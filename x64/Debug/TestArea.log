@@ -9,27 +9,28 @@ C:\Users\soulb\source\repos\TestArea\tVector.h(225,30): warning C4018: '>': sign
 C:\Users\soulb\source\repos\TestArea\tVector.h(237,2): warning C4013: 'Vector_RemoveAt' undefined; assuming extern returning int
 C:\Users\soulb\source\repos\TestArea\tVector.h(242,24): warning C4018: '<': signed/unsigned mismatch
 C:\Users\soulb\source\repos\TestArea\tVector.h(250,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\soulb\source\repos\TestArea\tHashMap.h(57,29): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\soulb\source\repos\TestArea\tHashMap.h(126,29): warning C4018: '<': signed/unsigned mismatch
-C:\Users\soulb\source\repos\TestArea\tHashMap.h(221,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\soulb\source\repos\TestArea\TestArea.c(47,2): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(118,36): warning C4018: '>': signed/unsigned mismatch
-C:\Users\soulb\source\repos\TestArea\TestArea.c(138,19): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'char [4]'
-C:\Users\soulb\source\repos\TestArea\TestArea.c(138,19): warning C4047: 'initializing': 'const char *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\TestArea.c(147,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\TestArea.c(153,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\TestArea.c(408,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(456,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(469,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(493,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(518,4): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(467,2): warning C4102: 'Step_2': unreferenced label
-C:\Users\soulb\source\repos\TestArea\TestArea.c(483,2): warning C4102: 'Step_3': unreferenced label
-C:\Users\soulb\source\repos\TestArea\TestArea.c(502,2): warning C4102: 'Step_4': unreferenced label
-C:\Users\soulb\source\repos\TestArea\TestArea.c(450,6): warning C4101: 'intBuffer': unreferenced local variable
-C:\Users\soulb\source\repos\TestArea\TestArea.c(443,7): warning C4101: 'input': unreferenced local variable
-C:\Users\soulb\source\repos\TestArea\tHelpers.h(25): warning C4716: 'ClampInt': must return a value
+C:\Users\soulb\source\repos\TestArea\tHashMap.h(66,46): warning C4090: 'function': different 'const' qualifiers
+C:\Users\soulb\source\repos\TestArea\tHashMap.h(70,29): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\soulb\source\repos\TestArea\tHashMap.h(139,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\soulb\source\repos\TestArea\tHashMap.h(234,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(219,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(48,2): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(119,36): warning C4018: '>': signed/unsigned mismatch
+C:\Users\soulb\source\repos\TestArea\TestArea.c(139,19): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'char [4]'
+C:\Users\soulb\source\repos\TestArea\TestArea.c(139,19): warning C4047: 'initializing': 'const char *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\TestArea.c(148,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\TestArea.c(154,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\TestArea.c(191,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(204,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(228,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(253,4): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(202,2): warning C4102: 'Step_2': unreferenced label
+C:\Users\soulb\source\repos\TestArea\TestArea.c(218,2): warning C4102: 'Step_3': unreferenced label
+C:\Users\soulb\source\repos\TestArea\TestArea.c(237,2): warning C4102: 'Step_4': unreferenced label
+C:\Users\soulb\source\repos\TestArea\TestArea.c(185,6): warning C4101: 'intBuffer': unreferenced local variable
+C:\Users\soulb\source\repos\TestArea\TestArea.c(178,7): warning C4101: 'input': unreferenced local variable
 C:\Users\soulb\source\repos\TestArea\tHelpers.h(20): warning C4716: 'Clamp': must return a value
+C:\Users\soulb\source\repos\TestArea\tHelpers.h(25): warning C4716: 'ClampInt': must return a value
 C:\Users\soulb\source\repos\TestArea\tVector.h(238): warning C4716: 'Vector_Remove': must return a value
 C:\Users\soulb\source\repos\TestArea\tVector.h(246): warning C4716: 'Vector_RemoveAt': must return a value
   TestArea.vcxproj -> C:\Users\soulb\source\repos\PureCrepo\x64\Debug\TestArea.exe

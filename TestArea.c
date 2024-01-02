@@ -1,5 +1,6 @@
 #include <tVector.h>
 #include <tHashMap.h>
+#include <tBarrel.h>
 
 void vectorTest()
 {
@@ -159,290 +160,28 @@ void heapTest()
 
 	}
 
-	barrel_node myIntNode =
+	BarrelNode myIntNode =
 	{
 		(Vector) {0,intType, heapEnd},
 	};
 }
 
-enum testFlags
-{
-	RUN = 1,
-	DONE = 2,
-	req_ROLL = 4,
-	req_FREE = 8,
-	wait_ROLL = 16,
-	wait_FREE = 32
-};
 
-enum testConsts
-{
-	BarrelTestCount = 10,
-	DeltaBufferCount = 10
-};
-
-typedef struct boop
-{
-	// Barrel Section
-	int _start;
-	int _count;
-	int _offset;
-	int _requests;
-
-	// Thread Section
-	DWORD _ID;
-	HANDLE _handle;
-	struct boop* _bucket;
-	int* _data;
-	int _index;
-	int _flags;
-} Boop;
-
-void barrelTestRoll(Boop* boop, int delta, int dir)
-{
-	// dir: -1 = left 1 = right
-
-	if (dir == 0)
-		return;
-
-	int absDelta = delta < 0 ? delta * -1 : delta;
-
-	if (boop->_count > 0)
-	{
-		int last = boop->_start + (boop->_count - 1);
-
-		// full roll
-
-		if (delta == 0)
-		{
-			if (dir > 0)
-			{
-				boop->_data[last + 1] = boop->_data[boop->_start];
-				boop->_offset--;
-				boop->_start++;
-			}
-
-			else
-			{
-				boop->_data[boop->_start - 1] = boop->_data[last];
-				boop->_offset++;
-				boop->_start--;
-			}
-		}
-
-		// with no offset, the end is guaranteed, no action needed
-
-		//   _ ||||||||||||| _
-
-		else
-		{
-			// tail end rolling
-
-			if ((delta < 0 && dir < 0) ||
-				(delta > 0 && dir > 0))
-			{
-				if (boop->_offset > 0)
-
-				for (int j = 0; j < absDelta; j++)
-				{
-					if (dir > 0) // roll forward    ||||||| -> |||||||
-						for (int i = last; i >= boop->_start + boop->_offset; i--)
-							boop->_data[i + 1] = boop->_data[i];
-					
-					else // roll backward           ||||||| <- |||||||
-						for (int i = boop->_start + (boop->_offset - 1); i < boop->_start + (boop->_count - 1); i++)
-							boop->_data[i] = boop->_data[i + 1];
-				}
-			}
-
-			// head end rolling
-
-			else
-			{
-				for (int j = 0; j < absDelta; j++)
-				{
-					if (dir > 0) // roll forward    ||||||| -> |||||||
-					{
-						if (boop->_offset > 0)
-							for (int i = boop->_start + (boop->_offset - 2); i >= boop->_start; i--)
-								boop->_data[i + 1] = boop->_data[i];
-
-						boop->_offset--;
-						boop->_start++;
-					}
-
-					else // roll backward           ||||||| <- |||||||
-					{
-						if (boop->_offset > 0)
-							for (int i = boop->_start; i < boop->_start + (boop->_offset - 1); i++)
-								boop->_data[i] = boop->_data[i + 1];
-
-						boop->_offset++;
-						boop->_start--;
-					}
-				}
-			}
-		}
-	}
-
-	else if (delta == 0 ||
-		(delta < 0 && dir > 0) ||
-		(delta > 0 && dir < 0))
-		boop->_start += dir > 0 ? 1 : -1;
-
-	boop->_count += delta;
-
-	boop->_requests -= delta;
-
-	boop->_count = boop->_count < 0 ? 0 : boop->_count;
-
-	boop->_offset =
-		boop->_offset < 0 ?
-		boop->_count > boop->_offset * -1 ? (boop->_offset + boop->_count) % boop->_count : 0 :
-		boop->_offset > boop->_count ?
-		boop->_count > 0 ? boop->_offset % boop->_count : 0 :
-		boop->_offset;
-}
-
-DWORD WINAPI barrelTestWork(void* target)
-{
-	if (!target)
-		return 1;
-
-	Boop* boop = target;
-
-	while (boop->_flags & RUN)
-	{
-		int delta = boop->_requests < 0 ? -1 : boop->_requests > 0 ? 1 : 0;
-
-		if (boop->_flags & req_ROLL)
-		{
-			// take this opportunity to shrink the barrel in place by 1 and allow the immediate roll forward
-			if (boop->_requests < 0)
-			{
-				barrelTestRoll(boop, -1, 1);
-				boop->_flags &= ~req_ROLL;
-			}
-
-			// check for last index for automatic rolling rights
-			else if (boop->_index + 1 == BarrelTestCount)
-			{
-				barrelTestRoll(boop, boop->_requests, 1);
-				boop->_flags &= ~req_ROLL;
-			}
-
-			// inform the next barrel that there is a requested slot to roll to
-			else if (!(boop->_flags & wait_ROLL))
-			{
-				boop->_bucket[boop->_index + 1]._flags |= req_ROLL;
-				boop->_flags |= wait_ROLL;
-			}
-
-			else if (boop->_flags & wait_ROLL &&
-				!(boop->_bucket[boop->_index + 1]._flags & req_ROLL))
-			{
-				barrelTestRoll(boop, delta, 1);
-				boop->_flags &= ~wait_ROLL;
-				boop->_flags &= ~req_ROLL;
-			}
-		}
-
-		else if (boop->_flags & req_FREE)
-		{
-			// take this opportunity to grow the barrel in place by 1 and allow the immediate roll backward
-			if (boop->_requests > 0)
-			{
-				barrelTestRoll(boop, 1, -1);
-				boop->_flags &= ~req_FREE;
-			}
-
-			// check for last index for automatic rolling rights
-			else if (boop->_index + 1 == BarrelTestCount)
-			{
-				barrelTestRoll(boop, boop->_requests, -1);
-				boop->_flags &= ~req_FREE;
-			}
-
-			// inform the next barrel that there is a requested slot to roll to
-			else if (!(boop->_bucket[boop->_index + 1]._flags & req_FREE))
-			{
-				barrelTestRoll(boop, delta, -1);
-				boop->_bucket[boop->_index + 1]._flags |= req_FREE;
-				boop->_flags &= boop->_requests != 0 ? 0xFFFFFFFF : ~req_FREE;
-			}
-
-			//else if ((boop->_flags & wait_FREE) &&
-			//	!(boop->_bucket[boop->_index + 1]._flags & req_FREE))
-			//{
-			//	barrelTestRoll(boop, delta, -1);
-			//	boop->_flags &= ~wait_FREE;
-			//	boop->_flags &= ~req_FREE;
-			//}
-		}
-
-		else if (boop->_requests != 0)
-		{
-			boop->_flags |= boop->_requests < 0 ? req_FREE : req_ROLL;
-		}
-	}
-
-	boop->_flags |= DONE;
-
-	return 0;
-}
-
-void boop_ctor(Boop* bucket, int index, int* dataHead)
-{
-	bucket[index]._bucket = bucket;
-	bucket[index]._start = 0;
-	bucket[index]._count = 0;
-	bucket[index]._offset = 0;
-	bucket[index]._requests = 0;
-
-	bucket[index]._index = index;
-	bucket[index]._data = dataHead;
-	bucket[index]._handle = CreateThread(NULL, 0, barrelTestWork, &bucket[index], 0, &(bucket[index]._ID));
-	bucket[index]._flags = RUN;
-
-	if (!(bucket[index]._handle))
-		PREENT("thread failed to execute!\n");
-}
-
-//int boop_delta(Boop* boop, int delta, int* bucket)
-//{
-//	boop->_requests = delta;
-//
-//	//SYSTEMTIME start;
-//	//GetSystemTime(&start);
-//
-//	while (true)
-//	{
-//		//SYSTEMTIME current;
-//		//GetSystemTime(&current);
-//		//if (current.wSecond - start.wSecond > 5)
-//		//	return 0;
-//
-//		if (boop->_requests == 0)
-//			break;
-//	}
-//
-//	if (delta > 0)
-//		for (int i = 0; i < delta; i++)
-//		{
-//			PREENT_ARGS("%", fmt_i(bucket[i]));
-//		}
-//}
 
 void barrelTest()
 {
-	int canvas[64];
+	HeapHandle = HeapCreate(0, 0, PageSize * MaxPageCount);
+	if (!HeapHandle)
+		return;
+
+	deltaPages(1);
 
 	for (int i = 0; i < 64; i++)
 		canvas[i] = 0;
 
 	char input[16];
 
-	Boop boops[BarrelTestCount];
+	BarrelNode boops[BarrelTestCount];
 
 	for (int i = 0; i < BarrelTestCount; i++)
 		boop_ctor(boops, i, canvas);
@@ -462,7 +201,7 @@ void barrelTest()
 			goto Step_1;
 		}
 
-		Boop* targetBoop = &boops[index];
+		BarrelNode* targetBoop = &boops[index];
 
 	Step_2:
 
@@ -470,10 +209,10 @@ void barrelTest()
 
 		int delta = strToInt(Geet());
 		int newDelta = delta;
-		int oldCount = targetBoop->_count;
+		int oldCount = targetBoop->_barrelCount;
 
 		newDelta =
-			delta + targetBoop->_count < 0 ? 0 :
+			delta + targetBoop->_barrelCount < 0 ? 0 :
 			delta > DeltaBufferCount ? DeltaBufferCount :
 			delta;
 
@@ -493,10 +232,10 @@ void barrelTest()
 		PREENT("requests complete!\n");
 
 		if (newDelta > 0)
-			for (int i = 0; i < targetBoop->_count - oldCount; i++)
+			for (int i = 0; i < targetBoop->_barrelCount - oldCount; i++)
 			{
 				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - i));
-				canvas[(targetBoop->_count > 0 ? ((i + oldCount + targetBoop->_offset) % targetBoop->_count) : 0) + targetBoop->_start] = strToInt(Geet());
+				canvas[(targetBoop->_barrelCount > 0 ? ((i + oldCount + targetBoop->_blockOffset) % targetBoop->_barrelCount) : 0) + targetBoop->_barrelStart] = strToInt(Geet());
 			}
 
 	Step_4:
@@ -504,9 +243,9 @@ void barrelTest()
 		for (int i = 0; i < BarrelTestCount; i++)
 			PREENT_ARGS("[%] count: %  offset: %  start: %  requests: %  flags: %  \n",
 				fmt_i(i),
-				fmt_i(boops[i]._count),
-				fmt_i(boops[i]._offset),
-				fmt_i(boops[i]._start),
+				fmt_i(boops[i]._barrelCount),
+				fmt_i(boops[i]._blockOffset),
+				fmt_i(boops[i]._barrelStart),
 				fmt_i(boops[i]._requests),
 				fmt_i(boops[i]._flags));
 
@@ -536,6 +275,6 @@ void barrelTest()
 
 int main()
 {
-
-	barrelTest();
+	//hashMapTest();
+	//barrelTest();
 }

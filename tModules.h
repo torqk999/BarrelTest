@@ -63,17 +63,33 @@ typedef struct {
 	Link _link;
 } LinkedVector;
 
-typedef struct {
+typedef struct barrelNode
+{
+	// Vector Section
 	Vector _vector;
-	//Link _link;
-	
-	unsigned int _unitsPerBlock;
-	unsigned int _barrelsPerBlock;
-	unsigned int _blockOffset;
-	unsigned int _locked;
-	unsigned int _blockCount;
+	Link _vLink;
+
+	// Barrel Section
+	Link _bLink;
+	int _barrelStart;
+	int _barrelCount;
+	int _blockOffset;
 	int _requests;
-} barrel_node;
+
+	int _unitsPerBlock;
+	int _barrelsPerBlock;
+
+	// Thread Section
+	DWORD _ID;
+	HANDLE _handle;
+	int _locked;
+	int _index;
+	int _flags;
+
+} BarrelNode;
+
+static BarrelNode* _heapHead;
+static unsigned int _nodeCount;
 
 typedef struct {
 	Vector _vector;
@@ -82,6 +98,7 @@ typedef struct {
 	unsigned int _last;
 	unsigned int _capacity;
 	int _lastLookupPerformance;
+	unsigned int (*_hashFunc)(void *, unsigned int);
 } hash_map;
 
 typedef struct {
