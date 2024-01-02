@@ -215,7 +215,6 @@ void barrelTestRoll(Boop* boop, int delta, int dir)
 
 		if (delta == 0)
 		{
-
 			if (dir > 0)
 			{
 				boop->_data[last + 1] = boop->_data[boop->_start];
@@ -229,8 +228,6 @@ void barrelTestRoll(Boop* boop, int delta, int dir)
 				boop->_offset++;
 				boop->_start--;
 			}
-
-			//boop->_start += dir > 0 ? 1 : -1;
 		}
 
 		// with no offset, the end is guaranteed, no action needed
@@ -244,31 +241,18 @@ void barrelTestRoll(Boop* boop, int delta, int dir)
 			if ((delta < 0 && dir < 0) ||
 				(delta > 0 && dir > 0))
 			{
-
+				if (boop->_offset > 0)
 
 				for (int j = 0; j < absDelta; j++)
 				{
-
 					if (dir > 0) // roll forward    ||||||| -> |||||||
-					{
-						if (boop->_offset > 0)
-							for (int i = last; i >= boop->_start + boop->_offset; i--)
-								boop->_data[i + 1] = boop->_data[i];
-
-						//boop->_start++;
-					}
-
-
+						for (int i = last; i >= boop->_start + boop->_offset; i--)
+							boop->_data[i + 1] = boop->_data[i];
+					
 					else // roll backward           ||||||| <- |||||||
-					{
-						if (boop->_offset > 0)
-							for (int i = boop->_start + boop->_offset; i < boop->_start + (boop->_count - 1); i++)
-								boop->_data[i] = boop->_data[i + 1];
-
-						//boop->_start--;
-					}
+						for (int i = boop->_start + (boop->_offset - 1); i < boop->_start + (boop->_count - 1); i++)
+							boop->_data[i] = boop->_data[i + 1];
 				}
-
 			}
 
 			// head end rolling
@@ -277,7 +261,6 @@ void barrelTestRoll(Boop* boop, int delta, int dir)
 			{
 				for (int j = 0; j < absDelta; j++)
 				{
-
 					if (dir > 0) // roll forward    ||||||| -> |||||||
 					{
 						if (boop->_offset > 0)
@@ -376,24 +359,25 @@ DWORD WINAPI barrelTestWork(void* target)
 			// check for last index for automatic rolling rights
 			else if (boop->_index + 1 == BarrelTestCount)
 			{
-				barrelTestRoll(boop, 0, 1);
+				barrelTestRoll(boop, boop->_requests, -1);
 				boop->_flags &= ~req_FREE;
 			}
 
-			// inform the prev barrel that there is a requested slot to roll to
-			else if (!(boop->_flags & wait_FREE))
-			{
-				boop->_bucket[boop->_index + 1]._flags |= req_FREE;
-				boop->_flags |= wait_FREE;
-			}
-
-			else if ((boop->_flags & wait_FREE) &&
-				!(boop->_bucket[boop->_index + 1]._flags & req_FREE))
+			// inform the next barrel that there is a requested slot to roll to
+			else if (!(boop->_bucket[boop->_index + 1]._flags & req_FREE))
 			{
 				barrelTestRoll(boop, delta, -1);
-				boop->_flags &= ~wait_FREE;
-				boop->_flags &= ~req_FREE;
+				boop->_bucket[boop->_index + 1]._flags |= req_FREE;
+				boop->_flags &= boop->_requests != 0 ? 0xFFFFFFFF : ~req_FREE;
 			}
+
+			//else if ((boop->_flags & wait_FREE) &&
+			//	!(boop->_bucket[boop->_index + 1]._flags & req_FREE))
+			//{
+			//	barrelTestRoll(boop, delta, -1);
+			//	boop->_flags &= ~wait_FREE;
+			//	boop->_flags &= ~req_FREE;
+			//}
 		}
 
 		else if (boop->_requests != 0)
