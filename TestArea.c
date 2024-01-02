@@ -451,9 +451,9 @@ void boop_ctor(Boop* bucket, int index, int* dataHead)
 
 void barrelTest()
 {
-	int canvas[256];
+	int canvas[64];
 
-	for (int i = 0; i < 256; i++)
+	for (int i = 0; i < 64; i++)
 		canvas[i] = 0;
 
 	char input[16];
@@ -527,10 +527,10 @@ void barrelTest()
 				fmt_i(boops[i]._flags));
 
 
-		for (int i = 0; i < 16; i++)
+		for (int i = 0; i < 8; i++)
 		{
-			for (int j = 0; j < 16; j++)
-				PREENT_ARGS("| % ", fmt_i(canvas[(i * 16) + j]));
+			for (int j = 0; j < 8; j++)
+				PREENT_ARGS("| % ", fmt_i(canvas[(i * 8) + j]));
 			PREENT("|\n");
 		}
 	}
