@@ -11,7 +11,6 @@ typedef struct
 #define MAX_NUM_BUFFER 50
 #define DBL_PRECISION 15
 
-
 static char PREENT_BUFFER[MAX_PREENT_BUFFER];
 
 uint strLenSafe(const char* str)

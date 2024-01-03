@@ -10,7 +10,8 @@ enum Constants {
 	Hash_Max_Conversion = 64,
 	Heap_Size_Page = 4096,
 	Heap_Page_Max = 128,
-	Barrel_Size_Unit = 64,
+	Barrel_Size_Unit = 32,
+	Barrel_Count_Node = 3,
 	Heap_Threshold = 2048
 };
 
@@ -53,42 +54,37 @@ typedef struct {
 } hash_node;
 
 typedef struct {
-	unsigned int _count;
 	TypeID _type;
 	void* _bucket;
+	unsigned int _count;
 } Vector;
 
 typedef struct {
-	Vector _vector;
 	Link _link;
+	Vector _vector;
 } LinkedVector;
 
-typedef struct barrelNode
-{
-	// Vector Section
-	Vector _vector;
-	Link _vLink;
+typedef struct{
+	ullong _mem[4];
+} Barrel;
 
-	// Barrel Section
+typedef struct barrelNode {
+	Vector _vector;
 	Link _bLink;
+
+	int _locked;
+	int _flags;
 	int _barrelStart;
 	int _barrelCount;
+
 	int _blockOffset;
 	int _requests;
-
 	int _unitsPerBlock;
 	int _barrelsPerBlock;
-
-	// Thread Section
-	DWORD _ID;
-	HANDLE _handle;
-	int _locked;
-	int _index;
-	int _flags;
-
 } BarrelNode;
 
-static BarrelNode* _heapHead;
+static Barrel* _heapHead;
+static BarrelNode* _nodeHead;
 static unsigned int _nodeCount;
 
 typedef struct {
@@ -148,4 +144,4 @@ typedef struct {
 	HashTable _propAllocations;
 } DataBase;
 
-#define TYPE_ID(typeName) (TypeID) {#typeName,sizeof(typeName),0}
+#define TYPE_ID(typeName) (TypeID) {sizeof(typeName),#typeName}

@@ -3,12 +3,9 @@
 
 Vector* Vector_GetTermNode(Vector* vector)
 {
-	if (!(vector->_type._flags & LINKED))
-		return NULL;
+	LinkedVector* linked = ((LinkedVector*)vector)->_link._next;
 
-	LinkedVector* linked = (LinkedVector*)vector;
-
-	while (linked->_vector._type._flags)
+	while (linked)
 		linked = (LinkedVector*)(linked->_link._next->_self);
 
 	return vector;
@@ -27,22 +24,14 @@ void* Vector_GetPtr(Vector* vector, unsigned int index)
 	return &(((char*)(vector->_bucket))[vector->_type._size * index]);
 }
 
-unsigned int Vector_GetCount(Vector* vector)
+unsigned int LinkedVector_GetCount(LinkedVector* vector)
 {
 	unsigned int _output = 0;
 
-	if (!vector->_type._flags)
-		return _output;
+	_output += vector->_vector._count;
 
-	_output += vector->_count;
-
-	if (!(vector->_type._flags & LINKED))
-		return _output;
-
-	LinkedVector* linked = (LinkedVector*)vector;
-
-	if (linked->_link._next)
-		_output += Vector_GetCount(&(((LinkedVector*)(linked->_link._next->_self))->_vector));
+	if (vector->_link._next)
+		_output += LinkedVector_GetCount(&(((LinkedVector*)(vector->_link._next->_self))->_vector));
 
 	return _output;
 }
@@ -99,8 +88,8 @@ void Vector_MoveIndex(void* src, void* trg, unsigned int srcIndex, unsigned int 
 
 bool Vector_Write1(Vector* vector, void* src, unsigned int start, unsigned int count)
 {
-	if (vector->_type._flags == READ_ONLY)
-		return false;
+	//if (vector->_type._flags == READ_ONLY)
+	//	return false;
 
 	if (start < 0 || start >= vector->_count ||
 		start + count < 0 || start + count >= vector->_count)
@@ -169,7 +158,7 @@ void Vector_nullTerm(
 	Vector* null,
 	size_t unitSize)
 {
-	null->_type = (TypeID){unitSize, "NULL", NULL_VEC};
+	null->_type = (TypeID){unitSize, "NULL"};
 	null->_count = 0;
 	null->_bucket = NULL;
 }
@@ -268,7 +257,7 @@ void Vector_BuildTemp(char** tmp, void* head, size_t unitSize, size_t unitDelta,
 
 #define VECTOR(vecPtr, typeName, ...) Vector_ctor(vecPtr, STACK_VEC, sizeof(typeName), PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
 
-#define VEC_TOR(typeName, ...) Vector_Vectorize((TypeID){sizeof(typeName), #typeName, STACK_VEC | LINKED}, PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
+#define VEC_TOR(typeName, ...) Vector_Vectorize((TypeID){sizeof(typeName), #typeName}, PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
 
 #define VEC_PRINT_ALL(vectorPtr, typeName, strFormat) for (int i = 0; i < ( vectorPtr ) ->_count; i++) \
 { typeName output; Vector_ReadIndex1( vectorPtr , i, &output, sizeof( typeName )); \

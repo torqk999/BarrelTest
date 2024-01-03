@@ -17,6 +17,10 @@ enum testConsts
 	DeltaBufferCount = 10
 };
 
+typedef struct {
+	BarrelNode* _barrel;
+	unsigned int _index;
+} BarrelToken;
 
 void barrelTestRoll(BarrelNode* boop, int delta, int dir)
 {
@@ -37,14 +41,14 @@ void barrelTestRoll(BarrelNode* boop, int delta, int dir)
 		{
 			if (dir > 0)
 			{
-				boop->_data[last + 1] = boop->_data[boop->_barrelStart];
+				_heapHead[last + 1] = _heapHead[boop->_barrelStart];
 				boop->_blockOffset--;
 				boop->_barrelStart++;
 			}
 
 			else
 			{
-				boop->_data[boop->_barrelStart - 1] = boop->_data[last];
+				_heapHead[boop->_barrelStart - 1] = _heapHead[last];
 				boop->_blockOffset++;
 				boop->_barrelStart--;
 			}
@@ -67,11 +71,11 @@ void barrelTestRoll(BarrelNode* boop, int delta, int dir)
 					{
 						if (dir > 0) // roll forward    ||||||| -> |||||||
 							for (int i = last; i >= boop->_barrelStart + boop->_blockOffset; i--)
-								boop->_data[i + 1] = boop->_data[i];
+								_heapHead[i + 1] = _heapHead[i];
 
 						else // roll backward           ||||||| <- |||||||
 							for (int i = boop->_barrelStart + (boop->_blockOffset - 1); i < boop->_barrelStart + (boop->_barrelCount - 1); i++)
-								boop->_data[i] = boop->_data[i + 1];
+								_heapHead[i] = _heapHead[i + 1];
 					}
 			}
 
@@ -85,7 +89,7 @@ void barrelTestRoll(BarrelNode* boop, int delta, int dir)
 					{
 						if (boop->_blockOffset > 0)
 							for (int i = boop->_barrelStart + (boop->_blockOffset - 2); i >= boop->_barrelStart; i--)
-								boop->_data[i + 1] = boop->_data[i];
+								_heapHead[i + 1] = _heapHead[i];
 
 						boop->_blockOffset--;
 						boop->_barrelStart++;
@@ -95,7 +99,113 @@ void barrelTestRoll(BarrelNode* boop, int delta, int dir)
 					{
 						if (boop->_blockOffset > 0)
 							for (int i = boop->_barrelStart; i < boop->_barrelStart + (boop->_blockOffset - 1); i++)
-								boop->_data[i] = boop->_data[i + 1];
+								_heapHead[i] = _heapHead[i + 1];
+
+						boop->_blockOffset++;
+						boop->_barrelStart--;
+					}
+				}
+			}
+		}
+	}
+
+	else if (delta == 0 ||
+		(delta < 0 && dir > 0) ||
+		(delta > 0 && dir < 0))
+		boop->_barrelStart += dir > 0 ? 1 : -1;
+
+	boop->_barrelCount += delta;
+
+	boop->_requests -= delta;
+
+	boop->_barrelCount = boop->_barrelCount < 0 ? 0 : boop->_barrelCount;
+
+	boop->_blockOffset =
+		boop->_blockOffset < 0 ?
+		boop->_barrelCount > boop->_blockOffset * -1 ? (boop->_blockOffset + boop->_barrelCount) % boop->_barrelCount : 0 :
+		boop->_blockOffset > boop->_barrelCount ?
+		boop->_barrelCount > 0 ? boop->_blockOffset % boop->_barrelCount : 0 :
+		boop->_blockOffset;
+}
+
+void barrelRoll(BarrelNode* boop, int delta, int dir)
+{
+	// dir: -1 = left 1 = right
+
+	if (dir == 0)
+		return;
+
+	int absDelta = delta < 0 ? delta * -1 : delta;
+
+	if (boop->_barrelCount > 0)
+	{
+		int last = boop->_barrelStart + (boop->_barrelCount - 1);
+
+		// full roll
+
+		if (delta == 0)
+		{
+			if (dir > 0)
+			{
+				_heapHead[last + 1] = _heapHead[boop->_barrelStart];
+				boop->_blockOffset -= boop->_blockOffset % boop->_barrelsPerBlock ? 0 : 1;
+				boop->_barrelStart++;
+			}
+
+			else
+			{
+				_heapHead[boop->_barrelStart - 1] = _heapHead[last];
+				boop->_blockOffset += boop->_blockOffset % boop->_barrelsPerBlock ? 0 : 1;
+				boop->_barrelStart--;
+			}
+		}
+
+		// with no offset, the end is guaranteed, no action needed
+
+		//   _ ||||||||||||| _
+
+		else
+		{
+			// tail end rolling
+
+			if ((delta < 0 && dir < 0) ||
+				(delta > 0 && dir > 0))
+			{
+				if (boop->_blockOffset > 0)
+
+					for (int j = 0; j < absDelta; j++)
+					{
+						if (dir > 0) // roll forward    ||||||| -> |||||||
+							for (int i = last; i >= boop->_barrelStart + boop->_blockOffset; i--)
+								_heapHead[i + 1] = _heapHead[i];
+
+						else // roll backward           ||||||| <- |||||||
+							for (int i = boop->_barrelStart + (boop->_blockOffset - 1); i < boop->_barrelStart + (boop->_barrelCount - 1); i++)
+								_heapHead[i] = _heapHead[i + 1];
+					}
+			}
+
+			// head end rolling
+
+			else
+			{
+				for (int j = 0; j < absDelta; j++)
+				{
+					if (dir > 0) // roll forward    ||||||| -> |||||||
+					{
+						if (boop->_blockOffset > 0)
+							for (int i = boop->_barrelStart + (boop->_blockOffset - 2); i >= boop->_barrelStart; i--)
+								_heapHead[i + 1] = _heapHead[i];
+
+						boop->_blockOffset--;
+						boop->_barrelStart++;
+					}
+
+					else // roll backward           ||||||| <- |||||||
+					{
+						if (boop->_blockOffset > 0)
+							for (int i = boop->_barrelStart; i < boop->_barrelStart + (boop->_blockOffset - 1); i++)
+								_heapHead[i] = _heapHead[i + 1];
 
 						boop->_blockOffset++;
 						boop->_barrelStart--;
@@ -129,7 +239,10 @@ DWORD WINAPI barrelTestWork(void* target)
 	if (!target)
 		return 1;
 
-	BarrelToken* boop = target;
+	BarrelToken token = *(BarrelToken*)target;
+
+	BarrelNode* boop = token._barrel;
+	unsigned int index = token._index;
 
 	while (boop->_flags & RUN)
 	{
@@ -145,7 +258,7 @@ DWORD WINAPI barrelTestWork(void* target)
 			}
 
 			// check for last index for automatic rolling rights
-			else if (boop->_index + 1 == BarrelTestCount)
+			else if (index + 1 == BarrelTestCount)
 			{
 				barrelTestRoll(boop, boop->_requests, 1);
 				boop->_flags &= ~req_ROLL;
@@ -154,12 +267,12 @@ DWORD WINAPI barrelTestWork(void* target)
 			// inform the next barrel that there is a requested slot to roll to
 			else if (!(boop->_flags & wait_ROLL))
 			{
-				boop->_bucket[boop->_index + 1]._flags |= req_ROLL;
+				_nodeHead[index + 1]._flags |= req_ROLL;
 				boop->_flags |= wait_ROLL;
 			}
 
 			else if (boop->_flags & wait_ROLL &&
-				!(boop->_bucket[boop->_index + 1]._flags & req_ROLL))
+				!(_nodeHead[index + 1]._flags & req_ROLL))
 			{
 				barrelTestRoll(boop, delta, 1);
 				boop->_flags &= ~wait_ROLL;
@@ -177,17 +290,17 @@ DWORD WINAPI barrelTestWork(void* target)
 			}
 
 			// check for last index for automatic rolling rights
-			else if (boop->_index + 1 == BarrelTestCount)
+			else if (index + 1 == BarrelTestCount)
 			{
 				barrelTestRoll(boop, boop->_requests, -1);
 				boop->_flags &= ~req_FREE;
 			}
 
 			// inform the next barrel that there is a requested slot to roll to
-			else if (!(boop->_bucket[boop->_index + 1]._flags & req_FREE))
+			else if (!(_nodeHead[index + 1]._flags & req_FREE))
 			{
 				barrelTestRoll(boop, delta, -1);
-				boop->_bucket[boop->_index + 1]._flags |= req_FREE;
+				_nodeHead[index + 1]._flags |= req_FREE;
 				boop->_flags &= boop->_requests != 0 ? 0xFFFFFFFF : ~req_FREE;
 			}
 		}
@@ -203,32 +316,44 @@ DWORD WINAPI barrelTestWork(void* target)
 	return 0;
 }
 
-void boop_ctor(BarrelNode* node, int index, BarrelToken token)
+void boop_ctor(
+	BarrelToken* token,
+	LPHANDLE handleLoc,
+	LPDWORD idLoc,
+	Vector template,
+	int barrelStart)
 {
-	//bucket[index]._bucket = bucket;
-	node[index]._barrelStart = 0;
-	node[index]._barrelCount = 0;
-	node[index]._blockOffset = 0;
-	node[index]._requests = 0;
+	token->_barrel->_barrelStart = barrelStart;
+	token->_barrel->_barrelCount = 0;
+	token->_barrel->_blockOffset = 0;
+	token->_barrel->_requests = 0;
+	token->_barrel->_unitsPerBlock = 1;
+	token->_barrel->_barrelsPerBlock = 1;
 
-	node[index]._index = index;
-	//bucket[index]._data = dataHead;
-	node[index]._handle = CreateThread(NULL, 0, barrelTestWork, &token, 0, &(node[index]._ID));
-	node[index]._flags = RUN;
+	handleLoc = CreateThread(NULL, 0, barrelTestWork, token, 0, idLoc);
 
-	if (!(node[index]._handle))
+	if (!handleLoc)
 		PREENT("thread failed to execute!\n");
+	else
+		token->_barrel->_flags = RUN;
 }
 
-bool barrelNode_GetIndexLocation(BarrelNode* node, uint index, void** location)
+bool barrelNode_GetIndexLocation(BarrelNode* node, uint index, void** target)
 {
 	uint unitCapacity = node->_barrelCount * node->_unitsPerBlock;
 
 	if (index >= unitCapacity)
 		return false;
 
-	uint modifiedIndex =  ((node->_blockOffset * node->_unitsPerBlock) + index) % unitCapacity;
-	*location = &(((char*)node->_vector._bucket)[modifiedIndex * node->_vector._type._size]);
+	ullong byteLength = node->_barrelCount * Barrel_Size_Unit;
+	ullong byteOffset = (node->_blockOffset * node->_barrelsPerBlock) * Barrel_Size_Unit;
+	ullong byteIndex = index * node->_vector._type._size;
+
+	// vector offset + barrel offset + heap ptr
+
+	*target = ((byteOffset + byteIndex) % byteLength) + (node->_barrelStart * Barrel_Size_Unit) + _heapHead;
+
+	//Vector_MoveIndex(source, target, 0, 0, node->_vector._type._size);
 
 	return true;
 }

@@ -57,8 +57,6 @@ void hashMapTest()
 	}
 }
 
-
-
 DWORD WINAPI MyThreadJob(void* dataHead)
 {
 	if (!dataHead)
@@ -162,42 +160,55 @@ void heapTest()
 
 	BarrelNode myIntNode =
 	{
-		(Vector) {0,intType, heapEnd},
+		(Vector) {intType,heapEnd, 0},
 	};
 }
 
-
-
-void barrelTest()
-{
+void barrelTest() {
 	HeapHandle = HeapCreate(0, 0, PageSize * MaxPageCount);
 	if (!HeapHandle)
 		return;
 
 	deltaPages(1);
 
-	for (int i = 0; i < 64; i++)
-		canvas[i] = 0;
-
 	char input[16];
+	BarrelNode* boops = HeapHandle;
+	HANDLE handles[BarrelTestCount];
+	DWORD ids[BarrelTestCount];
+	int startCount = Barrel_Count_Node * BarrelTestCount;
+	int* targetPtr = NULL;
+	int* mapPtr = &boops[startCount];
 
-	BarrelNode boops[BarrelTestCount];
+	for (int i = 0; i < 32 * 8; i++)
+		mapPtr[i] = 0;
+	
 
-	for (int i = 0; i < BarrelTestCount; i++)
-		boop_ctor(boops, i, canvas);
+	//barrelNode_GetIndexLocation(&boops[1], 0, &mapPtr);
+	
+	// Omegus Barrel Vector   >:-|
+	boop_ctor(
+		&(BarrelToken) { &boops[0], 0 },
+		&handles[0], &ids[0],
+		(Vector) { TYPE_ID(Barrel),
+		boops, startCount }, 0);
 
-	int intBuffer[DeltaBufferCount];
+	for (int i = 1; i < BarrelTestCount; i++)
+		boop_ctor(
+			&(BarrelToken){&boops[i],i },
+			&handles[i], &ids[i],
+			(Vector){ TYPE_ID(int),
+			&((Barrel*)boops)[i * Barrel_Count_Node], 0 },
+			startCount);
 
-	while (true)
-	{
+	while (true) {
+
 	Step_1:
 
 		PREENT("Set Target: ");
 		int index = strToInt(Geet());
 
-		if (index < 0 || index >= BarrelTestCount)
-		{
-			PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(BarrelTestCount));
+		if (index < 1 || index >= BarrelTestCount) {
+			PREENT_ARGS("Bad index! Between 1 and %\n", fmt_i(BarrelTestCount));
 			goto Step_1;
 		}
 
@@ -235,7 +246,8 @@ void barrelTest()
 			for (int i = 0; i < targetBoop->_barrelCount - oldCount; i++)
 			{
 				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - i));
-				canvas[(targetBoop->_barrelCount > 0 ? ((i + oldCount + targetBoop->_blockOffset) % targetBoop->_barrelCount) : 0) + targetBoop->_barrelStart] = strToInt(Geet());
+				barrelNode_GetIndexLocation(targetBoop, i, &targetPtr);
+				*targetPtr = strToInt(Geet());
 			}
 
 	Step_4:
@@ -249,15 +261,15 @@ void barrelTest()
 				fmt_i(boops[i]._requests),
 				fmt_i(boops[i]._flags));
 
-
-		for (int i = 0; i < 8; i++)
-		{
-			for (int j = 0; j < 8; j++)
-				PREENT_ARGS("| % ", fmt_i(canvas[(i * 8) + j]));
-			PREENT("|\n");
+		for (int i = 0; i < 32; i++) {
+			PREENT("|");
+			for (int j = 0; j < 8; j++) {
+				PREENT_ARGS("| % ", fmt_i(mapPtr[(i * 8) + j]));
+			}
+				
+			PREENT("||\n");
 		}
 	}
-
 
 	for (int i = 0; i < BarrelTestCount; i++)
 		boops[i]._flags &= ~RUN;
@@ -269,12 +281,12 @@ void barrelTest()
 	//WaitForMultipleObjects(BarrelTestCount, threadHandles, true, INFINITE);
 
 	for (int i = 0; i < BarrelTestCount; i++)
-		if (boops[i]._handle)
-			CloseHandle(boops[i]._handle);
+		if (handles[i])
+			CloseHandle(handles[i]);
 }
 
-int main()
-{
-	//hashMapTest();
-	//barrelTest();
+int main() {
+
+	//PREENT_ARGS("%\n", fmt_l(sizeof(Barrel)));
+	barrelTest();
 }
