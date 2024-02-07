@@ -3,7 +3,7 @@
 
 void RollingQue_Clear(RollingQue* que, int index)
 {
-	que->_requests[index]._flag = NULL;
+	que->_requests[index]._target = NULL;
 	que->_requests[index]._delta = 0;
 }
 

@@ -47,17 +47,10 @@ DWORD WINAPI heapServiceWork(void* target)
 		size_t target = service->_heapEnd;
 		size_t current = (size_t)(service->_heapStart) + (sizeof(Page) * service->_pageCount);
 
-		QueRequest pageRequest;
-		bool requestAvailable = RollingQue_PullRequest(&(service->_pages._que), &pageRequest);
-
-		target -= requestAvailable ? pageRequest._delta * sizeof(Barrel) : 0;
-
 		int pageDelta = ((target > current ? target - current : current - target) / sizeof(Page)) - 1;
 
-		while(!heapDeltaPages(service, pageDelta)) { }
-
-		if (requestAvailable)
-			*(pageRequest._flag) = DONE;
+		if (!heapDeltaPages(service, pageDelta))
+			break;
 	}
 
 	return 0;

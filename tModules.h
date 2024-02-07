@@ -112,7 +112,7 @@ typedef struct {
 	//unsigned int _flags;
 	//void* _target;
 	int _delta;
-	int* _flag;
+	void* _target;
 }QueRequest;
 
 typedef struct {
@@ -177,6 +177,7 @@ typedef struct {
 	ThreadHandle* _threadBin;
 	unsigned int _threadCount;
 	int _nextAvailable;
+	int _lastPhysicalNode;
 	BarrelNode Omegus;
 } BarrelService;
 

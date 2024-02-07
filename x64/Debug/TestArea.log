@@ -23,16 +23,17 @@ C:\Users\soulb\source\repos\TestArea\tHashMap.h(138,29): warning C4018: '<': sig
 C:\Users\soulb\source\repos\TestArea\tHashMap.h(233,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\soulb\source\repos\TestArea\tHeap.h(6,36): warning C4018: '>': signed/unsigned mismatch
 C:\Users\soulb\source\repos\TestArea\tHeap.h(47,10): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
-C:\Users\soulb\source\repos\TestArea\tHeap.h(55,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tHeap.h(68,10): warning C4133: 'initializing': incompatible types - from 'Page *' to 'Barrel *'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(28,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(36,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(232,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(332,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(410,54): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(418,58): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(439,13): warning C4002: too many arguments for function-like macro invocation 'TYPE_ID'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(442,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+C:\Users\soulb\source\repos\TestArea\tHeap.h(50,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tHeap.h(61,10): warning C4133: 'initializing': incompatible types - from 'Page *' to 'Barrel *'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(45,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(53,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(117,16): warning C4047: 'initializing': 'BarrelNode *' differs in levels of indirection from 'int'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(249,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(350,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(449,54): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(457,58): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(479,13): warning C4002: too many arguments for function-like macro invocation 'TYPE_ID'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(481,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
 C:\Users\soulb\source\repos\TestArea\TestArea.c(49,2): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\TestArea.c(125,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\TestArea.c(131,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
@@ -54,5 +55,5 @@ C:\Users\soulb\source\repos\TestArea\tHelpers.h(20): warning C4716: 'Clamp': mus
 C:\Users\soulb\source\repos\TestArea\tVector.h(226): warning C4716: 'Vector_Remove': must return a value
 C:\Users\soulb\source\repos\TestArea\tVector.h(234): warning C4716: 'Vector_RemoveAt': must return a value
 C:\Users\soulb\source\repos\TestArea\tHeap.h(22): warning C4715: 'heapDeltaPages': not all control paths return a value
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(19): warning C4715: 'barrel_RecycleNode': not all control paths return a value
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(503): warning C4716: 'barrel_RemoveNode': must return a value
   TestArea.vcxproj -> C:\Users\soulb\source\repos\PureCrepo\x64\Debug\TestArea.exe
