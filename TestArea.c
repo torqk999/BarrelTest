@@ -2,6 +2,8 @@
 #include <tHashMap.h>
 #include <tBarrel.h>
 
+#pragma region testRegion
+#define BarrelTestCount 10
 void vectorTest()
 {
 	LinkedVector myVector = VEC_TOR(int, 1, 2, 3, 4, 5);
@@ -27,7 +29,6 @@ void vectorTest()
 		count++;
 	}
 }
-
 void hashMapTest()
 {
 	hash_map myHashMap = HASH_MAP(16, .7f);
@@ -56,7 +57,6 @@ void hashMapTest()
 		PREENT_ARGS("Value: %\n", fmt_s(result));
 	}
 }
-
 DWORD WINAPI MyThreadJob(void* dataHead)
 {
 	if (!dataHead)
@@ -74,7 +74,6 @@ DWORD WINAPI MyThreadJob(void* dataHead)
 
 	return 0;
 }
-
 void threadTest()
 {
 	DWORD threadID;
@@ -106,50 +105,30 @@ void threadTest()
 
 	PREENT_ARGS("Waited seconds: %", fmt_i(*count));
 }
-
-static uint PageCount = 0;
-const uint MaxPageCount = 64;
-static HANDLE HeapHandle;
-static size_t PageSize = 4096;
-
-void deltaPages(int delta)
+void heapTest(HeapService* heapService)
 {
-	delta = delta < 0 && (delta * -1) > PageCount ? PageCount * -1 : delta;
-
-	if (delta > 0)
-		HeapAlloc(HeapHandle, 0, delta * PageSize);
-
-	PageCount += delta;
-
-	if (delta < 0)
-		HeapFree(HeapHandle, 0, (void*)((size_t)HeapHandle + (PageCount * PageCount)));
-
-}
-
-void heapTest()
-{
-	HeapHandle = HeapCreate(0, 0, PageSize * MaxPageCount);
-	if (!HeapHandle)
+	heapService->_heapStart = HeapCreate(0, 0, PageSize * MaxPageCount);
+	if (!heapService->_heapStart)
 		return;
 
-	deltaPages(1);
+	heapDeltaPages(heapService, 1);
 
 	TypeID intType = TYPE_ID(int);
 
-	void* heapEnd = HeapHandle;
+	void* heapEnd = heapService->_heapStart;
 
 	int barrelsPerBlock,
 		unitsPerBlock;
 
-	if (!(Barrel_Size_Unit % intType._size))
+	if (!(sizeof(Barrel) % intType._size))
 	{
-		unitsPerBlock = Barrel_Size_Unit / intType._size;
+		unitsPerBlock = sizeof(Barrel) / intType._size;
 		barrelsPerBlock = 1;
 	}
 
-	else if (!(intType._size % Barrel_Size_Unit))
+	else if (!(intType._size % sizeof(Barrel)))
 	{
-		barrelsPerBlock = intType._size / Barrel_Size_Unit;
+		barrelsPerBlock = intType._size / sizeof(Barrel);
 		unitsPerBlock = 1;
 	}
 
@@ -158,135 +137,192 @@ void heapTest()
 
 	}
 
-	BarrelNode myIntNode =
-	{
-		(Vector) {intType,heapEnd, 0},
+	BarrelNode myIntNode = {
+
+			(Vector) {intType,heapEnd, 0}
 	};
+}
+#pragma endregion
+
+static int TaskFlags = 1;
+static ThreadHandle test_threadHandles[MaxThreadCount];
+static HeapService test_heapService;
+static BarrelService test_barrelService;
+
+void barrelTest_REMOVE()
+{
+	int* targetPtr = NULL;
+	const char* input = NULL;
+}
+
+void barrelTest_NEW()
+{
+	int* targetPtr = NULL;
+	const char* input = NULL;
+
+	PREENT("Choose Initial Capacity: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		goto End;
+
+	int capacity = strToInt(input);
+
+	if (capacity < 1) {
+		PREENT_ARGS("Bad Capacity! Must be greater than 0: %\n", fmt_i(capacity));
+		goto End;
+	}
+
+
+
+	//test_heapService._heapEnd;
+
+End: {}
+}
+
+void barrelTest_EDIT()
+{
+	int* targetPtr = NULL;
+	const char* input = NULL;
+
+	PREENT("Set Target: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		goto End;
+
+	int index = strToInt(input);
+
+	if (index < 1 || index >= test_barrelService.Omegus._vector._count) {
+		PREENT_ARGS("Bad index! Between 1 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
+		goto End;
+	}
+
+	BarrelNode* targetBoop = barrel_NodeLocation(&test_barrelService, index);
+
+	PREENT("Delta Count: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		goto End;
+
+	int delta = strToInt(input);
+	int newDelta = delta;
+
+	newDelta =
+		delta + targetBoop->_barrelCount < 0 ? 0 :
+		delta;
+
+	if (newDelta != delta)
+		PREENT_ARGS("Delta Capped: %\n", fmt_i(newDelta));
+
+	if (!barrel_VectorResizeRequest(targetBoop, newDelta))
+		goto PREENT;
+
+	while (targetBoop->_requests)
+	{
+		PREENT_ARGS("waiting on requests: %\n", fmt_I(targetBoop->_requests));
+		Sleep(250);
+	}
+
+	PREENT("requests complete!\n");
+
+PREENT:
+	{
+		int oldCount = targetBoop->_vector._count;
+		targetBoop->_vector._count += newDelta;
+
+		if (newDelta > 0)
+			for (int i = oldCount; i < targetBoop->_vector._count; i++)
+			{
+				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - (targetBoop->_vector._count - i)));
+				if (barrelNode_GetElementLocation(&test_barrelService, targetBoop, i, &targetPtr))
+					*targetPtr = strToInt(Geet());
+			}
+	}
+
+	PREENT("bCount | vCount | offset | bStart | bRequests | flags\n");
+
+	for (int i = 0; i < test_barrelService.Omegus._vector._count; i++)
+	{
+		BarrelNode nextNode = *barrel_NodeLocation(&test_barrelService, i);
+		PREENT_ARGS("[%]: % | % | % | % | % | % \n",
+			fmt_I(i),
+			fmt_I(nextNode._barrelCount),
+			fmt_I(nextNode._vector._count),
+			fmt_I(nextNode._barrelOffset),
+			fmt_I(nextNode._barrelStart),
+			fmt_I(nextNode._requests),
+			fmt_I(nextNode._flags));
+	}
+
+	for (int i = 0; i < 32; i++) {
+		PREENT("|");
+		for (int j = 0; j < 8; j++) {
+			PREENT_ARGS("| % ", fmt_I(((int*)test_heapService._heapStart)[(i * 8) + j]));
+		}
+
+		PREENT("||\n");
+	}
+
+End: {}
 }
 
 void barrelTest() {
-	HeapHandle = HeapCreate(0, 0, PageSize * MaxPageCount);
-	if (!HeapHandle)
+
+	// Thread and service initializers
+
+	if (!HeapServiceInit(&test_heapService, true))
+	{
+		PREENT("Init failure!\n");
 		return;
+	}
 
-	deltaPages(1);
+	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles);
 
-	char input[16];
-	BarrelNode* boops = HeapHandle;
-	HANDLE handles[BarrelTestCount];
-	DWORD ids[BarrelTestCount];
-	int startCount = Barrel_Count_Node * BarrelTestCount;
-	int* targetPtr = NULL;
-	int* mapPtr = &boops[startCount];
-
-	for (int i = 0; i < 32 * 8; i++)
-		mapPtr[i] = 0;
-	
-
-	//barrelNode_GetIndexLocation(&boops[1], 0, &mapPtr);
-	
-	// Omegus Barrel Vector   >:-|
-	boop_ctor(
-		&(BarrelToken) { &boops[0], 0 },
-		&handles[0], &ids[0],
-		(Vector) { TYPE_ID(Barrel),
-		boops, startCount }, 0);
-
-	for (int i = 1; i < BarrelTestCount; i++)
-		boop_ctor(
-			&(BarrelToken){&boops[i],i },
-			&handles[i], &ids[i],
-			(Vector){ TYPE_ID(int),
-			&((Barrel*)boops)[i * Barrel_Count_Node], 0 },
-			startCount);
+	const char* input = NULL;
 
 	while (true) {
 
 	Step_1:
+		PREENT("Choose Option (q == quit, w == new, e == edit, r == remove): ");
 
-		PREENT("Set Target: ");
-		int index = strToInt(Geet());
-
-		if (index < 1 || index >= BarrelTestCount) {
-			PREENT_ARGS("Bad index! Between 1 and %\n", fmt_i(BarrelTestCount));
-			goto Step_1;
-		}
-
-		BarrelNode* targetBoop = &boops[index];
-
-	Step_2:
-
-		PREENT("Delta Count: ");
-
-		int delta = strToInt(Geet());
-		int newDelta = delta;
-		int oldCount = targetBoop->_barrelCount;
-
-		newDelta =
-			delta + targetBoop->_barrelCount < 0 ? 0 :
-			delta > DeltaBufferCount ? DeltaBufferCount :
-			delta;
-
-		if (newDelta != delta)
-			PREENT_ARGS("Delta Capped: %\n", fmt_i(newDelta));
-
-	Step_3:
-
-		targetBoop->_requests += newDelta;
-
-		while (targetBoop->_requests)
+		input = Geet();
+		switch (input[0])
 		{
-			PREENT_ARGS("waiting on requests: %\n", fmt_I(targetBoop->_requests));
-			Sleep(250);
-		}
+		case 'q':
+			goto TestBreak;
 
-		PREENT("requests complete!\n");
+		case 'w':
+			barrelTest_NEW();
+			break;
 
-		if (newDelta > 0)
-			for (int i = 0; i < targetBoop->_barrelCount - oldCount; i++)
-			{
-				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - i));
-				barrelNode_GetIndexLocation(targetBoop, i, &targetPtr);
-				*targetPtr = strToInt(Geet());
-			}
+		case 'e':
+			barrelTest_EDIT();
+			break;
 
-	Step_4:
+		case 'r':
+			barrelTest_REMOVE();
+			break;
 
-		for (int i = 0; i < BarrelTestCount; i++)
-			PREENT_ARGS("[%] count: %  offset: %  start: %  requests: %  flags: %  \n",
-				fmt_i(i),
-				fmt_i(boops[i]._barrelCount),
-				fmt_i(boops[i]._blockOffset),
-				fmt_i(boops[i]._barrelStart),
-				fmt_i(boops[i]._requests),
-				fmt_i(boops[i]._flags));
-
-		for (int i = 0; i < 32; i++) {
-			PREENT("|");
-			for (int j = 0; j < 8; j++) {
-				PREENT_ARGS("| % ", fmt_i(mapPtr[(i * 8) + j]));
-			}
-				
-			PREENT("||\n");
+		default:
+			PREENT("Unknown command!\n");
+			break;
 		}
 	}
 
-	for (int i = 0; i < BarrelTestCount; i++)
-		boops[i]._flags &= ~RUN;
+TestBreak:
 
-	for (int i = 0; i < BarrelTestCount; i++)
-		if (!(boops[i]._flags & DONE))
-			i = 0;
+	for (int i = 0; i < test_barrelService.Omegus._vector._count; i++)
+	{
+		BarrelNode* closingNode = barrel_NodeLocation(&test_barrelService, i);
+		closingNode->_flags &= ~RUN;
+	}
 
-	//WaitForMultipleObjects(BarrelTestCount, threadHandles, true, INFINITE);
-
-	for (int i = 0; i < BarrelTestCount; i++)
-		if (handles[i])
-			CloseHandle(handles[i]);
 }
 
 int main() {
 
-	//PREENT_ARGS("%\n", fmt_l(sizeof(Barrel)));
+	PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
 	barrelTest();
 }

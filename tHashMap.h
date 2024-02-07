@@ -56,7 +56,6 @@ unsigned int GetULLongHash(unsigned long long* key, unsigned int capacity)
 void hashNode_ctor(hash_node* node)
 {
 	node->_key = NULL;
-	node->_link._self = node;
 	node->_link._prev = NULL;
 	node->_link._next = NULL;
 }

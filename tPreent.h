@@ -1,5 +1,5 @@
 #pragma once
-#include <tIncludes.h>
+#include <Windows.h>
 
 typedef struct 
 {
@@ -7,18 +7,18 @@ typedef struct
 	void* _ptr;
 } Preem;
 
-#define MAX_PREENT_BUFFER 64
+#define MAX_CONSOLE_BUFFER 64
 #define MAX_NUM_BUFFER 50
 #define DBL_PRECISION 15
 
-static char PREENT_BUFFER[MAX_PREENT_BUFFER];
+static char PREENT_BUFFER[MAX_CONSOLE_BUFFER];
 
 uint strLenSafe(const char* str)
 {
 	uint count = 1;
 	while (str[count - 1] != '\0')
 	{
-		if (count > MAX_PREENT_BUFFER)
+		if (count > MAX_CONSOLE_BUFFER)
 			return 0;
 		count++;
 	}
@@ -250,7 +250,7 @@ const char* Preent(const char* string, Preem* head)
 	HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD written = 0;
 
-	for (int i = 0; i < MAX_PREENT_BUFFER; i++)
+	for (int i = 0; i < MAX_CONSOLE_BUFFER; i++)
 	{
 		PREENT_BUFFER[i] = string[i];
 
@@ -302,12 +302,12 @@ const char* Preent(const char* string, Preem* head)
 		}
 	}
 
-	return &(string[MAX_PREENT_BUFFER]);
+	return &(string[MAX_CONSOLE_BUFFER]);
 }
 
 const char* GeetCount(ulong* count)
 {
-	ReadConsoleA(GetStdHandle(STD_INPUT_HANDLE), PREENT_BUFFER, MAX_PREENT_BUFFER, count, NULL);
+	ReadConsoleA(GetStdHandle(STD_INPUT_HANDLE), PREENT_BUFFER, MAX_CONSOLE_BUFFER, count, NULL);
 
 	return PREENT_BUFFER;
 	//*count = *count <= 1 ? 0 : *count - 1;

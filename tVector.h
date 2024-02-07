@@ -1,12 +1,12 @@
 #pragma once
-#include <tIncludes.h>
+#include <tModules.h>
 
-Vector* Vector_GetTermNode(Vector* vector)
+LinkedVector* LinkedVector_GetTermNode(LinkedVector* vector)
 {
-	LinkedVector* linked = ((LinkedVector*)vector)->_link._next;
+	LinkedVector* linked = (LinkedVector*)(vector->_link._next);
 
 	while (linked)
-		linked = (LinkedVector*)(linked->_link._next->_self);
+		linked = (LinkedVector*)(linked->_link._next);
 
 	return vector;
 }
@@ -31,7 +31,7 @@ unsigned int LinkedVector_GetCount(LinkedVector* vector)
 	_output += vector->_vector._count;
 
 	if (vector->_link._next)
-		_output += LinkedVector_GetCount(&(((LinkedVector*)(vector->_link._next->_self))->_vector));
+		_output += LinkedVector_GetCount((LinkedVector*)(vector->_link._next));
 
 	return _output;
 }
@@ -58,7 +58,7 @@ void* LinkedVector_Iterate(LinkedVector** vector, void* current, int delta)
 	{
 		if (!(*vector)->_link._prev)
 			return NULL;
-		*vector = (LinkedVector*)((*vector)->_link._prev->_self);
+		*vector = (LinkedVector*)((*vector)->_link._prev);
 		index += (*vector)->_vector._count;
 		trg = (size_t)((*vector)->_vector._bucket) + (index * (*vector)->_vector._type._size);
 		return LinkedVector_Iterate(vector, (void*)trg, 0);
@@ -68,7 +68,7 @@ void* LinkedVector_Iterate(LinkedVector** vector, void* current, int delta)
 	{
 		if (!(*vector)->_link._next)
 			return NULL;
-		*vector = (LinkedVector*)((*vector)->_link._next->_self);
+		*vector = (LinkedVector*)((*vector)->_link._next);
 		index -= (*vector)->_vector._count;
 		trg = (size_t)((*vector)->_vector._bucket) + (index * (*vector)->_vector._type._size);
 		return LinkedVector_Iterate(vector, (void*)trg, 0);
@@ -188,7 +188,6 @@ void LinkedVector_ctor(
 
 	linked->_link._next = next;
 	linked->_link._prev = prev;
-	linked->_link._self = linked;
 }
 
 LinkedVector Vector_Vectorize(TypeID type, unsigned int existingCount, void* existingBucket)

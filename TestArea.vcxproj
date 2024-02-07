@@ -133,11 +133,14 @@
   <ItemGroup>
     <ClInclude Include="tBarrel.h" />
     <ClInclude Include="tHashMap.h" />
+    <ClInclude Include="tHeap.h" />
     <ClInclude Include="tHelpers.h" />
-    <ClInclude Include="tIncludes.h" />
     <ClInclude Include="tLink.h" />
     <ClInclude Include="tModules.h" />
     <ClInclude Include="tPreent.h" />
+    <ClInclude Include="tQues.h" />
+    <ClInclude Include="tServices.h" />
+    <ClInclude Include="tThreads.h" />
     <ClInclude Include="tVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
