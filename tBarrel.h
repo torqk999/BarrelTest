@@ -162,6 +162,7 @@ bool barrel_ReadSpan(BarrelService* service, void* target, int nodeIndex, unsign
 		currentElement = currentElement >= vectorCount ? 0 : currentElement < 0 ? vectorCount - 1 : currentElement;
 
 		if (currentElement % unitsPerBlock ||
+			vectorCount - currentElement < unitsPerBlock ||
 			count < unitsPerBlock)
 		{
 			transcribeSpanFast(readPtr, writePtr, unitSize);
