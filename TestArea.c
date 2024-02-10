@@ -101,9 +101,9 @@ void threadTest()
 
 	count[1] = 1;
 
-	DWORD result = WaitForSingleObject(myThread, INFINITE);
+	//DWORD result = WaitForSingleObject(myThread, INFINITE);
 
-	PREENT_ARGS("Waited seconds: %", fmt_i(*count));
+	//PREENT_ARGS("Waited seconds: %", fmt_i(*count));
 }
 void heapTest(HeapService* heapService)
 {
@@ -216,7 +216,7 @@ void barrelTest_EDIT()
 	if (newDelta != delta)
 		PREENT_ARGS("Delta Capped: %\n", fmt_i(newDelta));
 
-	if (!barrel_VectorResizeRequest(targetBoop, newDelta))
+	if (!barrel_VectorResizeRequest(targetBoop, newDelta, NULL))
 		goto PREENT;
 
 	while (targetBoop->_requests)
@@ -236,7 +236,7 @@ PREENT:
 			for (int i = oldCount; i < targetBoop->_vector._count; i++)
 			{
 				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - (targetBoop->_vector._count - i)));
-				if (barrelNode_GetElementLocation(&test_barrelService, targetBoop, i, &targetPtr))
+				if (barrel_GetElementLocation(&test_barrelService, targetBoop, i, &targetPtr))
 					*targetPtr = strToInt(Geet());
 			}
 	}

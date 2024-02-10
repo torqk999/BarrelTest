@@ -17,15 +17,16 @@ enum Constants {
 	//Heap_Threshold = 2048
 };
 
-enum testFlags
+enum BarrelFlags
 {
 	DONE = 0,
 	RUN = 1,
-	//DONE = 2,
+	req_INIT = 2,
 	req_ROLL = 4,
 	req_FREE = 8,
-	wait_ROLL = 16,
-	wait_FREE = 32
+	req_RESIZE = 16,
+	wait_ROLL = 32,
+	wait_FREE = 64
 };
 
 enum MyEnum {
@@ -173,12 +174,12 @@ typedef struct {
 
 typedef struct {
 	tService _barrelNodes;
+	BarrelNode Omegus;
 	HeapService* _heap;
 	ThreadHandle* _threadBin;
 	unsigned int _threadCount;
 	int _nextAvailable;
 	int _lastPhysicalNode;
-	BarrelNode Omegus;
 } BarrelService;
 
 typedef struct {
