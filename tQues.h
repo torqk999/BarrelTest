@@ -22,18 +22,22 @@ void RollingQue_ctor(RollingQue* que)
 
 void Advance(int* index)
 {
-	*index = *index++;
-	if (*index >= QUE_SIZE)
-		*index = 0;
+	int working = *index;
+	working++;
+	if (working >= QUE_SIZE)
+		working = 0;
+	*index = working;
 }
 
 bool RollingQue_MakeRequest(RollingQue* que, QueRequest request)
 {
 	int check = que->_end;
 	Advance(&check);
-	if (check == que->_start)
+	if (check == que->_start) {
+		PREENT("End of que! No request space!\n");
 		return false;
-
+	}
+	
 	que->_requests[que->_end] = request;
 	que->_end = check;
 	return true;
@@ -44,6 +48,8 @@ bool RollingQue_PullRequest(RollingQue* que, QueRequest* request)
 	if (que->_start == que->_end)
 		return false;
 	
+	PREENT("Request pulled!\n");
+
 	*request = que->_requests[que->_start];
 	Advance(&que->_start);
 	return true;

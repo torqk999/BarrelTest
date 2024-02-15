@@ -22,36 +22,46 @@ C:\Users\soulb\source\repos\TestArea\tHashMap.h(65,46): warning C4090: 'function
 C:\Users\soulb\source\repos\TestArea\tHashMap.h(69,29): warning C4018: '<=': signed/unsigned mismatch
 C:\Users\soulb\source\repos\TestArea\tHashMap.h(138,29): warning C4018: '<': signed/unsigned mismatch
 C:\Users\soulb\source\repos\TestArea\tHashMap.h(233,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\soulb\source\repos\TestArea\tQues.h(37,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tQues.h(51,2): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\tHeap.h(6,36): warning C4018: '>': signed/unsigned mismatch
 C:\Users\soulb\source\repos\TestArea\tHeap.h(47,10): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
 C:\Users\soulb\source\repos\TestArea\tHeap.h(50,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\tHeap.h(61,10): warning C4133: 'initializing': incompatible types - from 'Page *' to 'Barrel *'
 C:\Users\soulb\source\repos\TestArea\tTypeID.h(24,54): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\tTypeID.h(32,44): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(70,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(81,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(145,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(156,13): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(167,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(177,13): warning C4098: 'barrel_TranscribeSpan': 'void' function returning a value
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(234,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(485,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(557,26): warning C4002: too many arguments for function-like macro invocation 'TYPE_ID'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(564,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(17,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(26,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(28,3): warning C4013: 'barrel_VectorDeltaSizeRequest' undefined; assuming extern returning int
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(31,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(37,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(44,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(55,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(119,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(130,13): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(141,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(151,13): warning C4098: 'barrel_TranscribeSpan': 'void' function returning a value
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(212,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(239,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(459,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(536,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(547,2): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\TestArea.c(50,2): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\TestArea.c(127,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\TestArea.c(133,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\TestArea.c(165,2): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(190,2): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(205,2): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(230,2): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(246,2): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(262,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(267,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(279,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(290,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(311,4): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\TestArea.c(289,2): warning C4102: 'Step_1': unreferenced label
+C:\Users\soulb\source\repos\TestArea\TestArea.c(180,2): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(195,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(197,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(219,2): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(234,2): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(266,2): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(282,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(287,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(252,1): warning C4102: 'PREENT': unreferenced label
+C:\Users\soulb\source\repos\TestArea\TestArea.c(324,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\TestArea.c(342,4): warning C4090: 'initializing': different 'const' qualifiers
+C:\Users\soulb\source\repos\TestArea\TestArea.c(339,2): warning C4102: 'Step_1': unreferenced label
+C:\Users\soulb\source\repos\TestArea\TestArea.c(374,1): warning C4102: 'TestBreak': unreferenced label
 C:\Users\soulb\source\repos\TestArea\tHelpers.h(25): warning C4716: 'ClampInt': must return a value
 C:\Users\soulb\source\repos\TestArea\tHelpers.h(20): warning C4716: 'Clamp': must return a value
 C:\Users\soulb\source\repos\TestArea\tVector.h(229): warning C4716: 'Vector_Remove': must return a value

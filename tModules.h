@@ -4,6 +4,9 @@
 #include <Windows.h>
 
 enum Constants {
+	NONE = -2,
+	OMEGA = -1,
+
 	Vector_Default_Capacity = 16,
 	Barrel_Max_Capacity = 1024,
 	Hash_Min_Threshold = 30,
@@ -29,10 +32,8 @@ enum ThreadType
 #define TARG_LINK "targLink"
 #define QUE_SIZE 16
 
-#define BarrelsPerNode 2
 #define MaxThreadCount 8
 #define MaxPageCount 64
-#define BarrelSize 32
 #define PageSize 4096
 #define PageThreshold 2048
 
@@ -41,8 +42,7 @@ const char* Reserved_Types[] = {
 	TARG_LINK
 };
 
-enum BarrelFlags
-{
+typedef enum {
 	DONE = 0,
 	RUN = 1,
 	req_INIT = 2,
@@ -51,9 +51,9 @@ enum BarrelFlags
 	//req_RESIZE = 16,
 	wait_ROLL = 32,
 	wait_FREE = 64
-};
+} BarrelFlags;
 
-enum VectorType {
+typedef enum {
 	NULL_VEC = 0,
 	STACK_VEC = 1,
 	CONST_VEC = 2,
@@ -62,7 +62,7 @@ enum VectorType {
 	LINKED = 16,
 	REFERENCE = 32,
 	ROOT = 64
-};
+} VectorType;
 
 typedef struct {
 	const size_t _size;
@@ -124,7 +124,7 @@ typedef struct {
 	unsigned int _end;
 } RollingQue;
 
-typedef struct barrelNode {
+typedef struct {
 	BarrelVector _vector;
 
 	int _nextNode;

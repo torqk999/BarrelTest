@@ -151,12 +151,24 @@ static ThreadHandle test_threadHandles[MaxThreadCount];
 static HeapService test_heapService;
 static BarrelService test_barrelService;
 static TypeID* test_intTypeID;
+static TypeID* test_nodeTypeID;
 
-void barrelTest_REMOVE()
-{
-	int* targetPtr = NULL;
-	const char* input = NULL;
-}
+typedef enum {
+	QUIT,
+	NEW,
+	REMOVE,
+	RESIZE,
+	WRITE,
+	READ,
+	VIEW_HEAP
+} KeyAction;
+
+
+
+
+bool ESCAPE = false;
+
+void barrelTest_ESCAPE() { ESCAPE = true; }
 
 void barrelTest_NEW()
 {
@@ -177,15 +189,27 @@ void barrelTest_NEW()
 	}
 
 	BarrelNode* newNode;
-	barrel_RequestNode(&test_barrelService, &newNode, (Vector) { test_intTypeID, capacity, ALLOCED });
-
-	PREENT("Node created!\n");
+	if (barrel_RequestNode(&test_barrelService, &newNode, (Vector) { test_intTypeID, capacity, ALLOCED }))
+		PREENT("Node created!\n");
+	else
+		PREENT("Node failed to create!\n");
 	//test_heapService._heapEnd;
 
 End: {}
 }
 
-void barrelTest_EDIT()
+void barrelTest_REMOVE()
+{
+	int* targetPtr = NULL;
+	const char* input = NULL;
+}
+
+void barrelTest_RESIZE()
+{
+
+}
+
+void barrelTest_WRITE()
 {
 	int* targetPtr = NULL;
 	const char* input = NULL;
@@ -198,8 +222,8 @@ void barrelTest_EDIT()
 
 	int index = strToInt(input);
 
-	if (index < 1 || index >= test_barrelService.Omegus._vector._count) {
-		PREENT_ARGS("Bad index! Between 1 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
+	if (index < 0 || index >= test_barrelService.Omegus._vector._count) {
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
 		goto End;
 	}
 
@@ -221,16 +245,7 @@ void barrelTest_EDIT()
 	if (newDelta != delta)
 		PREENT_ARGS("Delta Capped: %\n", fmt_i(newDelta));
 
-	if (!barrel_VectorResizeRequest(&test_barrelService, targetBoop, newDelta, NULL))
-		goto PREENT;
-
-	while (targetBoop->_requests)
-	{
-		PREENT_ARGS("waiting on requests: %\n", fmt_I(targetBoop->_requests));
-		Sleep(250);
-	}
-
-	PREENT("requests complete!\n");
+	barrel_VectorResizeRequest(&test_barrelService, targetBoop, newDelta, NULL);
 
 PREENT:
 	{
@@ -273,6 +288,34 @@ PREENT:
 End: {}
 }
 
+void barrelTest_READ()
+{
+
+}
+
+void barrelTest_VIEW_HEAP()
+{
+
+}
+
+typedef struct {
+	const char _keyPress;
+	const char* _description;
+	const void(*_action)();
+} ButtonAction;
+
+ButtonAction escapeAction = { 'q', "Escape", &barrelTest_ESCAPE };
+
+ButtonAction mainMenuActions[] = {
+	{ 'q', "Quit Program", &barrelTest_ESCAPE },
+	{ 'n', "New Collection", &barrelTest_NEW },
+	{ 'm', "Remove Collection", &barrelTest_REMOVE },
+	{ 's', "Re-size Collection", &barrelTest_RESIZE },
+	{ 'r', "Read from Collection span", &barrelTest_READ },
+	{ 'w', "Write to Collection span", &barrelTest_WRITE },
+	{ 'v', "View entire heap", &barrelTest_VIEW_HEAP }
+};
+
 bool barrelTest_INIT()
 {
 	if (!HeapServiceInit(&test_heapService, true))
@@ -281,49 +324,50 @@ bool barrelTest_INIT()
 		return false;
 	}
 
-	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles);
-
-	TypeID intTypeID = TYPE_ID(int);
-	test_intTypeID = &intTypeID;
+	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles, test_nodeTypeID);
 
 	return true;
 }
 
-void barrelTest() {
-
-	// Thread and service initializers
-	if (!barrelTest_INIT())
-		return false;
+void barrelTest_MAIN() {
 
 	const char* input = NULL;
 
-	while (true) {
+	while (!ESCAPE) {
 
 	Step_1:
-		PREENT("Choose Option (q == quit, w == new, e == edit, r == remove): ");
+		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(test_barrelService.Omegus._vector._count));
+		for (int i = 0; i < 7; i++)
+			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
+		
 
 		input = Geet();
-		switch (input[0])
-		{
-		case 'q':
-			goto TestBreak;
 
-		case 'w':
-			barrelTest_NEW();
-			break;
+		for (int i = 0; i < 7; i++)
+			if (mainMenuActions[i]._keyPress == input[0])
+				mainMenuActions[i]._action();
 
-		case 'e':
-			barrelTest_EDIT();
-			break;
-
-		case 'r':
-			barrelTest_REMOVE();
-			break;
-
-		default:
-			PREENT("Unknown command!\n");
-			break;
-		}
+		//switch (input[0])
+		//{
+		//case 'q':
+		//	goto TestBreak;
+		//
+		//case 'w':
+		//	barrelTest_NEW();
+		//	break;
+		//
+		//case 'e':
+		//	barrelTest_WRITE();
+		//	break;
+		//
+		//case 'r':
+		//	barrelTest_REMOVE();
+		//	break;
+		//
+		//default:
+		//	PREENT("Unknown command!\n");
+		//	break;
+		//}
 	}
 
 TestBreak:
@@ -334,6 +378,18 @@ TestBreak:
 		closingNode->_flags &= ~RUN;
 	}
 
+}
+
+void barrelTest()
+{
+	TypeID intTypeID = TYPE_ID(int);
+	TypeID barrelNodeType = TYPE_ID(BarrelNode);
+
+	test_intTypeID = &intTypeID;
+	test_nodeTypeID = &barrelNodeType;
+
+	barrelTest_INIT();
+	barrelTest_MAIN();
 }
 
 int main() {
