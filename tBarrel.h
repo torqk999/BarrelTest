@@ -34,37 +34,6 @@ int barrel_NextAvailableNode(BarrelService* service)
 
 	return next;
 }
-int barrel_NextAvailableBarrel(BarrelService* service)
-{
-	if (service->_lastPhysicalNode < 0)
-		return 0;
-	BarrelNode* lastNode = barrel_NodeLocation(service, service->_lastPhysicalNode);
-	return lastNode->_barrelStart + lastNode->_barrelCount;
-}
-int barrel_NextAdjacentIndex(BarrelService* service, int targetStartBarrel)
-{
-	int nextIndex = -1;
-
-	if (targetStartBarrel < 0)
-		return nextIndex;
-
-	int nextStartBarrel = targetStartBarrel * 2;
-
-	for (int i = 0; i < service->Omegus._vector._count; i++)
-	{
-		BarrelNode* nextNode = barrel_NodeLocation(service, i);
-		if (nextNode->_barrelStart == targetStartBarrel)
-			continue;
-
-		int nextPossible = nextNode->_barrelStart;
-		if (nextPossible > targetStartBarrel && nextPossible < nextStartBarrel)
-		{
-			nextStartBarrel = nextPossible;
-			nextIndex = i;
-		}
-	}
-	return nextIndex;
-}
 int barrel_maximumAvailableBarrels(BarrelService* barrelService, int requested)
 {
 	int availableBarrels = heap_Remaining(barrelService->_heap) / sizeof(Barrel);

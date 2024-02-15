@@ -30,13 +30,14 @@ C:\Users\soulb\source\repos\TestArea\tTypeID.h(24,54): warning C4267: '=': conve
 C:\Users\soulb\source\repos\TestArea\tTypeID.h(32,44): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\tBarrel.h(70,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\tBarrel.h(81,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(165,11): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(176,13): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(187,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(219,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(470,3): warning C4020: 'Preent': too many actual parameters
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(542,26): warning C4002: too many arguments for function-like macro invocation 'TYPE_ID'
-C:\Users\soulb\source\repos\TestArea\tBarrel.h(549,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(145,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(156,13): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(167,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(177,13): warning C4098: 'barrel_TranscribeSpan': 'void' function returning a value
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(234,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(485,3): warning C4020: 'Preent': too many actual parameters
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(557,26): warning C4002: too many arguments for function-like macro invocation 'TYPE_ID'
+C:\Users\soulb\source\repos\TestArea\tBarrel.h(564,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
 C:\Users\soulb\source\repos\TestArea\TestArea.c(50,2): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\TestArea.c(127,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\soulb\source\repos\TestArea\TestArea.c(133,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
@@ -51,8 +52,8 @@ C:\Users\soulb\source\repos\TestArea\TestArea.c(279,3): warning C4020: 'Preent':
 C:\Users\soulb\source\repos\TestArea\TestArea.c(290,3): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\TestArea.c(311,4): warning C4020: 'Preent': too many actual parameters
 C:\Users\soulb\source\repos\TestArea\TestArea.c(289,2): warning C4102: 'Step_1': unreferenced label
-C:\Users\soulb\source\repos\TestArea\tHelpers.h(20): warning C4716: 'Clamp': must return a value
 C:\Users\soulb\source\repos\TestArea\tHelpers.h(25): warning C4716: 'ClampInt': must return a value
+C:\Users\soulb\source\repos\TestArea\tHelpers.h(20): warning C4716: 'Clamp': must return a value
 C:\Users\soulb\source\repos\TestArea\tVector.h(229): warning C4716: 'Vector_Remove': must return a value
 C:\Users\soulb\source\repos\TestArea\tVector.h(237): warning C4716: 'Vector_RemoveAt': must return a value
 C:\Users\soulb\source\repos\TestArea\tHeap.h(22): warning C4715: 'heapDeltaPages': not all control paths return a value

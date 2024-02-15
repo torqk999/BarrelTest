@@ -150,6 +150,7 @@ static int TaskFlags = 1;
 static ThreadHandle test_threadHandles[MaxThreadCount];
 static HeapService test_heapService;
 static BarrelService test_barrelService;
+static TypeID* test_intTypeID;
 
 void barrelTest_REMOVE()
 {
@@ -175,8 +176,10 @@ void barrelTest_NEW()
 		goto End;
 	}
 
+	BarrelNode* newNode;
+	barrel_RequestNode(&test_barrelService, &newNode, (Vector) { test_intTypeID, capacity, ALLOCED });
 
-
+	PREENT("Node created!\n");
 	//test_heapService._heapEnd;
 
 End: {}
@@ -270,17 +273,27 @@ PREENT:
 End: {}
 }
 
-void barrelTest() {
-
-	// Thread and service initializers
-
+bool barrelTest_INIT()
+{
 	if (!HeapServiceInit(&test_heapService, true))
 	{
 		PREENT("Init failure!\n");
-		return;
+		return false;
 	}
 
 	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles);
+
+	TypeID intTypeID = TYPE_ID(int);
+	test_intTypeID = &intTypeID;
+
+	return true;
+}
+
+void barrelTest() {
+
+	// Thread and service initializers
+	if (!barrelTest_INIT())
+		return false;
 
 	const char* input = NULL;
 
@@ -325,6 +338,8 @@ TestBreak:
 
 int main() {
 
-	PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
-	//barrelTest();
+
+
+	//PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
+	barrelTest();
 }

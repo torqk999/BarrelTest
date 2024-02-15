@@ -53,7 +53,7 @@ enum BarrelFlags
 	wait_FREE = 64
 };
 
-enum VectoraType {
+enum VectorType {
 	NULL_VEC = 0,
 	STACK_VEC = 1,
 	CONST_VEC = 2,
