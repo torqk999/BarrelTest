@@ -163,9 +163,6 @@ typedef enum {
 	VIEW_HEAP
 } KeyAction;
 
-
-
-
 bool ESCAPE = false;
 
 void barrelTest_ESCAPE() { ESCAPE = true; }
@@ -339,35 +336,12 @@ void barrelTest_MAIN() {
 		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(test_barrelService.Omegus._vector._count));
 		for (int i = 0; i < 7; i++)
 			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
-		
 
 		input = Geet();
 
 		for (int i = 0; i < 7; i++)
 			if (mainMenuActions[i]._keyPress == input[0])
 				mainMenuActions[i]._action();
-
-		//switch (input[0])
-		//{
-		//case 'q':
-		//	goto TestBreak;
-		//
-		//case 'w':
-		//	barrelTest_NEW();
-		//	break;
-		//
-		//case 'e':
-		//	barrelTest_WRITE();
-		//	break;
-		//
-		//case 'r':
-		//	barrelTest_REMOVE();
-		//	break;
-		//
-		//default:
-		//	PREENT("Unknown command!\n");
-		//	break;
-		//}
 	}
 
 TestBreak:
@@ -393,8 +367,6 @@ void barrelTest()
 }
 
 int main() {
-
-
 
 	//PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
 	barrelTest();
