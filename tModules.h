@@ -17,25 +17,6 @@ enum Constants {
 	//Heap_Threshold = 2048
 };
 
-enum BarrelFlags
-{
-	DONE = 0,
-	RUN = 1,
-	req_INIT = 2,
-	req_ROLL = 4,
-	req_FREE = 8,
-	req_RESIZE = 16,
-	wait_ROLL = 32,
-	wait_FREE = 64
-};
-
-enum MyEnum {
-	A,
-	B,
-	C,
-	D
-};
-
 enum ThreadType
 {
 	THREAD,
@@ -46,8 +27,9 @@ enum ThreadType
 //type and prop names
 #define TERMINATE "nullTerm"
 #define TARG_LINK "targLink"
+#define QUE_SIZE 16
 
-#define BarrelsPerNode 3
+#define BarrelsPerNode 2
 #define MaxThreadCount 8
 #define MaxPageCount 64
 #define BarrelSize 32
@@ -57,6 +39,18 @@ enum ThreadType
 const char* Reserved_Types[] = {
 	TERMINATE,
 	TARG_LINK
+};
+
+enum BarrelFlags
+{
+	DONE = 0,
+	RUN = 1,
+	req_INIT = 2,
+	req_ROLL = 4,
+	req_FREE = 8,
+	//req_RESIZE = 16,
+	wait_ROLL = 32,
+	wait_FREE = 64
 };
 
 enum VectoraType {
@@ -71,15 +65,18 @@ enum VectoraType {
 };
 
 typedef struct {
-	size_t _size;
+	const size_t _size;
 	const char* _name;
-	unsigned int _flags;
+	const unsigned int _flags;
+
+	// Barrel Section
+	const unsigned int _unitsPerBlock;
+	const unsigned int _barrelsPerBlock;
 } TypeID;
 
 typedef struct _Link {
 	struct _Link* _next;
 	struct _Link* _prev;
-	//void* _self;
 } Link;
 
 typedef struct {
@@ -89,10 +86,17 @@ typedef struct {
 } hash_node;
 
 typedef struct {
-	TypeID _type;
-	void* _bucket;
+	const TypeID* _type;
 	int _count;
+	const unsigned int _locality;
+	void* _bucket;
 } Vector;
+
+typedef struct {
+	const TypeID* _type;
+	int _count;
+	int UNUSED; // Padding for _locality
+} BarrelVector;
 
 typedef struct {
 	Link _link;
@@ -107,32 +111,30 @@ typedef struct{
 	ullong _mem[4];
 } Barrel;
 
-#define QUE_SIZE 16
-
 typedef struct {
 	//unsigned int _flags;
 	//void* _target;
 	int _delta;
 	void* _target;
-}QueRequest;
+} QueRequest;
 
 typedef struct {
 	QueRequest _requests[QUE_SIZE];
 	unsigned int _start;
 	unsigned int _end;
-}RollingQue;
+} RollingQue;
 
 typedef struct barrelNode {
-	Vector _vector;
+	BarrelVector _vector;
+
 	int _nextNode;
-	int _locked;
 	int _flags;
 	int _barrelStart;
 	int _barrelCount;
 	int _barrelOffset;
 	int _requests;
-	int _unitsPerBlock;
-	int _barrelsPerBlock;
+
+	volatile LONG _userCount;
 } BarrelNode;
 
 typedef struct {
@@ -223,4 +225,3 @@ typedef struct {
 	HashTable _propAllocations;
 } DataBase;
 
-#define TYPE_ID(typeName) (TypeID) { sizeof(typeName) , #typeName }

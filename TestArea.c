@@ -2,6 +2,7 @@
 #include <tHashMap.h>
 #include <tBarrel.h>
 
+
 #pragma region testRegion
 #define BarrelTestCount 10
 void vectorTest()
@@ -65,7 +66,6 @@ DWORD WINAPI MyThreadJob(void* dataHead)
 	int* target = dataHead;
 	int* flags = &(target[1]);
 
-
 	while (!(*flags))
 	{
 		(*target)++;
@@ -82,6 +82,8 @@ void threadTest()
 
 	count[0] = 0;
 	count[1] = 0;
+
+
 
 	HANDLE myThread = CreateThread(
 		NULL,
@@ -137,10 +139,10 @@ void heapTest(HeapService* heapService)
 
 	}
 
-	BarrelNode myIntNode = {
-
-			(Vector) {intType,heapEnd, 0}
-	};
+	//BarrelNode myIntNode = {
+	//
+	//		(Vector) {intType,heapEnd, 0}
+	//};
 }
 #pragma endregion
 
@@ -216,7 +218,7 @@ void barrelTest_EDIT()
 	if (newDelta != delta)
 		PREENT_ARGS("Delta Capped: %\n", fmt_i(newDelta));
 
-	if (!barrel_VectorResizeRequest(targetBoop, newDelta, NULL))
+	if (!barrel_VectorResizeRequest(&test_barrelService, targetBoop, newDelta, NULL))
 		goto PREENT;
 
 	while (targetBoop->_requests)
@@ -236,8 +238,8 @@ PREENT:
 			for (int i = oldCount; i < targetBoop->_vector._count; i++)
 			{
 				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - (targetBoop->_vector._count - i)));
-				if (barrel_GetElementLocation(&test_barrelService, targetBoop, i, &targetPtr))
-					*targetPtr = strToInt(Geet());
+				targetPtr = barrel_GetElementLocation(&test_barrelService, targetBoop, i);
+				*targetPtr = strToInt(Geet());
 			}
 	}
 
@@ -323,6 +325,6 @@ TestBreak:
 
 int main() {
 
-	//PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
-	barrelTest();
+	PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
+	//barrelTest();
 }

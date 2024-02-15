@@ -53,5 +53,8 @@
     <ClInclude Include="tQues.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tTypeID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

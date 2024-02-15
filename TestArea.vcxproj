@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +141,7 @@
     <ClInclude Include="tQues.h" />
     <ClInclude Include="tServices.h" />
     <ClInclude Include="tThreads.h" />
+    <ClInclude Include="tTypeID.h" />
     <ClInclude Include="tVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

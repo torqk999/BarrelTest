@@ -13,7 +13,7 @@ LinkedVector* LinkedVector_GetTermNode(LinkedVector* vector)
 
 long long Vector_GetIndex(Vector* vector, void* trg)
 {
-	return ((long long)trg - (long long)(vector->_bucket)) / vector->_type._size;
+	return ((long long)trg - (long long)(vector->_bucket)) / vector->_type->_size;
 }
 
 void* Vector_GetPtr(Vector* vector, unsigned int index)
@@ -21,7 +21,7 @@ void* Vector_GetPtr(Vector* vector, unsigned int index)
 	if (index < 0 || index > vector->_count)
 		return NULL;
 
-	return &(((char*)(vector->_bucket))[vector->_type._size * index]);
+	return &(((char*)(vector->_bucket))[vector->_type->_size * index]);
 }
 
 unsigned int LinkedVector_GetCount(LinkedVector* vector)
@@ -38,10 +38,10 @@ unsigned int LinkedVector_GetCount(LinkedVector* vector)
 
 void* Vector_Iterate(Vector* vector, void* current, int delta)
 {
-	size_t trg = (size_t)current + (delta * vector->_type._size);
+	size_t trg = (size_t)current + (delta * vector->_type->_size);
 	size_t start = (size_t)(vector->_bucket);
 
-	if (trg < start || trg >= start + ((vector->_count - 1) * vector->_type._size))
+	if (trg < start || trg >= start + ((vector->_count - 1) * vector->_type->_size))
 		return NULL;
 	
 	return (void*)trg;
@@ -49,7 +49,7 @@ void* Vector_Iterate(Vector* vector, void* current, int delta)
 
 void* LinkedVector_Iterate(LinkedVector** vector, void* current, int delta)
 {
-	size_t trg = (size_t)current + (delta * (*vector)->_vector._type._size);
+	size_t trg = (size_t)current + (delta * (*vector)->_vector._type->_size);
 	size_t start = (size_t)((*vector)->_vector._bucket);
 	long long index = Vector_GetIndex(&((*vector)->_vector), (void*)trg);
 
@@ -60,17 +60,17 @@ void* LinkedVector_Iterate(LinkedVector** vector, void* current, int delta)
 			return NULL;
 		*vector = (LinkedVector*)((*vector)->_link._prev);
 		index += (*vector)->_vector._count;
-		trg = (size_t)((*vector)->_vector._bucket) + (index * (*vector)->_vector._type._size);
+		trg = (size_t)((*vector)->_vector._bucket) + (index * (*vector)->_vector._type->_size);
 		return LinkedVector_Iterate(vector, (void*)trg, 0);
 	}
 
-	if (trg >= start + (((*vector)->_vector._count) * (*vector)->_vector._type._size))
+	if (trg >= start + (((*vector)->_vector._count) * (*vector)->_vector._type->_size))
 	{
 		if (!(*vector)->_link._next)
 			return NULL;
 		*vector = (LinkedVector*)((*vector)->_link._next);
 		index -= (*vector)->_vector._count;
-		trg = (size_t)((*vector)->_vector._bucket) + (index * (*vector)->_vector._type._size);
+		trg = (size_t)((*vector)->_vector._bucket) + (index * (*vector)->_vector._type->_size);
 		return LinkedVector_Iterate(vector, (void*)trg, 0);
 	}
 
@@ -98,7 +98,7 @@ bool Vector_Write1(Vector* vector, void* src, unsigned int start, unsigned int c
 	unsigned int newCount = start + count;
 
 	for (int i = 0; i < count; i++)
-		Vector_MoveIndex(src, vector->_bucket, i, i + start, vector->_type._size);
+		Vector_MoveIndex(src, vector->_bucket, i, i + start, vector->_type->_size);
 
 	vector->_count = newCount;
 
@@ -114,7 +114,7 @@ bool Vector_Read(Vector* vector, void* trg, unsigned int start, unsigned int cou
 		return false;
 
 	for (int i = 0; i < count; i++)
-		Vector_MoveIndex(vector->_bucket, trg, i + start, i, vector->_type._size);
+		Vector_MoveIndex(vector->_bucket, trg, i + start, i, vector->_type->_size);
 	return true;
 }
 
@@ -123,7 +123,7 @@ bool Vector_WriteIndex(Vector* vector, void* src, unsigned int vecIndex)
 	if (vecIndex < 0 || vecIndex >= vector->_count)
 		return false;
 
-	Vector_MoveIndex(src, vector->_bucket, 0, vecIndex, vector->_type._size);
+	Vector_MoveIndex(src, vector->_bucket, 0, vecIndex, vector->_type->_size);
 	return true;
 }
 
@@ -132,20 +132,20 @@ bool Vector_ReadIndex(Vector* vector, void* trg, unsigned int vecIndex)
 	if (vecIndex < 0 || vecIndex >= vector->_count)
 		return false;
 
-	Vector_MoveIndex(vector->_bucket, trg, vecIndex, 0, vector->_type._size);
+	Vector_MoveIndex(vector->_bucket, trg, vecIndex, 0, vector->_type->_size);
 	return true;
 }
 
 bool Vector_Transcribe1(Vector* trg, Vector* src, unsigned int trgIndex, unsigned int srcIndex)
 {
-	if (src->_type._size != trg->_type._size)
+	if (src->_type->_size != trg->_type->_size)
 		return false;
 
 	if (srcIndex < 0 || srcIndex >= src->_count ||
 		trgIndex < 0 || trgIndex >= trg->_count)
 		return false;
 
-	Vector_MoveIndex(src->_bucket, trg->_bucket, srcIndex, trgIndex, src->_type._size);
+	Vector_MoveIndex(src->_bucket, trg->_bucket, srcIndex, trgIndex, src->_type->_size);
 	return true;
 }
 
@@ -154,11 +154,14 @@ bool Vector_Transcribe0(Vector* trg, Vector* src, unsigned int index)
 	return Vector_Transcribe1(trg, src, index, index);
 }
 
+const TypeID null = { 0, "NULL" };
+
 void Vector_nullTerm(
 	Vector* null,
 	size_t unitSize)
 {
-	null->_type = (TypeID){unitSize, "NULL"};
+	
+	null->_type = &null;
 	null->_count = 0;
 	null->_bucket = NULL;
 }
@@ -170,7 +173,7 @@ void Vector_ctor(
 	void* existingBucket
 	)
 {
-	vector->_type = type;
+	vector->_type = &type;
 	vector->_count = existingCount;
 	vector->_bucket = existingBucket;
 }
@@ -202,10 +205,10 @@ LinkedVector Vector_Vectorize(TypeID type, unsigned int existingCount, void* exi
 void Vector_Link(LinkedVector* trg, LinkedVector* link)
 {
 	if (trg)
-		trg->_link._next = link ? trg->_vector._type._size == link->_vector._type._size ? &(link->_link) : NULL : NULL;
+		trg->_link._next = link ? trg->_vector._type->_size == link->_vector._type->_size ? &(link->_link) : NULL : NULL;
 
 	if (link)
-		link->_link._prev = trg ? trg->_vector._type._size == link->_vector._type._size ? &(trg->_link) : NULL : NULL;
+		link->_link._prev = trg ? trg->_vector._type->_size == link->_vector._type->_size ? &(trg->_link) : NULL : NULL;
 }
 
 bool Vector_Insert(Vector* trg, unsigned int index, void* src)
@@ -220,7 +223,7 @@ bool Vector_Insert(Vector* trg, unsigned int index, void* src)
 
 bool Vector_Remove(Vector* vec, void* trg)
 {
-	unsigned long long index = ((unsigned long long)trg - (unsigned long long)(vec->_bucket)) / (unsigned long long)(vec->_type._size);
+	unsigned long long index = ((unsigned long long)trg - (unsigned long long)(vec->_bucket)) / (unsigned long long)(vec->_type->_size);
 	//printf("target removal index: %u\n", index);
 	Vector_RemoveAt(vec, index);
 }
