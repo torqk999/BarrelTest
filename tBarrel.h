@@ -172,6 +172,7 @@ bool barrel_ReadSpan(BarrelService* service, BarrelNode* targetNode, void* targe
 
 	return true;
 }
+bool barrel_ReadVector(BarrelService* service, BarrelNode* targetNode, Vector vector) { return barrel_ReadSpan(service, targetNode, vector._bucket, 0, vector._count); }
 bool barrel_WriteElement(BarrelService* service, BarrelNode* targetNode, void* source, unsigned int index)
 {
 	if (!service || !targetNode)
@@ -193,6 +194,7 @@ bool barrel_WriteSpan(BarrelService* service, BarrelNode* targetNode, void* sour
 
 	return true;
 }
+bool barrel_WriteVector(BarrelService* service, BarrelNode* targetNode, Vector vector) { return barrel_WriteSpan(service, targetNode, vector._bucket, 0, vector._count); }
 bool barrel_VectorResizeRequest(BarrelService* service, BarrelNode* node, int delta, void* source)
 {
 	return barrel_VectorDeltaSizeRequest(service, node, delta - node->_vector._count, source);
