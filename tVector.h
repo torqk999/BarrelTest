@@ -83,14 +83,11 @@
 //		link->_link._prev = trg ? trg->_vector._type->_size == link->_vector._type->_size ? &(trg->_link) : NULL : NULL;
 //}
 
-
-
 bool Vector_Iterate(CollectionRequest* request)
 {
 	Vector* vector = (Vector*)request->_trg;
 	return vector->_type->_extensions.Iterate(request);
 }
-
 bool Vector_Transcribe(CollectionRequest request) {
 
 	Vector* src = request._src;
@@ -121,60 +118,59 @@ bool Vector_Transcribe(CollectionRequest request) {
 
 	return true;
 }
-
-bool Vector_Read(Vector* src, void* trg, unsigned int index)
+bool Vector_Resize(Vector* trg, unsigned int count)
 {
-	return src->_type->_extensions.Transcribe((CollectionRequest) { trg, src, index, 0, 1, TRANSCRIBE_COLLECTION_TO_RAW});
+	return trg->_type->_extensions.Modify((CollectionRequest) { trg, NULL, 0, 0, count, MODIFY_RESIZE });
 }
+
 bool Vector_ReadSpan(Vector* src, void* trg, unsigned int start, unsigned int count)
 {
 	return src->_type->_extensions.Transcribe((CollectionRequest) { trg, src, start, 0, count, TRANSCRIBE_COLLECTION_TO_RAW});
 }
-
-bool Vector_Write(Vector* trg, void* src, unsigned int index)
+bool Vector_Read(Vector* src, void* trg, unsigned int index)
 {
-	return trg->_type->_extensions.Transcribe((CollectionRequest) { trg, src, index, 0, 1, TRANSCRIBE_RAW_TO_COLLECTION});
+	return Vector_ReadSpan(trg, src, index, 1);
 }
+
 bool Vector_WriteSpan(Vector* trg, void* src, unsigned int start, int count) {
 
 	return trg->_type->_extensions.Transcribe((CollectionRequest) {trg, src, start, 0, count, TRANSCRIBE_RAW_TO_COLLECTION});
 }
-
-bool Vector_Insert(Vector* trg, void* src, unsigned int index)
+bool Vector_Write(Vector* trg, void* src, unsigned int index)
 {
-	return trg->_type->_extensions.Modify((CollectionRequest) { trg, src, index, 0, 1, MODIFY_INSERT });
+	return Vector_WriteSpan(trg, src, index, 1);
 }
 
 bool Vector_InsertSpan(Vector* trg, void* src, unsigned int index, unsigned int count)
 {
 	return trg->_type->_extensions.Modify((CollectionRequest) { trg, src, index, 0, count, MODIFY_INSERT });
 }
-
-bool Vector_Resize(Vector* trg, unsigned int count)
+bool Vector_Insert(Vector* trg, void* src, unsigned int index)
 {
-	return trg->_type->_extensions.Modify((CollectionRequest) { trg, NULL, 0, 0, count, MODIFY_RESIZE });
+	return Vector_InsertSpan(trg, src, index, 1);
 }
 
-bool Vector_Remove(Vector* vec, void* trg)
+bool Vector_RemoveSpan(Vector* trg, void* search, unsigned int count)
 {
-	//unsigned long long index = ((unsigned long long)trg - (unsigned long long)(vec->_bucket)) / (unsigned long long)(vec->_type->_size);
-	////printf("target removal index: %u\n", index);
-	//Vector_RemoveAt(vec, index);
+	return trg->_type->_extensions.Modify((CollectionRequest) { trg, search, 0, 0, count, MODIFY_REMOVE_FIRST_FOUND });
+}
+bool Vector_Remove(Vector* trg, void* search)
+{
+	return Vector_RemoveSpan(trg, search, 1);
 }
 
+bool Vector_RemoveSpanAt(Vector* trg, unsigned int index, unsigned int count)
+{
+	return trg->_type->_extensions.Modify((CollectionRequest) { trg, 0, index, 0, count, MODIFY_REMOVE_AT });
+}
 bool Vector_RemoveAt(Vector* trg, unsigned int index)
 {
-	//for (int i = index; i < trg->_count; i++)
-	//	Vector_Transcribe1(trg, trg, i, i + 1);
-	//
-	//trg->_count--;
+	return Vector_RemoveSpanAt(trg, index, 1);
 }
 
 const TypeID NULL_TYPE = { 0, "NULL" };
 
-void Vector_nullTerm(
-	Vector* null,
-	size_t unitSize)
+void Vector_nullTerm(Vector* null, size_t unitSize)
 {
 	
 	null->_type = &NULL_TYPE;
@@ -184,18 +180,17 @@ void Vector_nullTerm(
 
 void Vector_ctor(
 	Vector* vector,
-	TypeID type,
+	TypeID* type,
 	unsigned int existingCount,
+	unsigned int existingCapacity,
 	void* existingBucket
 	)
 {
-	vector->_type = &type;
+	vector->_type = type;
 	vector->_count = existingCount;
+	vector->_capacity = existingCapacity;
 	vector->_bucket = existingBucket;
 }
-
-
-
 
 
 void Vector_BuildTemp(char** tmp, void* head, size_t unitSize, size_t unitDelta, unsigned int count)

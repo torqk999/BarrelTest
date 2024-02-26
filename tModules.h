@@ -4,6 +4,22 @@
 #include <Windows.h>
 
 typedef struct {
+	const char* name;
+	int age;
+	float height;
+	unsigned long long _SIN;
+} CharacterSheet;
+
+typedef struct node{
+	CharacterSheet* _sheet;
+	struct node* _parent;
+	struct node* _children;
+	struct node* _sibling;
+	int _childCount;
+
+} Node;
+
+typedef struct {
 	void* _trg;
 	void* _src;
 	uint _trgIx;
@@ -81,15 +97,18 @@ typedef struct {
 } RollingQue;
 
 typedef struct {
+
 	Collection _vector;
+
 	BarrelFlags _flags;
+	volatile LONG _userCount;
+	volatile LONG _pointerCount;
 
 	uint _barrelOffset;
 	int _barrelStart;
 	int _nextNode;
 	int _requests;
 
-	volatile LONG _userCount;
 } BarrelNode;
 
 typedef struct {
@@ -97,7 +116,6 @@ typedef struct {
 	float _threshold;
 	unsigned int _first;
 	unsigned int _last;
-	unsigned int _capacity;
 	int _lastLookupPerformance;
 	unsigned int (*_hashFunc)(void *, unsigned int);
 } hash_map;
@@ -179,4 +197,3 @@ typedef struct {
 	HashTable _types;
 	HashTable _propAllocations;
 } DataBase;
-

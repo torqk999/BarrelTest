@@ -69,6 +69,8 @@ bool HeapServiceInit(HeapService* heapService, bool clear)
 {
 	heapService->_heapStart = HeapCreate(0, 0, 0);
 	
+	int myStackVar;
+
 	if (!heapService->_heapStart)
 		return false;
 

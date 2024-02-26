@@ -1,7 +1,5 @@
 #include <tVector.h>
 #include <tHashMap.h>
-#include <tBarrel.h>
-
 
 #pragma region testRegion
 #define BarrelTestCount 10
@@ -149,11 +147,11 @@ void heapTest(HeapService* heapService)
 #pragma endregion
 
 static int TaskFlags = 1;
+
 static ThreadHandle test_threadHandles[MaxThreadCount];
 static HeapService test_heapService;
 static BarrelService test_barrelService;
 static TypeID* test_intTypeID;
-static TypeID* test_nodeTypeID;
 
 typedef enum {
 	QUIT,
@@ -172,7 +170,6 @@ typedef struct {
 	const char* _description;
 	const void(*_action)();
 } ButtonAction;
-
 
 void barrelTest_ESCAPE() { ESCAPE = true; }
 
@@ -383,7 +380,7 @@ bool barrelTest_INIT()
 		return false;
 	}
 
-	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles, test_nodeTypeID);
+	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles, GlobalBarrelNodeType);
 
 	return true;
 }
@@ -422,7 +419,7 @@ void barrelTest()
 	TypeID barrelNodeType = BUCKET_ID(BarrelNode, 0);
 
 	test_intTypeID = &intTypeID;
-	test_nodeTypeID = &barrelNodeType;
+	GlobalBarrelNodeType = &barrelNodeType;
 
 	barrelTest_INIT();
 	barrelTest_MAIN();
@@ -430,6 +427,31 @@ void barrelTest()
 
 int main() {
 
-	//PREENT_ARGS("sizeof Node: %", fmt_l(sizeof(BarrelNode)));
-	barrelTest();
+	PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
+	//barrelTest();
 }
+
+
+/*
+
+
+Instruction - WORD SIZE
+Address
+Value - WORD SIZE
+
+PROCESS 
+///////////////
+READ-ONLY 0xFF...
+
+STACK
+|
+V
+
+/\/\/\/\/\/\ <- OS dependant
+
+^
+|
+HEAP 0x00...
+////////////////
+
+*/

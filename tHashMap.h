@@ -2,6 +2,8 @@
 #include <tVector.h>
 #include <tLink.h>
 
+static TypeID* GlobalHashNodeType;
+
 uint hashCapacity(uint request)
 {
 	uint output = 1;
@@ -12,7 +14,7 @@ uint hashCapacity(uint request)
 
 hash_node* hashMap_GetAtIndex(hash_map* map, uint index)
 {
-	if (index > map->_capacity)
+	if (index > map->_vector._capacity)
 		return NULL;
 
 	return &(((hash_node*)(map->_vector._bucket))[index]);
@@ -62,13 +64,13 @@ void hashNode_ctor(hash_node* node)
 
 int hashMap_GetNode(hash_map* map, hash_node** nodePtr, uint* index, const char* key, bool assert)
 {
-	unsigned int startIndex = map->_hashFunc(key, map->_capacity);//GetCharHash(key, map->_capacity);
+	unsigned int startIndex = map->_hashFunc(key, map->_vector._capacity);//GetCharHash(key, map->_capacity);
 	
 	map->_lastLookupPerformance = -1; // Assume off map to start;
 
-	for (int i = startIndex; i <= map->_capacity; i++)
+	for (int i = startIndex; i <= map->_vector._capacity; i++)
 	{
-		if (i == map->_capacity)
+		if (i == map->_vector._capacity)
 		{
 			// Flew off the end of map, maybe just wrap around?
 			// Capacity should always be big enough for it to go somewhere.
@@ -114,7 +116,7 @@ int hashMap_GetNode(hash_map* map, hash_node** nodePtr, uint* index, const char*
 
 bool hashMap_AssertionWillExceed(hash_map* map)
 {
-	return (float)(map->_vector._count + 1) / map->_capacity > map->_threshold;
+	return (float)(map->_vector._count + 1) / map->_vector._capacity > map->_threshold;
 }
 
 bool hashMap_GetPreviousNode(hash_map* map, unsigned int startIndex, hash_node** target)
@@ -135,7 +137,7 @@ bool hashMap_GetPreviousNode(hash_map* map, unsigned int startIndex, hash_node**
 
 bool hashMap_GetNextNode(hash_map* map, unsigned int startIndex, hash_node** target)
 {
-	for (int i = startIndex; i < map->_capacity; i++)
+	for (int i = startIndex; i < map->_vector._capacity; i++)
 	{
 		hash_node* nextNode = hashMap_GetAtIndex(map, i);
 
@@ -265,7 +267,7 @@ void hashMap_ctor1(hash_map* map, unsigned int flags, unsigned int capacity, flo
 
 	//capacity = Clamp(capacity, 0, Barrel_Max_Capacity);
 	threshold = Clamp(threshold, (float)Hash_Min_Threshold / 100, (float)Hash_Max_Threshold / 100);
-	Vector_ctor(&(map->_vector), (TypeID){sizeof(hash_node), "hash_node", }, 0, tableStart);
+	Vector_ctor(&(map->_vector), GlobalHashNodeType, 0, capacity, tableStart);
 
 	map->_hashFunc = hashFunc;
 
@@ -273,7 +275,6 @@ void hashMap_ctor1(hash_map* map, unsigned int flags, unsigned int capacity, flo
 		hashNode_ctor(hashMap_GetAtIndex(map, i));
 
 	map->_threshold = threshold;
-	map->_capacity = capacity;
 
 	map->_first = 0;
 	map->_last = 0;

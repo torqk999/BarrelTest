@@ -6,16 +6,20 @@ void* Bucket_GetPtr(Vector* bucketVector, unsigned int index)
 	return index >= bucketVector->_count ? NULL : (size_t)(bucketVector->_bucket) + (index * bucketVector->_type->_size);
 }
 
-bool Bucket_Resize(CollectionRequest request)
-{
-	Vector* bucketVector = request._trg;
-	if (request._count > bucketVector->_capacity)
+bool Bucket_ReadFromVector(CollectionRequest request) {
+
+	Vector* src = request._src;
+
+	if (request._srcIx + request._count >= src->_count)
 		return false;
 
-	bucketVector->_count = request._count;
+	request._src = src->_bucket;
+	request._trgIx = 0;
+
+	TranscribeSpan(request);
+
 	return true;
 }
-
 bool Bucket_WriteToVector(CollectionRequest request) {
 
 	Vector* trg = request._trg;
@@ -33,22 +37,6 @@ bool Bucket_WriteToVector(CollectionRequest request) {
 
 	return true;
 }
-
-bool Bucket_ReadFromVector(CollectionRequest request) {
-
-	Vector* src = request._src;
-
-	if (request._srcIx + request._count >= src->_count)
-		return false;
-
-	request._src = src->_bucket;
-	request._trgIx = 0;
-
-	TranscribeSpan(request);
-
-	return true;
-}
-
 bool Bucket_Insert(CollectionRequest request)
 {
 	Vector* trg = request._trg;
@@ -65,30 +53,32 @@ bool Bucket_Insert(CollectionRequest request)
 	request._src = trg->_bucket;
 	request._srcIx = trg->_count - 1;
 	request._trgIx = trg->_count + request._count - 1;
+	request._count *= -1;
 
-	for (int i = trg->_count + request._count - 1; i > request._trgIx; i--) {
-		Bucket_WriteToVector(request);
-		request._srcIx--;
-		request._trgIx--;
-	}
+	Bucket_WriteToVector(request);
 
 	request._src = insertion;
-	request._trgIx = target;
 	request._srcIx = 0;
+	request._trgIx = target;
+	request._count *= 1;
 
-	for (int i = 0; i < request._count; i++) {
-		Bucket_WriteToVector(request);
-		request._srcIx++;
-		request._trgIx++;
-	}
+	Bucket_WriteToVector(request);
 
 	trg->_count++;
 	return true;
 }
-
-void* Bucket_Iterate(CollectionRequest* request)
+bool Bucket_Remove(CollectionRequest request)
 {
-	Vector* bucketVector = request->_src;
+
+}
+bool Bucket_RemoveAt(CollectionRequest request)
+{
+
+}
+
+bool Bucket_Iterate(CollectionRequest* request)
+{
+	Vector* bucketVector = request->_trg;
 	unsigned int* current = &(request->_trgIx);
 	unsigned int* count = &(request->_count);
 
@@ -102,7 +92,6 @@ void* Bucket_Iterate(CollectionRequest* request)
 
 	return nxt;
 }
-
 bool Bucket_Transcribe(CollectionRequest request)
 {
 	switch (request._type)
@@ -117,13 +106,27 @@ bool Bucket_Transcribe(CollectionRequest request)
 		return false;
 	}
 }
+bool Bucket_Resize(CollectionRequest request)
+{
+	Vector* bucketVector = request._trg;
+	if (request._count > bucketVector->_capacity)
+		return false;
 
+	bucketVector->_count = request._count;
+	return true;
+}
 bool Bucket_Modify(CollectionRequest request)
 {
 	switch (request._type)
 	{
 	case MODIFY_INSERT:
 		return Bucket_Insert(request);
+
+	case MODIFY_REMOVE_AT:
+		return Bucket_RemoveAt(request);
+
+	case MODIFY_REMOVE_FIRST_FOUND:
+		return Bucket_Remove(request);
 
 	case MODIFY_RESIZE:
 		return Bucket_Resize(request);

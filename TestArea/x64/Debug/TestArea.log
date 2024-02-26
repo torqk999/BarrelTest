@@ -17,10 +17,10 @@ C:\Repos\BarrelTest\tHelpers.h(140,38): warning C4022: 'rawTranscribe': pointer 
 C:\Repos\BarrelTest\tHelpers.h(140,97): warning C4022: 'rawTranscribe': pointer mismatch for actual parameter 2
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tHelpers.h(145,29): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tHeap.h(51,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tHeap.h(51,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tHeap.h(72,6): warning C4101: 'myStackVar': unreferenced local variable
   (compiling source file 'TestArea.c')
   
 C:\Repos\BarrelTest\tTypeID.h(100,54): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
@@ -29,40 +29,46 @@ C:\Repos\BarrelTest\tTypeID.h(100,54): warning C4267: '=': conversion from 'size
 C:\Repos\BarrelTest\tTypeID.h(108,44): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(13,32): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.h(12,26): warning C4018: '>=': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(22,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tBarrel.h(113,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(33,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Repos\BarrelTest\tBarrel.h(128,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(48,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tBarrel.h(159,59): warning C4020: 'barrel_DeltaSizeRequest': too many actual parameters
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(86,59): warning C4020: 'barrel_DeltaSizeRequest': too many actual parameters
+C:\Repos\BarrelTest\tBarrel.h(173,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(287,10): warning C4013: 'Bucket_Insert' undefined; assuming extern returning int
+C:\Repos\BarrelTest\tBarrel.h(194,5): warning C4013: 'barrel_ResizeRequest' undefined; assuming extern returning int
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(348,29): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.h(376,29): warning C4018: '>=': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(352,71): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.h(380,71): warning C4018: '<': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(376,43): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.h(404,43): warning C4018: '<': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(424,19): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.h(452,19): warning C4018: '>=': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(551,18): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.h(541,3): warning C4102: 'Next': unreferenced label
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBarrel.h(600,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+C:\Repos\BarrelTest\tBarrel.h(581,18): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(628,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(645,60): warning C4090: 'function': different 'const' qualifiers
   (compiling source file 'TestArea.c')
   
 C:\Repos\BarrelTest\tBucket.h(6,46): warning C4047: ':': 'void *' differs in levels of indirection from 'size_t'
@@ -71,48 +77,49 @@ C:\Repos\BarrelTest\tBucket.h(6,46): warning C4047: ':': 'void *' differs in lev
 C:\Repos\BarrelTest\tBucket.h(6,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBucket.h(12,21): warning C4018: '>': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBucket.h(86,3): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBucket.h(69,51): warning C4018: '>': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBucket.h(93,2): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tBucket.h(138,9): warning C4047: 'initializing': 'int (__cdecl *)(CollectionRequest *)' differs in levels of indirection from 'void *(__cdecl *)(CollectionRequest *)'
+C:\Repos\BarrelTest\tBucket.h(112,21): warning C4018: '>': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tVector.h(99,102): warning C4090: 'initializing': different 'const' qualifiers
+C:\Repos\BarrelTest\tVector.h(96,102): warning C4090: 'initializing': different 'const' qualifiers
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tVector.h(203,20): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tVector.h(198,20): warning C4018: '<': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tHashMap.h(65,46): warning C4090: 'function': different 'const' qualifiers
+C:\Repos\BarrelTest\tHashMap.h(67,46): warning C4090: 'function': different 'const' qualifiers
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tHashMap.h(69,29): warning C4018: '<=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tHashMap.h(71,29): warning C4018: '<=': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tHashMap.h(138,29): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tHashMap.h(140,29): warning C4018: '<': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\tHashMap.h(233,20): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tHashMap.h(235,20): warning C4018: '<': signed/unsigned mismatch
   (compiling source file 'TestArea.c')
   
-C:\Repos\BarrelTest\TestArea.c(129,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\TestArea.c(135,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\TestArea.c(252,25): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(305,25): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(340,20): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(399,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(400,4): warning C4090: 'initializing': different 'const' qualifiers
-C:\Repos\BarrelTest\TestArea.c(404,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(411,20): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(397,2): warning C4102: 'Step_1': unreferenced label
-C:\Repos\BarrelTest\TestArea.c(409,1): warning C4102: 'TestBreak': unreferenced label
+C:\Repos\BarrelTest\TestArea.c(127,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(133,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(249,25): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(302,25): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(337,20): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(396,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(397,4): warning C4090: 'initializing': different 'const' qualifiers
+C:\Repos\BarrelTest\TestArea.c(401,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(408,20): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(394,2): warning C4102: 'Step_1': unreferenced label
+C:\Repos\BarrelTest\TestArea.c(406,1): warning C4102: 'TestBreak': unreferenced label
 C:\Repos\BarrelTest\tHelpers.h(8,1): warning C4716: 'Clamp': must return a value
 C:\Repos\BarrelTest\tHelpers.h(13,1): warning C4716: 'ClampInt': must return a value
 C:\Repos\BarrelTest\tHeap.h(23,1): warning C4715: 'heapDeltaPages': not all control paths return a value
-C:\Repos\BarrelTest\tVector.h(163,1): warning C4716: 'Vector_Remove': must return a value
-C:\Repos\BarrelTest\tVector.h(171,1): warning C4716: 'Vector_RemoveAt': must return a value
-  LINK : C:\Repos\BarrelTest\x64\Debug\TestArea.exe not found or not built by the last incremental link; performing full link
+C:\Repos\BarrelTest\tBarrel.h(260,1): warning C4716: 'barrel_Remove': must return a value
+C:\Repos\BarrelTest\tBarrel.h(261,1): warning C4716: 'barrel_RemoveAt': must return a value
+C:\Repos\BarrelTest\tBucket.h(73,1): warning C4716: 'Bucket_Remove': must return a value
+C:\Repos\BarrelTest\tBucket.h(77,1): warning C4716: 'Bucket_RemoveAt': must return a value
   TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

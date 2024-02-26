@@ -142,11 +142,14 @@ void TranscribeElement(CollectionRequest request)
 
 void TranscribeSpan(CollectionRequest request)
 {
-	for (unsigned int i = 0; i < request._count; i++)
+	int dir = request._count < 0 ? -1 : 1;
+	unsigned int count = request._count * dir;
+
+	for (unsigned int i = 0; i < count; i++)
 	{
 		TranscribeElement(request);
-		request._srcIx++;
-		request._trgIx++;
+		request._srcIx += dir;
+		request._trgIx += dir;
 	}
 
 }
