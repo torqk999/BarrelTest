@@ -66,10 +66,18 @@ void ClearPage(HeapService* service, int index)
 
 bool HeapServiceInit(HeapService* heapService, bool clear)
 {
-	heapService->_heapStart = HeapCreate(0, 0, PageSize * MaxPageCount);
-
+	heapService->_heapStart = HeapCreate(0, 0, 0);
+	
 	if (!heapService->_heapStart)
 		return false;
+
+	ULONG ulEnableLFH = 2;
+
+	if (!HeapSetInformation(heapService->_heapStart, HeapCompatibilityInformation, &ulEnableLFH, sizeof(ulEnableLFH)))
+	{
+		PREENT("Information Set Failed!\n");
+		return false;
+	}
 
 	heapService->_heapEnd = heapService->_heapStart;
 	heapService->_pageCount = 0;
