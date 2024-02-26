@@ -5,59 +5,61 @@
 
 #pragma region testRegion
 #define BarrelTestCount 10
-void vectorTest()
-{
-	LinkedVector myVector = VEC_TOR(int, 1, 2, 3, 4, 5);
+//void vectorTest()
+//{
+//	LinkedVector myVector = VEC_TOR(int, 1, 2, 3, 4, 5);
+//
+//	LinkedVector myNextVector = VEC_TOR(int, 6, 7, 8, 9, 10);
+//
+//	Vector_Link(&myVector, &myNextVector);
+//
+//	Vector* vPtr = &(myVector._vector);
+//	LinkedVector* lvPtr = &myVector;
+//
+//	int* ptr = Vector_GetPtr(vPtr, 0);
+//	int count = 0;
+//
+//	int myInt = 42;
+//
+//	Vector_WriteIndex(vPtr, &myInt, 2);
+//
+//	while (ptr)
+//	{
+//		PREENT_ARGS("[%]: %\n", fmt_i(count), fmt_i(*ptr));
+//		ptr = LinkedVector_Iterate(&lvPtr, ptr, 1);
+//		count++;
+//	}
+//}
 
-	LinkedVector myNextVector = VEC_TOR(int, 6, 7, 8, 9, 10);
+//void hashMapTest()
+//{
+//	hash_map myHashMap = HASH_MAP(16, .7f);
+//
+//	struct {
+//		char* key;
+//		int value;
+//	} IntPair[] =
+//	{
+//		{ "sam" , 5 },
+//		{ "bob" , 3 },
+//		{ "dan" , 8 }
+//	};
+//
+//	for (int i = 0; i < 3; i++)
+//		PREENT_ARGS("Assertion: %\n", fmt_s(hashMap_Assert(&myHashMap, IntPair[i].key, &(IntPair[i].value)) ? "true" : "false"));
+//
+//	PREENT("\n----------------------------\n\n");
+//
+//	for (int i = 0; i < 3; i++)
+//	{
+//		int* intPtr;
+//
+//		char* result = hashMap_GetOccupantLocation(&myHashMap, IntPair[i].key, &intPtr) ? numConvert((Preem) { 'i', intPtr }) : "FAIL";
+//
+//		PREENT_ARGS("Value: %\n", fmt_s(result));
+//	}
+//}
 
-	Vector_Link(&myVector, &myNextVector);
-
-	Vector* vPtr = &(myVector._vector);
-	LinkedVector* lvPtr = &myVector;
-
-	int* ptr = Vector_GetPtr(vPtr, 0);
-	int count = 0;
-
-	int myInt = 42;
-
-	Vector_WriteIndex(vPtr, &myInt, 2);
-
-	while (ptr)
-	{
-		PREENT_ARGS("[%]: %\n", fmt_i(count), fmt_i(*ptr));
-		ptr = LinkedVector_Iterate(&lvPtr, ptr, 1);
-		count++;
-	}
-}
-void hashMapTest()
-{
-	hash_map myHashMap = HASH_MAP(16, .7f);
-
-	struct {
-		char* key;
-		int value;
-	} IntPair[] =
-	{
-		{ "sam" , 5 },
-		{ "bob" , 3 },
-		{ "dan" , 8 }
-	};
-
-	for (int i = 0; i < 3; i++)
-		PREENT_ARGS("Assertion: %\n", fmt_s(hashMap_Assert(&myHashMap, IntPair[i].key, &(IntPair[i].value)) ? "true" : "false"));
-
-	PREENT("\n----------------------------\n\n");
-
-	for (int i = 0; i < 3; i++)
-	{
-		int* intPtr;
-
-		char* result = hashMap_GetOccupantLocation(&myHashMap, IntPair[i].key, &intPtr) ? numConvert((Preem) { 'i', intPtr }) : "FAIL";
-
-		PREENT_ARGS("Value: %\n", fmt_s(result));
-	}
-}
 DWORD WINAPI MyThreadJob(void* dataHead)
 {
 	if (!dataHead)
@@ -115,7 +117,7 @@ void heapTest(HeapService* heapService)
 
 	heapDeltaPages(heapService, 1);
 
-	TypeID intType = TYPE_ID(int);
+	TypeID intType = BARREL_ID(int);
 
 	void* heapEnd = heapService->_heapStart;
 
@@ -208,7 +210,7 @@ void barrelTest_NEW()
 	}
 
 	BarrelNode* newNode;
-	if (barrel_RequestNode(&test_barrelService, &newNode, (Vector) { test_intTypeID, capacity, ALLOCED }))
+	if (barrel_RequestNode(&test_barrelService, &newNode, (Vector) { test_intTypeID, capacity, capacity}))
 		PREENT("Node created!\n");
 	else
 		PREENT("Node failed to create!\n");

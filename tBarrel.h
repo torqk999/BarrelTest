@@ -2,6 +2,12 @@
 #include <tHeap.h>
 #include <tTypeID.h>
 
+static BarrelService* GlobalBarrelService;
+
+
+
+//static BarrelService* GetGlobalBarrelService() { return GlobalBarrelService; }
+
 BarrelNode* barrel_NodeLocation(BarrelService* service, int index)
 {
 	return index <= NONE || index >= service->Omegus._vector._count ? NULL :
@@ -47,7 +53,7 @@ int barrel_maximumAvailableBarrels(BarrelService* barrelService, int requested)
 
 size_t barrel_VectorRemainingSizeCap(BarrelNode* node)
 {
-	return (node->_barrelCount * sizeof(Barrel)) - (node->_vector._count * node->_vector._type->_size);
+	return (node->_vector._capacity * sizeof(Barrel)) - (node->_vector._count * node->_vector._type->_size);
 }
 
 uint barrel_VectorRemainingUnitCap(BarrelNode* node)
@@ -55,151 +61,7 @@ uint barrel_VectorRemainingUnitCap(BarrelNode* node)
 	return barrel_VectorRemainingSizeCap(node) / node->_vector._type->_size;
 }
 
-void* barrel_GetElementLocation(BarrelService* service, BarrelNode* node, uint index)
-{
-	ullong byteLength = node->_barrelCount * sizeof(Barrel);
-	ullong byteOffset = node->_barrelOffset * sizeof(Barrel);
-	ullong byteIndex = index * node->_vector._type->_size;
-
-	void* location = (void*)
-		(((byteOffset + byteIndex) % byteLength) +
-			(node->_barrelStart * sizeof(Barrel)) +
-			(ullong)service->_heap->_heapStart);
-
-	return location;
-}
-void barrel_TranscribeElement(BarrelService* service, BarrelNode* targetNode, void* target, unsigned int index, bool read)
-{
-	void* barrelPtr = barrel_GetElementLocation(service, targetNode, index);
-	void* readPtr = read ? barrelPtr : target;
-	void* writePtr = read ? target : barrelPtr;
-
-	while (targetNode->_flags & req_ROLL ||
-		targetNode->_flags & req_FREE) { /* Wait for lock to free */
-	}
-
-	InterlockedIncrement(&(targetNode->_userCount));
-
-	for (size_t i = 0; i < targetNode->_vector._type->_size; i++) {
-
-		((char*)writePtr)[i] = ((char*)readPtr)[i];
-	}
-
-	InterlockedDecrement(&(targetNode->_userCount));
-}
-void barrel_TranscribeSpan(BarrelService* service, BarrelNode* targetNode, void* target, unsigned int start, int count, bool read)
-{
-	void* readPtr = read ? NULL : target;
-	void* writePtr = read ? target : NULL;
-	void** barrelPtr = read ? &readPtr : &writePtr;
-
-	int currentElement = start;
-	int direction = count < 0 ? -1 : 1;
-	count *= direction;
-
-	int barrelsPerBlock = targetNode->_vector._type->_barrelsPerBlock;
-	int unitsPerBlock = targetNode->_vector._type->_unitsPerBlock;
-	int vectorCount = targetNode->_vector._count;
-
-	size_t unitSize = targetNode->_vector._type->_size;
-	size_t collectionSize = targetNode->_barrelCount * sizeof(Barrel);
-	size_t collectionHead = (targetNode->_barrelStart * sizeof(Barrel)) + (ullong)service->_heap->_heapStart;
-	size_t collectionOffset = targetNode->_barrelOffset * sizeof(Barrel);
-
-	while (targetNode->_flags & req_ROLL ||
-		targetNode->_flags & req_FREE) { /* Wait for lock to free */
-	}
-
-	InterlockedIncrement(&(targetNode->_userCount));
-
-	while (count) {
-
-		currentElement = currentElement >= vectorCount ? 0 : currentElement < 0 ? vectorCount - 1 : currentElement;
-
-		*barrelPtr = ((collectionOffset + (currentElement * unitSize)) % collectionSize) + collectionHead;
-
-		if (currentElement % unitsPerBlock ||				// Is not currently started on a 'memory bound' edge
-			vectorCount - currentElement < unitsPerBlock ||	// Remaining elements not enough to fill a 'block'
-			count < unitsPerBlock)							// Total elements left to write less than one 'block'
-		{
-			for (size_t i = 0; i < unitSize; i++) {
-
-				((char*)writePtr)[i] = ((char*)readPtr)[i];	// Process is up to n - 1 where n is total number of bytes per block
-			}
-
-			writePtr = (size_t)writePtr + unitSize;
-
-			currentElement += direction;
-			count--;
-		}
-		else												// Move entire barrels at a time safely
-		{
-			for (int i = 0; i < barrelsPerBlock; i++) {
-
-				*(Barrel*)writePtr = *(Barrel*)readPtr;
-
-				writePtr = (size_t)writePtr + sizeof(Barrel);
-			}
-
-			currentElement += (direction * unitsPerBlock);
-			count -= unitsPerBlock;
-		}
-	}
-
-	InterlockedDecrement(&(targetNode->_userCount));
-
-	return true;
-}
-
-bool barrel_ReadElement(BarrelService* service, BarrelNode* targetNode, void* target, unsigned int index)
-{
-	if (!service || !targetNode)
-		return false;
-
-	barrel_TranscribeElement(service, targetNode, target, index, true);
-
-	return true;
-}
-bool barrel_ReadSpan(BarrelService* service, BarrelNode* targetNode, void* target, unsigned int start, int count)
-{
-	if (!count)
-		return true;
-
-	if (!service || !targetNode)
-		return false;
-
-	barrel_TranscribeSpan(service, targetNode, target, start, count, true);
-
-	return true;
-}
-bool barrel_ReadVector(BarrelService* service, BarrelNode* targetNode, Vector vector) { return barrel_ReadSpan(service, targetNode, vector._bucket, 0, vector._count); }
-bool barrel_WriteElement(BarrelService* service, BarrelNode* targetNode, void* source, unsigned int index)
-{
-	if (!service || !targetNode)
-		return false;
-
-	barrel_TranscribeElement(service, targetNode, source, index, false);
-
-	return true;
-}
-bool barrel_WriteSpan(BarrelService* service, BarrelNode* targetNode, void* source, unsigned int start, int count)
-{
-	if (!count)
-		return true;
-
-	if (!service || !targetNode)
-		return false;
-
-	barrel_TranscribeSpan(service, targetNode, source, start, count, true);
-
-	return true;
-}
-bool barrel_WriteVector(BarrelService* service, BarrelNode* targetNode, Vector vector) { return barrel_WriteSpan(service, targetNode, vector._bucket, 0, vector._count); }
-bool barrel_VectorResizeRequest(BarrelService* service, BarrelNode* node, int delta, void* source)
-{
-	return barrel_VectorDeltaSizeRequest(service, node, delta - node->_vector._count, source);
-}
-bool barrel_VectorDeltaSizeRequest(BarrelService* service, BarrelNode* node, int delta, void* source)
+bool barrel_DeltaSizeRequest(BarrelService* service, BarrelNode* node, int delta, void* source)
 {
 	if (delta == 0)
 		return true;
@@ -222,14 +84,198 @@ bool barrel_VectorDeltaSizeRequest(BarrelService* service, BarrelNode* node, int
 	node->_requests += requestDelta;
 	while (node->_requests) { /* Call might hang... */ }
 
-	// transcribe new elements into the vector
-	if (delta > 0 && source &&
-		!barrel_WriteSpan(service, node, source, node->_vector._count, delta))
-		return false;
-
 	node->_vector._count += delta;
 
 	return true;
+}
+
+bool barrel_ResizeRequest(CollectionRequest request)
+{
+	BarrelNode* node = request._trg;
+	return barrel_DeltaSizeRequest(request._service, node, request._count - node->_vector._count, request._src);
+}
+
+void* barrel_GetElementLocation(BarrelService* service, BarrelNode* node, uint index)
+{
+	ullong byteLength = node->_vector._capacity * sizeof(Barrel);
+	ullong byteOffset = node->_barrelOffset * sizeof(Barrel);
+	ullong byteIndex = index * node->_vector._type->_size;
+
+	void* location = (void*)
+		(((byteOffset + byteIndex) % byteLength) +
+			(node->_barrelStart * sizeof(Barrel)) +
+			(ullong)service->_heap->_heapStart);
+
+	return location;
+}
+void barrel_TranscribeElement(BarrelService* service, BarrelNode* targetNode, void* target, unsigned int index, bool isRead)
+{
+	while (targetNode->_flags & req_ROLL ||
+		targetNode->_flags & req_FREE) { /* Wait for lock to free */
+	}
+
+	InterlockedIncrement(&(targetNode->_userCount));
+
+	void* barrelPtr = barrel_GetElementLocation(service, targetNode, index);
+	void* readPtr = isRead ? barrelPtr : target;
+	void* writePtr = isRead ? target : barrelPtr;
+
+	rawTranscribe(readPtr, writePtr, targetNode->_vector._type->_size);
+
+	InterlockedDecrement(&(targetNode->_userCount));
+}
+void barrel_TranscribeSpan(CollectionRequest request)
+{
+	bool isRead = request._type & TRANSCRIBE_COLLECTION_TO_RAW;
+	void* readPtr = isRead ? NULL : request._trg;
+	void* writePtr = isRead ? request._trg : NULL;
+	void** barrelPtr = isRead ? &readPtr : &writePtr;
+
+	BarrelNode* targetNode = isRead ? request._src : request._trg;
+	
+
+	int currentElement = isRead ? request._srcIx : request._trgIx;
+	int direction = request._count < 0 ? -1 : 1;
+	int count = request._count * direction;
+
+	int barrelsPerBlock = targetNode->_vector._type->_barrelsPerBlock;
+	int unitsPerBlock = targetNode->_vector._type->_unitsPerBlock;
+	int vectorCount = targetNode->_vector._count;
+
+	size_t unitSize = targetNode->_vector._type->_size;
+	size_t collectionSize = targetNode->_vector._capacity * sizeof(Barrel);
+	size_t collectionHead = (targetNode->_barrelStart * sizeof(Barrel)) + request._size; // Substitute for the heapHead
+	size_t collectionOffset = targetNode->_barrelOffset * sizeof(Barrel);
+
+	while (targetNode->_flags & req_ROLL ||
+		targetNode->_flags & req_FREE) { /* Wait for lock to free */
+	}
+
+	InterlockedIncrement(&(targetNode->_userCount));
+
+	while (count) {
+
+		currentElement = currentElement >= vectorCount ? 0 : currentElement < 0 ? vectorCount - 1 : currentElement;
+
+		*barrelPtr = ((collectionOffset + (currentElement * unitSize)) % collectionSize) + collectionHead;
+
+		if (currentElement % unitsPerBlock ||				// Is not currently started on a 'memory bound' edge
+			vectorCount - currentElement < unitsPerBlock ||	// Remaining elements not enough to fill a 'block'
+			count < unitsPerBlock)							// Total elements left to write less than one 'block'
+		{
+			rawTranscribe(readPtr, writePtr, unitSize);
+
+			writePtr = (size_t)writePtr + unitSize;
+
+			currentElement += direction;
+			count--;
+		}
+		else												// Move entire barrels at a time safely
+		{
+			barrelTranscribe(readPtr, writePtr, barrelsPerBlock);
+
+			writePtr = (size_t)writePtr + (sizeof(Barrel) * barrelsPerBlock);
+			
+			currentElement += (direction * unitsPerBlock);
+			count -= unitsPerBlock;
+		}
+	}
+
+	InterlockedDecrement(&(targetNode->_userCount));
+
+	return true;
+}
+
+
+bool barrel_ReadFromVector(CollectionRequest request) {
+
+	BarrelNode* node = request._src;
+
+	if (!(request._count))
+		return true;
+
+	if (request._srcIx + request._count >= node->_vector._count &&
+		!(node->_vector._type->_flags & FLEXIBLE))
+		return false;
+	
+	barrel_TranscribeSpan(request);
+
+	return true;
+}
+
+bool barrel_WriteToVector(CollectionRequest request)
+{
+	BarrelNode* node = request._trg;
+	BarrelService* service = request._service;
+
+	if (node->_vector._type->_flags & READ_ONLY)
+		return false;
+
+	if (!(request._count))
+		return true;
+
+	if (request._trgIx + request._count >= node->_vector._count)
+	{
+		if (!(node->_vector._type->_flags & FLEXIBLE))
+			return false;
+
+		CollectionRequest resize = {node, NULL, 0,0,}
+
+		if(!barrel_ResizeRequest())
+			return false;
+	}
+
+	barrel_TranscribeSpan(request);
+
+	return true;
+}
+
+
+
+
+bool barrel_Iterate(CollectionRequest* request)
+{
+	unsigned int* current = &(request->_trgIx);
+	unsigned int* count = &(request->_count);
+
+	if (!barrel_ReadFromVector(*request))
+		return false;
+
+	*current += *count;
+	*count = *count - 1;
+
+	return true;
+}
+
+bool barrel_Transcribe(CollectionRequest request)
+{
+	switch (request._type)
+	{
+	case TRANSCRIBE_RAW_TO_COLLECTION:
+		return barrel_WriteToVector(request);
+
+	case TRANSCRIBE_COLLECTION_TO_RAW:
+		return barrel_ReadFromVector(request);
+
+	case TRANSCRIBE_COLLECTIONS:
+		return barrel_WriteToVector(request);
+
+
+	default:
+		return false;
+	}
+}
+
+bool barrel_Modify(CollectionRequest request)
+{
+	switch (request._type)
+	{
+	case MODIFY_INSERT:
+		return Bucket_Insert(request);
+
+	default:
+		return false;
+	}
 }
 
 void barrelRoll(BarrelService* service, int index, int delta, int dir)
@@ -247,9 +293,9 @@ void barrelRoll(BarrelService* service, int index, int delta, int dir)
 
 	int absDelta = delta < 0 ? delta * -1 : delta;
 
-	if (node->_barrelCount > 0)
+	if (node->_vector._capacity > 0)
 	{
-		int last = node->_barrelStart + (node->_barrelCount - 1);
+		int last = node->_barrelStart + (node->_vector._capacity - 1);
 
 		// full roll
 
@@ -290,7 +336,7 @@ void barrelRoll(BarrelService* service, int index, int delta, int dir)
 								_heapHead[i + 1] = _heapHead[i];
 
 						else // roll backward           ||||||| <- |||||||
-							for (int i = node->_barrelStart + (node->_barrelOffset - 1); i < node->_barrelStart + (node->_barrelCount - 1); i++)
+							for (int i = node->_barrelStart + (node->_barrelOffset - 1); i < node->_barrelStart + (node->_vector._capacity - 1); i++)
 								_heapHead[i] = _heapHead[i + 1];
 					}
 			}
@@ -330,17 +376,17 @@ void barrelRoll(BarrelService* service, int index, int delta, int dir)
 		(delta > 0 && dir < 0))
 		node->_barrelStart += dir > 0 ? 1 : -1;
 
-	node->_barrelCount += delta;
+	node->_vector._capacity += delta;
 
 	node->_requests -= delta;
 
-	node->_barrelCount = node->_barrelCount < 0 ? 0 : node->_barrelCount;
+	node->_vector._capacity = node->_vector._capacity < 0 ? 0 : node->_vector._capacity;
 
 	node->_barrelOffset =
 		node->_barrelOffset < 0 ?
-		node->_barrelCount > node->_barrelOffset * -1 ? (node->_barrelOffset + node->_barrelCount) % node->_barrelCount : 0 :
-		node->_barrelOffset > node->_barrelCount ?
-		node->_barrelCount > 0 ? node->_barrelOffset % node->_barrelCount : 0 :
+		node->_vector._capacity > node->_barrelOffset * -1 ? (node->_barrelOffset + node->_vector._capacity) % node->_vector._capacity : 0 :
+		node->_barrelOffset > node->_vector._capacity ?
+		node->_vector._capacity > 0 ? node->_barrelOffset % node->_vector._capacity : 0 :
 		node->_barrelOffset;
 }
 
@@ -374,7 +420,7 @@ DWORD WINAPI barrelRollingWork(void* target)
 		{
 			if (nextNode)
 			{
-				nextNode->_barrelStart = workNode->_barrelStart + workNode->_barrelCount;
+				nextNode->_barrelStart = workNode->_barrelStart + workNode->_vector._capacity;
 				service->_lastPhysicalNode = workNode->_nextNode;
 			}
 
@@ -509,6 +555,7 @@ DWORD WINAPI barrelServiceWork(void* target)
 void BarrelNode_ctor(BarrelService* service, BarrelNode* barrel, Vector vector)
 {
 	barrel->_vector._count = 0;
+	barrel->_vector._capacity = 0;
 	barrel->_vector._type = vector._type;
 
 	barrel->_flags = RUN;
@@ -516,7 +563,6 @@ void BarrelNode_ctor(BarrelService* service, BarrelNode* barrel, Vector vector)
 	barrel->_barrelStart = NONE;
 
 	barrel->_barrelOffset = 0;
-	barrel->_barrelCount = 0;
 	barrel->_userCount = 0;
 	barrel->_requests = 0;
 }
@@ -536,6 +582,8 @@ void BarrelServiceInit(BarrelService* barrelService, HeapService* heapService, T
 	barrelService->Omegus._barrelStart = 0;
 
 	tService_ctor(barrelService, barrelServiceWork);
+
+	GlobalBarrelService = barrelService;
 }
 
 bool barrel_RequestNode(BarrelService* barrelService, BarrelNode** nodeLoc, Vector vector)
@@ -577,3 +625,4 @@ bool barrel_RemoveNode(BarrelService* barrelService, BarrelNode* node)
 {
 	return false;
 }
+

@@ -1,9 +1,10 @@
 #pragma once
 #include <tServices.h>
+#include <Windows.h>
 
 bool heapDeltaPages(HeapService* heapService, int delta)
 {
-	delta = delta < 0 && (delta * -1) > heapService->_pageCount ? -1 * (heapService->_pageCount) : delta; // auto-clamp
+	delta = delta < 0 && (unsigned int)(delta * -1) > heapService->_pageCount ? -1 * (heapService->_pageCount) : delta; // auto-clamp
 
 	if (delta == 0)
 		return false; // no action taken
@@ -44,7 +45,7 @@ DWORD WINAPI heapServiceWork(void* target)
 
 	while (service->_pages._localFlags & RUN)
 	{
-		size_t target = service->_heapEnd;
+		size_t target = (size_t)(service->_heapEnd);
 		size_t current = (size_t)(service->_heapStart) + (sizeof(Page) * service->_pageCount);
 
 		int pageDelta = ((target > current ? target - current : current - target) / sizeof(Page)) - 1;
@@ -58,7 +59,7 @@ DWORD WINAPI heapServiceWork(void* target)
 
 void ClearPage(HeapService* service, int index)
 {
-	Barrel* pageStart = &(((Page*)(service->_heapStart))[index]);
+	Barrel* pageStart = (Barrel*) &(((Page*)(service->_heapStart))[index]);
 
 	for (int i = 0; i < 128; i++)
 		pageStart[i] = (Barrel){ 0,0,0,0 };

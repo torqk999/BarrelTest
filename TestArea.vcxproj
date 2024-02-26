@@ -132,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tBarrel.h" />
+    <ClInclude Include="tBucket.h" />
+    <ClInclude Include="tDefines.h" />
+    <ClInclude Include="tEnums.h" />
     <ClInclude Include="tHashMap.h" />
     <ClInclude Include="tHeap.h" />
     <ClInclude Include="tHelpers.h" />

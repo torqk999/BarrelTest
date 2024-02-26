@@ -1,78 +1,45 @@
 #pragma once
-#include <tHelpers.h>
-#include <tPreent.h>
+#include <tDefines.h>
+#include <tEnums.h>
 #include <Windows.h>
 
-enum Constants {
-	NONE = -2,
-	OMEGA = -1,
+typedef struct {
+	void* _trg;
+	void* _src;
+	uint _trgIx;
+	uint _srcIx;
+	int _count;
+	CheckType _type;
+	size_t _size;
+	void* _service;
+} CollectionRequest;
 
-	Vector_Default_Capacity = 16,
-	Barrel_Max_Capacity = 1024,
-	Hash_Min_Threshold = 30,
-	Hash_Default_Threshold = 70,
-	Hash_Max_Threshold = 80,
-	Hash_Max_Conversion = 64,
-	//Heap_Size_Page = 4096,
-	//Heap_Page_Max = 128,
-	//Barrel_Size_Unit = 32,
-	//Barrel_Count_Node = 3,
-	//Heap_Threshold = 2048
-};
-
-enum ThreadType
-{
-	THREAD,
-	HEAP,
-	BARREL
-};
-
-//type and prop names
-#define TERMINATE "nullTerm"
-#define TARG_LINK "targLink"
-#define QUE_SIZE 16
-
-#define MaxThreadCount 8
-#define MaxPageCount 64
-#define PageSize 4096
-#define PageThreshold 2048
-
-const char* Reserved_Types[] = {
-	TERMINATE,
-	TARG_LINK
-};
-
-typedef enum {
-	DONE = 0,
-	RUN = 1,
-	req_INIT = 2,
-	req_ROLL = 4,
-	req_FREE = 8,
-	//req_RESIZE = 16,
-	wait_ROLL = 32,
-	wait_FREE = 64
-} BarrelFlags;
-
-typedef enum {
-	NULL_VEC = 0,
-	STACK_VEC = 1,
-	CONST_VEC = 2,
-	READ_ONLY = 4,
-	ALLOCED = 8,
-	LINKED = 16,
-	REFERENCE = 32,
-	ROOT = 64
-} VectorType;
+typedef struct {
+	bool (*Iterate)(CollectionRequest* request);
+	bool (*Compare)(CollectionRequest request);
+	bool (*Transcribe)(CollectionRequest request);
+	bool (*Modify)(CollectionRequest request);
+	void* _singleBuffer;
+} CollectionExtensions;
 
 typedef struct {
 	const size_t _size;
 	const char* _name;
 	const unsigned int _flags;
 
+	// Tranformation Section
+	const CollectionExtensions _extensions;
+
 	// Barrel Section
 	const unsigned int _unitsPerBlock;
 	const unsigned int _barrelsPerBlock;
 } TypeID;
+
+typedef struct {
+	const TypeID* _type;
+	uint _count;
+	uint _capacity;
+} Collection;
 
 typedef struct _Link {
 	struct _Link* _next;
@@ -88,20 +55,9 @@ typedef struct {
 typedef struct {
 	const TypeID* _type;
 	unsigned int _count;
-	const unsigned int _locality;
+	unsigned int _capacity;
 	void* _bucket;
 } Vector;
-
-typedef struct {
-	const TypeID* _type;
-	int _count;
-	int UNUSED; // Padding for _locality
-} BarrelVector;
-
-typedef struct {
-	Link _link;
-	Vector _vector;
-} LinkedVector;
 
 typedef struct {
 	ullong _mem[512];
@@ -120,18 +76,17 @@ typedef struct {
 
 typedef struct {
 	QueRequest _requests[QUE_SIZE];
-	unsigned int _start;
-	unsigned int _end;
+	uint _start;
+	uint _end;
 } RollingQue;
 
 typedef struct {
-	BarrelVector _vector;
+	Collection _vector;
+	BarrelFlags _flags;
 
-	int _nextNode;
-	int _flags;
+	uint _barrelOffset;
 	int _barrelStart;
-	int _barrelCount;
-	int _barrelOffset;
+	int _nextNode;
 	int _requests;
 
 	volatile LONG _userCount;

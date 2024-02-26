@@ -320,6 +320,6 @@ const char* Geet()
 	return GeetCount(&count);
 }
 
-#define PREENT(string, ...) Preent(string, 0, NULL)
+#define PREENT(string, ...) Preent(string, NULL)
 
 #define PREENT_ARGS(string, ...) Preent( string , (Preem[]) { __VA_ARGS__ , { 'n', NULL } })

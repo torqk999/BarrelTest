@@ -56,5 +56,14 @@
     <ClInclude Include="tTypeID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tBucket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tEnums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

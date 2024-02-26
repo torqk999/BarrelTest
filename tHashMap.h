@@ -280,19 +280,19 @@ void hashMap_ctor1(hash_map* map, unsigned int flags, unsigned int capacity, flo
 	map->_lastLookupPerformance = 0;
 }
 
-void hashMap_ctor0(hash_map* map, unsigned int flags, void* mapStart, unsigned int (*hashFunc)(void*, unsigned int))
+void hashMap_ctor0(hash_map* map, TypeFlags flags, void* mapStart, unsigned int (*hashFunc)(void*, unsigned int))
 {
 	hashMap_ctor1(map, flags, Vector_Default_Capacity, Hash_Default_Threshold, mapStart, hashFunc);
 }
 
-hash_map hashMap_Create(unsigned int capacity, unsigned int flags, float threshold, void* mapStart, unsigned int (*hashFunc)(void*, unsigned int))
+hash_map hashMap_Create(unsigned int capacity, TypeFlags flags, float threshold, void* mapStart, unsigned int (*hashFunc)(void*, unsigned int))
 {
 	hash_map output;
 	hashMap_ctor1(&output, flags, capacity, threshold, mapStart, hashFunc);
 	return output;
 }
 
-#define HASH_MAP(capacity, threshold) hashMap_Create(capacity, STACK_VEC, threshold, (hash_node[capacity]){0}, GetCharHash)
+#define HASH_MAP(capacity, threshold) hashMap_Create(capacity, BUCKET, threshold, (hash_node[capacity]){0}, GetCharHash)
 
 //#define HASH_ASSERT(tablePtr, key, value) hashMap_Assert(tablePtr, key, sizeof(value), &value) 
 

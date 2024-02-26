@@ -1,18 +1,6 @@
 #pragma once
-
-#define true 1
-#define false 0
-#define bool int
-
-#define uint unsigned int
-#define ulong unsigned long
-#define ullong unsigned long long
-
-#define STR(x) #x
-#define CONCAT_IMPL( x, y ) x##y
-#define MACRO_CONCAT( x, y ) CONCAT_IMPL( x, y )
-#define MCLN( x ) MACRO_CONCAT( x, __LINE__ )
-#define MCCN( x ) MACRO_CONCAT( x, __COUNTER__ )
+#include <tModules.h>
+#include <tPreent.h>
 
 float Clamp(float value, float min, float max)
 {
@@ -31,6 +19,65 @@ int pow(int base, unsigned int power)
 		output *= base;
 	return output;
 }
+
+bool defaultCharCompare(CollectionRequest request)
+{
+	return ((char*)request._src)[request._srcIx] == ((char*)request._trg)[request._trgIx];
+}
+
+bool defaultStringCompare(CollectionRequest request)
+{
+	while (((char*)request._src)[request._srcIx] != '\0')
+	{
+		if (((char*)request._src)[request._srcIx] != ((char*)request._trg)[request._trgIx])
+			return false;
+
+		request._srcIx++;
+		request._trgIx++;
+	}
+	return ((char*)request._trg)[request._trgIx] == '\0';
+}
+
+int UnsignedIntegralCompare(CollectionRequest request)
+{
+	ullong* left = ((unsigned long long*)request._src);
+	ullong* right = ((unsigned long long*)request._trg);
+
+	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
+}
+
+int SignedIntegralCompare(CollectionRequest request)
+{
+	llong* left = *((unsigned long long*)request._src);
+	llong* right = *((unsigned long long*)request._trg);
+
+	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
+}
+
+int FloatingCompare(CollectionRequest request)
+{
+	long double* left = ((unsigned long long*)request._src);
+	long double* right = ((unsigned long long*)request._trg);
+
+	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
+}
+
+int findSubStringCustom(const char* src, char* sub, bool (*compare)(char* src, char* trg))
+{
+	int currentIndex = 0;
+	char* currentCheck = sub;
+	while (*src != '\0') {
+		if (currentCheck == '\0')
+			return currentIndex;
+
+		currentCheck = compare(src, currentCheck) ? currentCheck + 1 : sub;
+		src++;
+	}
+	return -1;
+}
+
+
+int findSubString(const char* src, char* sub) { return findSubStringCustom(src, sub, &defaultCharCompare); }
 
 unsigned int paramCount(char* rawArray, char* checkArray)
 {
@@ -74,4 +121,32 @@ unsigned int paramCount0(const char* params)
 			break;
 		}
 	return paramCount;
+}
+
+void rawTranscribe(void* src, void* trg, size_t size)
+{
+	for (size_t i = 0; i < size; i++)
+		*((char*)trg) = *((char*)src);
+}
+
+void barrelTranscribe(void* src, void* trg, unsigned int count)
+{
+	for (unsigned int i = 0; i < count; i++)
+		((Barrel*)trg)[i] = ((Barrel*)src)[i];
+}
+
+void TranscribeElement(CollectionRequest request)
+{
+	rawTranscribe(((size_t)request._src + (request._srcIx * request._size)), ((size_t)request._trg + (request._trgIx * request._size)), request._size);
+}
+
+void TranscribeSpan(CollectionRequest request)
+{
+	for (unsigned int i = 0; i < request._count; i++)
+	{
+		Bucket_TranscribeElement(request);
+		request._srcIx++;
+		request._trgIx++;
+	}
+
 }
