@@ -117,7 +117,7 @@ void heapTest(HeapService* heapService)
 
 	heapDeltaPages(heapService, 1);
 
-	TypeID intType = BARREL_ID(int);
+	TypeID intType = BARREL_ID(int, 0);
 
 	void* heapEnd = heapService->_heapStart;
 
@@ -418,8 +418,8 @@ TestBreak:
 
 void barrelTest()
 {
-	TypeID intTypeID = BUCKET_ID(int);
-	TypeID barrelNodeType = BUCKET_ID(BarrelNode);
+	TypeID intTypeID = BUCKET_ID(int, 0);
+	TypeID barrelNodeType = BUCKET_ID(BarrelNode, 0);
 
 	test_intTypeID = &intTypeID;
 	test_nodeTypeID = &barrelNodeType;
