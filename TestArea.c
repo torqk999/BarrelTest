@@ -342,7 +342,7 @@ void barrelTest_VIEW_HEAP()
 		BarrelNode nextNode = *barrel_NodeLocation(&test_barrelService, i);
 		PREENT_ARGS("[%]: % | % | % | % | % | % \n",
 			fmt_I(i),
-			fmt_I(nextNode._barrelCount),
+			fmt_I(nextNode._vector._capacity),
 			fmt_I(nextNode._vector._count),
 			fmt_I(nextNode._barrelOffset),
 			fmt_I(nextNode._barrelStart),
@@ -418,8 +418,8 @@ TestBreak:
 
 void barrelTest()
 {
-	TypeID intTypeID = TYPE_ID(int);
-	TypeID barrelNodeType = TYPE_ID(BarrelNode);
+	TypeID intTypeID = BUCKET_ID(int);
+	TypeID barrelNodeType = BUCKET_ID(BarrelNode);
 
 	test_intTypeID = &intTypeID;
 	test_nodeTypeID = &barrelNodeType;

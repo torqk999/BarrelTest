@@ -40,44 +40,44 @@ bool defaultStringCompare(CollectionRequest request)
 
 int UnsignedIntegralCompare(CollectionRequest request)
 {
-	ullong* left = ((unsigned long long*)request._src);
-	ullong* right = ((unsigned long long*)request._trg);
+	ullong* left = ((ullong*)request._src);
+	ullong* right = ((ullong*)request._trg);
 
 	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
 }
 
 int SignedIntegralCompare(CollectionRequest request)
 {
-	llong* left = *((unsigned long long*)request._src);
-	llong* right = *((unsigned long long*)request._trg);
+	llong* left = ((llong*)request._src);
+	llong* right = ((llong*)request._trg);
 
 	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
 }
 
 int FloatingCompare(CollectionRequest request)
 {
-	long double* left = ((unsigned long long*)request._src);
-	long double* right = ((unsigned long long*)request._trg);
+	long double* left = ((long double*)request._src);
+	long double* right = ((long double*)request._trg);
 
 	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
 }
 
-int findSubStringCustom(const char* src, char* sub, bool (*compare)(char* src, char* trg))
+int findSubStringCustom(const char* src, const char* sub, bool (*compare)(CollectionRequest request))
 {
 	int currentIndex = 0;
-	char* currentCheck = sub;
+	const char* currentCheck = sub;
 	while (*src != '\0') {
 		if (currentCheck == '\0')
 			return currentIndex;
 
-		currentCheck = compare(src, currentCheck) ? currentCheck + 1 : sub;
+		currentCheck = compare((CollectionRequest) {src, currentCheck, 0,0,1,COMPARE_EQUIVALENCE}) ? currentCheck + 1 : sub;
 		src++;
 	}
 	return -1;
 }
 
 
-int findSubString(const char* src, char* sub) { return findSubStringCustom(src, sub, &defaultCharCompare); }
+int findSubString(const char* src, const char* sub) { return findSubStringCustom(src, sub, &defaultCharCompare); }
 
 unsigned int paramCount(char* rawArray, char* checkArray)
 {
@@ -144,7 +144,7 @@ void TranscribeSpan(CollectionRequest request)
 {
 	for (unsigned int i = 0; i < request._count; i++)
 	{
-		Bucket_TranscribeElement(request);
+		TranscribeElement(request);
 		request._srcIx++;
 		request._trgIx++;
 	}

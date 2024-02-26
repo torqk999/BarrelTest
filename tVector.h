@@ -85,9 +85,10 @@
 
 
 
-bool Vector_Iterate(Vector* vector, unsigned int* current, int delta)
+bool Vector_Iterate(CollectionRequest* request)
 {
-	return vector->_type->_extensions.Iterate((CollectionRequest) {NULL, vector, 0, current, delta, ITERATE});
+	Vector* vector = (Vector*)request->_trg;
+	return vector->_type->_extensions.Iterate(request);
 }
 
 bool Vector_Transcribe(CollectionRequest request) {
@@ -156,17 +157,17 @@ bool Vector_Resize(Vector* trg, unsigned int count)
 
 bool Vector_Remove(Vector* vec, void* trg)
 {
-	unsigned long long index = ((unsigned long long)trg - (unsigned long long)(vec->_bucket)) / (unsigned long long)(vec->_type->_size);
-	//printf("target removal index: %u\n", index);
-	Vector_RemoveAt(vec, index);
+	//unsigned long long index = ((unsigned long long)trg - (unsigned long long)(vec->_bucket)) / (unsigned long long)(vec->_type->_size);
+	////printf("target removal index: %u\n", index);
+	//Vector_RemoveAt(vec, index);
 }
 
 bool Vector_RemoveAt(Vector* trg, unsigned int index)
 {
-	for (int i = index; i < trg->_count; i++)
-		Vector_Transcribe1(trg, trg, i, i + 1);
-
-	trg->_count--;
+	//for (int i = index; i < trg->_count; i++)
+	//	Vector_Transcribe1(trg, trg, i, i + 1);
+	//
+	//trg->_count--;
 }
 
 const TypeID NULL_TYPE = { 0, "NULL" };

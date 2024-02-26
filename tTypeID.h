@@ -1,10 +1,13 @@
 #pragma once
-#include <tModules.h>
+#include <tHelpers.h>
+
+static CollectionExtensions GlobalBucketExtensionTemplate;
+static CollectionExtensions GlobalBarrelExtensionTemplate;
 
 bool CompareTypes(CollectionRequest request)
 {
-	TypeID* readType = request._src;
-	TypeID* writeType = request._trg;
+	TypeID* readType = (TypeID*)(request._src);
+	TypeID* writeType = (TypeID*)(request._trg);
 
 	switch (request._type)
 	{
@@ -63,36 +66,23 @@ TypeFlags CreateTypeFlags(const char* name, TypeFlags init)
 	return newFlags;
 }
 
-CollectionExtensions CreateCollectionExtensions(TypeFlags flags)
+CollectionExtensions CreateCollectionExtensions(TypeFlags initFlags, CollectionExtensions (*TemplateExtension)())
 {
-	CollectionExtensions newExtensions;
+	CollectionExtensions newExtensions = TemplateExtension();
 
-	if (flags & ALPHA)
-		newExtensions.Compare = flags & POINTER ? defaultStringCompare : defaultCharCompare;
+	if (initFlags & ALPHA)
+		newExtensions.Compare = initFlags & POINTER ? defaultStringCompare : defaultCharCompare;
 
-	if (flags & INTEGRAL)
-		newExtensions.Compare = flags & UNSIGNED ? UnsignedIntegralCompare : SignedIntegralCompare;
+	if (initFlags & INTEGRAL)
+		newExtensions.Compare = initFlags & UNSIGNED ? UnsignedIntegralCompare : SignedIntegralCompare;
 
-	if (flags & FLOATING)
+	if (initFlags & FLOATING)
 		newExtensions.Compare = FloatingCompare;
 
-
-	if (flags & BARREL)
-	{
-		newExtensions.Iterate = barrel_Iterate;
-		newExtensions.Modify = barrel_Modify;
-		newExtensions.Transcribe = barrel_Transcribe;
-	}
-	else
-	{
-		newExtensions.Iterate = Bucket_Iterate;
-		newExtensions.Modify = Bucket_Modify;
-		newExtensions.Transcribe = Bucket_Transcribe;
-	}
-		
+	return newExtensions;
 }
 
-TypeID CreateTypeID(const size_t size, const char* name, TypeFlags initFlags)
+TypeID CreateTypeID(const size_t size, const char* name, TypeFlags initFlags, CollectionExtensions(*TemplateExtension)())
 {
 	// block is the smallest contiguous chunk of memory bounded units of both barrels
 	// and vector units set for vector unit size equals sizeof Barrel
@@ -119,11 +109,11 @@ TypeID CreateTypeID(const size_t size, const char* name, TypeFlags initFlags)
 	}
 
 	TypeFlags typeFlags = CreateTypeFlags(name, initFlags);
-	CollectionExtensions extensions = CreateCollectionExtensions(typeFlags);
-
+	CollectionExtensions extensions = CreateCollectionExtensions(typeFlags, TemplateExtension);
 	TypeID newTypeID = { size, name, typeFlags, extensions, unitsPerBlock, barrelsPerBlock};
+
 	return newTypeID;
 }
 
-#define TYPE_ID(typeName) CreateTypeID( sizeof(typeName) , #typeName , 0)
-#define BARREL_ID(typeName) CreateTypeID( sizeof(typeName) , #typeName , BARREL)
+#define BUCKET_ID(typeName, flags) CreateTypeID( sizeof(typeName) , #typeName , flags | 0, Bucket_TemplateExtension)
+#define BARREL_ID(typeName, flags) CreateTypeID( sizeof(typeName) , #typeName , flags | BARREL, barrel_TemplateExtension)

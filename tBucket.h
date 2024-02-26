@@ -63,12 +63,11 @@ bool Bucket_Insert(CollectionRequest request)
 	int target = request._trgIx;
 
 	request._src = trg->_bucket;
-	request._trg = trg->_bucket;
 	request._srcIx = trg->_count - 1;
 	request._trgIx = trg->_count + request._count - 1;
 
 	for (int i = trg->_count + request._count - 1; i > request._trgIx; i--) {
-		Bucket_TranscribeElement(request);
+		Bucket_WriteToVector(request);
 		request._srcIx--;
 		request._trgIx--;
 	}
@@ -78,7 +77,7 @@ bool Bucket_Insert(CollectionRequest request)
 	request._srcIx = 0;
 
 	for (int i = 0; i < request._count; i++) {
-		Bucket_TranscribeElement(request);
+		Bucket_WriteToVector(request);
 		request._srcIx++;
 		request._trgIx++;
 	}
@@ -132,4 +131,14 @@ bool Bucket_Modify(CollectionRequest request)
 	default:
 		return false;
 	}
+}
+
+CollectionExtensions Bucket_TemplateExtension()
+{
+	return (CollectionExtensions) {
+			Bucket_Iterate,
+			NULL,
+			Bucket_Transcribe,
+			Bucket_Modify
+	};
 }
