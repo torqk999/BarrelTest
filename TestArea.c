@@ -165,14 +165,36 @@ typedef enum {
 
 bool ESCAPE = false;
 
+typedef struct {
+	const char _keyPress;
+	const char* _description;
+	const void(*_action)();
+} ButtonAction;
+
+
 void barrelTest_ESCAPE() { ESCAPE = true; }
+
+ButtonAction escapeAction = { 'q', "Escape", &barrelTest_ESCAPE };
+
+void fill_screen(char* fill) {
+	COORD tl = { 0,0 };
+	CONSOLE_SCREEN_BUFFER_INFO s;
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(console, &s);
+	DWORD written, cells = s.dwSize.X * s.dwSize.Y;
+	FillConsoleOutputCharacter(console, fill == NULL ? ' ' : *fill, cells, tl, &written);
+	FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
+	SetConsoleCursorPosition(console, tl);
+}
+
+void clear_screen() { fill_screen(NULL); }
 
 void barrelTest_NEW()
 {
 	int* targetPtr = NULL;
 	const char* input = NULL;
 
-	PREENT("Choose Initial Capacity: ");
+	PREENT("At any time, enter 'q' to leave\nChoose Initial Capacity: ");
 
 	input = Geet();
 	if (input[0] == 'q')
@@ -208,56 +230,109 @@ void barrelTest_RESIZE()
 
 void barrelTest_WRITE()
 {
+	if (test_barrelService.Omegus._vector._count < 1)
+	{
+		PREENT("No Collections to write to!\n");
+		return;
+	}
+
 	int* targetPtr = NULL;
 	const char* input = NULL;
 
-	PREENT("Set Target: ");
+	PREENT("At any time, enter 'q' to leave\nSet Target: ");
 
 	input = Geet();
 	if (input[0] == 'q')
-		goto End;
+		return;
 
 	int index = strToInt(input);
 
 	if (index < 0 || index >= test_barrelService.Omegus._vector._count) {
 		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
-		goto End;
+		return;
 	}
 
 	BarrelNode* targetBoop = barrel_NodeLocation(&test_barrelService, index);
+
+	PREENT("Start Index: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int startIndex = strToInt(input);
 
 	PREENT("Delta Count: ");
 
 	input = Geet();
 	if (input[0] == 'q')
-		goto End;
+		return;
 
 	int delta = strToInt(input);
-	int newDelta = delta;
+	int deltaDir = delta < 0 ? -1 : 1;
 
-	newDelta =
-		delta + targetBoop->_barrelCount < 0 ? 0 :
-		delta;
-
-	if (newDelta != delta)
-		PREENT_ARGS("Delta Capped: %\n", fmt_i(newDelta));
-
-	barrel_VectorResizeRequest(&test_barrelService, targetBoop, newDelta, NULL);
-
-PREENT:
+	for (int i = 0; i < delta; i += deltaDir)
 	{
-		int oldCount = targetBoop->_vector._count;
-		targetBoop->_vector._count += newDelta;
-
-		if (newDelta > 0)
-			for (int i = oldCount; i < targetBoop->_vector._count; i++)
-			{
-				PREENT_ARGS("Input new param (% remaining): ", fmt_i(newDelta - (targetBoop->_vector._count - i)));
-				targetPtr = barrel_GetElementLocation(&test_barrelService, targetBoop, i);
-				*targetPtr = strToInt(Geet());
-			}
+		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
+		targetPtr = barrel_GetElementLocation(&test_barrelService, targetBoop, startIndex + i);
+		*targetPtr = strToInt(Geet());
 	}
 
+	PREENT("Write Complete!\n");
+}
+
+void barrelTest_READ()
+{
+	if (test_barrelService.Omegus._vector._count < 1)
+	{
+		PREENT("No Collections to read from!\n");
+		return;
+	}
+
+	int* targetPtr = NULL;
+	const char* input = NULL;
+
+	PREENT("At any time, enter 'q' to leave\nSet Target: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int index = strToInt(input);
+
+	if (index < 0 || index >= test_barrelService.Omegus._vector._count) {
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
+		return;
+	}
+
+	BarrelNode* targetBoop = barrel_NodeLocation(&test_barrelService, index);
+
+	PREENT("Start Index: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int startIndex = strToInt(input);
+
+	PREENT("Delta Count: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int delta = strToInt(input);
+	int deltaDir = delta < 0 ? -1 : 1;
+
+	for (int i = 0; i < delta; i += deltaDir)
+	{
+		targetPtr = barrel_GetElementLocation(&test_barrelService, targetBoop, startIndex + i);
+		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
+	}
+}
+
+void barrelTest_VIEW_HEAP()
+{
 	PREENT("bCount | vCount | offset | bStart | bRequests | flags\n");
 
 	for (int i = 0; i < test_barrelService.Omegus._vector._count; i++)
@@ -273,6 +348,8 @@ PREENT:
 			fmt_I(nextNode._flags));
 	}
 
+	PREENT("\n[HEEP MAP]\n");
+
 	for (int i = 0; i < 32; i++) {
 		PREENT("|");
 		for (int j = 0; j < 8; j++) {
@@ -281,27 +358,9 @@ PREENT:
 
 		PREENT("||\n");
 	}
-
-End: {}
 }
 
-void barrelTest_READ()
-{
-
-}
-
-void barrelTest_VIEW_HEAP()
-{
-
-}
-
-typedef struct {
-	const char _keyPress;
-	const char* _description;
-	const void(*_action)();
-} ButtonAction;
-
-ButtonAction escapeAction = { 'q', "Escape", &barrelTest_ESCAPE };
+unsigned int mainMenuActionCount = 8;
 
 ButtonAction mainMenuActions[] = {
 	{ 'q', "Quit Program", &barrelTest_ESCAPE },
@@ -310,7 +369,8 @@ ButtonAction mainMenuActions[] = {
 	{ 's', "Re-size Collection", &barrelTest_RESIZE },
 	{ 'r', "Read from Collection span", &barrelTest_READ },
 	{ 'w', "Write to Collection span", &barrelTest_WRITE },
-	{ 'v', "View entire heap", &barrelTest_VIEW_HEAP }
+	{ 'v', "View entire heap", &barrelTest_VIEW_HEAP },
+	{ 'c', "Clear Screen", &clear_screen },
 };
 
 bool barrelTest_INIT()
@@ -334,12 +394,12 @@ void barrelTest_MAIN() {
 
 	Step_1:
 		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(test_barrelService.Omegus._vector._count));
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < mainMenuActionCount; i++)
 			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
 
 		input = Geet();
 
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < mainMenuActionCount; i++)
 			if (mainMenuActions[i]._keyPress == input[0])
 				mainMenuActions[i]._action();
 	}

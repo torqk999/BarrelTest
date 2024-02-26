@@ -246,15 +246,6 @@ void Vector_BuildTemp(char** tmp, void* head, size_t unitSize, size_t unitDelta,
 		}
 }
 
-
-//#define VEC_PAD( typeName , ... ) \
-//sizeof( typeName ) <  2  ? ( typeName []) { __VA_ARGS__ , 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } : \
-//sizeof( typeName ) <  4  ? ( typeName []) { __VA_ARGS__ , 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } : \
-//sizeof( typeName ) <  8  ? ( typeName []) { __VA_ARGS__ , 0,0,0,0,0,0,0,0,0,0,0,0 } : \
-//sizeof( typeName ) <  16 ? ( typeName []) { __VA_ARGS__ , 0,0,0,0,0,0 } : \
-//sizeof( typeName ) <  32 ? ( typeName []) { __VA_ARGS__ , 0,0,0 } : \
-//sizeof( typeName ) >= 48 ? ( typeName []) { __VA_ARGS__ , 0 } : ( typeName []) { __VA_ARGS__ , 0 } \
-
 #define PAR_COUNT(...) paramCount( ( char [] ){ __VA_ARGS__ ,  0 },( char [] ) { __VA_ARGS__ , 1 } )
 
 #define VECTOR(vecPtr, typeName, ...) Vector_ctor(vecPtr, STACK_VEC, sizeof(typeName), PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })

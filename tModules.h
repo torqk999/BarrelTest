@@ -87,7 +87,7 @@ typedef struct {
 
 typedef struct {
 	const TypeID* _type;
-	int _count;
+	unsigned int _count;
 	const unsigned int _locality;
 	void* _bucket;
 } Vector;

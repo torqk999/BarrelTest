@@ -27,7 +27,7 @@ int ClampInt(int value, int min, int max)
 int pow(int base, unsigned int power)
 {
 	int output = 1;
-	for (int i = 0; i < power; i++)
+	for (unsigned int i = 0; i < power; i++)
 		output *= base;
 	return output;
 }

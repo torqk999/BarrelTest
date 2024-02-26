@@ -1,0 +1,146 @@
+﻿  TestArea.c
+C:\Repos\BarrelTest\tPreent.h(184,10): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tPreent.h(197,12): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tPreent.h(131,7): warning C4101: 'next': unreferenced local variable
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(100,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(116,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(164,14): warning C4047: '=': 'const TypeID *' differs in levels of indirection from 'Vector **'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(216,30): warning C4018: '>': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(228,2): warning C4013: 'Vector_RemoveAt' undefined; assuming extern returning int
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(233,24): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tVector.h(241,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHashMap.h(65,46): warning C4090: 'function': different 'const' qualifiers
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHashMap.h(69,29): warning C4018: '<=': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHashMap.h(138,29): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHashMap.h(233,20): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tQues.h(37,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tQues.h(51,2): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHeap.h(6,36): warning C4018: '>': signed/unsigned mismatch
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHeap.h(47,10): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHeap.h(50,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tHeap.h(61,10): warning C4133: 'initializing': incompatible types - from 'Page *' to 'Barrel *'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tTypeID.h(24,54): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tTypeID.h(32,44): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(17,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(26,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(28,3): warning C4013: 'barrel_VectorDeltaSizeRequest' undefined; assuming extern returning int
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(31,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(37,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(44,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(55,45): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(119,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(130,13): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(141,14): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(151,13): warning C4098: 'barrel_TranscribeSpan': 'void' function returning a value
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(214,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(241,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(461,3): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(538,16): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tBarrel.h(549,2): warning C4020: 'Preent': too many actual parameters
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\TestArea.c(50,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(127,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(133,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(197,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(212,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(214,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(235,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(242,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(257,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(265,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(281,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(288,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(295,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(310,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(318,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(336,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(351,2): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(354,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(359,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(380,3): warning C4020: 'Preent': too many actual parameters
+C:\Repos\BarrelTest\TestArea.c(397,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(398,4): warning C4090: 'initializing': different 'const' qualifiers
+C:\Repos\BarrelTest\TestArea.c(402,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(395,2): warning C4102: 'Step_1': unreferenced label
+C:\Repos\BarrelTest\TestArea.c(407,1): warning C4102: 'TestBreak': unreferenced label
+C:\Repos\BarrelTest\tHelpers.h(25,1): warning C4716: 'ClampInt': must return a value
+C:\Repos\BarrelTest\tHelpers.h(20,1): warning C4716: 'Clamp': must return a value
+C:\Repos\BarrelTest\tVector.h(229,1): warning C4716: 'Vector_Remove': must return a value
+C:\Repos\BarrelTest\tVector.h(237,1): warning C4716: 'Vector_RemoveAt': must return a value
+C:\Repos\BarrelTest\tHeap.h(22,1): warning C4715: 'heapDeltaPages': not all control paths return a value
+  TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe
