@@ -434,7 +434,6 @@ int main() {
 
 /*
 
-
 Instruction - WORD SIZE
 Address
 Value - WORD SIZE
