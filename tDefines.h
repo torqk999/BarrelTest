@@ -24,7 +24,4 @@
 #define PageSize 4096
 #define PageThreshold 2048
 
-const char* Reserved_Types[] = {
-	TERMINATE,
-	TARG_LINK
-};
+

@@ -1,1 +1,14 @@
+C:\Repos\BarrelTest\tBarrel.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tBarrel.obj
+C:\Repos\BarrelTest\tBucket.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tBucket.obj
 C:\Repos\BarrelTest\TestArea.c;C:\Repos\BarrelTest\TestArea\x64\Debug\TestArea.obj
+C:\Repos\BarrelTest\tHashMap.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHashMap.obj
+C:\Repos\BarrelTest\tHeap.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHeap.obj
+C:\Repos\BarrelTest\tHelpers.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHelpers.obj
+C:\Repos\BarrelTest\tLink.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tLink.obj
+C:\Repos\BarrelTest\tModules.h;C:\Repos\BarrelTest\TestArea\x64\Debug\tModules.obj
+C:\Repos\BarrelTest\tPreent.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tPreent.obj
+C:\Repos\BarrelTest\tQues.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tQues.obj
+C:\Repos\BarrelTest\tServices.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tServices.obj
+C:\Repos\BarrelTest\tThreads.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tThreads.obj
+C:\Repos\BarrelTest\tTypeID.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tTypeID.obj
+C:\Repos\BarrelTest\tVector.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tVector.obj

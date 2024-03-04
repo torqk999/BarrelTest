@@ -83,126 +83,6 @@
 //		link->_link._prev = trg ? trg->_vector._type->_size == link->_vector._type->_size ? &(trg->_link) : NULL : NULL;
 //}
 
-bool Vector_Iterate(CollectionRequest* request)
-{
-	Vector* vector = (Vector*)request->_trg;
-	return vector->_type->_extensions.Iterate(request);
-}
-bool Vector_Transcribe(CollectionRequest request) {
-
-	Vector* src = request._src;
-	Vector* trg = request._trg;
-
-	if (!CompareTypes((CollectionRequest) { trg->_type, src->_type, 0, 0, 1, COMPARE_COMPATIBILITY_FULL }))
-		return false;
-
-	if (request._trgIx + request._count >= trg->_count ||
-		request._srcIx + request._count >= src->_count)
-		return false;
-
-	CollectionRequest readRequest = { src->_type->_extensions._singleBuffer, src, 0, request._srcIx, 1, TRANSCRIBE_COLLECTION_TO_RAW };
-	CollectionRequest writeRequest = { trg, src->_type->_extensions._singleBuffer, request._trgIx, 0, 1, TRANSCRIBE_RAW_TO_COLLECTION };
-
-	for (int i = 0; i < request._count; i++)
-	{
-		if (!src->_type->_extensions.Transcribe(readRequest) ||
-			!trg->_type->_extensions.Transcribe(writeRequest))
-			return false;
-
-		readRequest._srcIx++;
-		readRequest._trgIx++;
-
-		writeRequest._srcIx++;
-		writeRequest._trgIx++;
-	}
-
-	return true;
-}
-bool Vector_Resize(Vector* trg, unsigned int count)
-{
-	return trg->_type->_extensions.Modify((CollectionRequest) { trg, NULL, 0, 0, count, MODIFY_RESIZE });
-}
-
-bool Vector_ReadSpan(Vector* src, void* trg, unsigned int start, unsigned int count)
-{
-	return src->_type->_extensions.Transcribe((CollectionRequest) { trg, src, start, 0, count, TRANSCRIBE_COLLECTION_TO_RAW});
-}
-bool Vector_Read(Vector* src, void* trg, unsigned int index)
-{
-	return Vector_ReadSpan(trg, src, index, 1);
-}
-
-bool Vector_WriteSpan(Vector* trg, void* src, unsigned int start, int count) {
-
-	return trg->_type->_extensions.Transcribe((CollectionRequest) {trg, src, start, 0, count, TRANSCRIBE_RAW_TO_COLLECTION});
-}
-bool Vector_Write(Vector* trg, void* src, unsigned int index)
-{
-	return Vector_WriteSpan(trg, src, index, 1);
-}
-
-bool Vector_InsertSpan(Vector* trg, void* src, unsigned int index, unsigned int count)
-{
-	return trg->_type->_extensions.Modify((CollectionRequest) { trg, src, index, 0, count, MODIFY_INSERT });
-}
-bool Vector_Insert(Vector* trg, void* src, unsigned int index)
-{
-	return Vector_InsertSpan(trg, src, index, 1);
-}
-
-bool Vector_RemoveSpan(Vector* trg, void* search, unsigned int count)
-{
-	return trg->_type->_extensions.Modify((CollectionRequest) { trg, search, 0, 0, count, MODIFY_REMOVE_FIRST_FOUND });
-}
-bool Vector_Remove(Vector* trg, void* search)
-{
-	return Vector_RemoveSpan(trg, search, 1);
-}
-
-bool Vector_RemoveSpanAt(Vector* trg, unsigned int index, unsigned int count)
-{
-	return trg->_type->_extensions.Modify((CollectionRequest) { trg, 0, index, 0, count, MODIFY_REMOVE_AT });
-}
-bool Vector_RemoveAt(Vector* trg, unsigned int index)
-{
-	return Vector_RemoveSpanAt(trg, index, 1);
-}
-
-const TypeID NULL_TYPE = { 0, "NULL" };
-
-void Vector_nullTerm(Vector* null, size_t unitSize)
-{
-	
-	null->_type = &NULL_TYPE;
-	null->_count = 0;
-	null->_bucket = NULL;
-}
-
-void Vector_ctor(
-	Vector* vector,
-	TypeID* type,
-	unsigned int existingCount,
-	unsigned int existingCapacity,
-	void* existingBucket
-	)
-{
-	vector->_type = type;
-	vector->_count = existingCount;
-	vector->_capacity = existingCapacity;
-	vector->_bucket = existingBucket;
-}
-
-
-void Vector_BuildTemp(char** tmp, void* head, size_t unitSize, size_t unitDelta, unsigned int count)
-{
-	for (int i = 0; i < count; i++)
-		for (int j = 0; j < unitSize; j++)
-		{
-			char nextChar = ((char*)head)[(i * unitDelta) + j];
-			(*tmp)[(i * unitSize) + j] = nextChar;
-		}
-}
-
 #define PAR_COUNT(...) paramCount( ( char [] ){ __VA_ARGS__ ,  0 },( char [] ) { __VA_ARGS__ , 1 } )
 
 #define VECTOR(vecPtr, typeName, ...) Vector_ctor(vecPtr, BUCKET, sizeof(typeName), PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
@@ -211,6 +91,43 @@ void Vector_BuildTemp(char** tmp, void* head, size_t unitSize, size_t unitDelta,
 
 #define VEC_PRINT_ALL(vectorPtr, typeName, strFormat) for (int i = 0; i < ( vectorPtr ) ->_count; i++) \
 { typeName output; Vector_ReadIndex1( vectorPtr , i, &output, sizeof( typeName )); \
+
+//const TypeID NULL_TYPE = { 0, "NULL" };
+
+
+bool Vector_Iterate(CollectionRequest* request);
+bool Vector_Transcribe(CollectionRequest request);
+bool Vector_Resize(Vector* trg, unsigned int count);
+
+bool Vector_ReadSpan(Vector* src, void* trg, unsigned int start, unsigned int count);
+bool Vector_Read(Vector* src, void* trg, unsigned int index);
+
+bool Vector_WriteSpan(Vector* trg, void* src, unsigned int start, int count);
+bool Vector_Write(Vector* trg, void* src, unsigned int index);
+
+bool Vector_InsertSpan(Vector* trg, void* src, unsigned int index, unsigned int count);
+bool Vector_Insert(Vector* trg, void* src, unsigned int index);
+
+bool Vector_RemoveSpan(Vector* trg, void* search, unsigned int count);
+bool Vector_Remove(Vector* trg, void* search);
+
+bool Vector_RemoveSpanAt(Vector* trg, unsigned int index, unsigned int count);
+bool Vector_RemoveAt(Vector* trg, unsigned int index);
+
+void Vector_nullTerm(Vector* null, size_t unitSize);
+
+void Vector_ctor(
+	Vector * vector,
+	TypeID * type,
+	unsigned int existingCount,
+	unsigned int existingCapacity,
+	void* existingBucket
+);
+
+
+void Vector_BuildTemp(char** tmp, void* head, size_t unitSize, size_t unitDelta, unsigned int count);
+
+
 
 //printf("[%i] : " #strFormat "\n", i, output); } \
 

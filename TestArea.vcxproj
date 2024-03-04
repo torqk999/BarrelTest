@@ -128,7 +128,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="tBarrel.c" />
+    <ClCompile Include="tBucket.c" />
     <ClCompile Include="TestArea.c" />
+    <ClCompile Include="tHashMap.c" />
+    <ClCompile Include="tHeap.c" />
+    <ClCompile Include="tHelpers.c" />
+    <ClCompile Include="tLink.c" />
+    <ClCompile Include="tModules.h" />
+    <ClCompile Include="tPreent.c" />
+    <ClCompile Include="tQues.c" />
+    <ClCompile Include="tServices.c" />
+    <ClCompile Include="tThreads.c" />
+    <ClCompile Include="tTypeID.c" />
+    <ClCompile Include="tVector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tBarrel.h" />
@@ -139,7 +152,6 @@
     <ClInclude Include="tHeap.h" />
     <ClInclude Include="tHelpers.h" />
     <ClInclude Include="tLink.h" />
-    <ClInclude Include="tModules.h" />
     <ClInclude Include="tPreent.h" />
     <ClInclude Include="tQues.h" />
     <ClInclude Include="tServices.h" />

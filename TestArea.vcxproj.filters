@@ -18,12 +18,48 @@
     <ClCompile Include="TestArea.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tHelpers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tModules.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tPreent.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tBarrel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tHeap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tTypeID.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tQues.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tThreads.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tServices.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tBucket.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tHashMap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tLink.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tVector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tHelpers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tModules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tPreent.h">

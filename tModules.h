@@ -1,4 +1,4 @@
-#pragma once
+#ifndef MODULES
 #include <tDefines.h>
 #include <tEnums.h>
 #include <Windows.h>
@@ -10,7 +10,7 @@ typedef struct {
 	unsigned long long _SIN;
 } CharacterSheet;
 
-typedef struct node{
+typedef struct node {
 	CharacterSheet* _sheet;
 	struct node* _parent;
 	struct node* _children;
@@ -18,6 +18,12 @@ typedef struct node{
 	int _childCount;
 
 } Node;
+
+/*const char* Reserved_Types[] = {
+	TERMINATE,
+	TARG_LINK
+};*/
+
 
 typedef struct {
 	void* _trg;
@@ -79,7 +85,7 @@ typedef struct {
 	ullong _mem[512];
 } Page;
 
-typedef struct{
+typedef struct {
 	ullong _mem[4];
 } Barrel;
 
@@ -117,7 +123,7 @@ typedef struct {
 	unsigned int _first;
 	unsigned int _last;
 	int _lastLookupPerformance;
-	unsigned int (*_hashFunc)(void *, unsigned int);
+	unsigned int (*_hashFunc)(void*, unsigned int);
 } hash_map;
 
 typedef struct {
@@ -197,3 +203,6 @@ typedef struct {
 	HashTable _types;
 	HashTable _propAllocations;
 } DataBase;
+
+#endif // !MODULES
+#define MODULES
