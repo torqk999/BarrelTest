@@ -427,8 +427,8 @@ void barrelTest()
 
 int main() {
 
-	PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
-	//barrelTest();
+	//PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
+	barrelTest();
 }
 
 
