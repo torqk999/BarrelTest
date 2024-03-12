@@ -15,11 +15,12 @@
 #define MCLN( x ) MACRO_CONCAT( x, __LINE__ )
 #define MCCN( x ) MACRO_CONCAT( x, __COUNTER__ )
 
-#define TERMINATE "nullTerm"
-#define TARG_LINK "targLink"
-#define QUE_SIZE 16
+//#define QUE_SIZE 16
 
 #define MaxThreadCount 8
+
+#define MaxQueCount 32
+
 #define MaxPageCount 64
 #define PageSize 4096
 #define PageThreshold 2048

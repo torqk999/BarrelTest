@@ -1,16 +1,16 @@
 #pragma once
 #include <tHelpers.h>
 
-static CollectionExtensions GlobalBucketExtensionTemplate;
-static CollectionExtensions GlobalBarrelExtensionTemplate;
+bool TypeID_Compare(Request request);
 
-bool CompareTypes(CollectionRequest request);
+bool TypeID_GetNullValue(TypeID* type, void* writeLoc);
 
 TypeFlags CreateTypeFlags(const char* name, TypeFlags init);
 
-CollectionExtensions CreateCollectionExtensions(TypeFlags initFlags, CollectionExtensions(*TemplateExtension)());
+TypeID CreateBarrelID(const size_t size, const char* name, void* nullLoc, TypeFlags initFlags);
 
-TypeID CreateTypeID(const size_t size, const char* name, TypeFlags initFlags, CollectionExtensions(*TemplateExtension)());
+void CloneTypeID(TypeID* trg, TypeID* src);
 
-#define BUCKET_ID(typeName, flags) CreateTypeID( sizeof(typeName) , #typeName , flags | 0, Bucket_TemplateExtension)
-#define BARREL_ID(typeName, flags) CreateTypeID( sizeof(typeName) , #typeName , flags | BARREL, barrel_TemplateExtension)
+#define TYPE_ID(typeName, flags) {sizeof(typeName), #typeName, NULL, flags}
+#define TYPE_DECL(typeName, nullLoc, flags) const TypeID typeName##_TypeID = {sizeof(typeName), #typeName, nullLoc, flags}
+#define BARREL_ID(typeName, flags) CreateBarrelID( sizeof(typeName) , #typeName, NULL, flags | BARREL)

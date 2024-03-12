@@ -21,9 +21,6 @@
     <ClCompile Include="tHelpers.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tModules.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="tPreent.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,8 +51,11 @@
     <ClCompile Include="tLink.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tVector.c">
+    <ClCompile Include="tCollection.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tModules.h">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +68,7 @@
     <ClInclude Include="tLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tVector.h">
+    <ClInclude Include="tCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tHashMap.h">
@@ -95,11 +95,11 @@
     <ClInclude Include="tBucket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tEnums.h">
-      <Filter>Header Files</Filter>
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tDefines.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

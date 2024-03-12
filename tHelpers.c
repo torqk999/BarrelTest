@@ -18,12 +18,12 @@ int pow(int base, unsigned int power)
 	return output;
 }
 
-bool defaultCharCompare(CollectionRequest request)
+bool defaultCharCompare(Request request)
 {
 	return ((char*)request._src)[request._srcIx] == ((char*)request._trg)[request._trgIx];
 }
 
-bool defaultStringCompare(CollectionRequest request)
+bool defaultStringCompare(Request request)
 {
 	while (((char*)request._src)[request._srcIx] != '\0')
 	{
@@ -36,7 +36,7 @@ bool defaultStringCompare(CollectionRequest request)
 	return ((char*)request._trg)[request._trgIx] == '\0';
 }
 
-int UnsignedIntegralCompare(CollectionRequest request)
+int UnsignedIntegralCompare(Request request)
 {
 	ullong* left = ((ullong*)request._src);
 	ullong* right = ((ullong*)request._trg);
@@ -44,7 +44,7 @@ int UnsignedIntegralCompare(CollectionRequest request)
 	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
 }
 
-int SignedIntegralCompare(CollectionRequest request)
+int SignedIntegralCompare(Request request)
 {
 	llong* left = ((llong*)request._src);
 	llong* right = ((llong*)request._trg);
@@ -52,7 +52,7 @@ int SignedIntegralCompare(CollectionRequest request)
 	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
 }
 
-int FloatingCompare(CollectionRequest request)
+int FloatingCompare(Request request)
 {
 	long double* left = ((long double*)request._src);
 	long double* right = ((long double*)request._trg);
@@ -60,7 +60,7 @@ int FloatingCompare(CollectionRequest request)
 	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
 }
 
-int findSubStringCustom(const char* src, const char* sub, bool (*compare)(CollectionRequest request))
+int findSubStringCustom(const char* src, const char* sub, bool (*compare)(Request request))
 {
 	int currentIndex = 0;
 	const char* currentCheck = sub;
@@ -68,7 +68,7 @@ int findSubStringCustom(const char* src, const char* sub, bool (*compare)(Collec
 		if (currentCheck == '\0')
 			return currentIndex;
 
-		currentCheck = compare((CollectionRequest) { src, currentCheck, 0, 0, 1, COMPARE_EQUIVALENCE }) ? currentCheck + 1 : sub;
+		currentCheck = compare((Request) { COMPARE_EQUIVALENCE, src, currentCheck, 0, 0, 1 }) ? currentCheck + 1 : sub;
 		src++;
 	}
 	return -1;
@@ -124,7 +124,7 @@ unsigned int paramCount0(const char* params)
 void rawTranscribe(void* src, void* trg, size_t size)
 {
 	for (size_t i = 0; i < size; i++)
-		*((char*)trg) = *((char*)src);
+		((char*)trg)[i] = src ? ((char*)src)[i] : NULL;
 }
 
 void barrelTranscribe(void* src, void* trg, unsigned int count)
@@ -133,12 +133,17 @@ void barrelTranscribe(void* src, void* trg, unsigned int count)
 		((Barrel*)trg)[i] = ((Barrel*)src)[i];
 }
 
-void TranscribeElement(CollectionRequest request)
+void TranscribeElement(Request request)
 {
-	rawTranscribe(((size_t)request._src + (request._srcIx * request._size)), ((size_t)request._trg + (request._trgIx * request._size)), request._size);
+	rawTranscribe(
+		request._src ?
+			((size_t)request._src + (request._srcIx * request._size)) :
+			NULL,
+		((size_t)request._trg + (request._trgIx * request._size)),
+		request._size);
 }
 
-void TranscribeSpan(CollectionRequest request)
+void TranscribeSpan(Request request)
 {
 	int dir = request._count < 0 ? -1 : 1;
 	unsigned int count = request._count * dir;

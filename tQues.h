@@ -1,16 +1,21 @@
 #pragma once
-#include <tHelpers.h>
+#include <tBucket.h>
+
+//TYPE_DECL(Request, NULL, 0);
+const TypeID Request_TypeID;
 
 void RollingQue_Clear(RollingQue* que, int index);
 
 void RollingQue_ClearAll(RollingQue* que);
 
-void RollingQue_ctor(RollingQue* que);
+RollingQue RollingQue_ctor(Bucket bucket);
 
-void Advance(int* index);
+ULONG Advance(volatile ULONG* index);
 
-bool RollingQue_MakeRequest(RollingQue* que, QueRequest request);
+bool RollingQue_Append(RollingQue* que, void* input);
 
-bool RollingQue_PullRequest(RollingQue* que, QueRequest* request);
+bool RollingQue_PullNext(RollingQue* que, void* output);
 
-bool RollingQue_HasRequests(RollingQue* que);
+bool RollingQue_HasQue(RollingQue* que);
+
+bool RollingQue_SeeNext(RollingQue* que, void* trg);

@@ -1,4 +1,6 @@
 #pragma once
-#include <tHelpers.h>
+#include <tTypeID.h>
+
+const TypeID ThreadHandle_TypeID;
 
 bool ThreadHandle_ctor(ThreadHandle* threadHandle, void* service, LPTHREAD_START_ROUTINE workEntry, int offset);

@@ -1,6 +1,6 @@
 #include <tTypeID.h>
 
-bool CompareTypes(CollectionRequest request)
+bool TypeID_Compare(Request request)
 {
 	TypeID* readType = (TypeID*)(request._src);
 	TypeID* writeType = (TypeID*)(request._trg);
@@ -24,6 +24,14 @@ bool CompareTypes(CollectionRequest request)
 	default:
 		return false;
 	}
+}
+
+bool TypeID_GetNullValue(TypeID* type, void* writeLoc)
+{
+	for (size_t i = 0; i < type->_size; i++)
+		*((char*)writeLoc) = !(type->_nullLoc) ? 0 : *((char*)(type->_nullLoc));
+
+	return type->_nullLoc != 0;
 }
 
 TypeFlags CreateTypeFlags(const char* name, TypeFlags init)
@@ -62,51 +70,40 @@ TypeFlags CreateTypeFlags(const char* name, TypeFlags init)
 	return newFlags;
 }
 
-CollectionExtensions CreateCollectionExtensions(TypeFlags initFlags, CollectionExtensions(*TemplateExtension)())
+TypeID CreateBarrelID(const size_t size, const char* name, void* nullLoc, TypeFlags initFlags)
 {
-	CollectionExtensions newExtensions = TemplateExtension();
-
-	if (initFlags & ALPHA)
-		newExtensions.Compare = initFlags & POINTER ? defaultStringCompare : defaultCharCompare;
-
-	if (initFlags & INTEGRAL)
-		newExtensions.Compare = initFlags & UNSIGNED ? UnsignedIntegralCompare : SignedIntegralCompare;
-
-	if (initFlags & FLOATING)
-		newExtensions.Compare = FloatingCompare;
-
-	return newExtensions;
-}
-
-TypeID CreateTypeID(const size_t size, const char* name, TypeFlags initFlags, CollectionExtensions(*TemplateExtension)())
-{
-	// block is the smallest contiguous chunk of memory bounded units of both barrels
-	// and vector units set for vector unit size equals sizeof Barrel
-
 	int unitsPerBlock = 1;
 	int barrelsPerBlock = 1;
+	
+	// Expand for Barrel size constants
+	{ 
 
-	// check less or greater conditions, adjust units per 'block' accordingly
+		// block is the smallest contiguous chunk of memory bounded units of both barrels
+		// and vector units set for vector unit size equals sizeof Barrel.
+		// check less or greater conditions, adjust units per 'block' accordingly
 
-	if (size < sizeof(Barrel))
-	{
-		while ((barrelsPerBlock * sizeof(Barrel)) % size)
-			barrelsPerBlock++;
+		if (size < sizeof(Barrel))
+		{
+			while ((barrelsPerBlock * sizeof(Barrel)) % size)
+				barrelsPerBlock++;
 
-		unitsPerBlock = (barrelsPerBlock * sizeof(Barrel)) / size;
+			unitsPerBlock = (barrelsPerBlock * sizeof(Barrel)) / size;
+		}
+
+		else if (size > sizeof(Barrel))
+		{
+			while ((unitsPerBlock * size) % sizeof(Barrel))
+				unitsPerBlock++;
+
+			barrelsPerBlock = (unitsPerBlock * size) / sizeof(Barrel);
+		}
 	}
 
-	else if (size > sizeof(Barrel))
-	{
-		while ((unitsPerBlock * size) % sizeof(Barrel))
-			unitsPerBlock++;
-
-		barrelsPerBlock = (unitsPerBlock * size) / sizeof(Barrel);
-	}
-
-	TypeFlags typeFlags = CreateTypeFlags(name, initFlags);
-	CollectionExtensions extensions = CreateCollectionExtensions(typeFlags, TemplateExtension);
-	TypeID newTypeID = { size, name, typeFlags, extensions, unitsPerBlock, barrelsPerBlock };
+	TypeID newTypeID = { size, name, CreateTypeFlags(name, initFlags), nullLoc , unitsPerBlock, barrelsPerBlock };
 
 	return newTypeID;
+}
+
+void CloneTypeID(TypeID* trg, TypeID* src) {
+	rawTranscribe(src, trg, sizeof(TypeID));
 }

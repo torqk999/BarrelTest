@@ -1,6 +1,5 @@
 #pragma once
 #include <tServices.h>
-#include <Windows.h>
 
 bool heapDeltaPages(HeapService* heapService, int delta);
 
@@ -10,4 +9,4 @@ DWORD WINAPI heapServiceWork(void* target);
 
 void ClearPage(HeapService* service, int index);
 
-bool HeapServiceInit(HeapService* heapService, bool clear);
+HeapService* HeapServiceInit(bool clear);

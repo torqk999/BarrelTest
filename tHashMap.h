@@ -1,7 +1,7 @@
 #pragma once
-#include <tVector.h>
+#include <tCollection.h>
 #include <tLink.h>
-
+/*
 static TypeID* GlobalHashNodeType;
 
 #define HASH_MAP(capacity, threshold) hashMap_Create(capacity, BUCKET, threshold, (hash_node[capacity]){0}, GetCharHash)
@@ -47,7 +47,7 @@ void hashMap_ctor1(hash_map* map, unsigned int flags, unsigned int capacity, flo
 void hashMap_ctor0(hash_map* map, TypeFlags flags, void* mapStart, unsigned int (*hashFunc)(void*, unsigned int));
 
 hash_map hashMap_Create(unsigned int capacity, TypeFlags flags, float threshold, void* mapStart, unsigned int (*hashFunc)(void*, unsigned int));
-
+*/
 
 //#define HASH_ASSERT(tablePtr, key, value) hashMap_Assert(tablePtr, key, sizeof(value), &value) 
 

@@ -1,8 +1,8 @@
 #include <tPreent.h>
 
-uint strLenSafe(const char* str)
+unsigned int strLenSafe(const char* str)
 {
-	uint count = 1;
+	unsigned int count = 1;
 	while (str[count - 1] != '\0')
 	{
 		if (count > MAX_CONSOLE_BUFFER)
@@ -28,7 +28,7 @@ void pootStr(const char* str, HANDLE output, DWORD written)
 
 	//while (*str != '\0')
 	//{
-	uint length = strLenSafe(str);
+	unsigned int length = strLenSafe(str);
 
 	if (!length)
 		return;
@@ -105,8 +105,8 @@ char* numConvert(Preem preem)
 	*ptr = '\0';
 
 	char next;
-	bool isPositive = 1;
-	bool isInt = false;
+	int isPositive = 1;
+	int isInt = 0;
 
 	int intCheck;
 	long long longCheck;
@@ -146,7 +146,7 @@ char* numConvert(Preem preem)
 		base += 8;
 		iVal = *((unsigned int*)(preem._ptr));
 	IsInt:
-		isInt = true;
+		isInt = 1;
 		break;
 
 	case 'f':
@@ -160,7 +160,7 @@ char* numConvert(Preem preem)
 		iVal = fVal;
 		fVal -= iVal;
 		base = 10;
-		isInt = false;
+		isInt = 0;
 	}
 
 	if (!isInt)
@@ -268,7 +268,7 @@ const char* Preent(const char* string, Preem* head)
 	return &(string[MAX_CONSOLE_BUFFER]);
 }
 
-const char* GeetCount(ulong* count)
+const char* GeetCount(unsigned int* count)
 {
 	ReadConsoleA(GetStdHandle(STD_INPUT_HANDLE), PREENT_BUFFER, MAX_CONSOLE_BUFFER, count, NULL);
 
@@ -279,6 +279,6 @@ const char* GeetCount(ulong* count)
 
 const char* Geet()
 {
-	ulong count;
+	unsigned int count;
 	return GeetCount(&count);
 }

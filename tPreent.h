@@ -1,12 +1,5 @@
 #pragma once
-#include <Windows.h>
-#include <tDefines.h>
-
-typedef struct
-{
-	char _type;
-	void* _ptr;
-} Preem;
+#include <tModules.h>
 
 #define MAX_CONSOLE_BUFFER 64
 #define MAX_NUM_BUFFER 50
@@ -31,7 +24,7 @@ typedef struct
 
 static char PREENT_BUFFER[MAX_CONSOLE_BUFFER];
 
-uint strLenSafe(const char* str);
+unsigned int strLenSafe(const char* str);
 
 void pootChar(char put, HANDLE output, DWORD written);
 
@@ -48,6 +41,6 @@ char* numConvert(Preem preem);
 
 const char* Preent(const char* string, Preem* head);
 
-const char* GeetCount(ulong* count);
+const char* GeetCount(unsigned int* count);
 
 const char* Geet();

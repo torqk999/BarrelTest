@@ -1,45 +1,47 @@
 #pragma once
 #include <tHeap.h>
-#include <tTypeID.h>
 
-static BarrelService* GlobalBarrelService;
-static TypeID* GlobalBarrelNodeType;
+BarrelService GlobalBarrelService;
+TypeID GlobalBarrelNodeType;
 
-BarrelNode* barrel_NodeLocation(BarrelService* service, int index);
-BarrelNode* barrel_LastPhysicalNode(BarrelService* service);
+ThreadHandle barrelService_ThreadBin[MaxThreadCount];
+Request barrelService_QueBin[MaxQueCount];
 
-void* barrel_GetElementLocation(BarrelService* service, BarrelNode* node, uint index);
-void barrel_TranscribeElement(BarrelService* service, BarrelNode* targetNode, void* target, unsigned int index, bool isRead);
-void barrel_TranscribeSpan(CollectionRequest request);
+BarrelNode* barrel_NodeLocation(int index);
+BarrelNode* barrel_LastPhysicalNode();
+
+void* barrel_GetElementLocation(BarrelNode* node, uint index);
+void barrel_TranscribeElement(BarrelNode* targetNode, void* target, unsigned int index, bool isRead);
+void barrel_TranscribeSpan(Request request);
 
 size_t barrel_VectorRemainingSizeCap(BarrelNode* node);
 uint barrel_VectorRemainingUnitCap(BarrelNode* node);
 
-bool barrel_DeltaSizeRequest(BarrelService* service, BarrelNode* node, int delta);
+bool barrel_DeltaSizeRequest(BarrelNode* node, int delta);
 
-int barrel_NextAvailableNode(BarrelService* service);
-int barrel_maximumAvailableBarrels(BarrelService* barrelService, int requested);
+int barrel_NextAvailableNode();
+int barrel_maximumAvailableBarrels(int requested);
 
-bool barrel_ReadFromVector(CollectionRequest request);
-bool barrel_WriteToVector(CollectionRequest request);
-bool barrel_Insert(CollectionRequest request);
-bool barrel_Remove(CollectionRequest request);
-bool barrel_RemoveAt(CollectionRequest request);
+bool barrel_Read(Request request);
+bool barrel_Write(Request request);
+bool barrel_Insert(Request request);
+bool barrel_Remove(Request request);
+bool barrel_RemoveAt(Request request);
 
-bool barrel_Iterate(CollectionRequest* request);
-bool barrel_Transcribe(CollectionRequest request);
-bool barrel_ResizeRequest(CollectionRequest request);
-bool barrel_Modify(CollectionRequest request);
+bool barrel_Iterate(Request* request);
+bool barrel_Transcribe(Request request);
+bool barrel_ResizeRequest(Request request);
+bool barrel_Modify(Request request);
 
-void barrelRoll(BarrelService* service, int index, int delta, int dir);
+void barrelRoll(int index, int delta, int dir);
 
 DWORD WINAPI barrelRollingWork(void* target);
 DWORD WINAPI barrelServiceWork(void* target);
 
-void BarrelNode_ctor(BarrelService* service, BarrelNode* barrel, TypeID* type);
-void BarrelServiceInit(BarrelService* barrelService, HeapService* heapService, ThreadHandle* threadBin, TypeID* barrelNodeTypeID);
+BarrelNode BarrelNode_ctor(TypeID* type);
+bool BarrelServiceInit(HeapService* heapService);
 
-bool barrel_RequestNode(BarrelService* barrelService, BarrelNode** nodeLoc, Vector vector);
-bool barrel_RemoveNode(BarrelService* barrelService, BarrelNode* node);
+bool barrel_RequestNode(BarrelNode** nodeLoc, Bucket vector);
+bool barrel_RemoveNode(BarrelNode* node);
 
-CollectionExtensions barrel_TemplateExtension();
+uint barrel_NodeCount();

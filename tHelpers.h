@@ -1,5 +1,4 @@
 #pragma once
-#include <tModules.h>
 #include <tPreent.h>
 
 //extern CollectionRequest;
@@ -10,17 +9,17 @@ int ClampInt(int value, int min, int max);
 
 int pow(int base, unsigned int power);
 
-bool defaultCharCompare(CollectionRequest request);
+bool defaultCharCompare(Request request);
 
-bool defaultStringCompare(CollectionRequest request);
+bool defaultStringCompare(Request request);
 
-int UnsignedIntegralCompare(CollectionRequest request);
+int UnsignedIntegralCompare(Request request);
 
-int SignedIntegralCompare(CollectionRequest request);
+int SignedIntegralCompare(Request request);
 
-int FloatingCompare(CollectionRequest request);
+int FloatingCompare(Request request);
 
-int findSubStringCustom(const char* src, const char* sub, bool (*compare)(CollectionRequest request));
+int findSubStringCustom(const char* src, const char* sub, bool (*compare)(Request request));
 
 int findSubString(const char* src, const char* sub);
 
@@ -32,6 +31,6 @@ void rawTranscribe(void* src, void* trg, size_t size);
 
 void barrelTranscribe(void* src, void* trg, unsigned int count);
 
-void TranscribeElement(CollectionRequest request);
+void TranscribeElement(Request request);
 
-void TranscribeSpan(CollectionRequest request);
+void TranscribeSpan(Request request);

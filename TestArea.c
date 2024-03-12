@@ -1,4 +1,4 @@
-#include <tVector.h>
+#include <tBarrel.h>
 #include <tHashMap.h>
 
 #pragma region testRegion
@@ -146,11 +146,9 @@ void heapTest(HeapService* heapService)
 }
 #pragma endregion
 
-static int TaskFlags = 1;
 
-static ThreadHandle test_threadHandles[MaxThreadCount];
-static HeapService test_heapService;
-static BarrelService test_barrelService;
+//static HeapService* test_heapService;
+//static BarrelService* test_barrelService;
 static TypeID* test_intTypeID;
 
 typedef enum {
@@ -207,7 +205,7 @@ void barrelTest_NEW()
 	}
 
 	BarrelNode* newNode;
-	if (barrel_RequestNode(&test_barrelService, &newNode, (Vector) { test_intTypeID, capacity, capacity}))
+	if (barrel_RequestNode(&newNode, (Bucket) { test_intTypeID, capacity, capacity}))
 		PREENT("Node created!\n");
 	else
 		PREENT("Node failed to create!\n");
@@ -229,7 +227,7 @@ void barrelTest_RESIZE()
 
 void barrelTest_WRITE()
 {
-	if (test_barrelService.Omegus._vector._count < 1)
+	if (barrel_NodeCount() < 1)
 	{
 		PREENT("No Collections to write to!\n");
 		return;
@@ -246,12 +244,12 @@ void barrelTest_WRITE()
 
 	int index = strToInt(input);
 
-	if (index < 0 || index >= test_barrelService.Omegus._vector._count) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
+	if (index < 0 || index >= barrel_NodeCount()) {
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(barrel_NodeCount()));
 		return;
 	}
 
-	BarrelNode* targetBoop = barrel_NodeLocation(&test_barrelService, index);
+	BarrelNode* targetBoop = barrel_NodeLocation(index);
 
 	PREENT("Start Index: ");
 
@@ -273,7 +271,7 @@ void barrelTest_WRITE()
 	for (int i = 0; i < delta; i += deltaDir)
 	{
 		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
-		targetPtr = barrel_GetElementLocation(&test_barrelService, targetBoop, startIndex + i);
+		targetPtr = barrel_GetElementLocation(targetBoop, startIndex + i);
 		*targetPtr = strToInt(Geet());
 	}
 
@@ -282,7 +280,7 @@ void barrelTest_WRITE()
 
 void barrelTest_READ()
 {
-	if (test_barrelService.Omegus._vector._count < 1)
+	if (barrel_NodeCount() < 1)
 	{
 		PREENT("No Collections to read from!\n");
 		return;
@@ -299,12 +297,12 @@ void barrelTest_READ()
 
 	int index = strToInt(input);
 
-	if (index < 0 || index >= test_barrelService.Omegus._vector._count) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(test_barrelService.Omegus._vector._count));
+	if (index < 0 || index >= barrel_NodeCount()) {
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(barrel_NodeCount()));
 		return;
 	}
 
-	BarrelNode* targetBoop = barrel_NodeLocation(&test_barrelService, index);
+	BarrelNode* targetBoop = barrel_NodeLocation(index);
 
 	PREENT("Start Index: ");
 
@@ -325,7 +323,7 @@ void barrelTest_READ()
 
 	for (int i = 0; i < delta; i += deltaDir)
 	{
-		targetPtr = barrel_GetElementLocation(&test_barrelService, targetBoop, startIndex + i);
+		targetPtr = barrel_GetElementLocation(targetBoop, startIndex + i);
 		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
 	}
 }
@@ -334,13 +332,13 @@ void barrelTest_VIEW_HEAP()
 {
 	PREENT("bCount | vCount | offset | bStart | bRequests | flags\n");
 
-	for (int i = 0; i < test_barrelService.Omegus._vector._count; i++)
+	for (int i = 0; i < barrel_NodeCount(); i++)
 	{
-		BarrelNode nextNode = *barrel_NodeLocation(&test_barrelService, i);
+		BarrelNode nextNode = *barrel_NodeLocation(i);
 		PREENT_ARGS("[%]: % | % | % | % | % | % \n",
 			fmt_I(i),
-			fmt_I(nextNode._vector._capacity),
-			fmt_I(nextNode._vector._count),
+			fmt_I(nextNode._collection._capacity),
+			fmt_I(nextNode._collection._count),
 			fmt_I(nextNode._barrelOffset),
 			fmt_I(nextNode._barrelStart),
 			fmt_I(nextNode._requests),
@@ -349,14 +347,14 @@ void barrelTest_VIEW_HEAP()
 
 	PREENT("\n[HEEP MAP]\n");
 
-	for (int i = 0; i < 32; i++) {
-		PREENT("|");
-		for (int j = 0; j < 8; j++) {
-			PREENT_ARGS("| % ", fmt_I(((int*)test_heapService._heapStart)[(i * 8) + j]));
-		}
-
-		PREENT("||\n");
-	}
+	//for (int i = 0; i < 32; i++) {
+	//	PREENT("|");
+	//	for (int j = 0; j < 8; j++) {
+	//		PREENT_ARGS("| % ", fmt_I(((int*)test_heapService->_heapStart)[(i * 8) + j]));
+	//	}
+	//
+	//	PREENT("||\n");
+	//}
 }
 
 unsigned int mainMenuActionCount = 8;
@@ -372,18 +370,6 @@ ButtonAction mainMenuActions[] = {
 	{ 'c', "Clear Screen", &clear_screen },
 };
 
-bool barrelTest_INIT()
-{
-	if (!HeapServiceInit(&test_heapService, true))
-	{
-		PREENT("Init failure!\n");
-		return false;
-	}
-
-	BarrelServiceInit(&test_barrelService, &test_heapService, test_threadHandles, GlobalBarrelNodeType);
-
-	return true;
-}
 
 void barrelTest_MAIN() {
 
@@ -391,8 +377,7 @@ void barrelTest_MAIN() {
 
 	while (!ESCAPE) {
 
-	Step_1:
-		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(test_barrelService.Omegus._vector._count));
+		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(barrel_NodeCount()));
 		for (int i = 0; i < mainMenuActionCount; i++)
 			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
 
@@ -402,34 +387,32 @@ void barrelTest_MAIN() {
 			if (mainMenuActions[i]._keyPress == input[0])
 				mainMenuActions[i]._action();
 	}
-
-TestBreak:
-
-	for (int i = 0; i < test_barrelService.Omegus._vector._count; i++)
-	{
-		BarrelNode* closingNode = barrel_NodeLocation(&test_barrelService, i);
-		closingNode->_flags &= ~RUN;
-	}
-
 }
 
 void barrelTest()
 {
-	TypeID intTypeID = BUCKET_ID(int, 0);
-	TypeID barrelNodeType = BUCKET_ID(BarrelNode, 0);
+	TypeID intTypeID = BARREL_ID(int, 0);
 
 	test_intTypeID = &intTypeID;
-	GlobalBarrelNodeType = &barrelNodeType;
 
-	barrelTest_INIT();
+	if (!BarrelServiceInit(HeapServiceInit(true)))
+	{
+		PREENT("Services failed to start!\n");
+		return;
+	}
 	barrelTest_MAIN();
 }
+
+#define Derp(x) _Generic
+
 
 int main() {
 
 	//PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
 	barrelTest();
 }
+
+
 
 
 /*

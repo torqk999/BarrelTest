@@ -1,22 +1,7 @@
-﻿  TestArea.c
-C:\Repos\BarrelTest\TestArea.c(127,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\TestArea.c(133,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\TestArea.c(249,25): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(302,25): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(337,20): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(396,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(397,4): warning C4090: 'initializing': different 'const' qualifiers
-C:\Repos\BarrelTest\TestArea.c(401,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(408,20): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(394,2): warning C4102: 'Step_1': unreferenced label
-C:\Repos\BarrelTest\TestArea.c(406,1): warning C4102: 'TestBreak': unreferenced label
-  tHashMap.c
-C:\Repos\BarrelTest\tHashMap.c(63,46): warning C4090: 'function': different 'const' qualifiers
-C:\Repos\BarrelTest\tHashMap.c(67,29): warning C4018: '<=': signed/unsigned mismatch
-C:\Repos\BarrelTest\tHashMap.c(136,29): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\tHashMap.c(231,20): warning C4018: '<': signed/unsigned mismatch
-  tVector.c
-C:\Repos\BarrelTest\tVector.c(95,102): warning C4090: 'initializing': different 'const' qualifiers
-C:\Repos\BarrelTest\tVector.c(195,20): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  tQues.c
+C:\Repos\BarrelTest\tQues.c(3,1): warning C4047: 'initializing': 'const unsigned int' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tQues.c(7,19): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(39,26): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(50,25): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(65,25): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
   TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

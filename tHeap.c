@@ -1,28 +1,32 @@
 #include <tHeap.h>
 
-bool heapDeltaPages(HeapService* heapService, int delta)
+static HeapService GlobalHeapService;
+static TypeID GlobalPageType;
+
+bool heapDeltaPages(int delta)
 {
-	delta = delta < 0 && (unsigned int)(delta * -1) > heapService->_pageCount ? -1 * (heapService->_pageCount) : delta; // auto-clamp
+	int theDelta = delta;
+	delta = delta < 0 && (unsigned int)(delta * -1) > GlobalHeapService._pageCount ? -1 * (GlobalHeapService._pageCount) : delta; // auto-clamp
 
 	if (delta == 0)
 		return false; // no action taken
 
 	if (delta > 0)
 	{
-		HeapAlloc(heapService->_heapStart, 0, delta * PageSize);
+		HeapAlloc(GlobalHeapService._heapStart, 0, delta * PageSize);
 	}
 
-	heapService->_pageCount += delta;
+	GlobalHeapService._pageCount += delta;
 
 	if (delta < 0)
 	{
-		HeapFree(heapService->_heapStart, 0, (void*)((size_t)heapService->_heapStart + (heapService->_pageCount * (size_t)PageSize)));
+		HeapFree(GlobalHeapService._heapStart, 0, (void*)((size_t)GlobalHeapService._heapStart + (GlobalHeapService._pageCount * (size_t)PageSize)));
 	}
 }
 
-size_t heap_Remaining(HeapService* heap)
+size_t heap_Remaining()
 {
-	return ((size_t)(heap->_heapStart) + (heap->_pageCount * sizeof(Page))) - (size_t)(heap->_heapEnd);
+	return ((size_t)(GlobalHeapService._heapStart) + (GlobalHeapService._pageCount * sizeof(Page))) - (size_t)(GlobalHeapService._heapEnd);
 }
 
 DWORD WINAPI heapServiceWork(void* target)
@@ -48,50 +52,52 @@ DWORD WINAPI heapServiceWork(void* target)
 
 		int pageDelta = ((target > current ? target - current : current - target) / sizeof(Page)) - 1;
 
-		if (!heapDeltaPages(service, pageDelta))
+		if (!heapDeltaPages(pageDelta))
 			break;
 	}
 
 	return 0;
 }
 
-void ClearPage(HeapService* service, int index)
+void ClearPage(int index)
 {
-	Barrel* pageStart = (Barrel*)&(((Page*)(service->_heapStart))[index]);
+	Page* targetPage = &(((Page*)GlobalHeapService._heapStart)[index]);
 
-	for (int i = 0; i < 128; i++)
-		pageStart[i] = (Barrel){ 0,0,0,0 };
+	for (int i = 0; i < 512; i++)
+		targetPage->_mem[i] = 0;
 }
 
-bool HeapServiceInit(HeapService* heapService, bool clear)
+HeapService* HeapServiceInit(bool clear)
 {
-	heapService->_heapStart = HeapCreate(0, 0, 0);
+	GlobalHeapService._heapStart = HeapCreate(0, 0, 0);
 
-	int myStackVar;
-
-	if (!heapService->_heapStart)
-		return false;
+	if (!GlobalHeapService._heapStart)
+	{
+		PREENT("Heap Create Failed!\n");
+		return NULL;
+	}
+		
 
 	ULONG ulEnableLFH = 2;
 
-	if (!HeapSetInformation(heapService->_heapStart, HeapCompatibilityInformation, &ulEnableLFH, sizeof(ulEnableLFH)))
+	if (!HeapSetInformation(GlobalHeapService._heapStart, HeapCompatibilityInformation, &ulEnableLFH, sizeof(ulEnableLFH)))
 	{
 		PREENT("Information Set Failed!\n");
-		return false;
+		return NULL;
 	}
 
-	heapService->_heapEnd = heapService->_heapStart;
-	heapService->_pageCount = 0;
+	GlobalHeapService._heapEnd = GlobalHeapService._heapStart;
+	GlobalHeapService._pageCount = 0;
 
 	// Initialize service
-	tService_ctor(&(heapService->_pages), heapServiceWork);
+	Service_Start(&(GlobalHeapService._pages), heapServiceWork);
 
 	// Add first Page
-	heapDeltaPages(heapService, 1);
+	heapDeltaPages(1);
 
 	// Initialize the mapSpace to zeros
 	if (clear)
-		ClearPage(heapService, 0);
+		ClearPage(0);
 
-	return true;
+	return &GlobalHeapService;
 }

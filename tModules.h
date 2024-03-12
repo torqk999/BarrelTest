@@ -1,67 +1,14 @@
 #ifndef MODULES
-#include <tDefines.h>
+
 #include <tEnums.h>
+#include <tDefines.h>
 #include <Windows.h>
 
-typedef struct {
-	const char* name;
-	int age;
-	float height;
-	unsigned long long _SIN;
-} CharacterSheet;
-
-typedef struct node {
-	CharacterSheet* _sheet;
-	struct node* _parent;
-	struct node* _children;
-	struct node* _sibling;
-	int _childCount;
-
-} Node;
-
-/*const char* Reserved_Types[] = {
-	TERMINATE,
-	TARG_LINK
-};*/
-
-
-typedef struct {
-	void* _trg;
-	void* _src;
-	uint _trgIx;
-	uint _srcIx;
-	int _count;
-	CheckType _type;
-	size_t _size;
-	void* _service;
-} CollectionRequest;
-
-typedef struct {
-	bool (*Iterate)(CollectionRequest* request);
-	bool (*Compare)(CollectionRequest request);
-	bool (*Transcribe)(CollectionRequest request);
-	bool (*Modify)(CollectionRequest request);
-	void* _singleBuffer;
-} CollectionExtensions;
-
-typedef struct {
-	const size_t _size;
-	const char* _name;
-	const unsigned int _flags;
-
-	// Tranformation Section
-	const CollectionExtensions _extensions;
-
-	// Barrel Section
-	const unsigned int _unitsPerBlock;
-	const unsigned int _barrelsPerBlock;
-} TypeID;
-
-typedef struct {
-	const TypeID* _type;
-	uint _count;
-	uint _capacity;
-} Collection;
+typedef struct
+{
+	char _type;
+	void* _ptr;
+} Preem;
 
 typedef struct _Link {
 	struct _Link* _next;
@@ -75,13 +22,6 @@ typedef struct {
 } hash_node;
 
 typedef struct {
-	const TypeID* _type;
-	unsigned int _count;
-	unsigned int _capacity;
-	void* _bucket;
-} Vector;
-
-typedef struct {
 	ullong _mem[512];
 } Page;
 
@@ -90,35 +30,82 @@ typedef struct {
 } Barrel;
 
 typedef struct {
-	//unsigned int _flags;
-	//void* _target;
-	int _delta;
-	void* _target;
-} QueRequest;
+	const size_t _size;
+	const char* const _name;
+	const unsigned int _flags;
+	void* const _nullLoc;
+
+	// Barrel Section
+	const unsigned int _unitsPerBlock;
+	const unsigned int _barrelsPerBlock;
+} TypeID;
 
 typedef struct {
-	QueRequest _requests[QUE_SIZE];
-	uint _start;
-	uint _end;
+
+	RequestType _type;
+
+	void* _trg;
+	void* _src;
+	void* _buffer;
+
+	int _trgIx;
+	int _srcIx;
+	int _count;
+
+	size_t _size;
+
+} Request;
+
+typedef struct {
+	bool (*Iterate)(Request* request);
+	//bool (*Compare)(Request request);
+	bool (*Transcribe)(Request request);
+	bool (*Modify)(Request request);
+} CollectionExtensions;
+
+typedef struct {
+	TypeID* _type;
+	CollectionExtensions* _extensions;
+	//bool (*Compare)(Request request);
+	uint _count;
+	uint _capacity;
+} Collection;
+
+typedef struct {
+	Collection _collection;
+	void* _bucket;
+} Bucket;
+
+typedef struct {
+	Bucket _bucket;
+	volatile ULONG _start;
+	volatile ULONG _next;
 } RollingQue;
 
 typedef struct {
 
-	Collection _vector;
+	Collection _collection;
 
 	BarrelFlags _flags;
 	volatile LONG _userCount;
 	volatile LONG _pointerCount;
 
+	//uint _barrelCount = _collection._capacity
 	uint _barrelOffset;
 	int _barrelStart;
-	int _nextNode;
+	int _nextNode; // next garbage/physical (Whether is active or not)
 	int _requests;
 
 } BarrelNode;
 
 typedef struct {
-	Vector _vector;
+	RequestType _type;
+
+	Bucket _init;
+} BarrelRequest;
+
+typedef struct {
+	Collection* _collection;
 	float _threshold;
 	unsigned int _first;
 	unsigned int _last;
@@ -137,13 +124,11 @@ typedef struct {
 	DWORD _ID;
 	void* _service;
 	int _offset;
-	//int _flags;
 } ThreadHandle;
 
 typedef struct {
 	int _localFlags;
 	ThreadHandle _serviceThread;
-	RollingQue _que;
 } tService;
 
 typedef struct {
@@ -155,10 +140,13 @@ typedef struct {
 
 typedef struct {
 	tService _barrelNodes;
-	BarrelNode Omegus;
+
 	HeapService* _heap;
-	ThreadHandle* _threadBin;
-	unsigned int _threadCount;
+
+	BarrelNode Omegus;
+	Bucket _threadBin;
+	RollingQue _requests;
+
 	int _nextAvailable;
 	int _lastPhysicalNode;
 } BarrelService;
@@ -180,22 +168,22 @@ typedef struct {
 
 typedef struct {
 	PropertyID _property;
-	Vector _params;
+	Bucket _params;
 } Parameter;
 
 typedef struct {
 	unsigned long long _firstBarCode;
-	Vector _subscriptions;
+	Bucket _subscriptions;
 } Batch;
 
 typedef struct {
 	PropertyID _property;
-	Vector _batches;
+	Bucket _batches;
 } Allocator;
 
 typedef struct {
 	hash_map _map;
-	Vector _data;
+	Collection* _data;
 } HashTable;
 
 typedef struct {

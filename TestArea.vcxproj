@@ -141,7 +141,7 @@
     <ClCompile Include="tServices.c" />
     <ClCompile Include="tThreads.c" />
     <ClCompile Include="tTypeID.c" />
-    <ClCompile Include="tVector.c" />
+    <ClCompile Include="tCollection.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tBarrel.h" />
@@ -157,7 +157,7 @@
     <ClInclude Include="tServices.h" />
     <ClInclude Include="tThreads.h" />
     <ClInclude Include="tTypeID.h" />
-    <ClInclude Include="tVector.h" />
+    <ClInclude Include="tCollection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

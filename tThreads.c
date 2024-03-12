@@ -1,5 +1,7 @@
 #include <tThreads.h>
 
+TYPE_DECL(ThreadHandle, NULL, 0);
+
 bool ThreadHandle_ctor(ThreadHandle* threadHandle, void* service, LPTHREAD_START_ROUTINE workEntry, int offset)
 {
 	if (!threadHandle || !service || !workEntry)

@@ -1,5 +1,5 @@
 #include <tHashMap.h>
-
+/*
 uint hashCapacity(uint request)
 {
 	uint output = 1;
@@ -10,16 +10,18 @@ uint hashCapacity(uint request)
 
 hash_node* hashMap_GetAtIndex(hash_map* map, uint index)
 {
-	if (index > map->_vector._capacity)
+	if (index > map->_collection->_capacity)
 		return NULL;
 
-	return &(((hash_node*)(map->_vector._bucket))[index]);
-}
+	Collection_
 
-hash_node* hashMap_Start(hash_map* map)
-{
-	return hashMap_GetAtIndex(map, 0);
+	return &(((hash_node*)(map->_bucket._bucket))[index]);
 }
+//
+//hash_node* hashMap_Start(hash_map* map)
+//{
+//	return hashMap_GetAtIndex(map, 0);
+//}
 
 unsigned int GetCharHash(const char* key, unsigned int capacity)
 {
@@ -60,7 +62,7 @@ void hashNode_ctor(hash_node* node)
 
 int hashMap_GetNode(hash_map* map, hash_node** nodePtr, uint* index, const char* key, bool assert)
 {
-	unsigned int startIndex = map->_hashFunc(key, map->_vector._capacity);//GetCharHash(key, map->_capacity);
+	unsigned int startIndex = map->_hashFunc(key, map->_collection._capacity);//GetCharHash(key, map->_capacity);
 
 	map->_lastLookupPerformance = -1; // Assume off map to start;
 
@@ -289,7 +291,7 @@ hash_map hashMap_Create(unsigned int capacity, TypeFlags flags, float threshold,
 	return output;
 }
 
-
+*/
 //#define HASH_ASSERT(tablePtr, key, value) hashMap_Assert(tablePtr, key, sizeof(value), &value) 
 
 //void hash_dtor(hash_map* table)

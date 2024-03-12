@@ -4,31 +4,24 @@ enum Constants {
 	NONE = -2,
 	OMEGA = -1,
 
-	Vector_Default_Capacity = 16,
-	Barrel_Max_Capacity = 1024,
+	//Vector_Default_Capacity = 16,
+	//Barrel_Max_Capacity = 1024,
 	Hash_Min_Threshold = 30,
 	Hash_Default_Threshold = 70,
 	Hash_Max_Threshold = 80,
 	Hash_Max_Conversion = 64,
-	//Heap_Size_Page = 4096,
-	//Heap_Page_Max = 128,
-	//Barrel_Size_Unit = 32,
-	//Barrel_Count_Node = 3,
-	//Heap_Threshold = 2048
 };
 
 typedef enum {
-	DONE = 0,
 	RUN = 1,
-	req_INIT = 2,
-	req_ROLL = 4,
-	req_FREE = 8,
-	wait_ROLL = 16,
-	wait_FREE = 32
+	req_INIT = 4,
+	req_ROLL = 8,
+	req_FREE = 16,
+	wait_ROLL = 32,
+	wait_FREE = 64
 } BarrelFlags;
 
 typedef enum {
-	NULL = 0,
 	POINTER = 1,
 	UNSIGNED = 2,
 	BARREL = 4,
@@ -45,6 +38,8 @@ typedef enum {
 typedef enum {
 	ITERATE,
 
+	CREATE_NODE,
+
 	COMPARE_EQUIVALENCE,
 	COMPARE_COMPATIBILITY_FULL,
 	COMPARE_COMPATIBILITY_WRITE_ALLOWED,
@@ -59,4 +54,11 @@ typedef enum {
 	MODIFY_REMOVE_AT,
 	MODIFY_REMOVE_FIRST_FOUND,
 	MODIFY_RESIZE,
-} CheckType;
+	MODIFY_DECON,
+
+	WAIT_INSERT,
+	WAIT_REMOVE_AT,
+	WAIT_REMOVE_FIRST_FOUND,
+	WAIT_RESIZE,
+	WAIT_DECON
+} RequestType;

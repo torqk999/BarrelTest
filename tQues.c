@@ -1,60 +1,67 @@
 #include <tQues.h>
 
+TYPE_DECL(Request, NULL, 0);
+
 void RollingQue_Clear(RollingQue* que, int index)
 {
-	que->_requests[index]._target = NULL;
-	que->_requests[index]._delta = 0;
+	Collection_Write(&(que->_bucket), NULL, index);
 }
 
 void RollingQue_ClearAll(RollingQue* que)
 {
-	for (int i = 0; i < QUE_SIZE; i++)
+	for (int i = 0; i < MaxQueCount; i++)
 		RollingQue_Clear(que, i);
-}
 
-void RollingQue_ctor(RollingQue* que)
-{
-	que->_end = 0;
+	que->_next = 0;
 	que->_start = 0;
-	RollingQue_ClearAll(que);
 }
 
-void Advance(int* index)
+RollingQue RollingQue_ctor(Bucket bucket)
 {
-	int working = *index;
-	working++;
-	if (working >= QUE_SIZE)
-		working = 0;
-	*index = working;
+	RollingQue newQue = { bucket };
+	RollingQue_ClearAll(&newQue);
+	return newQue;
 }
 
-bool RollingQue_MakeRequest(RollingQue* que, QueRequest request)
+ULONG Advance(volatile ULONG* index)
 {
-	int check = que->_end;
-	Advance(&check);
-	if (check == que->_start) {
-		PREENT("End of que! No request space!\n");
+	return InterlockedExchange(index, *index + 1 >= MaxQueCount ? 0 : *index + 1);
+}
+
+bool RollingQue_Append(RollingQue* que, void* next)
+{
+	if (que->_next + 1 == que->_start) {
+		PREENT("Que Capacity Full! No request space!\n");
 		return false;
 	}
 
-	que->_requests[que->_end] = request;
-	que->_end = check;
-	return true;
+	PREENT("Request made!\n");
+	return Collection_Write(&(que->_bucket), next, Advance(&que->_next));
 }
 
-bool RollingQue_PullRequest(RollingQue* que, QueRequest* request)
+bool RollingQue_PullNext(RollingQue* que, void* trg)
 {
-	if (que->_start == que->_end)
+	if (que->_start == que->_next) {
+		//PREENT("End of que! No requests left to process!\n");
 		return false;
+	}
 
 	PREENT("Request pulled!\n");
-
-	*request = que->_requests[que->_start];
-	Advance(&que->_start);
-	return true;
+	return Collection_Read(&(que->_bucket), trg, Advance(&que->_start));
 }
 
-bool RollingQue_HasRequests(RollingQue* que)
+bool RollingQue_HasQue(RollingQue* que)
 {
-	return que->_start != que->_end;
+	return que->_start != que->_next;
 }
+
+bool RollingQue_SeeNext(RollingQue* que, void* trg)
+{
+	if (que->_start == que->_next) {
+		//PREENT("End of que! No requests left to process!\n");
+		return false;
+	}
+
+	return Collection_Read(&(que->_bucket), trg, que->_start);
+}
+

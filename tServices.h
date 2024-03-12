@@ -2,4 +2,6 @@
 #include <tThreads.h>
 #include <tQues.h>
 
-void tService_ctor(tService* service, LPTHREAD_START_ROUTINE serviceThreadStart);
+//tService tService_ctor(RollingQue serviceQue);
+
+bool Service_Start(tService* service, LPTHREAD_START_ROUTINE serviceThreadStart);
