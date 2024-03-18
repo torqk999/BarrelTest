@@ -1,5 +1,7 @@
 #pragma once
 #include <tHeap.h>
+#include <tLink.h>
+#include <tRequest.h>
 
 BarrelService GlobalBarrelService;
 TypeID GlobalBarrelNodeType;
@@ -18,6 +20,8 @@ size_t barrel_VectorRemainingSizeCap(BarrelNode* node);
 uint barrel_VectorRemainingUnitCap(BarrelNode* node);
 
 bool barrel_DeltaSizeRequest(BarrelNode* node, int delta);
+bool barrel_ResizeRequest(Request request);
+void barrel_AppendRequest(LinkedRequest* linkedRequest);
 
 int barrel_NextAvailableNode();
 int barrel_maximumAvailableBarrels(int requested);
@@ -30,8 +34,10 @@ bool barrel_RemoveAt(Request request);
 
 bool barrel_Iterate(Request* request);
 bool barrel_Transcribe(Request request);
-bool barrel_ResizeRequest(Request request);
+
 bool barrel_Modify(Request request);
+
+bool barrel_Extensions(Request* request);
 
 void barrelRoll(int index, int delta, int dir);
 

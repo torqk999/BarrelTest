@@ -12,16 +12,12 @@ bool Bucket_Add(Request request);
 bool Bucket_Insert(Request request);
 bool Bucket_Remove(Request request);
 bool Bucket_RemoveAt(Request request);
-
 bool Bucket_Iterate(Request* request);
-bool Bucket_Transcribe(Request request);
-bool Bucket_Modify(Request request);
 
-CollectionExtensions Bucket_TemplateExtensions;
-//{
-//	Bucket_Iterate,
-//	Bucket_Transcribe,
-//	Bucket_Modify
-//};
+bool Bucket_Head(Request* request);
+
+bool Bucket_Extensions(Request* request);
 
 Bucket Bucket_ctor(Collection collection, void* bucket);
+
+#define BUCKET(typeName, flags, ...) Bucket_ctor(Collection_ctor(&((TypeID){sizeof(typeName), #typeName, flags}),)

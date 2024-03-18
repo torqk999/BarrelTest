@@ -1,12 +1,31 @@
 #include <tBucket.h>
 
-
-
 void* Bucket_GetPtr(Bucket* bucket, unsigned int index)
 {
 	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_bucket) + (index * bucket->_collection._type->_size);
 }
 
+bool Bucket_Head(Request* request) {
+	request->_trg = ((Bucket*)(request->_src))->_bucket;
+	return true;
+}
+bool Bucket_Iterate(Request* request)
+{
+	Bucket* bucketVector = request->_trg;
+	unsigned int* current = &(request->_trgIx);
+	unsigned int* count = &(request->_count);
+
+	if (*current >= bucketVector->_collection._capacity)
+		return false;
+
+	void* nxt = Bucket_GetPtr(bucketVector, *current);
+
+	*current = (*current) + 1;
+
+	*count = *current == *count ? 0 : *count;
+
+	return nxt;
+}
 bool Bucket_Resize(Request request)
 {
 	Bucket* bucketVector = request._trg;
@@ -14,20 +33,6 @@ bool Bucket_Resize(Request request)
 		return false;
 
 	bucketVector->_collection._count = request._count;
-	return true;
-}
-bool Bucket_Read(Request request) {
-
-	Bucket* src = request._src;
-
-	if (request._srcIx + request._count >= src->_collection._count)
-		return false;
-
-	request._src = src->_bucket;
-	request._trgIx = 0;
-
-	TranscribeSpan(request);
-
 	return true;
 }
 bool Bucket_Write(Request request) {
@@ -41,7 +46,25 @@ bool Bucket_Write(Request request) {
 		return false;
 
 	request._trg = trg->_bucket;
+	if (request._type & TRANSCRIBE_COLLECTIONS)
+		request._src = ((Bucket*)request._src)->_bucket;
 	request._srcIx = 0;
+
+	TranscribeSpan(request);
+
+	return true;
+}
+bool Bucket_Read(Request request) {
+
+	Bucket* src = request._src;
+
+	if (request._srcIx + request._count >= src->_collection._count)
+		return false;
+
+	request._src = src->_bucket;
+	if (request._type & TRANSCRIBE_COLLECTIONS)
+		request._trg = ((Bucket*)request._trg)->_bucket;
+	request._trgIx = 0;
 
 	TranscribeSpan(request);
 
@@ -88,73 +111,46 @@ bool Bucket_RemoveAt(Request request)
 
 }
 
-bool Bucket_Iterate(Request* request)
+
+bool Bucket_Extensions(Request* request)
 {
-	Bucket* bucketVector = request->_trg;
-	unsigned int* current = &(request->_trgIx);
-	unsigned int* count = &(request->_count);
-
-	if (*current >= bucketVector->_collection._capacity)
-		return false;
-
-
-
-	void* nxt = Bucket_GetPtr(bucketVector, *current);
-
-	*current = (*current) + 1;
-
-	*count = *current == *count ? 0 : *count;
-
-	
-
-	return nxt;
-}
-bool Bucket_Transcribe(Request request)
-{
-	switch (request._type)
+	switch (request->_type)
 	{
+	case HEAD:
+		return Bucket_Head(request);
+
+	case ITERATE:
+		return Bucket_Iterate(request);
+
+	case MODIFY_DELTA_CAPACITY:
+		return Bucket_Resize(*request);
+
 	case TRANSCRIBE_RAW_TO_COLLECTION:
-		return Bucket_Write(request);
+	case TRANSCRIBE_COLLECTIONS:
+		return Bucket_Write(*request);
 
 	case TRANSCRIBE_COLLECTION_TO_RAW:
-		return Bucket_Read(request);
+		return Bucket_Read(*request);
 
-	default:
-		return false;
-	}
-}
-bool Bucket_Modify(Request request)
-{
-	switch (request._type)
-	{
 	case MODIFY_INSERT:
-		return Bucket_Insert(request);
-
-	case MODIFY_REMOVE_AT:
-		return Bucket_RemoveAt(request);
+		return Bucket_Insert(*request);
 
 	case MODIFY_REMOVE_FIRST_FOUND:
-		return Bucket_Remove(request);
+		return Bucket_Remove(*request);
 
-	case MODIFY_RESIZE:
-		return Bucket_Resize(request);
+	case MODIFY_REMOVE_AT:
+		return Bucket_RemoveAt(*request);
 
 	default:
 		return false;
 	}
 }
-
-CollectionExtensions Bucket_TemplateExtensions =
-{
-	Bucket_Iterate,
-	Bucket_Transcribe,
-	Bucket_Modify
-};
 
 Bucket Bucket_ctor(Collection collection, void* bucket) {
 	Bucket newBucket;
 
 	newBucket._collection = collection;
+	newBucket._collection._extensions = Bucket_Extensions;
 	newBucket._bucket = bucket;
 
 	return newBucket;

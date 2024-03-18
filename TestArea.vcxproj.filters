@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestArea.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tHelpers.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -55,6 +52,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tModules.h">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tRequest.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tVector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestArea.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="tDefines.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tVector.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

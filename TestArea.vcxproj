@@ -138,10 +138,12 @@
     <ClCompile Include="tModules.h" />
     <ClCompile Include="tPreent.c" />
     <ClCompile Include="tQues.c" />
+    <ClCompile Include="tRequest.c" />
     <ClCompile Include="tServices.c" />
     <ClCompile Include="tThreads.c" />
     <ClCompile Include="tTypeID.c" />
     <ClCompile Include="tCollection.c" />
+    <ClCompile Include="tVector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tBarrel.h" />
@@ -154,10 +156,12 @@
     <ClInclude Include="tLink.h" />
     <ClInclude Include="tPreent.h" />
     <ClInclude Include="tQues.h" />
+    <ClInclude Include="tRequest.h" />
     <ClInclude Include="tServices.h" />
     <ClInclude Include="tThreads.h" />
     <ClInclude Include="tTypeID.h" />
     <ClInclude Include="tCollection.h" />
+    <ClInclude Include="tVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

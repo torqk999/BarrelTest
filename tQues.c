@@ -4,7 +4,7 @@ TYPE_DECL(Request, NULL, 0);
 
 void RollingQue_Clear(RollingQue* que, int index)
 {
-	Collection_Write(&(que->_bucket), NULL, index);
+	Collection_Write(que, NULL, index);
 }
 
 void RollingQue_ClearAll(RollingQue* que)
@@ -36,7 +36,7 @@ bool RollingQue_Append(RollingQue* que, void* next)
 	}
 
 	PREENT("Request made!\n");
-	return Collection_Write(&(que->_bucket), next, Advance(&que->_next));
+	return Collection_Write(que, next, Advance(&que->_next));
 }
 
 bool RollingQue_PullNext(RollingQue* que, void* trg)
@@ -47,7 +47,7 @@ bool RollingQue_PullNext(RollingQue* que, void* trg)
 	}
 
 	PREENT("Request pulled!\n");
-	return Collection_Read(&(que->_bucket), trg, Advance(&que->_start));
+	return Collection_Read(que, trg, Advance(&que->_start));
 }
 
 bool RollingQue_HasQue(RollingQue* que)
@@ -62,6 +62,6 @@ bool RollingQue_SeeNext(RollingQue* que, void* trg)
 		return false;
 	}
 
-	return Collection_Read(&(que->_bucket), trg, que->_start);
+	return Collection_Read(que, trg, que->_start);
 }
 

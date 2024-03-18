@@ -13,6 +13,7 @@ typedef struct
 typedef struct _Link {
 	struct _Link* _next;
 	struct _Link* _prev;
+	volatile LONG _lock;
 } Link;
 
 typedef struct {
@@ -46,7 +47,6 @@ typedef struct {
 
 	void* _trg;
 	void* _src;
-	void* _buffer;
 
 	int _trgIx;
 	int _srcIx;
@@ -56,20 +56,20 @@ typedef struct {
 
 } Request;
 
+
 typedef struct {
-	bool (*Iterate)(Request* request);
-	//bool (*Compare)(Request request);
-	bool (*Transcribe)(Request request);
-	bool (*Modify)(Request request);
-} CollectionExtensions;
+	Link _link;
+	Request _request;
+} LinkedRequest;
 
 typedef struct {
 	TypeID* _type;
-	CollectionExtensions* _extensions;
-	//bool (*Compare)(Request request);
+	bool(*_extensions)(Request* request);
 	uint _count;
 	uint _capacity;
 } Collection;
+
+typedef Collection* COLLECTION;
 
 typedef struct {
 	Collection _collection;
@@ -85,6 +85,7 @@ typedef struct {
 typedef struct {
 
 	Collection _collection;
+	LinkedRequest* _requests;
 
 	BarrelFlags _flags;
 	volatile LONG _userCount;
@@ -94,8 +95,7 @@ typedef struct {
 	uint _barrelOffset;
 	int _barrelStart;
 	int _nextNode; // next garbage/physical (Whether is active or not)
-	int _requests;
-
+	
 } BarrelNode;
 
 typedef struct {
@@ -145,7 +145,7 @@ typedef struct {
 
 	BarrelNode Omegus;
 	Bucket _threadBin;
-	RollingQue _requests;
+	//RollingQue _requests;
 
 	int _nextAvailable;
 	int _lastPhysicalNode;

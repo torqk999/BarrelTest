@@ -82,86 +82,61 @@
 
 const TypeID NULL_TYPE = { 0, "NULL" };
 
-bool Collection_Iterate(Request* request)
+bool Collection_Iterate(Collection* trg, Request* iter)
 {
-	Bucket* vector = (Bucket*)request->_trg;
-	return vector->_collection._extensions->Iterate(request);
+	return trg->_extensions(iter);
 }
-bool Collection_Transcribe(Request request) {
-
-	Collection* src = request._src;
-	Collection* trg = request._trg;
-
-	if (!TypeID_Compare((Request) { COMPARE_COMPATIBILITY_FULL, trg->_type, src->_type, NULL, 0, 0, 1 }))
-		return false;
-
-	if (request._trgIx + request._count >= trg->_count ||
-		request._srcIx + request._count >= src->_count)
-		return false;
-
-	Request readRequest = { TRANSCRIBE_COLLECTION_TO_RAW, request._buffer, src, NULL, 0, request._srcIx, 1 };
-	Request writeRequest = { TRANSCRIBE_RAW_TO_COLLECTION, trg, request._buffer, NULL, request._trgIx, 0, 1 };
-
-	for (int i = 0; i < request._count; i++)
-	{
-		if (!src->_extensions->Transcribe(readRequest) ||
-			!trg->_extensions->Transcribe(writeRequest))
-			return false;
-
-		readRequest._srcIx++;
-		readRequest._trgIx++;
-
-		writeRequest._srcIx++;
-		writeRequest._trgIx++;
-	}
-
-	return true;
+bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count) {
+	return trg->_extensions(&(Request) { TRANSCRIBE_COLLECTIONS, trg, src, tIx, sIx, count });
 }
-bool Collection_Resize(Collection* trg, unsigned int count)
-{
-	return trg->_extensions->Modify((Request) { MODIFY_RESIZE, trg, NULL, NULL, 0, 0, count });
+bool Collection_Resize(Collection* trg, unsigned int count) {
+	return trg->_extensions(&(Request) { MODIFY_DELTA_CAPACITY, trg, NULL, 0, 0, count });
 }
-bool Collection_ReadSpan(Collection* src, void* trg, unsigned int start, unsigned int count)
-{
-	return src->_extensions->Transcribe((Request) { TRANSCRIBE_COLLECTION_TO_RAW, trg, src, NULL, start, 0, count });
+bool Collection_ReadSpan(Collection* src, void* trg, unsigned int start, unsigned int count) {
+	return src->_extensions(&(Request) { TRANSCRIBE_COLLECTION_TO_RAW, trg, src, start, 0, count });
 }
+bool Collection_WriteSpan(Collection* trg, void* src, unsigned int start, int count) {
+	return trg->_extensions(&(Request) { TRANSCRIBE_RAW_TO_COLLECTION, trg, src, start, 0, count });
+}
+bool Collection_InsertSpan(Collection* trg, void* src, unsigned int index, unsigned int count) {
+	return trg->_extensions(&(Request) { MODIFY_INSERT, trg, src, index, 0, count });
+}
+bool Collection_RemoveSpanAt(Collection* trg, unsigned int index, unsigned int count) {
+	return trg->_extensions(&(Request) { MODIFY_REMOVE_AT, trg, NULL, index, 0, count });
+}
+
 bool Collection_Read(Collection* src, void* trg, unsigned int index)
 {
 	return Collection_ReadSpan(trg, src, index, 1);
-}
-bool Collection_WriteSpan(Collection* trg, void* src, unsigned int start, int count) {
-
-	return trg->_extensions->Transcribe((Request) { TRANSCRIBE_RAW_TO_COLLECTION, trg, src, NULL, start, 0, count });
 }
 bool Collection_Write(Collection* trg, void* src, unsigned int index)
 {
 	return Collection_WriteSpan(trg, src, index, 1);
 }
-bool Collection_InsertSpan(Collection* trg, void* src, unsigned int index, unsigned int count)
-{
-	return trg->_extensions->Modify((Request) { MODIFY_INSERT, trg, src, NULL, index, 0, count });
-}
 bool Collection_Insert(Collection* trg, void* src, unsigned int index)
 {
 	return Collection_InsertSpan(trg, src, index, 1);
-}
-bool Collection_RemoveSpan(Collection* trg, void* search, unsigned int count)
-{
-	return trg->_extensions->Modify((Request) { MODIFY_REMOVE_FIRST_FOUND, trg, search, NULL, 0, 0, count });
-}
-bool Collection_Remove(Collection* trg, void* search)
-{
-	return Collection_RemoveSpan(trg, search, 1);
-}
-bool Collection_RemoveSpanAt(Collection* trg, unsigned int index, unsigned int count)
-{
-	return trg->_extensions->Modify((Request) { MODIFY_REMOVE_AT, trg, NULL, NULL, index, 0, count });
 }
 bool Collection_RemoveAt(Collection* trg, unsigned int index)
 {
 	return Collection_RemoveSpanAt(trg, index, 1);
 }
 
+bool Collection_RemoveSpan(Collection* trg, void* search, unsigned int count)
+{
+	return trg->_extensions(&(Request) { MODIFY_REMOVE_FIRST_FOUND, trg, search, NULL, 0, 0, count });
+}
+
+bool Collection_Remove(Collection* trg, void* search)
+{
+	return Collection_RemoveSpan(trg, search, 1);
+}
+
+void* Collection_Head(Collection* src){
+	Request req = (Request){ HEAD, NULL, src };
+	src->_extensions(&req);
+	return req._trg;
+}
 
 //CollectionExtensions CreateGenericExtensions(TypeFlags initFlags, CollectionExtensions* templateExtensions)
 //{
@@ -181,8 +156,6 @@ bool Collection_RemoveAt(Collection* trg, unsigned int index)
 
 Collection Collection_ctor(
 	TypeID* type,
-	CollectionExtensions* extensions,
-	//bool(*compare)(Request),
 	uint initCount,
 	uint initCapacity
 )
@@ -191,16 +164,13 @@ Collection Collection_ctor(
 
 	newCollection._count = initCount;
 	newCollection._capacity = initCapacity;
-	newCollection._extensions = extensions;
+	newCollection._extensions = NULL;
 	newCollection._type = type;
-	//newCollection.Compare = compare;
-
-	//CloneTypeID(&(newCollection._type), type);
 
 	return newCollection;
 }
 
 bool Collection_dtor(Collection* collection){
 
-	return collection->_extensions->Modify((Request) { MODIFY_DECON, collection});
+	return collection->_extensions(&(Request) { MODIFY_DECON, collection});
 }

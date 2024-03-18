@@ -1,7 +1,7 @@
 ﻿  tQues.c
 C:\Repos\BarrelTest\tQues.c(3,1): warning C4047: 'initializing': 'const unsigned int' differs in levels of indirection from 'void *'
-C:\Repos\BarrelTest\tQues.c(7,19): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
-C:\Repos\BarrelTest\tQues.c(39,26): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
-C:\Repos\BarrelTest\tQues.c(50,25): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
-C:\Repos\BarrelTest\tQues.c(65,25): warning C4133: 'function': incompatible types - from 'Bucket *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(7,19): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(39,26): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(50,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
+C:\Repos\BarrelTest\tQues.c(65,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
   TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

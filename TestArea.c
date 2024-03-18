@@ -403,10 +403,12 @@ void barrelTest()
 	barrelTest_MAIN();
 }
 
-#define Derp(x) _Generic
+//#define Derp(x) _Generic
 
 
 int main() {
+
+	TypeID myIntType = TYPE_ID(int, 0);
 
 	//PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
 	barrelTest();
