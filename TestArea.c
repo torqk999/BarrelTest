@@ -115,7 +115,7 @@ void heapTest(HeapService* heapService)
 
 	heapDeltaPages(heapService, 1);
 
-	TypeID intType = BARREL_ID(int, 0);
+	TypeInfo intType = BARREL_ID(int, 0);
 
 	void* heapEnd = heapService->_heapStart;
 
@@ -149,7 +149,7 @@ void heapTest(HeapService* heapService)
 
 //static HeapService* test_heapService;
 //static BarrelService* test_barrelService;
-static TypeID* test_intTypeID;
+static TypeInfo* test_intTypeID;
 
 typedef enum {
 	QUIT,
@@ -391,7 +391,7 @@ void barrelTest_MAIN() {
 
 void barrelTest()
 {
-	TypeID intTypeID = BARREL_ID(int, 0);
+	TypeInfo intTypeID = BARREL_ID(int, 0);
 
 	test_intTypeID = &intTypeID;
 
@@ -408,7 +408,7 @@ void barrelTest()
 
 int main() {
 
-	TypeID myIntType = TYPE_ID(int, 0);
+	TypeInfo myIntType = TYPE_ID(int, 0);
 
 	//PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
 	barrelTest();

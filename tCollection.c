@@ -80,12 +80,29 @@
 //		link->_link._prev = trg ? trg->_vector._type->_size == link->_vector._type->_size ? &(trg->_link) : NULL : NULL;
 //}
 
-const TypeID NULL_TYPE = { 0, "NULL" };
+const TypeInfo NULL_TYPE = { 0, "NULL" };
 
-bool Collection_Iterate(Collection* trg, Request* iter)
+void* Collection_Iterate(Collection* trg, Request* iter)
 {
 	return trg->_extensions(iter);
 }
+void Managed_Use(		ManagedCollection* trg)
+{
+	InterlockedIncrement(&(trg->_userCount));
+}
+void Managed_Free(		ManagedCollection* trg)
+{
+	InterlockedDecrement(&(trg->_userCount));
+}
+void Managed_Point(		ManagedCollection* trg)
+{
+	
+}
+void Managed_Release(	ManagedCollection* trg)
+{
+	
+}
+
 bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count) {
 	return trg->_extensions(&(Request) { TRANSCRIBE_COLLECTIONS, trg, src, tIx, sIx, count });
 }
@@ -155,7 +172,8 @@ void* Collection_Head(Collection* src){
 //}
 
 Collection Collection_ctor(
-	TypeID* type,
+	TypeInfo* type,
+	bool(*extensions)(Request* request),
 	uint initCount,
 	uint initCapacity
 )
@@ -164,10 +182,21 @@ Collection Collection_ctor(
 
 	newCollection._count = initCount;
 	newCollection._capacity = initCapacity;
-	newCollection._extensions = NULL;
+	newCollection._extensions = extensions;
 	newCollection._type = type;
 
 	return newCollection;
+}
+
+ManagedCollection Managed_ctor(Collection collection)
+{
+	ManagedCollection newManaged;
+
+	newManaged._collection = collection;
+	newManaged._userCount = 0;
+	newManaged._pointerCount = 0;
+
+	return newManaged;
 }
 
 bool Collection_dtor(Collection* collection){

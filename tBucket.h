@@ -1,8 +1,6 @@
 #pragma once
 #include <tCollection.h>
 
-
-
 void* Bucket_GetPtr(Bucket* bucketVector, unsigned int index);
 
 bool Bucket_Resize(Request request);
@@ -20,4 +18,4 @@ bool Bucket_Extensions(Request* request);
 
 Bucket Bucket_ctor(Collection collection, void* bucket);
 
-#define BUCKET(typeName, flags, ...) Bucket_ctor(Collection_ctor(&((TypeID){sizeof(typeName), #typeName, flags}),)
+#define BUCKET(typeName, flags, ...) Bucket_ctor(Collection_ctor(&((TypeInfo){sizeof(typeName), #typeName, flags}),)

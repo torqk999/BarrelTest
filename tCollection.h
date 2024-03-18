@@ -1,38 +1,6 @@
 #pragma once
 #include <tTypeID.h>
 
-typedef enum {
-	DONE,
-	ITERATE,
-	HEAD,
-
-	CREATE_NODE_BARREL,
-
-	COMPARE_EQUIVALENCE,
-	COMPARE_COMPATIBILITY_FULL,
-	COMPARE_COMPATIBILITY_WRITE_ALLOWED,
-	COMPARE_COMPATIBILITY_SIZE,
-
-	//TRANSCRIBE,
-
-	TRANSCRIBE_RAW_TO_RAW,
-	TRANSCRIBE_COLLECTIONS,
-	TRANSCRIBE_RAW_TO_COLLECTION,
-	TRANSCRIBE_COLLECTION_TO_RAW,
-
-	MODIFY_INSERT,
-	MODIFY_REMOVE_AT,
-	MODIFY_REMOVE_FIRST_FOUND,
-	MODIFY_DELTA_CAPACITY,
-	MODIFY_DELTA_COUNT,
-	MODIFY_DECON,
-
-	//WAIT_INSERT,
-	//WAIT_REMOVE_AT,
-	//WAIT_REMOVE_FIRST_FOUND,
-	//WAIT_RESIZE,
-	//WAIT_DECON
-} RequestType;
 
 /* Vector - Underlying functionality of the collection system, ambiguous of whether it derives
 * from a 'bucket' or a 'barrel'. Includes construction, 
@@ -43,7 +11,7 @@ typedef enum {
 
 #define VECTOR(vecPtr, typeName, ...) Vector_ctor(vecPtr, BUCKET, sizeof(typeName), PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
 
-#define VEC_TOR(typeName, ...) Vector_Vectorize((TypeID){sizeof(typeName), #typeName}, PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
+#define VEC_TOR(typeName, ...) Vector_Vectorize((TypeInfo){sizeof(typeName), #typeName}, PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
 
 #define VEC_PRINT_ALL(vectorPtr, typeName, strFormat) for (int i = 0; i < ( vectorPtr ) ->_count; i++) \
 { typeName output; Vector_ReadIndex1( vectorPtr , i, &output, sizeof( typeName )); \
@@ -60,7 +28,15 @@ void foo()
 //	sizeof()
 //};
 
-//bool Collection_Iterate(Request* request);
+void* Collection_Iterate(Collection* trg, Request* iter);
+void* Collection_Head(Collection* trg);
+void Managed_Use(		ManagedCollection* trg);
+void Managed_Free(		ManagedCollection* trg);
+void Managed_Point(		ManagedCollection* trg);
+void Managed_Release(	ManagedCollection* trg);
+
+uint Collection_Flags(Collection* trg);
+
 bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count);
 bool Collection_Resize(Collection* trg, unsigned int count);
 bool Collection_ReadSpan(Collection * src, void* trg, unsigned int start, unsigned int count);
@@ -75,12 +51,15 @@ bool Collection_RemoveAt(Collection * trg, unsigned int index);
 bool Collection_RemoveSpan(Collection* trg, void* search, unsigned int count);
 bool Collection_Remove(Collection* trg, void* search);
 
-void* Collection_Head(Collection* trg);
+
 
 Collection Collection_ctor(
-	TypeID* type,
+	TypeInfo* type,
+	bool(*extensions)(Request* request),
 	uint existingCount,
 	uint existingCapacity
 );
+
+ManagedCollection Managed_ctor(Collection collection);
 
 bool Collection_dtor(Collection* vector);

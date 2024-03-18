@@ -141,7 +141,7 @@
     <ClCompile Include="tRequest.c" />
     <ClCompile Include="tServices.c" />
     <ClCompile Include="tThreads.c" />
-    <ClCompile Include="tTypeID.c" />
+    <ClCompile Include="tTypeInfo.c" />
     <ClCompile Include="tCollection.c" />
     <ClCompile Include="tVector.c" />
   </ItemGroup>
@@ -159,7 +159,7 @@
     <ClInclude Include="tRequest.h" />
     <ClInclude Include="tServices.h" />
     <ClInclude Include="tThreads.h" />
-    <ClInclude Include="tTypeID.h" />
+    <ClInclude Include="tTypeInfo.h" />
     <ClInclude Include="tCollection.h" />
     <ClInclude Include="tVector.h" />
   </ItemGroup>

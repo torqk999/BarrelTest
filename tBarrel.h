@@ -4,7 +4,7 @@
 #include <tRequest.h>
 
 BarrelService GlobalBarrelService;
-TypeID GlobalBarrelNodeType;
+TypeInfo GlobalBarrelNodeType;
 
 ThreadHandle barrelService_ThreadBin[MaxThreadCount];
 Request barrelService_QueBin[MaxQueCount];
@@ -13,29 +13,26 @@ BarrelNode* barrel_NodeLocation(int index);
 BarrelNode* barrel_LastPhysicalNode();
 
 void* barrel_GetElementLocation(BarrelNode* node, uint index);
-void barrel_TranscribeElement(BarrelNode* targetNode, void* target, unsigned int index, bool isRead);
-void barrel_TranscribeSpan(Request request);
 
-size_t barrel_VectorRemainingSizeCap(BarrelNode* node);
-uint barrel_VectorRemainingUnitCap(BarrelNode* node);
 
-bool barrel_DeltaSizeRequest(BarrelNode* node, int delta);
-bool barrel_ResizeRequest(Request request);
+size_t barrel_RemainingSizeCap(BarrelNode* node);
+uint barrel_RemainingUnitCap(BarrelNode* node);
+
+bool barrel_DeltaSize(Request request);
+bool barrel_Resize(Request request);
 void barrel_AppendRequest(LinkedRequest* linkedRequest);
 
 int barrel_NextAvailableNode();
 int barrel_maximumAvailableBarrels(int requested);
+
+bool barrel_Head(Request* request);
+bool barrel_Iterate(Request* request);
 
 bool barrel_Read(Request request);
 bool barrel_Write(Request request);
 bool barrel_Insert(Request request);
 bool barrel_Remove(Request request);
 bool barrel_RemoveAt(Request request);
-
-bool barrel_Iterate(Request* request);
-bool barrel_Transcribe(Request request);
-
-bool barrel_Modify(Request request);
 
 bool barrel_Extensions(Request* request);
 
@@ -44,7 +41,7 @@ void barrelRoll(int index, int delta, int dir);
 DWORD WINAPI barrelRollingWork(void* target);
 DWORD WINAPI barrelServiceWork(void* target);
 
-BarrelNode BarrelNode_ctor(TypeID* type);
+BarrelNode BarrelNode_ctor(TypeInfo* type);
 bool BarrelServiceInit(HeapService* heapService);
 
 bool barrel_RequestNode(BarrelNode** nodeLoc, Bucket vector);

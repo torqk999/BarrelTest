@@ -14,7 +14,6 @@ Request Transcribe(
 			type,
 			trg,
 			src,
-			buf,
 			tIx,
 			sIx,
 			cnt,
@@ -27,7 +26,6 @@ Request CreateBarrelNode(BarrelNode* trg) {
 		CREATE_NODE_BARREL,
 			trg,
 			NULL,
-			NULL,
 			0,
 			0,
 			0,
@@ -39,7 +37,6 @@ Request DeltaSizeCapacity(Collection* trg, int delta) {
 	return (Request) {
 		MODIFY_DELTA_CAPACITY,
 			trg,
-			NULL,
 			NULL,
 			0,
 			0,
@@ -56,7 +53,6 @@ Request Decon(Collection* trg) {
 	return (Request) {
 		MODIFY_DECON,
 			trg,
-			NULL,
 			NULL,
 			0,
 			0,

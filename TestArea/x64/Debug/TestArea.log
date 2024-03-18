@@ -1,7 +1,245 @@
-﻿  tQues.c
+﻿  tBarrel.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tBarrel.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tBarrel.c')
+  
+C:\Repos\BarrelTest\tBarrel.c(21,26): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.c(47,39): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Repos\BarrelTest\tBarrel.c(72,78): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'Collection *'
+C:\Repos\BarrelTest\tBarrel.c(65,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tBarrel.c(96,16): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
+C:\Repos\BarrelTest\tBarrel.c(96,35): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
+C:\Repos\BarrelTest\tBarrel.c(109,8): warning C4013: 'barrel_DeltaSizeRequest' undefined; assuming extern returning int
+C:\Repos\BarrelTest\tBarrel.c(127,67): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tBarrel.c(147,8): warning C4013: 'barrel_ResizeRequest' undefined; assuming extern returning int
+C:\Repos\BarrelTest\tBarrel.c(147,46): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'Collection *'
+C:\Repos\BarrelTest\tBarrel.c(151,2): warning C4013: 'barrel_TranscribeSpan' undefined; assuming extern returning int
+C:\Repos\BarrelTest\tBarrel.c(174,46): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'Collection *'
+C:\Repos\BarrelTest\tBarrel.c(316,29): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.c(320,71): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.c(344,43): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.c(395,19): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.c(488,25): warning C4047: '=': 'int' differs in levels of indirection from 'BarrelNode *'
+C:\Repos\BarrelTest\tBarrel.c(492,49): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
+C:\Repos\BarrelTest\tBarrel.c(492,25): warning C4133: '=': incompatible types - from 'Link *' to 'LinkedRequest *'
+C:\Repos\BarrelTest\tBarrel.c(510,49): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
+C:\Repos\BarrelTest\tBarrel.c(510,25): warning C4133: '=': incompatible types - from 'Link *' to 'LinkedRequest *'
+C:\Repos\BarrelTest\tBarrel.c(503,2): warning C4102: 'Next': unreferenced label
+C:\Repos\BarrelTest\tBarrel.c(551,18): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBarrel.c(572,39): warning C4028: formal parameter 1 different from declaration
+C:\Repos\BarrelTest\tBarrel.c(599,47): error C2198: 'Collection_ctor': too few arguments for call
+C:\Repos\BarrelTest\tBarrel.c(603,24): warning C4090: 'function': different 'const' qualifiers
+C:\Repos\BarrelTest\tBarrel.c(604,4): warning C4047: 'function': 'int (__cdecl *)(Request *)' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tBarrel.c(604,4): warning C4024: 'Collection_ctor': different types for formal and actual parameter 2
+C:\Repos\BarrelTest\tBarrel.c(602,3): error C2198: 'Collection_ctor': too few arguments for call
+C:\Repos\BarrelTest\tBarrel.c(610,23): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
+C:\Repos\BarrelTest\tBarrel.c(636,38): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'Collection *'
+C:\Repos\BarrelTest\tBarrel.c(645,21): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+  tBucket.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tBucket.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tBucket.c')
+  
+C:\Repos\BarrelTest\tBucket.c(5,52): warning C4047: ':': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tBucket.c(5,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tBucket.c(27,2): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tBucket.c(32,21): warning C4018: '>': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBucket.c(45,38): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBucket.c(61,38): warning C4018: '>=': signed/unsigned mismatch
+  TestArea.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'TestArea.c')
+  
+C:\Repos\BarrelTest\TestArea.c(127,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(133,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(208,35): warning C4047: 'initializing': 'int (__cdecl *)(Request *)' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\TestArea.c(247,25): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(300,25): warning C4018: '>=': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(335,20): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(338,3): error C2039: '_collection': is not a member of 'BarrelNode'
+  C:\Repos\BarrelTest\tModules.h(90,16):
+  see declaration of 'BarrelNode'
+  
+C:\Repos\BarrelTest\TestArea.c(338,3): warning C4047: 'initializing': 'int' differs in levels of indirection from 'LinkedRequest *'
+C:\Repos\BarrelTest\TestArea.c(381,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(382,4): warning C4090: 'initializing': different 'const' qualifiers
+C:\Repos\BarrelTest\TestArea.c(386,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\TestArea.c(411,9): warning C4047: 'initializing': 'const unsigned int' differs in levels of indirection from 'void *'
+  tHashMap.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tHashMap.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tHashMap.c')
+  
+  tHeap.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tHeap.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tHeap.c')
+  
+C:\Repos\BarrelTest\tHeap.c(6,25): warning C4028: formal parameter 1 different from declaration
+C:\Repos\BarrelTest\tHeap.c(7,1): warning C4029: declared formal parameter list different from definition
+C:\Repos\BarrelTest\tHeap.c(28,1): warning C4026: function declared with formal parameter list
+C:\Repos\BarrelTest\tHeap.c(53,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tHeap.c(62,20): warning C4028: formal parameter 1 different from declaration
+C:\Repos\BarrelTest\tHeap.c(63,1): warning C4029: declared formal parameter list different from definition
+  tHelpers.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tHelpers.c')
+  
+C:\Repos\BarrelTest\tHelpers.c(71,86): warning C4090: 'initializing': different 'const' qualifiers
+C:\Repos\BarrelTest\tHelpers.c(127,43): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tHelpers.c(140,62): warning C4047: ':': 'size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tHelpers.c(139,16): warning C4022: 'rawTranscribe': pointer mismatch for actual parameter 1
+C:\Repos\BarrelTest\tHelpers.c(142,25): warning C4022: 'rawTranscribe': pointer mismatch for actual parameter 2
+  tLink.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tLink.c')
+  
+  tPreent.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tPreent.c')
+  
+C:\Repos\BarrelTest\tPreent.c(160,10): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Repos\BarrelTest\tPreent.c(173,12): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Repos\BarrelTest\tPreent.c(107,7): warning C4101: 'next': unreferenced local variable
+  tQues.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tQues.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tQues.c')
+  
 C:\Repos\BarrelTest\tQues.c(3,1): warning C4047: 'initializing': 'const unsigned int' differs in levels of indirection from 'void *'
 C:\Repos\BarrelTest\tQues.c(7,19): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
 C:\Repos\BarrelTest\tQues.c(39,26): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
 C:\Repos\BarrelTest\tQues.c(50,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
 C:\Repos\BarrelTest\tQues.c(65,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
-  TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe
+  tRequest.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tRequest.c')
+  
+  tServices.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tServices.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tServices.c')
+  
+  tThreads.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tThreads.c')
+  
+C:\Repos\BarrelTest\tThreads.c(3,1): warning C4047: 'initializing': 'const unsigned int' differs in levels of indirection from 'void *'
+  tTypeID.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tTypeID.c')
+  
+C:\Repos\BarrelTest\tTypeID.c(90,55): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Repos\BarrelTest\tTypeID.c(98,45): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  tCollection.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tCollection.c')
+  
+C:\Repos\BarrelTest\tCollection.h(23,2): warning C4013: 'Vector_Vectorize' undefined; assuming extern returning int
+  (compiling source file 'tCollection.c')
+  
+C:\Repos\BarrelTest\tCollection.c(87,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tCollection.c(144,27): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+  tVector.c
+C:\Repos\BarrelTest\tEnums.h(41,3): warning C4091: 'typedef ': ignored on left of '' when no variable is declared
+  (compiling source file 'tVector.c')
+  
+C:\Repos\BarrelTest\tVector.c(10,19): error C2065: 'targetNode': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(10,21): error C2223: left of '->_flags' must point to struct/union
+C:\Repos\BarrelTest\tVector.c(11,13): error C2065: 'targetNode': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(11,15): error C2223: left of '->_flags' must point to struct/union
+C:\Repos\BarrelTest\tVector.c(14,35): error C2065: 'targetNode': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(14,37): error C2223: left of '->_userCount' must point to struct/union
+C:\Repos\BarrelTest\tVector.c(14,2): error C2168: '_InterlockedIncrement': too few actual parameters for intrinsic function
+C:\Repos\BarrelTest\tVector.c(16,20): warning C4013: 'barrel_GetElementLocation' undefined; assuming extern returning int
+C:\Repos\BarrelTest\tVector.c(16,56): error C2065: 'targetNode': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(16,63): error C2065: 'index': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(17,25): error C2065: 'isRead': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(17,45): error C2065: 'target': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(17,37): warning C4047: ':': 'void *' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tVector.c(18,26): error C2065: 'isRead': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(18,35): error C2065: 'target': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(18,35): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tVector.c(20,45): error C2065: 'targetNode': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(20,47): error C2223: left of '->_collection' must point to struct/union
+C:\Repos\BarrelTest\tVector.c(20,2): error C2198: 'rawTranscribe': too few arguments for call
+C:\Repos\BarrelTest\tVector.c(22,35): error C2065: 'targetNode': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(22,37): error C2223: left of '->_userCount' must point to struct/union
+C:\Repos\BarrelTest\tVector.c(22,2): error C2168: '_InterlockedDecrement': too few actual parameters for intrinsic function
+C:\Repos\BarrelTest\tVector.c(16,8): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tVector.c(48,115): error C2065: 'GlobalBarrelService': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(48,116): error C2224: left of '._heap' must have struct/union type
+C:\Repos\BarrelTest\tVector.c(49,43): error C2039: '_barrelOffset': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(51,24): error C2039: '_flags': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(52,18): error C2039: '_flags': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(55,40): error C2039: '_userCount': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(55,2): error C2168: '_InterlockedIncrement': too few actual parameters for intrinsic function
+C:\Repos\BarrelTest\tVector.c(59,25): error C2039: '_flags': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(60,19): error C2039: '_flags': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(63,41): error C2039: '_userCount': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(63,3): error C2168: '_InterlockedIncrement': too few actual parameters for intrinsic function
+C:\Repos\BarrelTest\tVector.c(69,18): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(69,35): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(69,71): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(69,109): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(71,14): error C2065: 'barrelPtr': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(71,3): error C2100: you cannot dereference an operand of type 'int'
+C:\Repos\BarrelTest\tVector.c(71,63): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(71,14): warning C4047: '=': 'int' differs in levels of indirection from 'Barrel *'
+C:\Repos\BarrelTest\tVector.c(73,22): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(74,33): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(81,19): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(90,19): error C2065: 'currentElement': undeclared identifier
+C:\Repos\BarrelTest\tVector.c(95,40): error C2039: '_userCount': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(95,2): error C2168: '_InterlockedDecrement': too few actual parameters for intrinsic function
+C:\Repos\BarrelTest\tVector.c(98,41): error C2039: '_userCount': is not a member of 'Collection'
+  C:\Repos\BarrelTest\tModules.h(64,16):
+  see declaration of 'Collection'
+  
+C:\Repos\BarrelTest\tVector.c(98,3): error C2168: '_InterlockedDecrement': too few actual parameters for intrinsic function
+  Generating Code...
+C:\Repos\BarrelTest\tHelpers.c(11,1): warning C4716: 'ClampInt': must return a value
+C:\Repos\BarrelTest\tHelpers.c(6,1): warning C4716: 'Clamp': must return a value
+C:\Repos\BarrelTest\tHeap.c(25,1): warning C4715: 'heapDeltaPages': not all control paths return a value
+C:\Repos\BarrelTest\tBucket.c(73,1): warning C4716: 'Bucket_Add': must return a value
+C:\Repos\BarrelTest\tBucket.c(108,1): warning C4716: 'Bucket_Remove': must return a value
+C:\Repos\BarrelTest\tBucket.c(112,1): warning C4716: 'Bucket_RemoveAt': must return a value

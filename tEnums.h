@@ -24,21 +24,31 @@ typedef enum {
 typedef enum {
 	POINTER = 1,
 	UNSIGNED = 2,
-	BARREL = 4,
+	FLEXIBLE = 4,
 	READ_ONLY = 8,
 	STATIC = 16,
 	VOLATILE = 32,
 	ALPHA = 64,
 	INTEGRAL = 128,
 	FLOATING = 256,
-	//FLEXIBLE = 512,
-	//ROLLING = 1024
+	MANAGED = 512,
+	BARREL = 1024,
+	LIST = 2048
 } TypeFlags;
 
 typedef enum {
+
+} ;
+
+typedef enum {
 	DONE,
+	FLAGS,
 	ITERATE,
 	HEAD,
+	COLLECTION_USE,
+	COLLECTION_FREE,
+	COLLECTION_POINT,
+	COLLECTION_RELEASE,
 
 	CREATE_NODE_BARREL,
 

@@ -27,7 +27,7 @@
     <ClCompile Include="tHeap.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tTypeID.c">
+    <ClCompile Include="tTypeInfo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tQues.c">
@@ -95,7 +95,7 @@
     <ClInclude Include="tQues.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tTypeID.h">
+    <ClInclude Include="tTypeInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tBucket.h">

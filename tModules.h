@@ -33,13 +33,16 @@ typedef struct {
 typedef struct {
 	const size_t _size;
 	const char* const _name;
-	const unsigned int _flags;
-	void* const _nullLoc;
+} TypeRaw;
 
+typedef struct {
+	TypeRaw _raw;
+	void* const _nullLoc;
+	const unsigned int _flags;
 	// Barrel Section
 	const unsigned int _unitsPerBlock;
 	const unsigned int _barrelsPerBlock;
-} TypeID;
+} TypeInfo;
 
 typedef struct {
 
@@ -56,18 +59,23 @@ typedef struct {
 
 } Request;
 
-
 typedef struct {
 	Link _link;
 	Request _request;
 } LinkedRequest;
 
 typedef struct {
-	TypeID* _type;
+	TypeInfo* _type;
 	bool(*_extensions)(Request* request);
 	uint _count;
 	uint _capacity;
 } Collection;
+
+typedef struct {
+	Collection _collection;
+	volatile LONG _userCount;
+	volatile LONG _pointerCount;
+} ManagedCollection;
 
 typedef Collection* COLLECTION;
 
@@ -84,12 +92,10 @@ typedef struct {
 
 typedef struct {
 
-	Collection _collection;
+	ManagedCollection _managed;
 	LinkedRequest* _requests;
 
 	BarrelFlags _flags;
-	volatile LONG _userCount;
-	volatile LONG _pointerCount;
 
 	//uint _barrelCount = _collection._capacity
 	uint _barrelOffset;
@@ -157,12 +163,12 @@ typedef struct {
 } KeyPair;
 
 typedef struct {
-	TypeID _type;
+	TypeInfo _type;
 	void* _target;
 } Target;
 
 typedef struct {
-	TypeID _type;
+	TypeInfo _type;
 	const char* _name;
 } PropertyID;
 

@@ -2,7 +2,7 @@
 #include <tBucket.h>
 
 //TYPE_DECL(Request, NULL, 0);
-const TypeID Request_TypeID;
+const TypeInfo Request_TypeID;
 
 void RollingQue_Clear(RollingQue* que, int index);
 
