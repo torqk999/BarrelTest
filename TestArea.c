@@ -1,154 +1,7 @@
 #include <tBarrel.h>
 #include <tHashMap.h>
 
-#pragma region testRegion
-#define BarrelTestCount 10
-//void vectorTest()
-//{
-//	LinkedVector myVector = VEC_TOR(int, 1, 2, 3, 4, 5);
-//
-//	LinkedVector myNextVector = VEC_TOR(int, 6, 7, 8, 9, 10);
-//
-//	Vector_Link(&myVector, &myNextVector);
-//
-//	Vector* vPtr = &(myVector._vector);
-//	LinkedVector* lvPtr = &myVector;
-//
-//	int* ptr = Vector_GetPtr(vPtr, 0);
-//	int count = 0;
-//
-//	int myInt = 42;
-//
-//	Vector_WriteIndex(vPtr, &myInt, 2);
-//
-//	while (ptr)
-//	{
-//		PREENT_ARGS("[%]: %\n", fmt_i(count), fmt_i(*ptr));
-//		ptr = LinkedVector_Iterate(&lvPtr, ptr, 1);
-//		count++;
-//	}
-//}
 
-//void hashMapTest()
-//{
-//	hash_map myHashMap = HASH_MAP(16, .7f);
-//
-//	struct {
-//		char* key;
-//		int value;
-//	} IntPair[] =
-//	{
-//		{ "sam" , 5 },
-//		{ "bob" , 3 },
-//		{ "dan" , 8 }
-//	};
-//
-//	for (int i = 0; i < 3; i++)
-//		PREENT_ARGS("Assertion: %\n", fmt_s(hashMap_Assert(&myHashMap, IntPair[i].key, &(IntPair[i].value)) ? "true" : "false"));
-//
-//	PREENT("\n----------------------------\n\n");
-//
-//	for (int i = 0; i < 3; i++)
-//	{
-//		int* intPtr;
-//
-//		char* result = hashMap_GetOccupantLocation(&myHashMap, IntPair[i].key, &intPtr) ? numConvert((Preem) { 'i', intPtr }) : "FAIL";
-//
-//		PREENT_ARGS("Value: %\n", fmt_s(result));
-//	}
-//}
-
-DWORD WINAPI MyThreadJob(void* dataHead)
-{
-	if (!dataHead)
-		return 0;
-
-	int* target = dataHead;
-	int* flags = &(target[1]);
-
-	while (!(*flags))
-	{
-		(*target)++;
-		Sleep(1000);
-	}
-
-	return 0;
-}
-void threadTest()
-{
-	DWORD threadID;
-
-	int count[2];
-
-	count[0] = 0;
-	count[1] = 0;
-
-
-
-	HANDLE myThread = CreateThread(
-		NULL,
-		0,
-		&MyThreadJob,
-		count,
-		0,
-		&threadID
-	);
-
-	if (!myThread)
-		return;
-
-	char buffer[64];
-
-	Geet(buffer);
-
-	count[1] = 1;
-
-	//DWORD result = WaitForSingleObject(myThread, INFINITE);
-
-	//PREENT_ARGS("Waited seconds: %", fmt_i(*count));
-}
-void heapTest(HeapService* heapService)
-{
-	heapService->_heapStart = HeapCreate(0, 0, PageSize * MaxPageCount);
-	if (!heapService->_heapStart)
-		return;
-
-	heapDeltaPages(heapService, 1);
-
-	TypeInfo intType = BARREL_ID(int, 0);
-
-	void* heapEnd = heapService->_heapStart;
-
-	int barrelsPerBlock,
-		unitsPerBlock;
-
-	if (!(sizeof(Barrel) % intType._size))
-	{
-		unitsPerBlock = sizeof(Barrel) / intType._size;
-		barrelsPerBlock = 1;
-	}
-
-	else if (!(intType._size % sizeof(Barrel)))
-	{
-		barrelsPerBlock = intType._size / sizeof(Barrel);
-		unitsPerBlock = 1;
-	}
-
-	else
-	{
-
-	}
-
-	//BarrelNode myIntNode = {
-	//
-	//		(Vector) {intType,heapEnd, 0}
-	//};
-}
-#pragma endregion
-
-
-//static HeapService* test_heapService;
-//static BarrelService* test_barrelService;
 static TypeInfo* test_intTypeID;
 
 typedef enum {
@@ -370,7 +223,6 @@ ButtonAction mainMenuActions[] = {
 	{ 'c', "Clear Screen", &clear_screen },
 };
 
-
 void barrelTest_MAIN() {
 
 	const char* input = NULL;
@@ -395,11 +247,18 @@ void barrelTest()
 
 	test_intTypeID = &intTypeID;
 
+	long derp = 5;
+	long* ptrDerp = &derp;
+
+	Request blah = DeConstruct((void*) { 0 });
+
 	if (!BarrelServiceInit(HeapServiceInit(true)))
 	{
 		PREENT("Services failed to start!\n");
 		return;
 	}
+
+
 	barrelTest_MAIN();
 }
 

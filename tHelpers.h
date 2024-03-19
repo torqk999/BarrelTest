@@ -1,4 +1,5 @@
-#pragma once
+#ifndef	tHelpers
+#define	tHelpers
 #include <tPreent.h>
 
 //extern CollectionRequest;
@@ -34,3 +35,7 @@ void barrelTranscribe(void* src, void* trg, unsigned int count);
 void TranscribeElement(Request request);
 
 void TranscribeSpan(Request request);
+
+#define PARAM_COUNT(...) paramCount( ( char [] ){ __VA_ARGS__ ,  0 },( char [] ) { __VA_ARGS__ , 1 } )
+
+#endif

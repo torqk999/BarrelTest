@@ -22,19 +22,27 @@ typedef enum {
 } BarrelFlags;
 
 typedef enum {
-	POINTER = 1,
-	UNSIGNED = 2,
-	FLEXIBLE = 4,
-	READ_ONLY = 8,
-	STATIC = 16,
-	VOLATILE = 32,
-	ALPHA = 64,
-	INTEGRAL = 128,
-	FLOATING = 256,
-	MANAGED = 512,
-	BARREL = 1024,
-	LIST = 2048
+	//POINTER = 1,
+	READ_ONLY = 1,
+	FIXED_SIZE = 2,
+	STATIC = 4,
+	VOLATILE = 8,
+
+	UNSIGNED = 16,
+	ALPHA = 32,
+	INTEGRAL = 64,
+	FLOATING = 128,
+	STRUCT = 256,
+	UNION = 512,
+
+	MANAGED = 1024,
 } TypeFlags;
+
+typedef enum {
+	BUCKET,
+	BARREL,
+	LIST,
+} ClassFlag;
 
 typedef enum {
 
@@ -45,6 +53,9 @@ typedef enum {
 	FLAGS,
 	ITERATE,
 	HEAD,
+	INIT,
+	DECON,
+
 	COLLECTION_USE,
 	COLLECTION_FREE,
 	COLLECTION_POINT,
@@ -69,7 +80,7 @@ typedef enum {
 	MODIFY_REMOVE_FIRST_FOUND,
 	MODIFY_DELTA_CAPACITY,
 	MODIFY_DELTA_COUNT,
-	MODIFY_DECON,
+	
 
 	//WAIT_INSERT,
 	//WAIT_REMOVE_AT,

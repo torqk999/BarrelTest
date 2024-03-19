@@ -1,12 +1,15 @@
-#pragma once
+#ifndef	tHeap
+#define	tHeap
 #include <tServices.h>
 
-bool heapDeltaPages(HeapService* heapService, int delta);
+bool heapDeltaPages(int delta);
 
-size_t heap_Remaining(HeapService* heap);
+size_t heap_Remaining();
 
 DWORD WINAPI heapServiceWork(void* target);
 
-void ClearPage(HeapService* service, int index);
+void ClearPage(int index);
 
 HeapService* HeapServiceInit(bool clear);
+
+#endif

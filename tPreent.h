@@ -1,4 +1,7 @@
-#pragma once
+
+
+#ifndef	tPreent
+#define	tPreent
 #include <tModules.h>
 
 #define MAX_CONSOLE_BUFFER 64
@@ -44,3 +47,5 @@ const char* Preent(const char* string, Preem* head);
 const char* GeetCount(unsigned int* count);
 
 const char* Geet();
+
+#endif

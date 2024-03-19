@@ -1,11 +1,11 @@
 #ifndef MODULES
+#define MODULES
 
 #include <tEnums.h>
 #include <tDefines.h>
 #include <Windows.h>
 
-typedef struct
-{
+typedef struct {
 	char _type;
 	void* _ptr;
 } Preem;
@@ -36,7 +36,7 @@ typedef struct {
 } TypeRaw;
 
 typedef struct {
-	TypeRaw _raw;
+	const TypeRaw _type;
 	void* const _nullLoc;
 	const unsigned int _flags;
 	// Barrel Section
@@ -65,7 +65,7 @@ typedef struct {
 } LinkedRequest;
 
 typedef struct {
-	TypeInfo* _type;
+	TypeInfo* _info;
 	bool(*_extensions)(Request* request);
 	uint _count;
 	uint _capacity;
@@ -168,7 +168,7 @@ typedef struct {
 } Target;
 
 typedef struct {
-	TypeInfo _type;
+	TypeRaw _type;
 	const char* _name;
 } PropertyID;
 
@@ -199,4 +199,3 @@ typedef struct {
 } DataBase;
 
 #endif // !MODULES
-#define MODULES

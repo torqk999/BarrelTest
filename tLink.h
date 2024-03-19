@@ -1,4 +1,5 @@
-#pragma once
+#ifndef	tLink
+#define	tLink
 #include <tModules.h>
 
 static Link EmptyLink = {NULL, NULL, false};
@@ -13,3 +14,5 @@ Link* RemoveAndNext(Link* target)
 	UnLink(target);
 	return next;
 }
+
+#endif

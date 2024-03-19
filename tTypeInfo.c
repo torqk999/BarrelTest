@@ -2,21 +2,21 @@
 
 bool TypeID_Compare(Request request)
 {
-	TypeInfo* readType = (TypeInfo*)(request._src);
-	TypeInfo* writeType = (TypeInfo*)(request._trg);
+	TypeInfo* readInfo = (TypeInfo*)(request._src);
+	TypeInfo* writeInfo = (TypeInfo*)(request._trg);
 
 	switch (request._type)
 	{
 	case COMPARE_COMPATIBILITY_FULL:
-		if (readType->_name != writeType->_name)
+		if (readInfo->_type._name != writeInfo->_type._name)
 			return false;
 
 	case COMPARE_COMPATIBILITY_WRITE_ALLOWED:
-		if (writeType->_flags & READ_ONLY)
+		if (writeInfo->_flags & READ_ONLY)
 			return false;
 
 	case COMPARE_COMPATIBILITY_SIZE:
-		if (readType->_size != writeType->_size)
+		if (readInfo->_type._size != writeInfo->_type._size)
 			return false;
 
 		return true;
@@ -26,93 +26,110 @@ bool TypeID_Compare(Request request)
 	}
 }
 
-bool TypeID_GetNullValue(TypeInfo* type, void* writeLoc)
+bool TypeID_GetNullValue(TypeInfo* info, void* writeLoc)
 {
-	for (size_t i = 0; i < type->_size; i++)
-		*((char*)writeLoc) = !(type->_nullLoc) ? 0 : *((char*)(type->_nullLoc));
+	for (size_t i = 0; i < info->_type._size; i++)
+		*((char*)writeLoc) = !(info->_nullLoc) ? 0 : *((char*)(info->_nullLoc));
 
-	return type->_nullLoc != 0;
+	return info->_nullLoc != 0;
 }
 
-void Type_AppendQualifiers(const char* name, uint* flagLoc)
+uint Type_BuildFlags(const char* name, ClassFlag classFlag)
 {
-	if (findSubString(name, "*"))
-		*flagLoc |= POINTER;
+	uint flags = 0;
+
+	switch (classFlag) {
+	case BUCKET:
+		flags |= FIXED_SIZE;
+		break;
+
+	case BARREL:
+		flags |= MANAGED;
+		break;
+
+	case LIST:
+		flags |= MANAGED;
+		break;
+	}
 
 	if (findSubString(name, "const"))
-		*flagLoc |= READ_ONLY;
+		flags |= READ_ONLY | FIXED_SIZE;
 
 	if (findSubString(name, "static"))
-		*flagLoc |= STATIC;
+		flags |= STATIC;
 
 	if (findSubString(name, "volatile"))
-		*flagLoc |= VOLATILE;
+		flags |= VOLATILE;
 
 	if (findSubString(name, "unsigned"))
-		*flagLoc |= UNSIGNED;
+		flags |= UNSIGNED;
 
 	if (findSubString(name, "float") ||
 		findSubString(name, "double"))
-		*flagLoc |= FLOATING;
+		flags |= FLOATING;
 
 	else if
 		(findSubString(name, "int") ||
 			findSubString(name, "long") ||
 			findSubString(name, "short"))
-		*flagLoc |= INTEGRAL;
+		flags |= INTEGRAL;
 
 	else if
 		(findSubString(name, "char"))
-		*flagLoc |= ALPHA;
+		flags |= ALPHA;
+
+	return flags;
 }
 
 inline TypeRaw Type_CreateRaw(size_t size, const char* name) { return (TypeRaw) { size, name }; }
 
-TypeInfo Type_CreateNullableInfo(TypeRaw raw, void* nullLoc, uint flags)
+TypeInfo Type_CreateNullableInfo(TypeRaw raw, ClassFlag classFlag, void* nullLoc)
 {
-	Type_AppendQualifiers(raw._name, &flags);
-	return (TypeInfo) {raw, nullLoc, flags};
+	uint flags = Type_BuildFlags(raw._name, classFlag);
+	uint unitsPerBlock, barrelsPerBlock;
+	Type_BarrelBlockCounts(raw._size, &unitsPerBlock, &barrelsPerBlock);
+	return (TypeInfo) { raw, nullLoc, flags, unitsPerBlock, barrelsPerBlock };
 }
 
-TypeInfo Type_CreateInfo(TypeRaw raw, uint flags)
+TypeInfo Type_CreateInfo(TypeRaw raw, ClassFlag classFlag)
 {
-	return Type_CreateNullableInfo(raw, NULL, flags);
+	return Type_CreateNullableInfo(raw, classFlag, NULL);
 }
 
-TypeInfo CreateBarrelID(const size_t size, const char* name, void* nullLoc, TypeFlags initFlags)
-{
-	int unitsPerBlock = 1;
-	int barrelsPerBlock = 1;
-	
-	// Expand for Barrel size constants
-	{ 
-
-		// block is the smallest contiguous chunk of memory bounded units of both barrels
-		// and vector units set for vector unit size equals sizeof Barrel.
-		// check less or greater conditions, adjust units per 'block' accordingly
-
-		if (size < sizeof(Barrel))
-		{
-			while ((barrelsPerBlock * sizeof(Barrel)) % size)
-				barrelsPerBlock++;
-
-			unitsPerBlock = (barrelsPerBlock * sizeof(Barrel)) / size;
-		}
-
-		else if (size > sizeof(Barrel))
-		{
-			while ((unitsPerBlock * size) % sizeof(Barrel))
-				unitsPerBlock++;
-
-			barrelsPerBlock = (unitsPerBlock * size) / sizeof(Barrel);
-		}
+TypeInfo* Type_GetInfo(TypeRaw raw, ClassFlag flag) {
+	if (testTypeBinCurrentCount >= testTypeBinCount)
+	{
+		PREENT("No type slots available...\n");
+		return NULL;
 	}
 
-	TypeInfo newTypeID = { size, name, CreateTypeFlags(name, initFlags), nullLoc , unitsPerBlock, barrelsPerBlock };
-
-	return newTypeID;
+	TypeInfo tmpInfo = Type_CreateInfo(raw, flag);
+	rawTranscribe(&tmpInfo, &(testTypeBin[testTypeBinCurrentCount]), sizeof(TypeInfo));
+	TypeInfo* ptr = &(testTypeBin[testTypeBinCurrentCount]);
+	testTypeBinCurrentCount++;
+	return ptr;
 }
 
-void CloneTypeID(TypeInfo* trg, TypeInfo* src) {
-	rawTranscribe(src, trg, sizeof(TypeInfo));
+void Type_BarrelBlockCounts(size_t size, uint* unitsPerBlock, uint* barrelsPerBlock) {
+
+	// block is the smallest contiguous chunk of memory bounded units of both barrels
+	// and vector units set for vector unit size equals sizeof Barrel.
+	// check less or greater conditions, adjust units per 'block' accordingly
+
+	if (size < sizeof(Barrel))
+	{
+		while ((*barrelsPerBlock * sizeof(Barrel)) % size)
+			(*barrelsPerBlock)++;
+
+		unitsPerBlock = (*barrelsPerBlock * sizeof(Barrel)) / size;
+	}
+
+	else if (size > sizeof(Barrel))
+	{
+		while ((*unitsPerBlock * size) % sizeof(Barrel))
+			(*unitsPerBlock)++;
+
+		barrelsPerBlock = (*unitsPerBlock * size) / sizeof(Barrel);
+	}
+
 }

@@ -2,16 +2,16 @@
 
 Request Transcribe(
 	RequestType type,
-	void*		trg,
-	void*		src,
-	void*		buf,
+	void* trg,
+	void* src,
+	void* buf,
 	int			tIx,
 	int			sIx,
 	int			cnt,
 	size_t size
 ) {
 	return (Request) {
-			type,
+		type,
 			trg,
 			src,
 			tIx,
@@ -21,11 +21,11 @@ Request Transcribe(
 	};
 }
 
-Request CreateBarrelNode(BarrelNode* trg) {
+Request InitBarrelNode(BarrelNode* trg, BarrelNode* initiator) {
 	return (Request) {
-		CREATE_NODE_BARREL,
+		INIT,
 			trg,
-			NULL,
+			initiator,
 			0,
 			0,
 			0,
@@ -33,11 +33,11 @@ Request CreateBarrelNode(BarrelNode* trg) {
 	};
 }
 
-Request DeltaSizeCapacity(Collection* trg, int delta) {
+Request DeltaSizeCapacity(COLLECTION trg, void* src, int delta) {
 	return (Request) {
 		MODIFY_DELTA_CAPACITY,
 			trg,
-			NULL,
+			src,
 			0,
 			0,
 			delta,
@@ -45,13 +45,26 @@ Request DeltaSizeCapacity(Collection* trg, int delta) {
 	};
 }
 
-Request ResizeCollection(Collection* trg, int newSize) {
-	return DeltaSizeCapacity(trg, newSize - trg->_capacity);
+Request ResizeCollection(COLLECTION trg, void* src, int newSize) {
+	return DeltaSizeCapacity(trg, src, newSize - trg->_capacity);
 }
 
-Request Decon(Collection* trg) {
+Request Construct(size_t size, const char* typeName, void* src, uint capacity)
+{
 	return (Request) {
-		MODIFY_DECON,
+		INIT,
+			typeName,
+			src,
+			0,
+			0,
+			capacity,
+			size
+	};
+}
+
+Request DeConstruct(COLLECTION trg) {
+	return (Request) {
+		DECON,
 			trg,
 			NULL,
 			0,
@@ -59,4 +72,9 @@ Request Decon(Collection* trg) {
 			0,
 			0
 	};
+}
+
+LinkedRequest Linked(Request request)
+{
+	return (LinkedRequest) { (Link) { NULL, NULL, }, request };
 }

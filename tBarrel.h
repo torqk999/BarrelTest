@@ -1,4 +1,6 @@
-#pragma once
+#ifndef tBarrel
+#define tBarrel
+
 #include <tHeap.h>
 #include <tLink.h>
 #include <tRequest.h>
@@ -25,7 +27,7 @@ void barrel_AppendRequest(LinkedRequest* linkedRequest);
 int barrel_NextAvailableNode();
 int barrel_maximumAvailableBarrels(int requested);
 
-bool barrel_Head(Request* request);
+bool barrel_Head(Request request);
 bool barrel_Iterate(Request* request);
 
 bool barrel_Read(Request request);
@@ -38,13 +40,17 @@ bool barrel_Extensions(Request* request);
 
 void barrelRoll(int index, int delta, int dir);
 
+List<int>
+
 DWORD WINAPI barrelRollingWork(void* target);
 DWORD WINAPI barrelServiceWork(void* target);
 
 BarrelNode BarrelNode_ctor(TypeInfo* type);
 bool BarrelServiceInit(HeapService* heapService);
 
-bool barrel_RequestNode(BarrelNode** nodeLoc, Bucket vector);
+bool barrel_Construct(Request request);
 bool barrel_RemoveNode(BarrelNode* node);
 
 uint barrel_NodeCount();
+
+#endif // !tBarrel

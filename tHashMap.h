@@ -1,4 +1,5 @@
-#pragma once
+#ifndef	tHashMap
+#define	tHashMap
 #include <tCollection.h>
 #include <tLink.h>
 /*
@@ -56,3 +57,4 @@ hash_map hashMap_Create(unsigned int capacity, TypeFlags flags, float threshold,
 //	hashFreeMap(table);
 //}
 
+#endif

@@ -156,3 +156,4 @@ void TranscribeSpan(Request request)
 	}
 
 }
+

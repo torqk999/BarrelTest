@@ -2,30 +2,10 @@
 
 void* Bucket_GetPtr(Bucket* bucket, unsigned int index)
 {
-	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_bucket) + (index * bucket->_collection._type->_size);
+	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_bucket) + (index * bucket->_collection._info->_type._size);
 }
 
-bool Bucket_Head(Request* request) {
-	request->_trg = ((Bucket*)(request->_src))->_bucket;
-	return true;
-}
-bool Bucket_Iterate(Request* request)
-{
-	Bucket* bucketVector = request->_trg;
-	unsigned int* current = &(request->_trgIx);
-	unsigned int* count = &(request->_count);
 
-	if (*current >= bucketVector->_collection._capacity)
-		return false;
-
-	void* nxt = Bucket_GetPtr(bucketVector, *current);
-
-	*current = (*current) + 1;
-
-	*count = *current == *count ? 0 : *count;
-
-	return nxt;
-}
 bool Bucket_Resize(Request request)
 {
 	Bucket* bucketVector = request._trg;
@@ -39,7 +19,7 @@ bool Bucket_Write(Request request) {
 
 	Bucket* trg = request._trg;
 
-	if (trg->_collection._type->_flags & READ_ONLY)
+	if (trg->_collection._info->_flags & READ_ONLY)
 		return false;
 
 	if (request._trgIx + request._count >= trg->_collection._capacity)
@@ -110,17 +90,38 @@ bool Bucket_RemoveAt(Request request)
 {
 
 }
+bool Bucket_Head(Request request) {
+	*((void**)(request._trg)) = ((Bucket*)(request._src))->_bucket;
+	return true;
+}
+bool Bucket_Iterate(Request* request)
+{
+	Bucket* bucketVector = request->_trg;
+	unsigned int* current = &(request->_trgIx);
+	unsigned int* count = &(request->_count);
 
+	if (*current >= bucketVector->_collection._capacity)
+		return false;
+
+	void* nxt = Bucket_GetPtr(bucketVector, *current);
+
+	*current = (*current) + 1;
+
+	*count = *current == *count ? 0 : *count;
+
+	return nxt;
+}
 
 bool Bucket_Extensions(Request* request)
 {
 	switch (request->_type)
 	{
-	case HEAD:
-		return Bucket_Head(request);
 
-	case ITERATE:
-		return Bucket_Iterate(request);
+
+	case HEAD:
+		return Bucket_Head(*request);
+
+
 
 	case MODIFY_DELTA_CAPACITY:
 		return Bucket_Resize(*request);
@@ -141,6 +142,9 @@ bool Bucket_Extensions(Request* request)
 	case MODIFY_REMOVE_AT:
 		return Bucket_RemoveAt(*request);
 
+	case ITERATE:
+		return Bucket_Iterate(request);
+
 	default:
 		return false;
 	}
@@ -155,4 +159,12 @@ Bucket Bucket_ctor(Collection collection, void* bucket) {
 
 	return newBucket;
 }
+
+COLLECTION Bucket_Construct(size_t size, const char* typeName, void* src)
+{
+	Bucket* bucket = src;
+	bucket->_collection = Collection_ctor0(Type_CreateRaw(size, typeName), BUCKET, Bucket_Extensions, bucket->_collection._count);
+	return bucket;
+}
+
 

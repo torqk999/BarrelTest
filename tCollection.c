@@ -174,19 +174,36 @@ void* Collection_Head(Collection* src){
 Collection Collection_ctor(
 	TypeInfo* type,
 	bool(*extensions)(Request* request),
-	uint initCount,
-	uint initCapacity
+	uint init
 )
 {
 	Collection newCollection;
 
-	newCollection._count = initCount;
-	newCollection._capacity = initCapacity;
+	newCollection._count = init;
+	newCollection._capacity = init;
 	newCollection._extensions = extensions;
-	newCollection._type = type;
+	newCollection._info = type;
 
 	return newCollection;
 }
+
+Collection Collection_ctor0(
+	TypeRaw rawType, ClassFlag classFlag,
+	bool(*extensions)(Request* request),
+	uint init
+)
+{
+	Collection newCollection;
+
+	newCollection._count = init;
+	newCollection._capacity = init;
+	newCollection._extensions = extensions;
+	newCollection._info = Type_GetInfo(rawType, classFlag);
+
+	return newCollection;
+}
+
+
 
 ManagedCollection Managed_ctor(Collection collection)
 {
@@ -201,5 +218,5 @@ ManagedCollection Managed_ctor(Collection collection)
 
 bool Collection_dtor(Collection* collection){
 
-	return collection->_extensions(&(Request) { MODIFY_DECON, collection});
+	return collection->_extensions(&(Request) { DECON, collection});
 }

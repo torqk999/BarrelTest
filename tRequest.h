@@ -1,5 +1,6 @@
-#pragma once
-#include <tModules.h>
+#ifndef	tRequest
+#define	tRequest
+#include <tLink.h>
 
 Request Transcribe(
 	RequestType type,
@@ -12,8 +13,16 @@ Request Transcribe(
 	size_t size
 );
 
-Request CreateBarrelNode(BarrelNode* trg);
+Request InitBarrelNode(BarrelNode* trg);
 
-Request DeltaSizeCapacity(Collection* trg,  int delta);
+Request DeltaSizeCapacity(COLLECTION trg, void* src, int delta);
 
-Request ResizeCollection(Collection* trg, int newSize);
+Request ResizeCollection(COLLECTION trg, void* src, int newSize);
+
+Request Construct(size_t size, const char* typeName, void* src, uint capacity);
+
+Request DeConstruct(COLLECTION trg);
+
+LinkedRequest Linked(Request request);
+
+#endif

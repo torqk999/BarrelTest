@@ -1,4 +1,5 @@
-#pragma once
+#ifndef	tQues
+#define	tQues
 #include <tBucket.h>
 
 //TYPE_DECL(Request, NULL, 0);
@@ -19,3 +20,4 @@ bool RollingQue_PullNext(RollingQue* que, void* output);
 bool RollingQue_HasQue(RollingQue* que);
 
 bool RollingQue_SeeNext(RollingQue* que, void* trg);
+#endif

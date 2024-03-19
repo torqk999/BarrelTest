@@ -1,41 +1,23 @@
-#pragma once
-#include <tTypeID.h>
+#ifndef	tCollection
+#define	tCollection
+#include <tRequest.h>
+#include <tTypeInfo.h>
 
 
 /* Vector - Underlying functionality of the collection system, ambiguous of whether it derives
 * from a 'bucket' or a 'barrel'. Includes construction, 
 */
 
+const uint GlobalClassCount = 3;
 
-#define PAR_COUNT(...) paramCount( ( char [] ){ __VA_ARGS__ ,  0 },( char [] ) { __VA_ARGS__ , 1 } )
-
-#define VECTOR(vecPtr, typeName, ...) Vector_ctor(vecPtr, BUCKET, sizeof(typeName), PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
-
-#define VEC_TOR(typeName, ...) Vector_Vectorize((TypeInfo){sizeof(typeName), #typeName}, PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
-
-#define VEC_PRINT_ALL(vectorPtr, typeName, strFormat) for (int i = 0; i < ( vectorPtr ) ->_count; i++) \
-{ typeName output; Vector_ReadIndex1( vectorPtr , i, &output, sizeof( typeName )); \
-
-
-
-void foo()
-{
-	VEC_TOR(int, 0, 1, 2, 3, 4, 5);
-}
-
-//TypeID CollectionRequest_Type =
-//{
-//	sizeof()
-//};
+bool (*Constructors)(Request request);
 
 void* Collection_Iterate(Collection* trg, Request* iter);
-void* Collection_Head(Collection* trg);
+void* Collection_Head(	Collection* trg);
 void Managed_Use(		ManagedCollection* trg);
 void Managed_Free(		ManagedCollection* trg);
 void Managed_Point(		ManagedCollection* trg);
 void Managed_Release(	ManagedCollection* trg);
-
-uint Collection_Flags(Collection* trg);
 
 bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count);
 bool Collection_Resize(Collection* trg, unsigned int count);
@@ -51,15 +33,19 @@ bool Collection_RemoveAt(Collection * trg, unsigned int index);
 bool Collection_RemoveSpan(Collection* trg, void* search, unsigned int count);
 bool Collection_Remove(Collection* trg, void* search);
 
-
-
-Collection Collection_ctor(
-	TypeInfo* type,
-	bool(*extensions)(Request* request),
-	uint existingCount,
-	uint existingCapacity
-);
+Collection Collection_ctor(TypeInfo* info, bool(*extensions)(Request* request), uint init);
+Collection Collection_ctor0(TypeRaw type, ClassFlag classFlag, bool(*extensions)(Request* request), uint init);
 
 ManagedCollection Managed_ctor(Collection collection);
 
 bool Collection_dtor(Collection* vector);
+
+#endif
+
+
+
+
+#define VEC_TOR(typeName, ...) Vector_Vectorize((TypeInfo){sizeof(typeName), #typeName}, PAR_COUNT(__VA_ARGS__), (typeName[]) { __VA_ARGS__ })
+
+#define VEC_PRINT_ALL(vectorPtr, typeName, strFormat) for (int i = 0; i < ( vectorPtr ) ->_count; i++) \
+{ typeName output; Vector_ReadIndex1( vectorPtr , i, &output, sizeof( typeName )); \
