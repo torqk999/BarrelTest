@@ -36,7 +36,7 @@ typedef enum {
 	UNION = 512,
 
 	MANAGED = 1024,
-} TypeFlags;
+} TypeFlag;
 
 typedef enum {
 	BUCKET,
@@ -45,16 +45,15 @@ typedef enum {
 } ClassFlag;
 
 typedef enum {
-
-} ;
-
-typedef enum {
 	DONE,
 	FLAGS,
 	ITERATE,
-	HEAD,
+	LOCATION,
 	INIT,
 	DECON,
+
+	SLICE_CREATE,
+	SLICE_RELEASE,
 
 	COLLECTION_USE,
 	COLLECTION_FREE,
@@ -64,6 +63,7 @@ typedef enum {
 	CREATE_NODE_BARREL,
 
 	COMPARE_EQUIVALENCE,
+	COMPARE_FLAG,
 	COMPARE_COMPATIBILITY_FULL,
 	COMPARE_COMPATIBILITY_WRITE_ALLOWED,
 	COMPARE_COMPATIBILITY_SIZE,

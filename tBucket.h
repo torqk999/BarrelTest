@@ -3,9 +3,7 @@
 
 #include <tCollection.h>
 
-void* Bucket_GetPtr(Bucket* bucketVector, unsigned int index);
-
-
+void* Bucket_GetPtr(Bucket* bucketVector, uint index);
 
 bool Bucket_Resize(Request request);
 bool Bucket_Read(Request request);
@@ -14,8 +12,10 @@ bool Bucket_Add(Request request);
 bool Bucket_Insert(Request request);
 bool Bucket_Remove(Request request);
 bool Bucket_RemoveAt(Request request);
-bool Bucket_Head(Request request);
 
+bool Bucket_Slice(Request request);
+
+bool Bucket_Location(Request* request);
 bool Bucket_Iterate(Request* request);
 
 bool Bucket_Extensions(Request* request);

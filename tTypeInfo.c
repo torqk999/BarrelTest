@@ -7,6 +7,7 @@ bool TypeID_Compare(Request request)
 
 	switch (request._type)
 	{
+
 	case COMPARE_COMPATIBILITY_FULL:
 		if (readInfo->_type._name != writeInfo->_type._name)
 			return false;
@@ -32,6 +33,10 @@ bool TypeID_GetNullValue(TypeInfo* info, void* writeLoc)
 		*((char*)writeLoc) = !(info->_nullLoc) ? 0 : *((char*)(info->_nullLoc));
 
 	return info->_nullLoc != 0;
+}
+
+bool TypeID_CheckFlags(TypeInfo* info, uint flags) {
+	return info->_flags & flags == flags;
 }
 
 uint Type_BuildFlags(const char* name, ClassFlag classFlag)

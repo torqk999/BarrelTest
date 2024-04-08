@@ -63,6 +63,9 @@
     <ClCompile Include="TestArea.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="tSlice.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tHelpers.h">
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tSlice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

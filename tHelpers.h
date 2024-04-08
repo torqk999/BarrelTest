@@ -28,9 +28,9 @@ unsigned int paramCount(char* rawArray, char* checkArray);
 
 unsigned int paramCount0(const char* params);
 
-void rawTranscribe(void* src, void* trg, size_t size);
+void rawTranscribe(void* trg, void* src, size_t size);
 
-void barrelTranscribe(void* src, void* trg, unsigned int count);
+void barrelTranscribe(void* trg, void* src, unsigned int count);
 
 void TranscribeElement(Request request);
 

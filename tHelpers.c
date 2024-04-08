@@ -121,13 +121,13 @@ unsigned int paramCount0(const char* params)
 	return paramCount;
 }
 
-void rawTranscribe(void* src, void* trg, size_t size)
+void rawTranscribe(void* trg, void* src, size_t size)
 {
 	for (size_t i = 0; i < size; i++)
 		((char*)trg)[i] = src ? ((char*)src)[i] : NULL;
 }
 
-void barrelTranscribe(void* src, void* trg, unsigned int count)
+void barrelTranscribe(void* trg, void* src, unsigned int count)
 {
 	for (unsigned int i = 0; i < count; i++)
 		((Barrel*)trg)[i] = ((Barrel*)src)[i];
@@ -145,10 +145,10 @@ void TranscribeElement(Request request)
 
 void TranscribeSpan(Request request)
 {
-	int dir = request._count < 0 ? -1 : 1;
-	unsigned int count = request._count * dir;
+	int dir = request._size < 0 ? -1 : 1;
+	unsigned long long count = request._size * dir;
 
-	for (unsigned int i = 0; i < count; i++)
+	for (unsigned long long i = 0; i < count; i++)
 	{
 		TranscribeElement(request);
 		request._srcIx += dir;

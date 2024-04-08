@@ -53,9 +53,9 @@ typedef struct {
 
 	int _trgIx;
 	int _srcIx;
-	int _count;
+	long long _size;
 
-	size_t _size;
+	//size_t _size;
 
 } Request;
 
@@ -78,6 +78,14 @@ typedef struct {
 } ManagedCollection;
 
 typedef Collection* COLLECTION;
+
+typedef struct {
+	Collection* _src;
+	void* _hLoc;
+	void* _tLoc;
+	size_t _hMem;
+	size_t _tMem;
+} Slice;
 
 typedef struct {
 	Collection _collection;

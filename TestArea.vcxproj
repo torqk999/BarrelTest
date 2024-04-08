@@ -140,6 +140,7 @@
     <ClCompile Include="tQues.c" />
     <ClCompile Include="tRequest.c" />
     <ClCompile Include="tServices.c" />
+    <ClCompile Include="tSlice.c" />
     <ClCompile Include="tThreads.c" />
     <ClCompile Include="tTypeInfo.c" />
     <ClCompile Include="tCollection.c" />
@@ -158,6 +159,7 @@
     <ClInclude Include="tQues.h" />
     <ClInclude Include="tRequest.h" />
     <ClInclude Include="tServices.h" />
+    <ClInclude Include="tSlice.h" />
     <ClInclude Include="tThreads.h" />
     <ClInclude Include="tTypeInfo.h" />
     <ClInclude Include="tCollection.h" />

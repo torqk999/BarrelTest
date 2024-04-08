@@ -7,7 +7,6 @@ Request Transcribe(
 	void* buf,
 	int			tIx,
 	int			sIx,
-	int			cnt,
 	size_t size
 ) {
 	return (Request) {
@@ -16,7 +15,6 @@ Request Transcribe(
 			src,
 			tIx,
 			sIx,
-			cnt,
 			size
 	};
 }
@@ -26,7 +24,6 @@ Request InitBarrelNode(BarrelNode* trg, BarrelNode* initiator) {
 		INIT,
 			trg,
 			initiator,
-			0,
 			0,
 			0,
 			0
@@ -40,13 +37,60 @@ Request DeltaSizeCapacity(COLLECTION trg, void* src, int delta) {
 			src,
 			0,
 			0,
-			delta,
-			0
+			delta
 	};
 }
 
 Request ResizeCollection(COLLECTION trg, void* src, int newSize) {
 	return DeltaSizeCapacity(trg, src, newSize - trg->_capacity);
+}
+
+Request UseCollection(COLLECTION trg)
+{
+	return (Request) {
+		COLLECTION_USE,
+			trg,
+			NULL,
+			0,
+			0,
+			0,
+	};
+}
+
+Request FreeCollection(COLLECTION trg)
+{
+	return (Request) {
+		COLLECTION_FREE,
+			trg,
+			NULL,
+			0,
+			0,
+			0,
+	};
+}
+
+Request PointCollection(COLLECTION trg)
+{
+	return (Request) {
+		COLLECTION_POINT,
+			trg,
+			NULL,
+			0,
+			0,
+			0,
+	};
+}
+
+Request ReleaseCollection(COLLECTION trg)
+{
+	return (Request) {
+		COLLECTION_RELEASE,
+			trg,
+			NULL,
+			0,
+			0,
+			0,
+	};
 }
 
 Request Construct(size_t size, const char* typeName, void* src, uint capacity)
@@ -55,7 +99,6 @@ Request Construct(size_t size, const char* typeName, void* src, uint capacity)
 		INIT,
 			typeName,
 			src,
-			0,
 			0,
 			capacity,
 			size
@@ -67,7 +110,6 @@ Request DeConstruct(COLLECTION trg) {
 		DECON,
 			trg,
 			NULL,
-			0,
 			0,
 			0,
 			0

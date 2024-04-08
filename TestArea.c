@@ -124,7 +124,7 @@ void barrelTest_WRITE()
 	for (int i = 0; i < delta; i += deltaDir)
 	{
 		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
-		targetPtr = barrel_GetElementLocation(targetBoop, startIndex + i);
+		targetPtr = barrel_GetPtr(targetBoop, startIndex + i);
 		*targetPtr = strToInt(Geet());
 	}
 
@@ -176,7 +176,7 @@ void barrelTest_READ()
 
 	for (int i = 0; i < delta; i += deltaDir)
 	{
-		targetPtr = barrel_GetElementLocation(targetBoop, startIndex + i);
+		targetPtr = barrel_GetPtr(targetBoop, startIndex + i);
 		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
 	}
 }
@@ -190,8 +190,8 @@ void barrelTest_VIEW_HEAP()
 		BarrelNode nextNode = *barrel_NodeLocation(i);
 		PREENT_ARGS("[%]: % | % | % | % | % | % \n",
 			fmt_I(i),
-			fmt_I(nextNode._collection._capacity),
-			fmt_I(nextNode._collection._count),
+			fmt_I(nextNode._managed._collection._capacity),
+			fmt_I(nextNode._managed._collection._count),
 			fmt_I(nextNode._barrelOffset),
 			fmt_I(nextNode._barrelStart),
 			fmt_I(nextNode._requests),
@@ -243,9 +243,9 @@ void barrelTest_MAIN() {
 
 void barrelTest()
 {
-	TypeInfo intTypeID = BARREL_ID(int, 0);
+	TypeInfo* intTypeID = TYPE_ID(int, BARREL);
 
-	test_intTypeID = &intTypeID;
+	//test_intTypeID = &intTypeID;
 
 	long derp = 5;
 	long* ptrDerp = &derp;
@@ -267,7 +267,7 @@ void barrelTest()
 
 int main() {
 
-	TypeInfo myIntType = TYPE_ID(int, 0);
+	TypeInfo* myIntType = TYPE_ID(int, BUCKET);
 
 	//PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
 	barrelTest();

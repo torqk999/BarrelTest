@@ -1,18 +1,17 @@
 #include <tBucket.h>
 
-void* Bucket_GetPtr(Bucket* bucket, unsigned int index)
+void* Bucket_GetPtr(Bucket* bucket, uint index)
 {
 	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_bucket) + (index * bucket->_collection._info->_type._size);
 }
 
-
 bool Bucket_Resize(Request request)
 {
 	Bucket* bucketVector = request._trg;
-	if (request._count > bucketVector->_collection._capacity)
+	if (request._size > bucketVector->_collection._capacity)
 		return false;
 
-	bucketVector->_collection._count = request._count;
+	bucketVector->_collection._count = request._size;
 	return true;
 }
 bool Bucket_Write(Request request) {
@@ -22,7 +21,7 @@ bool Bucket_Write(Request request) {
 	if (trg->_collection._info->_flags & READ_ONLY)
 		return false;
 
-	if (request._trgIx + request._count >= trg->_collection._capacity)
+	if (request._trgIx + request._size >= trg->_collection._capacity)
 		return false;
 
 	request._trg = trg->_bucket;
@@ -38,7 +37,7 @@ bool Bucket_Read(Request request) {
 
 	Bucket* src = request._src;
 
-	if (request._srcIx + request._count >= src->_collection._count)
+	if (request._srcIx + request._size >= src->_collection._count)
 		return false;
 
 	request._src = src->_bucket;
@@ -67,15 +66,15 @@ bool Bucket_Insert(Request request)
 
 	request._src = trg->_bucket;
 	request._srcIx = trg->_collection._count - 1;
-	request._trgIx = trg->_collection._count + request._count - 1;
-	request._count *= -1;
+	request._trgIx = trg->_collection._count + request._size - 1;
+	request._size *= -1;
 
 	Bucket_Write(request);
 
 	request._src = insertion;
 	request._srcIx = 0;
 	request._trgIx = target;
-	request._count *= 1;
+	request._size *= 1;
 
 	Bucket_Write(request);
 
@@ -90,15 +89,34 @@ bool Bucket_RemoveAt(Request request)
 {
 
 }
-bool Bucket_Head(Request request) {
-	*((void**)(request._trg)) = ((Bucket*)(request._src))->_bucket;
+bool Bucket_Location(Request* request) {
+	Bucket* bucket = request->_src;
+	if (request->_srcIx >= bucket->_collection._capacity)
+		return false;
+	request->_trg = ((char*)(bucket->_bucket))[request->_srcIx * bucket->_collection._info->_type._size];
+	return true;
+}
+bool Bucket_Slice(Request request)
+{
+	Bucket* bucket = request._trg;
+	Slice* slice = request._src;
+
+	size_t unitSize = bucket->_collection._info->_type._size;
+	size_t headSize = (bucket->_collection._count - request._trgIx) * unitSize;
+	size_t requestSize = request._size * unitSize;
+	
+	slice->_hLoc = Bucket_GetPtr(bucket, request._trgIx);
+	slice->_tLoc = bucket->_bucket;//Bucket_GetPtr(bucket, 0);
+	slice->_hMem = headSize < requestSize ? headSize : requestSize;
+	slice->_tMem = headSize < requestSize ? requestSize - headSize: 0;
+
 	return true;
 }
 bool Bucket_Iterate(Request* request)
 {
 	Bucket* bucketVector = request->_trg;
 	unsigned int* current = &(request->_trgIx);
-	unsigned int* count = &(request->_count);
+	unsigned int* count = &(request->_size);
 
 	if (*current >= bucketVector->_collection._capacity)
 		return false;
@@ -114,14 +132,13 @@ bool Bucket_Iterate(Request* request)
 
 bool Bucket_Extensions(Request* request)
 {
-	switch (request->_type)
-	{
+	switch (request->_type){
 
+	case LOCATION:
+		return Bucket_Location(request);
 
-	case HEAD:
-		return Bucket_Head(*request);
-
-
+	case SLICE_CREATE:
+		return Bucket_Slice(*request);
 
 	case MODIFY_DELTA_CAPACITY:
 		return Bucket_Resize(*request);

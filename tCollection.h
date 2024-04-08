@@ -13,12 +13,13 @@ const uint GlobalClassCount = 3;
 bool (*Constructors)(Request request);
 
 void* Collection_Iterate(Collection* trg, Request* iter);
-void* Collection_Head(	Collection* trg);
+void* Collection_Location(	Collection* trg, uint index);
 void Managed_Use(		ManagedCollection* trg);
 void Managed_Free(		ManagedCollection* trg);
 void Managed_Point(		ManagedCollection* trg);
 void Managed_Release(	ManagedCollection* trg);
 
+bool Collection_GetSlice(Collection* trg, Slice* slice);
 bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count);
 bool Collection_Resize(Collection* trg, unsigned int count);
 bool Collection_ReadSpan(Collection * src, void* trg, unsigned int start, unsigned int count);

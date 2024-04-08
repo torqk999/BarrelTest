@@ -19,6 +19,14 @@ Request DeltaSizeCapacity(COLLECTION trg, void* src, int delta);
 
 Request ResizeCollection(COLLECTION trg, void* src, int newSize);
 
+Request UseCollection(COLLECTION trg);
+
+Request FreeCollection(COLLECTION trg);
+
+Request PointCollection(COLLECTION trg);
+
+Request ReleaseCollection(COLLECTION trg);
+
 Request Construct(size_t size, const char* typeName, void* src, uint capacity);
 
 Request DeConstruct(COLLECTION trg);

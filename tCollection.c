@@ -96,11 +96,21 @@ void Managed_Free(		ManagedCollection* trg)
 }
 void Managed_Point(		ManagedCollection* trg)
 {
-	
+	InterlockedIncrement(&(trg->_pointerCount));
 }
 void Managed_Release(	ManagedCollection* trg)
 {
-	
+	InterlockedDecrement(&(trg->_pointerCount));
+}
+
+bool Collection_GetSlice(Collection* trg, Slice* slice, uint start, uint count)
+{
+	return trg->_extensions(&(Request) { SLICE_CREATE, trg, slice, start, 0, count });
+}
+
+bool Collection_GetSlice(Collection* trg, Slice* slice)
+{
+	return false;
 }
 
 bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count) {
@@ -141,7 +151,7 @@ bool Collection_RemoveAt(Collection* trg, unsigned int index)
 
 bool Collection_RemoveSpan(Collection* trg, void* search, unsigned int count)
 {
-	return trg->_extensions(&(Request) { MODIFY_REMOVE_FIRST_FOUND, trg, search, NULL, 0, 0, count });
+	return trg->_extensions(&(Request) { MODIFY_REMOVE_FIRST_FOUND, trg, search, NULL, 0, count });
 }
 
 bool Collection_Remove(Collection* trg, void* search)
@@ -149,10 +159,10 @@ bool Collection_Remove(Collection* trg, void* search)
 	return Collection_RemoveSpan(trg, search, 1);
 }
 
-void* Collection_Head(Collection* src){
-	Request req = (Request){ HEAD, NULL, src };
-	src->_extensions(&req);
-	return req._trg;
+void* Collection_Location(Collection* src, uint index){
+	Request req = (Request){ LOCATION, NULL, src, 0, index };
+	bool result = src->_extensions(&req);
+	return result ? req._trg : NULL;
 }
 
 //CollectionExtensions CreateGenericExtensions(TypeFlags initFlags, CollectionExtensions* templateExtensions)
