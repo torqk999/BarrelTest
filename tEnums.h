@@ -1,8 +1,8 @@
 #pragma once
 
 enum Constants {
-	NONE = -2,
-	OMEGA = -1,
+	//NONE = -2,
+	//OMEGA = -1,
 
 	//Vector_Default_Capacity = 16,
 	//Barrel_Max_Capacity = 1024,
@@ -44,23 +44,63 @@ typedef enum {
 	LIST,
 } ClassFlag;
 
+
 typedef enum {
-	DONE,
 	FLAGS,
 	ITERATE,
 	LOCATION,
 	INIT,
-	DECON,
+	INFO,
+	COMPARE,
+	CREATE,
+	DESTROY,
+	MANAGE,
+	MODIFY,
+	TRANSCRIBE
+} RequestType;
 
-	SLICE_CREATE,
-	SLICE_RELEASE,
+typedef enum {
 
-	COLLECTION_USE,
-	COLLECTION_FREE,
-	COLLECTION_POINT,
-	COLLECTION_RELEASE,
+	// Main
+	NONE = -2,
+	OMEGA = -1,
+	FLAG = 1,
+	DONE,
+	USE,
+	FREE,
+	RELEASE,
+	tVARIANT = 0,
+	tTRG = 1,
+
+	tREAD,
+	tWRITE,
+	tRAW,
+	tCOLLECTION,
+	tPOINTER,
+	tCHUNK,
+
+	// Transcribe
+	tSRC = 2,
+	Ix_TRG = 3,
+	Ix_SRC = 4,
+	tDIRECTION = 5,
+
+	// Info
+	tNAME = 2,
+	tSIZE = 3,
+	tCOUNT = 4,
+	tCAPACITY = 5,
+
+
+	
+	PROVIDE,
+	
+	
+
+
 
 	CREATE_NODE_BARREL,
+
 
 	COMPARE_EQUIVALENCE,
 	COMPARE_FLAG,
@@ -70,21 +110,27 @@ typedef enum {
 
 	//TRANSCRIBE,
 
-	TRANSCRIBE_RAW_TO_RAW,
-	TRANSCRIBE_COLLECTIONS,
-	TRANSCRIBE_RAW_TO_COLLECTION,
-	TRANSCRIBE_COLLECTION_TO_RAW,
-	
+	RAW_TO_RAW,
+	COLLECTIONS,
+	RAW_TO_COLLECTION,
+	COLLECTION_TO_RAW,
+
 	MODIFY_INSERT,
 	MODIFY_REMOVE_AT,
 	MODIFY_REMOVE_FIRST_FOUND,
 	MODIFY_DELTA_CAPACITY,
 	MODIFY_DELTA_COUNT,
-	
 
-	//WAIT_INSERT,
-	//WAIT_REMOVE_AT,
-	//WAIT_REMOVE_FIRST_FOUND,
-	//WAIT_RESIZE,
-	//WAIT_DECON
-} RequestType;
+	__c,
+	__s,
+	__L,
+	__I,
+	__x,
+	__l,
+	__O,
+	__h,
+	__i,
+	__o,
+	__f,
+	__d
+} ParamType;

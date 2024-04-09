@@ -8,11 +8,6 @@ void LinkElements(Link* target, Link* prev, Link* next);
 
 void UnLink(Link* target);
 
-Link* RemoveAndNext(Link* target)
-{
-	Link* next = target->_next;
-	UnLink(target);
-	return next;
-}
+Link* RemoveAndNext(Link* target);
 
 #endif

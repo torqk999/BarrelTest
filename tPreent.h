@@ -8,22 +8,22 @@
 #define MAX_NUM_BUFFER 50
 #define DBL_PRECISION 15
 
-#define fmt_c(x) { 'c', &((char){ x }) }
-#define fmt_s(x) { 's',  x }
-#define fmt_L(x) { 'L', &((long long){ x }) }
-#define fmt_I(x) { 'I', &((int){ x }) }
-#define fmt_x(x) { 'x', &((unsigned long long){ x }) }
-#define fmt_l(x) { 'l', &((unsigned long long){ x }) }
-#define fmt_O(x) { 'O', &((unsigned long long){ x }) }
-#define fmt_h(x) { 'h', &((unsigned int){ x }) }
-#define fmt_i(x) { 'i', &((unsigned int){ x }) }
-#define fmt_o(x) { 'o', &((unsigned int){ x }) }
-#define fmt_f(x) { 'f', &((float){ x }) }
-#define fmt_d(x) { 'd', &((double){ x }) }
+#define fmt_c(x) { __c, &((char){ x }) }
+#define fmt_s(x) { __s,  x }
+#define fmt_L(x) { __L, &((long long){ x }) }
+#define fmt_I(x) { __I, &((int){ x }) }
+#define fmt_x(x) { __x, &((unsigned long long){ x }) }
+#define fmt_l(x) { __l, &((unsigned long long){ x }) }
+#define fmt_O(x) { __O, &((unsigned long long){ x }) }
+#define fmt_h(x) { __h, &((unsigned int){ x }) }
+#define fmt_i(x) { __i, &((unsigned int){ x }) }
+#define fmt_o(x) { __o, &((unsigned int){ x }) }
+#define fmt_f(x) { __f, &((float){ x }) }
+#define fmt_d(x) { __d, &((double){ x }) }
 
 #define PREENT(string, ...) Preent(string, NULL)
 
-#define PREENT_ARGS(string, ...) Preent( string , (Preem[]) { __VA_ARGS__ , { 'n', NULL } })
+#define PREENT_ARGS(string, ...) Preent( string , (Parameter[]) { __VA_ARGS__ , nullParam })
 
 static char PREENT_BUFFER[MAX_CONSOLE_BUFFER];
 
@@ -40,9 +40,9 @@ char* integerConvert(unsigned int num, int base);
 
 int strToInt(const char* input);
 
-char* numConvert(Preem preem);
+char* numConvert(Parameter preem);
 
-const char* Preent(const char* string, Preem* head);
+const char* Preent(const char* string, Parameter* head);
 
 const char* GeetCount(unsigned int* count);
 

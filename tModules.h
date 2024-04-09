@@ -6,15 +6,50 @@
 #include <Windows.h>
 
 typedef struct {
-	char _type;
+	ParamType _type;
 	void* _ptr;
-} Preem;
+} Parameter;
+
+typedef struct {
+	const RequestType _type;
+	void** _params;
+} REQUEST;
 
 typedef struct _Link {
 	struct _Link* _next;
 	struct _Link* _prev;
 	volatile LONG _lock;
 } Link;
+
+typedef struct { // Contextualized chunk of memory
+	const size_t _head;
+	const size_t _size;
+	const int _flags;
+} Chunk;
+
+typedef struct { // What kind of data is expected to be there
+	const char* const _name;
+	const size_t _size;
+	const void* const _nullLoc;
+	const unsigned int _unitsPerBlock;
+	const unsigned int _barrelsPerBlock;
+} TypeInfo;
+
+typedef struct { // What global class of data is being represented
+	const char* const _name;
+	const TypeInfo* const _type;
+} Property;
+
+typedef struct { // How to manage the data
+	const TypeInfo* const _type;
+	int (*_extensions)(REQUEST request);
+} Collection;
+
+typedef struct { // Fixed chunk of memory
+	Collection _collection;
+	Chunk _chunk;
+	uint _count;
+} Bucket;
 
 typedef struct {
 	Link _link;
@@ -31,45 +66,9 @@ typedef struct {
 } Barrel;
 
 typedef struct {
-	const size_t _size;
-	const char* const _name;
-} TypeRaw;
-
-typedef struct {
-	const TypeRaw _type;
-	void* const _nullLoc;
-	const unsigned int _flags;
-	// Barrel Section
-	const unsigned int _unitsPerBlock;
-	const unsigned int _barrelsPerBlock;
-} TypeInfo;
-
-typedef struct {
-
-	RequestType _type;
-
-	void* _trg;
-	void* _src;
-
-	int _trgIx;
-	int _srcIx;
-	long long _size;
-
-	//size_t _size;
-
-} Request;
-
-typedef struct {
 	Link _link;
-	Request _request;
+	REQUEST _request;
 } LinkedRequest;
-
-typedef struct {
-	TypeInfo* _info;
-	bool(*_extensions)(Request* request);
-	uint _count;
-	uint _capacity;
-} Collection;
 
 typedef struct {
 	Collection _collection;
@@ -80,43 +79,22 @@ typedef struct {
 typedef Collection* COLLECTION;
 
 typedef struct {
-	Collection* _src;
-	void* _hLoc;
-	void* _tLoc;
-	size_t _hMem;
-	size_t _tMem;
-} Slice;
-
-typedef struct {
-	Collection _collection;
-	void* _bucket;
-} Bucket;
-
-typedef struct {
 	Bucket _bucket;
 	volatile ULONG _start;
 	volatile ULONG _next;
 } RollingQue;
 
 typedef struct {
-
 	ManagedCollection _managed;
 	LinkedRequest* _requests;
 
 	BarrelFlags _flags;
 
-	//uint _barrelCount = _collection._capacity
+	uint _barrelCount;
 	uint _barrelOffset;
 	int _barrelStart;
 	int _nextNode; // next garbage/physical (Whether is active or not)
-	
 } BarrelNode;
-
-typedef struct {
-	RequestType _type;
-
-	Bucket _init;
-} BarrelRequest;
 
 typedef struct {
 	Collection* _collection;
@@ -124,14 +102,7 @@ typedef struct {
 	unsigned int _first;
 	unsigned int _last;
 	int _lastLookupPerformance;
-	unsigned int (*_hashFunc)(void*, unsigned int);
-} hash_map;
-
-typedef struct {
-	hash_map _map;
-	int _requests;
-	unsigned long long _pageCount;
-} barrel_map;
+} HashMap;
 
 typedef struct {
 	HANDLE _handle;
@@ -175,15 +146,10 @@ typedef struct {
 	void* _target;
 } Target;
 
-typedef struct {
-	TypeRaw _type;
-	const char* _name;
-} PropertyID;
-
-typedef struct {
-	PropertyID _property;
-	Bucket _params;
-} Parameter;
+//typedef struct {
+//	Property _property;
+//	Bucket _params;
+//} ParamType;
 
 typedef struct {
 	unsigned long long _firstBarCode;
@@ -191,19 +157,9 @@ typedef struct {
 } Batch;
 
 typedef struct {
-	PropertyID _property;
+	Property _property;
 	Bucket _batches;
 } Allocator;
 
-typedef struct {
-	hash_map _map;
-	Collection* _data;
-} HashTable;
-
-typedef struct {
-	barrel_map _barrels;
-	HashTable _types;
-	HashTable _propAllocations;
-} DataBase;
 
 #endif // !MODULES

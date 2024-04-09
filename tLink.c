@@ -18,10 +18,10 @@ void LinkElements(Link* target, Link* prev, Link* next)
 		next->_prev = target ? target : prev;
 		InterlockedDecrement(&(next->_lock));
 	}
-		
+
 	if (prev)
 	{
-		while (prev->_lock){}
+		while (prev->_lock) {}
 		InterlockedIncrement(&(prev->_lock));
 		prev->_next = target ? target : next;
 		InterlockedDecrement(&(prev->_lock));
@@ -31,4 +31,13 @@ void LinkElements(Link* target, Link* prev, Link* next)
 void UnLink(Link* target)
 {
 	LinkElements(NULL, target->_prev, target->_next);
+}
+
+Link* RemoveAndNext(Link* target)
+{
+
+	Link* next = target->_next;
+	UnLink(target);
+	return next;
+
 }

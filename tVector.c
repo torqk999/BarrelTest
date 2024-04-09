@@ -1,63 +1,40 @@
 #include <tVector.h>
-
-
-bool Vector_Transcribe(Request request)
+//
+//
+void Vector_Transcribe(REQUEST request)
 {
-	Collection* trgCollection = request._trg;
-	Collection* srcCollection = request._src;
+	Chunk trg = *((Chunk*)request._params[0]);
+	Chunk src = *((Chunk*)request._params[1]);
 
-	request._type = COMPARE_COMPATIBILITY_FULL;
+	size_t unitSize = request._params[2];
+	size_t count = request._params[3];
+	size_t trgIx = request._params[4];
+	size_t srcIx = request._params[5];
 
-	if (!TypeID_Compare(request))
-		return false;
-
-	Slice trgSlice, srcSlice;
-	Request trgRequest = { SLICE_CREATE, trgCollection, &trgSlice, request._trgIx, 0, request._size };
-	Request srcRequest = { SLICE_CREATE, srcCollection, &srcSlice, request._srcIx, 0, request._size };
-
-	if (!trgCollection->_extensions(&trgRequest) ||
-		!srcCollection->_extensions(&srcRequest))
-		return false;
-
-	size_t trgRemain = trgSlice._hMem;
-	size_t srcRemain = srcSlice._hMem;
+	size_t span = unitSize * count;
+	size_t trgPtr = trg._head + (unitSize * trgIx);
+	size_t srcPtr = src._head + (unitSize * trgIx);
 	
-	void* trgLoc = trgSlice._hLoc;
-	void* srcLoc = srcSlice._hLoc;
-
-	while (srcRemain || trgRemain)
+	while (span)
 	{
-		size_t delta = trgRemain < srcRemain ? trgRemain : srcRemain;
+		size_t trgRemain = (trg._head + trg._size) - trgPtr;
+		size_t srcRemain = (src._head + src._size) - srcPtr;
+		size_t delta = trgRemain < span ? srcRemain < trgRemain ? srcRemain : trgRemain : span;
 		
 		if (delta >= sizeof(Barrel)) {
 			uint barrelCount = delta / sizeof(Barrel);
 			delta = barrelCount * sizeof(Barrel);
 			
-			barrelTranscribe(trgLoc, srcLoc, barrelCount);
+			barrelTranscribe(trgPtr, srcPtr, barrelCount);
 		}
 		else {
-			rawTranscribe(trgLoc, srcLoc, delta);
+			rawTranscribe(trgPtr, srcPtr, delta);
 		}
 
-		trgRemain -= delta;
-		srcRemain -= delta;
-		
-		if (!trgRemain && trgSlice._tMem) {
-			trgRemain = trgSlice._tMem;
-			trgLoc = trgSlice._tLoc;
-		}
-
-		if (!srcRemain && srcSlice._tMem) {
-			srcRemain = srcSlice._tMem;
-			srcLoc = srcSlice._tLoc;
-		}
+		trgPtr += delta;
+		srcPtr += delta;
+		span -= delta;
 	}
-	
-	trgRequest._type = SLICE_RELEASE;
-	srcRequest._type = SLICE_RELEASE;
-
-	trgCollection->_extensions(&trgRequest);
-	srcCollection->_extensions(&srcRequest);
 
 	return true;
 }

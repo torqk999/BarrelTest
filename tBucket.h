@@ -1,36 +1,28 @@
 #ifndef	tBucket
 #define	tBucket
 
-#include <tCollection.h>
+#include <tVector.h>
 
-void* Bucket_GetPtr(Bucket* bucketVector, uint index);
+//void* Bucket_GetPtr(Bucket* bucketVector, uint index);
+//
+//bool Bucket_Resize(REQUEST request);
+//bool Bucket_Read(REQUEST request);
+//bool Bucket_Write(REQUEST request);
+//bool Bucket_Add(REQUEST request);
+//bool Bucket_Insert(REQUEST request);
+//bool Bucket_Remove(REQUEST request);
+//bool Bucket_RemoveAt(REQUEST request);
+//
+//bool Bucket_Chunk(REQUEST request);
+//
+//bool Bucket_Location(REQUEST* request);
+//bool Bucket_Iterate(REQUEST* request);
 
-bool Bucket_Resize(Request request);
-bool Bucket_Read(Request request);
-bool Bucket_Write(Request request);
-bool Bucket_Add(Request request);
-bool Bucket_Insert(Request request);
-bool Bucket_Remove(Request request);
-bool Bucket_RemoveAt(Request request);
+bool Bucket_Extensions(REQUEST request);
 
-bool Bucket_Slice(Request request);
+COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, int memFlags, uint count);
 
-bool Bucket_Location(Request* request);
-bool Bucket_Iterate(Request* request);
-
-bool Bucket_Extensions(Request* request);
-
-Bucket Bucket_ctor(Collection collection, void* bucket);
-
-COLLECTION Bucket_Construct(size_t size, const char* typeName, void* src);
-
-#define bucket(typeName, ...) Bucket_Construct(sizeof(typeName), #typeName, (ullong[]){0,0,PARAM_COUNT(__VA_ARGS__),(typeName[]){__VA_ARGS__}})
-
-void foo()
-{
-	COLLECTION myBucket = bucket(int, 0, 1, 2, 3, 4);
-
-	int myArray[] = {0,1,2,3,4};
-}
+#define bucket_custom(typeName, flags, ...) Bucket_ctor(#typeName, sizeof(tyeName), (Bucket){0},(typeName[]){__VA_ARGS__}, flags, PARAM_COUNT( __VA_ARGS__ ))
+#define bucket(typeName, ...) bucket_custom(typeName, 0, __VA_ARGS__)
 
 #endif

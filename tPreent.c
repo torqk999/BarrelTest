@@ -96,7 +96,7 @@ int strToInt(const char* input)
 	return output;
 }
 
-char* numConvert(Preem preem)
+char* numConvert(Parameter preem)
 {
 	static char Representation[] = "0123456789ABCDEF";
 	static char Buffer[MAX_NUM_BUFFER];
@@ -203,7 +203,7 @@ char* numConvert(Preem preem)
 	return(ptr);
 }
 
-const char* Preent(const char* string, Preem* head)
+const char* Preent(const char* string, Parameter* head)
 {
 	unsigned int startIndex = 0;
 	char* workingIndex = PREENT_BUFFER;
@@ -231,31 +231,31 @@ const char* Preent(const char* string, Preem* head)
 
 			switch (head[0]._type)
 			{
-			case 'c':
+			case __c:
 				pootChar(*((char*)(head[0]._ptr)), output, written);
 				head++;
 				break;
 
-			case 's':
+			case __s:
 				pootStr((char*)(head[0]._ptr), output, written);
 				head++;
 				break;
 
-			case 'I':
-			case 'L':
-			case 'x':
-			case 'l':
-			case 'O':
-			case 'h':
-			case 'i':
-			case 'o':
-			case 'f':
-			case 'd':
+			case __I:
+			case __L:
+			case __x:
+			case __l:
+			case __O:
+			case __h:
+			case __i:
+			case __o:
+			case __f:
+			case __d:
 				pootStr(numConvert(head[0]), output, written);
 				head++;
 				break;
 
-			case 'n':
+			case NONE:
 				pootStr("\n[NULL PARAM ERROR]\n", output, written);
 				break;
 

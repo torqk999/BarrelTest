@@ -9,6 +9,8 @@ C:\Repos\BarrelTest\tModules.h;C:\Repos\BarrelTest\TestArea\x64\Debug\tModules.o
 C:\Repos\BarrelTest\tPreent.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tPreent.obj
 C:\Repos\BarrelTest\tQues.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tQues.obj
 C:\Repos\BarrelTest\tServices.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tServices.obj
+C:\Repos\BarrelTest\tChunk.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tChunk.obj
 C:\Repos\BarrelTest\tThreads.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tThreads.obj
-C:\Repos\BarrelTest\tTypeID.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tTypeID.obj
+C:\Repos\BarrelTest\tTypeInfo.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tTypeInfo.obj
 C:\Repos\BarrelTest\tCollection.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tCollection.obj
+C:\Repos\BarrelTest\tVector.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tVector.obj

@@ -1,132 +1,15 @@
-﻿  tBarrel.c
-C:\Repos\BarrelTest\tBucket.h(31,24): warning C4047: 'initializing': 'unsigned __int64' differs in levels of indirection from 'int *'
-  (compiling source file 'tBarrel.c')
-  
-C:\Repos\BarrelTest\tBarrel.c(10,2): warning C4047: 'initializing': 'void *const ' differs in levels of indirection from 'int'
-C:\Repos\BarrelTest\tBarrel.c(11,2): warning C4047: 'initializing': 'const unsigned int' differs in levels of indirection from 'void *'
-C:\Repos\BarrelTest\tBarrel.c(21,26): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(53,39): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(62,14): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'ManagedCollection *'
-C:\Repos\BarrelTest\tBarrel.c(90,78): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(69,21): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(83,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(114,16): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
-C:\Repos\BarrelTest\tBarrel.c(114,35): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
-C:\Repos\BarrelTest\tBarrel.c(127,8): warning C4013: 'barrel_DeltaSizeRequest' undefined; assuming extern returning int
-C:\Repos\BarrelTest\tBarrel.c(145,67): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(165,8): warning C4013: 'barrel_ResizeRequest' undefined; assuming extern returning int
-C:\Repos\BarrelTest\tBarrel.c(165,46): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(169,2): warning C4013: 'barrel_TranscribeSpan' undefined; assuming extern returning int
-C:\Repos\BarrelTest\tBarrel.c(156,33): warning C4244: 'initializing': conversion from '__int64' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(193,39): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(184,33): warning C4244: 'initializing': conversion from '__int64' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(216,59): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(237,16): warning C4133: 'initializing': incompatible types - from '__int64 *' to 'unsigned int *'
-C:\Repos\BarrelTest\tBarrel.c(338,29): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(342,71): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(366,43): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(418,19): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(511,25): warning C4047: '=': 'int' differs in levels of indirection from 'BarrelNode *'
-C:\Repos\BarrelTest\tBarrel.c(515,49): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
-C:\Repos\BarrelTest\tBarrel.c(515,25): warning C4133: '=': incompatible types - from 'Link *' to 'LinkedRequest *'
-C:\Repos\BarrelTest\tBarrel.c(533,49): warning C4133: 'function': incompatible types - from 'LinkedRequest *' to 'Link *'
-C:\Repos\BarrelTest\tBarrel.c(533,25): warning C4133: '=': incompatible types - from 'Link *' to 'LinkedRequest *'
-C:\Repos\BarrelTest\tBarrel.c(423,48): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(526,2): warning C4102: 'Next': unreferenced label
-C:\Repos\BarrelTest\tBarrel.c(574,18): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(595,39): warning C4028: formal parameter 1 different from declaration
-C:\Repos\BarrelTest\tBarrel.c(626,24): warning C4090: 'function': different 'const' qualifiers
-C:\Repos\BarrelTest\tBarrel.c(627,4): warning C4047: 'function': 'int (__cdecl *)(Request *)' differs in levels of indirection from 'int'
-C:\Repos\BarrelTest\tBarrel.c(627,4): warning C4024: 'Collection_ctor': different types for formal and actual parameter 2
-C:\Repos\BarrelTest\tBarrel.c(633,23): warning C4133: 'function': incompatible types - from 'BarrelService *' to 'tService *'
-C:\Repos\BarrelTest\tBarrel.c(662,23): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'Collection *'
-C:\Repos\BarrelTest\tBarrel.c(665,2): warning C4133: 'return': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(669,21): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
-  tBucket.c
-C:\Repos\BarrelTest\tBucket.h(31,24): warning C4047: 'initializing': 'unsigned __int64' differs in levels of indirection from 'int *'
-  (compiling source file 'tBucket.c')
-  
-C:\Repos\BarrelTest\tBucket.c(5,52): warning C4047: ':': 'void *' differs in levels of indirection from 'size_t'
+﻿  tBucket.c
+C:\Repos\BarrelTest\tBucket.c(5,40): warning C4047: ':': 'void *' differs in levels of indirection from 'size_t'
 C:\Repos\BarrelTest\tBucket.c(5,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
-C:\Repos\BarrelTest\tBucket.c(14,44): warning C4244: '=': conversion from '__int64' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBucket.c(69,59): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBucket.c(94,22): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBucket.c(96,16): warning C4047: '=': 'void *' differs in levels of indirection from 'char'
-C:\Repos\BarrelTest\tBucket.c(130,2): warning C4047: 'return': 'int' differs in levels of indirection from 'void *'
-C:\Repos\BarrelTest\tBucket.c(119,16): warning C4133: 'initializing': incompatible types - from '__int64 *' to 'unsigned int *'
-C:\Repos\BarrelTest\tBucket.c(184,2): warning C4133: 'return': incompatible types - from 'Bucket *' to 'COLLECTION'
-  TestArea.c
-C:\Repos\BarrelTest\tBucket.h(31,24): warning C4047: 'initializing': 'unsigned __int64' differs in levels of indirection from 'int *'
-  (compiling source file 'TestArea.c')
-  
-C:\Repos\BarrelTest\TestArea.c(61,6): warning C4013: 'barrel_RequestNode' undefined; assuming extern returning int
-C:\Repos\BarrelTest\TestArea.c(61,35): warning C4047: 'initializing': 'int (__cdecl *)(Request *)' differs in levels of indirection from 'int'
-C:\Repos\BarrelTest\TestArea.c(100,25): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(153,25): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(188,20): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(191,3): warning C4047: 'initializing': 'int' differs in levels of indirection from 'LinkedRequest *'
-C:\Repos\BarrelTest\TestArea.c(233,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(234,4): warning C4090: 'initializing': different 'const' qualifiers
-C:\Repos\BarrelTest\TestArea.c(238,21): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\TestArea.c(253,10): warning C4101: 'blah': unreferenced local variable
-C:\Repos\BarrelTest\TestArea.c(270,11): error C2440: 'initializing': cannot convert from 'TypeInfo *' to 'TypeInfo'
-  tHashMap.c
-  tHeap.c
-C:\Repos\BarrelTest\tBucket.h(31,24): warning C4047: 'initializing': 'unsigned __int64' differs in levels of indirection from 'int *'
-  (compiling source file 'tHeap.c')
-  
-C:\Repos\BarrelTest\tHeap.c(53,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  tQues.c
-C:\Repos\BarrelTest\tBucket.h(31,24): warning C4047: 'initializing': 'unsigned __int64' differs in levels of indirection from 'int *'
-  (compiling source file 'tQues.c')
-  
-C:\Repos\BarrelTest\tQues.c(7,19): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
-C:\Repos\BarrelTest\tQues.c(39,26): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
-C:\Repos\BarrelTest\tQues.c(50,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
-C:\Repos\BarrelTest\tQues.c(65,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'Collection *'
-  tRequest.c
-C:\Repos\BarrelTest\tRequest.c(21,2): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(20,4): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(24,64): warning C4029: declared formal parameter list different from definition
-C:\Repos\BarrelTest\tRequest.c(33,2): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(32,4): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(45,2): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(44,4): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(110,2): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(110,2): warning C4090: 'initializing': different 'const' qualifiers
-C:\Repos\BarrelTest\tRequest.c(109,4): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(122,2): error C2078: too many initializers
-C:\Repos\BarrelTest\tRequest.c(121,4): error C2078: too many initializers
-  tServices.c
-C:\Repos\BarrelTest\tBucket.h(31,24): warning C4047: 'initializing': 'unsigned __int64' differs in levels of indirection from 'int *'
-  (compiling source file 'tServices.c')
-  
-  tSlice.c
-C:\Repos\BarrelTest\tSlice.c(5,8): warning C4028: formal parameter 2 different from declaration
-C:\Repos\BarrelTest\tSlice.c(6,8): warning C4028: formal parameter 3 different from declaration
-C:\Repos\BarrelTest\tSlice.c(9,1): warning C4029: declared formal parameter list different from definition
-C:\Repos\BarrelTest\tSlice.c(10,9): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'size_t'
-  tThreads.c
-  tTypeInfo.c
-C:\Repos\BarrelTest\tTypeInfo.c(39,38): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
-C:\Repos\BarrelTest\tTypeInfo.c(95,2): warning C4013: 'Type_BarrelBlockCounts' undefined; assuming extern returning int
-C:\Repos\BarrelTest\tTypeInfo.c(118,6): error C2371: 'Type_BarrelBlockCounts': redefinition; different basic types
-C:\Repos\BarrelTest\tTypeInfo.c(129,17): warning C4047: '=': 'unsigned int *' differs in levels of indirection from 'size_t'
-C:\Repos\BarrelTest\tTypeInfo.c(137,19): warning C4047: '=': 'unsigned int *' differs in levels of indirection from 'size_t'
-  tCollection.c
-C:\Repos\BarrelTest\tCollection.c(87,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
-C:\Repos\BarrelTest\tCollection.c(107,1): warning C4029: declared formal parameter list different from definition
-C:\Repos\BarrelTest\tCollection.c(111,6): error C2084: function 'int Collection_GetSlice(Collection *,Slice *,unsigned int,unsigned int)' already has a body
-  C:\Repos\BarrelTest\tCollection.c(106,6):
-  see previous definition of 'Collection_GetSlice'
-  
-C:\Repos\BarrelTest\tCollection.c(154,27): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
-  tVector.c
-C:\Repos\BarrelTest\tVector.c(33,29): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-  Generating Code...
-C:\Repos\BarrelTest\tHeap.c(25,1): warning C4715: 'heapDeltaPages': not all control paths return a value
-C:\Repos\BarrelTest\tBucket.c(52,1): warning C4716: 'Bucket_Add': must return a value
-C:\Repos\BarrelTest\tBucket.c(87,1): warning C4716: 'Bucket_Remove': must return a value
-C:\Repos\BarrelTest\tBucket.c(91,1): warning C4716: 'Bucket_RemoveAt': must return a value
-C:\Repos\BarrelTest\tBarrel.c(231,1): warning C4716: 'barrel_Remove': must return a value
-C:\Repos\BarrelTest\tBarrel.c(232,1): warning C4716: 'barrel_RemoveAt': must return a value
+C:\Repos\BarrelTest\tBucket.c(134,70): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Repos\BarrelTest\tBucket.c(161,25): warning C4047: '=': 'void *' differs in levels of indirection from 'const size_t'
+C:\Repos\BarrelTest\tBucket.c(172,32): warning C4047: '!=': 'const size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tBucket.c(174,32): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tBucket.c(174,32): warning C4047: 'function': 'void **' differs in levels of indirection from 'Parameter [17]'
+C:\Repos\BarrelTest\tBucket.c(174,32): warning C4022: 'CreateRequest': pointer mismatch for actual parameter 3
+C:\Repos\BarrelTest\tBucket.c(207,30): warning C4047: '=': 'void *' differs in levels of indirection from 'unsigned int'
+C:\Repos\BarrelTest\tBucket.c(269,25): warning C4113: 'int (__cdecl *)(REQUEST)' differs in parameter lists from 'int (__cdecl *)(RequestType *)'
+C:\Repos\BarrelTest\tBucket.c(274,2): warning C4133: 'return': incompatible types - from 'Bucket *' to 'COLLECTION'
+C:\Repos\BarrelTest\tBucket.c(217,1): warning C4715: 'Bucket_Info': not all control paths return a value
+C:\Repos\BarrelTest\tBucket.c(150,1): warning C4715: 'Bucket_Manage': not all control paths return a value
+  TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

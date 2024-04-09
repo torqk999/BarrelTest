@@ -1,7 +1,8 @@
 #ifndef	tVector
 #define	tVector
-#include <tSlice.h>
+#include <tCollection.h>
+#include <tChunk.h>
 
-bool Vector_Transcribe(Request request);
+void Vector_Transcribe(REQUEST request);
 
 #endif

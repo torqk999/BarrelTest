@@ -1,5 +1,21 @@
 #include <tHelpers.h>
 
+REQUEST CreateRequest(RequestType type, Parameter* params, void** buffer)
+{
+	REQUEST output = { type, buffer };
+
+	for (int i = 0; i < MaxParamCount; i++)
+		buffer[i] = NONE;
+
+	uint seek = 0;
+	while (params[seek]._type > -1 && params[seek]._type < MaxParamCount) {
+		buffer[params[seek]._type] = params[seek]._ptr;
+		seek++;
+	}
+	buffer[seek] = NULL;
+	return output;
+}
+
 float Clamp(float value, float min, float max)
 {
 	value = value < min ? min : value > max ? max : value;
@@ -18,64 +34,83 @@ int pow(int base, unsigned int power)
 	return output;
 }
 
-bool defaultCharCompare(Request request)
+bool defaultCharCompare(REQUEST request)
 {
-	return ((char*)request._src)[request._srcIx] == ((char*)request._trg)[request._trgIx];
+	//return ((char*)request._src)[request._srcIx] == ((char*)request._trg)[request._trgIx];
 }
 
-bool defaultStringCompare(Request request)
+bool defaultSubStringCompare(char* sub, char* str)
 {
-	while (((char*)request._src)[request._srcIx] != '\0')
-	{
-		if (((char*)request._src)[request._srcIx] != ((char*)request._trg)[request._trgIx])
+	int seek = 0;
+	while (sub[seek] != '\0') {
+		if (sub[seek] != str[seek])
 			return false;
-
-		request._srcIx++;
-		request._trgIx++;
+		seek++;
 	}
-	return ((char*)request._trg)[request._trgIx] == '\0';
+	return true;
 }
 
-int UnsignedIntegralCompare(Request request)
+bool defaultStringCompare(char* sub, char* str)
 {
-	ullong* left = ((ullong*)request._src);
-	ullong* right = ((ullong*)request._trg);
-
-	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
-}
-
-int SignedIntegralCompare(Request request)
-{
-	llong* left = ((llong*)request._src);
-	llong* right = ((llong*)request._trg);
-
-	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
-}
-
-int FloatingCompare(Request request)
-{
-	long double* left = ((long double*)request._src);
-	long double* right = ((long double*)request._trg);
-
-	return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
-}
-
-int findSubStringCustom(const char* src, const char* sub, bool (*compare)(Request request))
-{
-	int currentIndex = 0;
-	const char* currentCheck = sub;
-	while (*src != '\0') {
-		if (currentCheck == '\0')
-			return currentIndex;
-
-		currentCheck = compare((Request) { COMPARE_EQUIVALENCE, src, currentCheck, 0, 0, 1 }) ? currentCheck + 1 : sub;
-		src++;
+	int seek = 0;
+	while (sub[seek] != '\0') {
+		if (sub[seek] != str[seek])
+			return false;
+		seek++;
 	}
+	return str[seek] == '\0';
+}
+
+int UnsignedIntegralCompare(REQUEST request)
+{
+	//ullong* left = ((ullong*)request._src);
+	//ullong* right = ((ullong*)request._trg);
+	//
+	//return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
+}
+
+int SignedIntegralCompare(REQUEST request)
+{
+	//llong* left = ((llong*)request._src);
+	//llong* right = ((llong*)request._trg);
+	//
+	//return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
+}
+
+int FloatingCompare(REQUEST request)
+{
+	//long double* left = ((long double*)request._src);
+	//long double* right = ((long double*)request._trg);
+	//
+	//return left[request._srcIx] > right[request._trgIx] ? 1 : left[request._srcIx] < right[request._trgIx] ? -1 : 0;
+}
+
+int findSubStringCustom(const char* sub, const char* src, bool (*compare)(REQUEST request))
+{
+	//int seek = 0;
+	//
+	//while (src[seek] != '\0') {
+	//
+	//	if (compare(Request_Compare())
+	//		return seek;
+	//	seek++;
+	//}
 	return -1;
 }
 
 
-int findSubString(const char* src, const char* sub) { return findSubStringCustom(src, sub, &defaultCharCompare); }
+int findSubString(const char* sub, const char* src) {
+
+	int seek = 0;
+
+	while (src[seek] != '\0') {
+
+		if (defaultSubStringCompare(sub, src))
+			return seek;
+			seek++;
+	}
+	return -1;
+}
 
 unsigned int paramCount(char* rawArray, char* checkArray)
 {
@@ -121,6 +156,15 @@ unsigned int paramCount0(const char* params)
 	return paramCount;
 }
 
+void stringTranscribe(char* trg, char* src) {
+	int seek = 0;
+	while (src[seek] != '\0') {
+		trg[seek] = src[seek];
+		seek++;
+	}
+	trg[seek] = '\0';
+}
+
 void rawTranscribe(void* trg, void* src, size_t size)
 {
 	for (size_t i = 0; i < size; i++)
@@ -133,27 +177,27 @@ void barrelTranscribe(void* trg, void* src, unsigned int count)
 		((Barrel*)trg)[i] = ((Barrel*)src)[i];
 }
 
-void TranscribeElement(Request request)
+void TranscribeElement(REQUEST request)
 {
-	rawTranscribe(
-		request._src ?
-			((size_t)request._src + (request._srcIx * request._size)) :
-			NULL,
-		((size_t)request._trg + (request._trgIx * request._size)),
-		request._size);
+	//rawTranscribe(
+	//	request._src ?
+	//		((size_t)request._src + (request._srcIx * request._size)) :
+	//		NULL,
+	//	((size_t)request._trg + (request._trgIx * request._size)),
+	//	request._size);
 }
 
-void TranscribeSpan(Request request)
+void TranscribeSpan(REQUEST request)
 {
-	int dir = request._size < 0 ? -1 : 1;
-	unsigned long long count = request._size * dir;
-
-	for (unsigned long long i = 0; i < count; i++)
-	{
-		TranscribeElement(request);
-		request._srcIx += dir;
-		request._trgIx += dir;
-	}
+	//int dir = request._size < 0 ? -1 : 1;
+	//unsigned long long count = request._size * dir;
+	//
+	//for (unsigned long long i = 0; i < count; i++)
+	//{
+	//	TranscribeElement(request);
+	//	request._srcIx += dir;
+	//	request._trgIx += dir;
+	//}
 
 }
 

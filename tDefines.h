@@ -20,9 +20,13 @@
 #define MaxThreadCount 8
 
 #define MaxQueCount 32
+#define MaxParamCount 16
 
 #define MaxPageCount 64
 #define PageSize 4096
 #define PageThreshold 2048
 
+#define nullParam (Parameter){ NONE, NULL }
+#define P_(type, loc) (Parameter){type,loc}
 
+#define Request(req, ...) CreateRequest( req, (Parameter[]){ __VA_ARGS__ , nullParam }, (Parameter[MaxParamCount + 1]){0} )
