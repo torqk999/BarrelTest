@@ -44,7 +44,6 @@ typedef enum {
 	LIST,
 } ClassFlag;
 
-
 typedef enum {
 	FLAGS,
 	ITERATE,
@@ -65,10 +64,12 @@ typedef enum {
 	NONE = -2,
 	OMEGA = -1,
 	FLAG = 1,
+
 	DONE,
 	USE,
 	FREE,
 	RELEASE,
+
 	tVARIANT = 0,
 	tTRG = 1,
 

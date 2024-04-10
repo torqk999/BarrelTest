@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Repos\BarrelTest\x64\Debug\TestArea.exe</FullPath>
+      <FullPath>C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\x64\Debug\TestArea.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

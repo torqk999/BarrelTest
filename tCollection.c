@@ -144,10 +144,9 @@ uint Collection_Capacity(COLLECTION collection) {
 		return 0;
 	return output;
 }
-uint Collection_Count(COLLECTION collection)
-{
+uint Collection_Count(COLLECTION collection) {
 	uint output;
-	if (!collection->_extensions(Request(INFO, P_(tTRG, collection), P_(tCOUNT, &output))))
+	if (!collection->_extensions(Request(INFO, P_(tVARIANT, tCOUNT), P_(tSRC, collection), P_(tTRG, &output))))
 		return 0;
 	return output;
 }

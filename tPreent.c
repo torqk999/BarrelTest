@@ -118,41 +118,41 @@ char* numConvert(Parameter preem)
 
 	switch (preem._type)
 	{
-	case 'I':
+	case __I:
 		intCheck = *((int*)(preem._ptr));
 		isPositive = intCheck >= 0;
 		iVal = isPositive ? intCheck : -intCheck;
 		base = 10;
 		goto IsInt;
-	case 'L':
+	case __L:
 		longCheck = *((long long*)(preem._ptr));
 		isPositive = longCheck >= 0;
 		iVal = isPositive ? longCheck : -longCheck;
 		base = 10;
 		goto IsInt;
-	case 'x':
+	case __x:
 		base += 6;
-	case 'l':
+	case __l:
 		base += 2;
-	case 'O':
+	case __O:
 		base += 8;
 		iVal = *((unsigned long long*)(preem._ptr));
 		goto IsInt;
-	case 'h':
+	case __h:
 		base += 6;
-	case 'i':
+	case __i:
 		base += 2;
-	case 'o':
+	case __o:
 		base += 8;
 		iVal = *((unsigned int*)(preem._ptr));
 	IsInt:
 		isInt = 1;
 		break;
 
-	case 'f':
+	case __f:
 		fVal = *((float*)(preem._ptr));
 		goto IsFloat;
-	case 'd':
+	case __d:
 		fVal = *((double*)(preem._ptr));
 	IsFloat:
 		isPositive = fVal >= 0;

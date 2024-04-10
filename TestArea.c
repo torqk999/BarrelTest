@@ -282,11 +282,7 @@ int main() {
 
 	COLLECTION myBucket = FOO(int, 0, 1, 2, 3, 4, 5);
 
-	//Collection_Write
-
-	uint count = Collection_Count(myBucket);
-
-	PREENT_ARGS("collection count: %\n", fmt_i(&count));
+	PREENT_ARGS("collection count: %\n", fmt_i(Collection_Count(myBucket)));
 
 	//TypeInfo* myIntType = TYPE_ID(int, BUCKET);
 

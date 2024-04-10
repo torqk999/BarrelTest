@@ -1,15 +1,8 @@
-﻿  tBucket.c
-C:\Repos\BarrelTest\tBucket.c(5,40): warning C4047: ':': 'void *' differs in levels of indirection from 'size_t'
-C:\Repos\BarrelTest\tBucket.c(5,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
-C:\Repos\BarrelTest\tBucket.c(134,70): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBucket.c(161,25): warning C4047: '=': 'void *' differs in levels of indirection from 'const size_t'
-C:\Repos\BarrelTest\tBucket.c(172,32): warning C4047: '!=': 'const size_t' differs in levels of indirection from 'void *'
-C:\Repos\BarrelTest\tBucket.c(174,32): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
-C:\Repos\BarrelTest\tBucket.c(174,32): warning C4047: 'function': 'void **' differs in levels of indirection from 'Parameter [17]'
-C:\Repos\BarrelTest\tBucket.c(174,32): warning C4022: 'CreateRequest': pointer mismatch for actual parameter 3
-C:\Repos\BarrelTest\tBucket.c(207,30): warning C4047: '=': 'void *' differs in levels of indirection from 'unsigned int'
-C:\Repos\BarrelTest\tBucket.c(269,25): warning C4113: 'int (__cdecl *)(REQUEST)' differs in parameter lists from 'int (__cdecl *)(RequestType *)'
-C:\Repos\BarrelTest\tBucket.c(274,2): warning C4133: 'return': incompatible types - from 'Bucket *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBucket.c(217,1): warning C4715: 'Bucket_Info': not all control paths return a value
-C:\Repos\BarrelTest\tBucket.c(150,1): warning C4715: 'Bucket_Manage': not all control paths return a value
-  TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe
+﻿  TestArea.c
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(275,76): warning C4090: 'function': different 'const' qualifiers
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(275,80): warning C4090: 'function': different 'const' qualifiers
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(269,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(275,10): warning C4133: 'initializing': incompatible types - from 'COLLECTION' to 'Bucket *'
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(283,24): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'size_t'
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(283,13): warning C4133: 'initializing': incompatible types - from 'Bucket *' to 'COLLECTION'
+  TestArea.vcxproj -> C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\x64\Debug\TestArea.exe

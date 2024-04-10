@@ -1,16 +1,16 @@
-C:\Repos\BarrelTest\tBarrel.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tBarrel.obj
-C:\Repos\BarrelTest\tBucket.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tBucket.obj
-C:\Repos\BarrelTest\TestArea.c;C:\Repos\BarrelTest\TestArea\x64\Debug\TestArea.obj
-C:\Repos\BarrelTest\tHashMap.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHashMap.obj
-C:\Repos\BarrelTest\tHeap.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHeap.obj
-C:\Repos\BarrelTest\tHelpers.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHelpers.obj
-C:\Repos\BarrelTest\tLink.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tLink.obj
-C:\Repos\BarrelTest\tModules.h;C:\Repos\BarrelTest\TestArea\x64\Debug\tModules.obj
-C:\Repos\BarrelTest\tPreent.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tPreent.obj
-C:\Repos\BarrelTest\tQues.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tQues.obj
-C:\Repos\BarrelTest\tServices.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tServices.obj
-C:\Repos\BarrelTest\tChunk.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tChunk.obj
-C:\Repos\BarrelTest\tThreads.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tThreads.obj
-C:\Repos\BarrelTest\tTypeInfo.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tTypeInfo.obj
-C:\Repos\BarrelTest\tCollection.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tCollection.obj
-C:\Repos\BarrelTest\tVector.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tVector.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tBarrel.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tBarrel.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tBucket.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tBucket.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\TestArea.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tHashMap.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tHashMap.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tHeap.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tHeap.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tHelpers.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tHelpers.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tLink.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tLink.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tModules.h;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tModules.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tPreent.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tPreent.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tQues.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tQues.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tServices.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tServices.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tChunk.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tChunk.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tThreads.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tThreads.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tTypeInfo.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tTypeInfo.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tCollection.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tCollection.obj
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\tVector.c;C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea\x64\Debug\tVector.obj
