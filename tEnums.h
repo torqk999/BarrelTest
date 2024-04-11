@@ -22,20 +22,21 @@ typedef enum {
 } BarrelFlags;
 
 typedef enum {
-	//POINTER = 1,
 	READ_ONLY = 1,
 	FIXED_SIZE = 2,
 	STATIC = 4,
 	VOLATILE = 8,
+	MANAGED = 16,
+	EMPTY = 32
+} MemFlag;
 
-	UNSIGNED = 16,
-	ALPHA = 32,
-	INTEGRAL = 64,
-	FLOATING = 128,
-	STRUCT = 256,
-	UNION = 512,
-
-	MANAGED = 1024,
+typedef enum {
+	UNSIGNED = 1,
+	ALPHA = 2,
+	INTEGRAL = 4,
+	FLOATING = 8,
+	STRUCT = 16,
+	UNION = 32
 } TypeFlag;
 
 typedef enum {

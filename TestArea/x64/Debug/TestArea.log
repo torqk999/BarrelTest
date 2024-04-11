@@ -3,6 +3,5 @@ C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(
 C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(275,80): warning C4090: 'function': different 'const' qualifiers
 C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(269,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
 C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(275,10): warning C4133: 'initializing': incompatible types - from 'COLLECTION' to 'Bucket *'
-C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(283,24): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'size_t'
-C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(283,13): warning C4133: 'initializing': incompatible types - from 'Bucket *' to 'COLLECTION'
-  TestArea.vcxproj -> C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\x64\Debug\TestArea.exe
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(283,2): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Program Files (x86)\Microsoft Visual Studio\LocalRepos\BarrelTest\TestArea.c(286,3): error C2143: syntax error: missing ')' before ':'

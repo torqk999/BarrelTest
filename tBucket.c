@@ -257,18 +257,18 @@ bool Bucket_Extensions(REQUEST request)
 	}
 }
 
-COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, int memFlags, uint count) {
+COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, int memFlags, uint capacity) {
 
 	TypeInfo* info = TypeInfo_Get(name, unitSize);
+	bool empty = memFlags & EMPTY;
+	memFlags |= FIXED_SIZE;
 	Bucket tmpBucket = {
 		Collection_ctor(info, Bucket_Extensions),
-		Chunk_Create(src, info->_size * count, memFlags),
-		count
+		Chunk_Create(src, info->_size * capacity, memFlags),
+		empty? 0 : capacity
 	};
 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
 	Bucket* returnBucket = loc;
 	return returnBucket;
 }
-
-
 

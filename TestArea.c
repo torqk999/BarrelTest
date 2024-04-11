@@ -280,9 +280,18 @@ Bucket* foo(void** resources) {
 
 int main() {
 
-	COLLECTION myBucket = FOO(int, 0, 1, 2, 3, 4, 5);
+	//asm
+	//(
+	//	"syscall"
+	//	:
+	//	:"a"(1), "D"(1), "S"("Hello World!\n"), "d"(14)
+	//);
 
-	PREENT_ARGS("collection count: %\n", fmt_i(Collection_Count(myBucket)));
+	COLLECTION myBucket = Bucket_List(int, 0, 1, 2, 3, 4, 5);
+
+	COLLECTION emptyBucket = Bucket_Empty(int, 6);
+
+	PREENT_ARGS("collection count: %\n", fmt_i(Collection_Count(emptyBucket)));
 
 	//TypeInfo* myIntType = TYPE_ID(int, BUCKET);
 
