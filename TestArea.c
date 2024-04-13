@@ -264,39 +264,33 @@ ButtonAction mainMenuActions[] = {
 
 //#define Derp(x) _Generic
 
-Bucket* foo(void** resources) {
-	const char* name = resources[0];
-	size_t unitSize = resources[1];
-	Bucket* bucket = resources[2];
-	void* src = resources[3];
-	const char* p1 = resources[4];
-	const char* p2 = resources[5];
-
-	Bucket* output = Bucket_ctor(name, unitSize, bucket, src, 0, paramCount(p1, p2));
-	return output;
-}
-
-#define FOO(typeName, ...) foo((void*[]){ #typeName, sizeof(typeName), &(Bucket){0}, (typeName[]){ __VA_ARGS__ }, (char[]){ __VA_ARGS__ , 0 }, (char[]){ __VA_ARGS__ , 1}   })
+//Bucket* foo(void** resources) {
+//	const char* name = resources[0];
+//	size_t unitSize = resources[1];
+//	Bucket* bucket = resources[2];
+//	void* src = resources[3];
+//	const char* p1 = resources[4];
+//	const char* p2 = resources[5];
+//
+//	Bucket* output = Bucket_ctor(name, unitSize, bucket, src, 0, paramCount(p1, p2));
+//	return output;
+//}
+//
+//#define FOO(typeName, ...) foo((void*[]){ #typeName, sizeof(typeName), &(Bucket){0}, (typeName[]){ __VA_ARGS__ }, (char[]){ __VA_ARGS__ , 0 }, (char[]){ __VA_ARGS__ , 1}   })
 
 int main() {
-
-	//asm
-	//(
-	//	"syscall"
-	//	:
-	//	:"a"(1), "D"(1), "S"("Hello World!\n"), "d"(14)
-	//);
 
 	COLLECTION myBucket = Bucket_List(int, 0, 1, 2, 3, 4, 5);
 
 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
 
+	int output;
+	if (!Collection_Read(myBucket, &output, 3))
+		return 1;
+
 	PREENT_ARGS("collection count: %\n", fmt_i(Collection_Count(emptyBucket)));
 
-	//TypeInfo* myIntType = TYPE_ID(int, BUCKET);
-
-	//PREENT_ARGS("sizeof Node: %\n %", fmt_l(sizeof(BarrelNode)));
-	//barrelTest();
+	return 0;
 }
 
 

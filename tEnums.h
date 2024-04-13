@@ -66,10 +66,7 @@ typedef enum {
 	OMEGA = -1,
 	FLAG = 1,
 
-	DONE,
-	USE,
-	FREE,
-	RELEASE,
+
 
 	tVARIANT = 0,
 	tTRG = 1,
@@ -88,16 +85,17 @@ typedef enum {
 	tDIRECTION = 5,
 
 	// Info
-	tNAME = 2,
-	tSIZE = 3,
-	tCOUNT = 4,
-	tCAPACITY = 5,
-
-
+	tSIZE = 6,
+	tCOUNT = 7,
+	tCAPACITY = 8,
+	tNAME = 9,
 	
 	PROVIDE,
 	
-	
+	DONE,
+	USE,
+	FREE,
+	RELEASE,
 
 
 

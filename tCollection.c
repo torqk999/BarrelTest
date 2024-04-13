@@ -119,11 +119,11 @@
 //bool Collection_Resize(Collection* trg, unsigned int count) {
 //	return trg->_extensions(&(Request) { MODIFY_DELTA_CAPACITY, trg, NULL, 0, 0, count });
 //}
-bool Collection_ReadSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count) {
-	return trg->_extensions(Request(TRANSCRIBE, P_(COLLECTION_TO_RAW), P_(tTRG, trg), P_(tSRC, src), P_(tCOUNT, count), P_(Ix_TRG, start)));
+bool Collection_ReadSpan(COLLECTION src, void* trg, unsigned int start, unsigned int count) {
+	return src->_extensions(Request(TRANSCRIBE, P_(tDIRECTION, tREAD), P_(tVARIANT, tRAW), P_(tTRG, trg), P_(tSRC, src), P_(tCOUNT, (size_t)count), P_(Ix_TRG, 0), P_(Ix_SRC, start)));
 }
 bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count) {
-	return trg->_extensions(Request(TRANSCRIBE, P_(RAW_TO_COLLECTION), P_(tTRG, trg), P_(tSRC, src), P_(tCOUNT, count), P_(Ix_TRG, start)));
+	return trg->_extensions(Request(TRANSCRIBE, P_(tDIRECTION, tWRITE), P_(tVARIANT, tRAW), P_(tTRG, trg), P_(tSRC, src), P_(tCOUNT, (size_t)count), P_(Ix_TRG, start), P_(Ix_SRC, 0)));
 }
 //bool Collection_InsertSpan(Collection* trg, void* src, unsigned int index, unsigned int count) {
 //	return trg->_extensions(&(Request) { MODIFY_INSERT, trg, src, index, 0, count });
@@ -132,8 +132,8 @@ bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigne
 //	return trg->_extensions(&(Request) { MODIFY_REMOVE_AT, trg, NULL, index, 0, count });
 //}
 //
-bool Collection_Read(COLLECTION trg, void* src, unsigned int index) {
-	return Collection_ReadSpan(trg, src, index, 1);
+bool Collection_Read(COLLECTION src, void* trg, unsigned int index) {
+	return Collection_ReadSpan(src, trg, index, 1);
 }
 bool Collection_Write(COLLECTION trg, void* src, unsigned int index) {
 	return Collection_WriteSpan(trg, src, index, 1);

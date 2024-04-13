@@ -154,17 +154,20 @@ inline bool Bucket_Transcribe(REQUEST request) {
 	ParamType dir = (ParamType)request._params[tDIRECTION];
 	ParamType var = (ParamType)request._params[tVARIANT];
 
-	ParamType bucketIx = dir == tWRITE ? tSRC : tTRG;
+	ParamType bucketIx = dir == tWRITE ? tTRG : tSRC;
 	ParamType aggrIx = dir == tWRITE ? tSRC : tTRG;
 
 	Bucket* bucket = request._params[bucketIx];
-	request._params[tSIZE] = bucket->_collection._type->_size;
 
-	Chunk aggr;
+	size_t size = bucket->_collection._type->_size;
+	size_t count = (size_t)request._params[tCOUNT];
+
+	request._params[tSIZE] = size;
+	Chunk aggr; // Aggregate from the requested collection source.
 
 	switch (var) {
 	case tRAW:
-		Chunk_ctor(&aggr, request._params[aggrIx], (size_t)request._params[tSIZE] * (size_t)request._params[tCOUNT], 0);
+		Chunk_ctor(&aggr, request._params[aggrIx], (size_t)request._params[tSIZE] * count, 0);
 		break;
 
 	case tCOLLECTION:;
@@ -261,6 +264,7 @@ COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, 
 
 	TypeInfo* info = TypeInfo_Get(name, unitSize);
 	bool empty = memFlags & EMPTY;
+	memFlags &= !(EMPTY);
 	memFlags |= FIXED_SIZE;
 	Bucket tmpBucket = {
 		Collection_ctor(info, Bucket_Extensions),

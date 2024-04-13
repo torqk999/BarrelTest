@@ -3,13 +3,13 @@
 //
 void Vector_Transcribe(REQUEST request)
 {
-	Chunk trg = *((Chunk*)request._params[0]);
-	Chunk src = *((Chunk*)request._params[1]);
+	Chunk trg = *((Chunk*)request._params[tTRG]);
+	Chunk src = *((Chunk*)request._params[tSRC]);
 
-	size_t unitSize = request._params[2];
-	size_t count = request._params[3];
-	size_t trgIx = request._params[4];
-	size_t srcIx = request._params[5];
+	size_t unitSize = request._params[tSIZE];
+	size_t count = request._params[tCOUNT];
+	size_t trgIx = request._params[Ix_TRG];
+	size_t srcIx = request._params[Ix_SRC];
 
 	size_t span = unitSize * count;
 	size_t trgPtr = trg._head + (unitSize * trgIx);
