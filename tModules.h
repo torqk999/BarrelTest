@@ -90,6 +90,7 @@ typedef struct {
 
 	BarrelFlags _flags;
 
+	uint _batchOffset;
 	uint _barrelCount;
 	uint _barrelOffset;
 	int _barrelStart;
@@ -146,20 +147,25 @@ typedef struct {
 	void* _target;
 } Target;
 
-//typedef struct {
-//	Property _property;
-//	Bucket _params;
-//} ParamType;
+typedef struct {
+	BarrelNode _node;
+	uint _batchOffset;
+} PropertyBatch;
 
 typedef struct {
-	unsigned long long _firstBarCode;
-	Bucket _subscriptions;
-} Batch;
-
-typedef struct {
-	Property _property;
+	Property* _prop;
+	uint _count;
 	Bucket _batches;
-} Allocator;
+} PropAllocator;
 
+typedef struct {
+	PropAllocator* _allocators;
+	uint _count;
+} PropertyMap;
+
+typedef struct {
+	int _mask;
+	Bucket _batchPtrs;
+} Mutant;
 
 #endif // !MODULES

@@ -1,4 +1,24 @@
-﻿  tCollection.c
+﻿  TestArea.c
+  tBarrel.c
+  tBucket.c
+C:\Repos\BarrelTest\TestArea.c(283,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(283,24): warning C4244: 'initializing': conversion from 'float' to 'char', possible loss of data
+C:\Repos\BarrelTest\tBucket.c(5,40): warning C4047: ':': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tBucket.c(5,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tBucket.c(134,70): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Repos\BarrelTest\tBucket.c(165,25): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tBucket.c(175,32): warning C4047: '!=': 'const size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tBucket.c(177,32): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tBucket.c(177,32): warning C4047: 'function': 'void **' differs in levels of indirection from 'Parameter [17]'
+C:\Repos\BarrelTest\tBucket.c(177,32): warning C4022: 'CreateRequest': pointer mismatch for actual parameter 3
+C:\Repos\BarrelTest\tBucket.c(273,25): warning C4113: 'int (__cdecl *)(REQUEST)' differs in parameter lists from 'int (__cdecl *)(RequestType *)'
+C:\Repos\BarrelTest\tBucket.c(279,21): warning C4018: '<': signed/unsigned mismatch
+C:\Repos\BarrelTest\tBucket.c(284,2): warning C4133: 'return': incompatible types - from 'Bucket *' to 'COLLECTION'
+  tChunk.c
+C:\Repos\BarrelTest\tChunk.c(25,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tChunk.c(29,9): warning C4047: 'initializing': 'const size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tChunk.c(44,30): warning C4022: 'Chunk_ctor': pointer mismatch for actual parameter 2
+  tCollection.c
 C:\Repos\BarrelTest\tCollection.c(123,26): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
 C:\Repos\BarrelTest\tCollection.c(123,26): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'size_t'
 C:\Repos\BarrelTest\tCollection.c(123,26): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'unsigned int'
@@ -15,4 +35,49 @@ C:\Repos\BarrelTest\tCollection.c(149,31): warning C4047: 'initializing': 'void 
 C:\Repos\BarrelTest\tCollection.c(149,31): warning C4047: 'function': 'void **' differs in levels of indirection from 'Parameter [17]'
 C:\Repos\BarrelTest\tCollection.c(149,31): warning C4022: 'CreateRequest': pointer mismatch for actual parameter 3
 C:\Repos\BarrelTest\tCollection.c(180,9): warning C4113: 'int (__cdecl *)(RequestType *)' differs in parameter lists from 'int (__cdecl *)(REQUEST)'
+  tHashMap.c
+  tHeap.c
+C:\Repos\BarrelTest\tHeap.c(53,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  tHelpers.c
+C:\Repos\BarrelTest\tHelpers.c(8,13): warning C4047: '=': 'void *' differs in levels of indirection from 'int'
+C:\Repos\BarrelTest\tHelpers.c(108,34): warning C4090: 'function': different 'const' qualifiers
+C:\Repos\BarrelTest\tHelpers.c(108,39): warning C4090: 'function': different 'const' qualifiers
+C:\Repos\BarrelTest\tHelpers.c(171,43): warning C4047: ':': 'int' differs in levels of indirection from 'void *'
+  tLink.c
+  tPreent.c
+C:\Repos\BarrelTest\tPreent.c(160,10): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Repos\BarrelTest\tPreent.c(173,12): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Repos\BarrelTest\tPreent.c(107,7): warning C4101: 'next': unreferenced local variable
+  tQues.c
+C:\Repos\BarrelTest\tQues.c(7,19): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'COLLECTION'
+C:\Repos\BarrelTest\tQues.c(67,25): warning C4133: 'function': incompatible types - from 'RollingQue *' to 'COLLECTION'
+  tServices.c
+  tThreads.c
+  tTypeInfo.c
+C:\Repos\BarrelTest\tTypeInfo.c(96,56): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Repos\BarrelTest\tTypeInfo.c(104,46): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Repos\BarrelTest\tTypeInfo.c(120,18): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
+C:\Repos\BarrelTest\tTypeInfo.c(113,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'Page *'
+C:\Repos\BarrelTest\tTypeInfo.c(114,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tTypeInfo.c(168,50): warning C4090: '=': different 'const' qualifiers
+  tVector.c
+C:\Repos\BarrelTest\tVector.c(28,21): warning C4022: 'barrelTranscribe': pointer mismatch for actual parameter 1
+C:\Repos\BarrelTest\tVector.c(28,29): warning C4022: 'barrelTranscribe': pointer mismatch for actual parameter 2
+C:\Repos\BarrelTest\tVector.c(31,18): warning C4022: 'rawTranscribe': pointer mismatch for actual parameter 1
+C:\Repos\BarrelTest\tVector.c(31,26): warning C4022: 'rawTranscribe': pointer mismatch for actual parameter 2
+C:\Repos\BarrelTest\tVector.c(39,13): warning C4098: 'Vector_Transcribe': 'void' function returning a value
+C:\Repos\BarrelTest\tVector.c(9,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tVector.c(10,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tVector.c(11,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tVector.c(12,9): warning C4047: 'initializing': 'size_t' differs in levels of indirection from 'void *'
+C:\Repos\BarrelTest\tVector.c(25,29): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Generating Code...
+C:\Repos\BarrelTest\tHelpers.c(27,1): warning C4716: 'ClampInt': must return a value
+C:\Repos\BarrelTest\tHelpers.c(22,1): warning C4716: 'Clamp': must return a value
+C:\Repos\BarrelTest\tHelpers.c(40,1): warning C4716: 'defaultCharCompare': must return a value
+C:\Repos\BarrelTest\tHelpers.c(70,1): warning C4716: 'UnsignedIntegralCompare': must return a value
+C:\Repos\BarrelTest\tHelpers.c(86,1): warning C4716: 'FloatingCompare': must return a value
+C:\Repos\BarrelTest\tHelpers.c(78,1): warning C4716: 'SignedIntegralCompare': must return a value
+C:\Repos\BarrelTest\tHeap.c(25,1): warning C4715: 'heapDeltaPages': not all control paths return a value
+  tModules.h
   TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

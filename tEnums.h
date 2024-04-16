@@ -27,7 +27,10 @@ typedef enum {
 	STATIC = 4,
 	VOLATILE = 8,
 	MANAGED = 16,
-	EMPTY = 32
+
+	// Formatters. Remove after read (f &= !(e))
+	EMPTY = 32,
+	FILL = 64
 } MemFlag;
 
 typedef enum {

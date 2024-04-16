@@ -27,5 +27,6 @@ COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, 
 
 #define Bucket_List(typeName, ...) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[]){ __VA_ARGS__ }, 0, PARAM_COUNT( __VA_ARGS__ ) )
 #define Bucket_Empty(typeName, capacity) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[capacity]){ 0 }, EMPTY, capacity )
+#define Bucket_Fill(typeName, capacity, fill) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[capacity]){ fill }, FILL, capacity )
 
 #endif

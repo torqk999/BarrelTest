@@ -134,18 +134,18 @@ inline void* Bucket_GetPtr(Bucket* bucket, uint index)
 uint Bucket_Capacity(Bucket* bucket) { return (bucket->_chunk._size) / bucket->_collection._type->_size; }
 
 inline bool Bucket_Manage(REQUEST request) {
-	//Bucket* bucket = request._params[0];
+	Bucket* bucket = request._params[tSRC];
 	//void* output = request._params[1];
 	//ParamType option = (ParamType)request._params[2];
 
 	switch (request._type)
 	{
 	case tCHUNK:;
-		request._params[tSRC] = &(((Bucket*)request._params[tTRG])->_chunk);
+		request._params[tTRG] = &(bucket->_chunk);
 		return true;
 
 	default:
-		break;
+		return false;
 	}
 }
 
@@ -264,13 +264,21 @@ COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, 
 
 	TypeInfo* info = TypeInfo_Get(name, unitSize);
 	bool empty = memFlags & EMPTY;
+	bool fill = memFlags & FILL;
 	memFlags &= !(EMPTY);
+	memFlags &= !(FILL);
 	memFlags |= FIXED_SIZE;
+
 	Bucket tmpBucket = {
 		Collection_ctor(info, Bucket_Extensions),
 		Chunk_Create(src, info->_size * capacity, memFlags),
 		empty? 0 : capacity
 	};
+
+	if (fill)
+		for (int i = 1; i < capacity; i++)
+			rawTranscribe(&((char*)src)[i * unitSize], src, unitSize);
+		
 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
 	Bucket* returnBucket = loc;
 	return returnBucket;

@@ -280,7 +280,7 @@ ButtonAction mainMenuActions[] = {
 
 int main() {
 
-	COLLECTION myBucket = Bucket_List(int, 0, 1, 2, 3, 4, 5);
+	COLLECTION myBucket = Bucket_List(int, 0, 1.0f, 2, 3, 4, 5);
 
 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
 
