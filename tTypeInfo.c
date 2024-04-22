@@ -1,10 +1,11 @@
 #include <tTypeInfo.h>
 
-#define testTypeBinCount 32
+
 TypeInfo testTypeBin[testTypeBinCount];
 uint testTypeBinCurrentCount = 0;
 Page testNullBin;
 void* testNullBinHead = &testNullBin;
+
 
 //
 //bool TypeID_Compare(Request request)
@@ -46,18 +47,9 @@ void* testNullBinHead = &testNullBin;
 //	return info->_flags & flags == flags;
 //}
 //
-uint TypeInfo_BuildFlags(const char* name)
+int TypeInfo_BuildTypeFlags(const char* name)
 {
-	uint flags = 0;
-
-	if (findSubString(name, "const") > -1)
-		flags |= READ_ONLY | FIXED_SIZE;
-
-	if (findSubString(name, "static") > -1)
-		flags |= STATIC;
-
-	if (findSubString(name, "volatile") > -1)
-		flags |= VOLATILE;
+	int flags = 0;
 
 	if (findSubString(name, "unsigned") > -1)
 		flags |= UNSIGNED;
@@ -76,35 +68,53 @@ uint TypeInfo_BuildFlags(const char* name)
 		(findSubString(name, "char") > -1)
 		flags |= ALPHA;
 
+	else
+		flags |= TYPE_DEF;
+
 	return flags;
 }
 
-void TypeInfo_BarrelBlockCounts(size_t size, uint* unitsPerBlock, uint* barrelsPerBlock) {
+int TypeInfo_BuildMemFlags(const char* name) {
+	int flags = 0;
 
-	// block is the smallest contiguous chunk of memory bounded units of both barrels
+	if (findSubString(name, "const") > -1)
+		flags |= READ_ONLY | FIXED_SIZE;
+
+	if (findSubString(name, "static") > -1)
+		flags |= STATIC;
+
+	if (findSubString(name, "volatile") > -1)
+		flags |= VOLATILE;
+
+	return flags;
+}
+
+//void TypeInfo_BarrelBlockCounts(size_t size, uint* unitsPerBlock, uint* barrelsPerBlock) {
+//
+//	// block is the smallest contiguous chunk of memory bounded units of both barrels
 	// and vector units set for vector unit size equals sizeof Barrel.
 	// check less or greater conditions, adjust units per 'block' accordingly
-
-	*unitsPerBlock = 1;
-	*barrelsPerBlock = 1;
-
-	if (size < sizeof(Barrel))
-	{
-		while ((*barrelsPerBlock * sizeof(Barrel)) % size)
-			(*barrelsPerBlock)++;
-
-		*unitsPerBlock = (*barrelsPerBlock * sizeof(Barrel)) / size;
-	}
-
-	else if (size > sizeof(Barrel))
-	{
-		while ((*unitsPerBlock * size) % sizeof(Barrel))
-			(*unitsPerBlock)++;
-
-		*barrelsPerBlock = (*unitsPerBlock * size) / sizeof(Barrel);
-	}
-
-}
+//
+//	*unitsPerBlock = 1;
+//	*barrelsPerBlock = 1;
+//
+//	if (size < sizeof(Barrel))
+//	{
+//		while ((*barrelsPerBlock * sizeof(Barrel)) % size)
+//			(*barrelsPerBlock)++;
+//
+//		*unitsPerBlock = (*barrelsPerBlock * sizeof(Barrel)) / size;
+//	}
+//
+//	else if (size > sizeof(Barrel))
+//	{
+//		while ((*unitsPerBlock * size) % sizeof(Barrel))
+//			(*unitsPerBlock)++;
+//
+//		*barrelsPerBlock = (*unitsPerBlock * size) / sizeof(Barrel);
+//	}
+//
+//}
 
 void* TypeInfo_GetNullableTemplate(size_t size, void* nullLoc) {
 	if (!nullLoc)
@@ -121,42 +131,51 @@ void* TypeInfo_GetNullableTemplate(size_t size, void* nullLoc) {
 	return ptr;
 }
 
-TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc)
+bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b)
 {
+	return defaultStringCompare(a->_name, b->_name);
+}
+
+TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc) {
+
+	for (int i = 0; i < testTypeBinCurrentCount; i++) {
+		if (testTypeBin[i]._name == name)
+			return &testTypeBin[i];
+	}
+
 	if (testTypeBinCurrentCount >= testTypeBinCount)
 	{
 		PREENT("No type slots available...\n");
 		return NULL;
 	}
 
-	uint flags = TypeInfo_BuildFlags(name);
-	uint unitsPerBlock, barrelsPerBlock;
-	TypeInfo_BarrelBlockCounts(size, &unitsPerBlock, &barrelsPerBlock);
+	//uint flags = TypeInfo_BuildTypeFlags(name);
+	//uint unitsPerBlock, barrelsPerBlock;
+	//TypeInfo_BarrelBlockCounts(size, &unitsPerBlock, &barrelsPerBlock);
 	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
 
 	TypeInfo newInfo = {
 		name,
 		size,
 		nullTmp,
-		unitsPerBlock,
-		barrelsPerBlock
+		//unitsPerBlock,
+		//barrelsPerBlock
 	};
 
-	TypeInfo* binLocation = testTypeBin;
-	rawTranscribe(&(testTypeBin[testTypeBinCurrentCount]), &newInfo, sizeof(TypeInfo));
-	TypeInfo* ptr = &(testTypeBin[testTypeBinCurrentCount]);
+	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
+	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
 	testTypeBinCurrentCount++;
 	return ptr;
 }
 
 const char* TypeInfo_Name(COLLECTION collection)
 {
-	return collection->_type->_name;
+	return collection->_extensions->_type->_name;
 }
 
 size_t TypeInfo_Size(COLLECTION collection)
 {
-	return collection->_type->_size;
+	return collection->_extensions->_type->_size;
 }
 
 bool TypeInfo_GetInfo(REQUEST request)

@@ -1,8 +1,9 @@
 #include <tBucket.h>
 //
-inline void* Bucket_GetPtr(Bucket* bucket, uint index)
-{
-	return index >= bucket->_count ? NULL : (size_t)(bucket->_chunk._head) + (index * bucket->_collection._type->_size);
+
+
+inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
+	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_chunk._head) + (index * bucket->_collection._extensions->_type->_size);
 }
 //
 //bool Bucket_Resize(Request request)
@@ -131,17 +132,32 @@ inline void* Bucket_GetPtr(Bucket* bucket, uint index)
 //}
 //
 
-uint Bucket_Capacity(Bucket* bucket) { return (bucket->_chunk._size) / bucket->_collection._type->_size; }
+bool Bucket_GetChunk(Bucket* bucket, Chunk* loc) {
+	Chunk_ctor(loc, bucket->_chunk._head, bucket->_chunk._size);
+	return true;
+}
+
+uint Bucket_Capacity(Bucket* bucket) { return (bucket->_chunk._size) / bucket->_collection._extensions->_type->_size; }
+
+inline bool Bucket_Iterate(REQUEST request) {
+	Bucket* bucket = request._params[tSRC];
+	request._params[tTRG] = Bucket_GetPtr(bucket, request._params[Ix_TRG]);
+	((size_t)(request._params[Ix_TRG]))++;
+	return true;
+}
 
 inline bool Bucket_Manage(REQUEST request) {
+	ParamType var = (ParamType)request._params[tVARIANT];
 	Bucket* bucket = request._params[tSRC];
 	//void* output = request._params[1];
-	//ParamType option = (ParamType)request._params[2];
+	
 
-	switch (request._type)
+	switch (var)
 	{
 	case tCHUNK:;
-		request._params[tTRG] = &(bucket->_chunk);
+		return Bucket_GetChunk(bucket, request._params[tTRG]);
+
+	case tRELEASE:
 		return true;
 
 	default:
@@ -151,41 +167,6 @@ inline bool Bucket_Manage(REQUEST request) {
 
 inline bool Bucket_Transcribe(REQUEST request) {
 
-	ParamType dir = (ParamType)request._params[tDIRECTION];
-	ParamType var = (ParamType)request._params[tVARIANT];
-
-	ParamType bucketIx = dir == tWRITE ? tTRG : tSRC;
-	ParamType aggrIx = dir == tWRITE ? tSRC : tTRG;
-
-	Bucket* bucket = request._params[bucketIx];
-
-	size_t size = bucket->_collection._type->_size;
-	size_t count = (size_t)request._params[tCOUNT];
-
-	request._params[tSIZE] = size;
-	Chunk aggr; // Aggregate from the requested collection source.
-
-	switch (var) {
-	case tRAW:
-		Chunk_ctor(&aggr, request._params[aggrIx], (size_t)request._params[tSIZE] * count, 0);
-		break;
-
-	case tCOLLECTION:;
-		Collection* collection = request._params[aggrIx];
-		if (collection->_type->_size != request._params[tSIZE])
-			return false;
-		if (!collection->_extensions(Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, collection), P_(tTRG, &aggr))))
-			return false;
-		break;
-	default:
-		return false;
-	}
-
-	request._params[bucketIx] = &(bucket->_chunk);
-	request._params[aggrIx] = &aggr;
-	Vector_Transcribe(request);
-
-	return true;
 }
 
 inline bool Bucket_Info(REQUEST request) {
@@ -197,7 +178,7 @@ inline bool Bucket_Info(REQUEST request) {
 	switch (var) {
 
 	case tCOUNT:
-		*((uint*)output) = bucket->_count;
+		*((uint*)output) = bucket->_collection._count;
 		return true;
 
 	case tCAPACITY:
@@ -221,11 +202,14 @@ bool Bucket_Extensions(REQUEST request)
 	case INFO:
 		return Bucket_Info(request);
 
-	case TRANSCRIBE:
-		return Bucket_Transcribe(request);
+	//case TRANSCRIBE:
+	//	return Bucket_Transcribe(request);
 
 	case MANAGE:
 		return Bucket_Manage(request);
+
+	case ITERATE:
+		return Bucket_Iterate(request);
 
 		//case LOCATION:
 		//	return Bucket_Location(request);
@@ -260,8 +244,7 @@ bool Bucket_Extensions(REQUEST request)
 	}
 }
 
-COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, int memFlags, uint capacity) {
-
+Bucket Bucket_Create(const char* name, size_t unitSize, void* head, int memFlags, uint capacity) {
 	TypeInfo* info = TypeInfo_Get(name, unitSize);
 	bool empty = memFlags & EMPTY;
 	bool fill = memFlags & FILL;
@@ -270,17 +253,21 @@ COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, 
 	memFlags |= FIXED_SIZE;
 
 	Bucket tmpBucket = {
-		Collection_ctor(info, Bucket_Extensions),
-		Chunk_Create(src, info->_size * capacity, memFlags),
-		empty? 0 : capacity
+		Collection_Create(Collection_GetExtensions(info, Bucket_Extensions, memFlags), empty ? 0 : capacity),
+		Chunk_Create(head, info->_size * capacity)
 	};
 
 	if (fill)
 		for (int i = 1; i < capacity; i++)
-			rawTranscribe(&((char*)src)[i * unitSize], src, unitSize);
-		
+			rawTranscribe(&((char*)head)[i * unitSize], head, unitSize);
+
+	return tmpBucket;
+}
+
+COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* head, int memFlags, uint capacity) {
+
+	Bucket tmpBucket = Bucket_Create(name, unitSize, head, memFlags, capacity);
 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
-	Bucket* returnBucket = loc;
-	return returnBucket;
+	return loc;
 }
 

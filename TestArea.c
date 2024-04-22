@@ -284,11 +284,12 @@ int main() {
 
 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
 
-	int output;
+	int output = 0;
 	if (!Collection_Read(myBucket, &output, 3))
 		return 1;
 
-	PREENT_ARGS("collection count: %\n", fmt_i(Collection_Count(emptyBucket)));
+	PREENT_ARGS("collection count of emptyBucket: %\n", fmt_i(Collection_Count(emptyBucket)));
+	PREENT_ARGS("value at index 3 of myBucket: %\n", fmt_i(output));
 
 	return 0;
 }

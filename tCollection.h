@@ -1,6 +1,7 @@
 #ifndef	tCollection
 #define	tCollection
 #include <tTypeInfo.h>
+#include <tChunk.h>
 //
 //
 ///* Vector - Underlying functionality of the collection system, ambiguous of whether it derives
@@ -21,6 +22,7 @@
 ////bool Collection_GetSlice(Collection* trg, Slice* slice);
 //bool Collection_Transcribe(Collection* trg, Collection* src, unsigned int tIx, unsigned int sIx, unsigned int count);
 //bool Collection_Resize(Collection* trg, unsigned int count);
+bool Collection_Transcribe(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count);
 bool Collection_ReadSpan(COLLECTION src, void* trg, unsigned int start, unsigned int count);
 bool Collection_Read(COLLECTION src, void* trg, unsigned int index);
 bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count);
@@ -34,8 +36,14 @@ bool Collection_Write(COLLECTION trg, void* src, unsigned int index);
 //bool Collection_Remove(Collection* trg, void* search);
 uint Collection_Capacity(COLLECTION collection);
 uint Collection_Count(COLLECTION collection);
-
-Collection Collection_ctor(TypeInfo* type, bool(*extensions)(RequestType* request));
+bool Collection_ReadOnly(COLLECTION collection);
+bool Collection_Compare(COLLECTION a, COLLECTION b);
+bool Collection_InfoCompare(CollectionExtensions* A, CollectionExtensions* B);
+inline bool Collection_Request(COLLECTION collection);
+inline bool Collection_Release(COLLECTION collection);
+CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extensions)(RequestType* request), int memFlags);
+Collection Collection_Create(CollectionExtensions* extensions, uint count);
+CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*extensions)(RequestType* request), int memFlags);
 ////Collection Collection_ctor0(TypeRaw type, ClassFlag classFlag, bool(*extensions)(Request* request), uint init);
 //
 //ManagedCollection Managed_ctor(Collection collection);

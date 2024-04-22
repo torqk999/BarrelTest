@@ -14,94 +14,201 @@
 //ThreadHandle barrelService_ThreadBin[MaxThreadCount];
 //Request barrelService_QueBin[MaxQueCount];
 //
-//BarrelNode* barrel_NodeLocation(int index)
-//{
-//	return
-//		index == OMEGA ? &(GlobalBarrelService.Omegus) :
-//		index <= NONE || index >= GlobalBarrelService.Omegus._managed._collection._count ? NULL :
-//		&((BarrelNode*)(GlobalBarrelService._heap->_heapStart))[index];
-//}
+BarrelNode* Barrel_GetNode(int index)
+{
+	return
+		index == OMEGA ? &(GlobalBarrelService.Omegus) :
+		index <= NONE || index >= GlobalBarrelService.Omegus._collection._count ? NULL :
+		&((BarrelNode*)(GlobalBarrelService._heap->_heapStart))[index];
+}
 //BarrelNode* barrel_LastPhysicalNode() { return barrel_NodeLocation(GlobalBarrelService._lastPhysicalNode); }
-//
-//void* barrel_GetPtr(BarrelNode* nodePtr, uint index)
-//{
-//	BarrelNode node = *nodePtr;
-//	//ullong byteLength = node._managed._collection._capacity * sizeof(Barrel);
-//	//ullong byteOffset = node._barrelOffset * sizeof(Barrel);
-//	//ullong byteIndex = index * node._managed._collection._info->_type._size;
-//	//
-//	//void* location = (void*)
-//	//	(((byteOffset + byteIndex) % byteLength) +
-//	//		(node._barrelStart * sizeof(Barrel)) +
-//	//		(ullong)GlobalBarrelService._heap->_heapStart);
-//
-//	//return location;
-//
-//	return (void*)
-//		((((node._barrelOffset * sizeof(Barrel)) + (index * node._managed._collection._info->_type._size)) % (node._managed._collection._capacity * sizeof(Barrel))) +
-//				(node._barrelStart * sizeof(Barrel)) +
-//				(ullong)GlobalBarrelService._heap->_heapStart);
-//}
-//
-//
-//size_t barrel_RemainingSizeCap(BarrelNode* node)
-//{
-//	return (node->_managed._collection._capacity * sizeof(Barrel)) - (node->_managed._collection._count * node->_managed._collection._info->_type._size);
-//}
-//uint barrel_RemainingUnitCap(BarrelNode* node)
-//{
-//	return barrel_RemainingSizeCap(node) / node->_managed._collection._info->_type._size;
-//}
-//
-//bool barrel_Use(Request* request) {
-//	BarrelNode* targetNode = request->_trg;
-//
-//	while (targetNode->_flags & req_ROLL ||
-//		targetNode->_flags & req_FREE) { /* Wait for lock to free */ }
-//
-//	Managed_Use(targetNode);
-//
-//	return true;
-//}
-//
-//bool barrel_DeltaSize(Request request)
-//{
-//	int delta = request._size;
-//	BarrelNode* node = request._trg;
-//	void* src = request._src;
-//
-//	if (delta == 0)
-//		return true;
-//
-//	int deltaMag = delta < 0 ? -delta : delta;
-//
-//	size_t remainingCapacity = barrel_RemainingSizeCap(node);
-//	size_t deltaSize = deltaMag * node->_managed._collection._info->_type._size;
-//
-//	// determine initial block 'delta', rounding up if positive, to cover any trailing elements
-//	int requestDelta =
-//		delta > 0 ? ((deltaSize - remainingCapacity) / sizeof(Barrel)) + ((deltaSize - remainingCapacity) % sizeof(Barrel) > 0 ? 1 : 0) :
-//		delta < 0 ? ((remainingCapacity - deltaSize) / sizeof(Barrel)) : 0;
-//
-//	// bound to a full block
-//	while (requestDelta % node->_managed._collection._info->_barrelsPerBlock)
-//		requestDelta += requestDelta > 0 ? 1 : -1;
-//
-//	LinkedRequest deltaSizeRequest = { (Link) { NULL, NULL }, DeltaSizeCapacity(node, src, requestDelta) };
-//	barrel_AppendRequest(&deltaSizeRequest);
-//
-//	while (deltaSizeRequest._request._size) { /* Call might hang... */ }
-//
-//	node->_managed._collection._count += delta;
-//
-//	return true;
-//}
-//bool barrel_Resize(Request request)
-//{
-//	BarrelNode* node = (BarrelNode*)request._trg;
-//	request._size -= node->_managed._collection._count;
-//	return barrel_DeltaSize(request);
-//}
+
+inline size_t Barrel_GetSize(BarrelNode* nodePtr) {
+	return nodePtr->_barrelCount * sizeof(Barrel);
+}
+
+inline void* Barrel_GetHead(BarrelNode* nodePtr) {
+	return (void*)
+		((nodePtr->_barrelStart * sizeof(Barrel)) +
+		(ullong)GlobalBarrelService._heap->_heapStart);
+}
+
+inline void* Barrel_GetBarrelPtr(uint index) {
+	return (size_t)(GlobalBarrelService._heap->_heapStart) + (index * sizeof(Barrel));
+}
+
+inline void* Barrel_GetElementPtr(BarrelNode* nodePtr, uint index)
+{
+	BarrelNode node = *nodePtr;
+
+	return (void*)
+		((((node._barrelOffset * sizeof(Barrel)) + (index * node._collection._extensions->_type->_size))
+			% (node._barrelCount * sizeof(Barrel))) +
+				(node._barrelStart * sizeof(Barrel)) +
+				(ullong)GlobalBarrelService._heap->_heapStart);
+}
+
+inline size_t Barrel_RemainingSizeCap(BarrelNode* node)
+{
+	return (node->_barrelCount * sizeof(Barrel)) - (node->_collection._count * node->_collection._extensions->_type->_size);
+}
+inline uint Barrel_RemainingUnitCap(BarrelNode* node)
+{
+	return Barrel_RemainingSizeCap(node) / node->_collection._extensions->_type->_size;
+}
+
+uint Barrel_maximumAvailableBarrels(uint requested)
+{
+	uint availableBarrels = heap_Remaining(GlobalBarrelService._heap) / sizeof(Barrel);
+	return availableBarrels < requested ? availableBarrels : requested;
+}
+
+inline void Barrel_Offset(BarrelNode* node, int request) {
+	node->_barrelOffset -= request;
+	node->_barrelOffset =
+		node->_barrelOffset < 1 ? node->_barrelCount :
+		node->_barrelOffset > node->_barrelCount ? 1 :
+		node->_barrelOffset;
+}
+
+inline void Barrel_RollBack(BarrelNode* node, int request) {
+	node->_barrelStart += request;
+	for (int i = 0; i < -request; i++)
+		barrelTranscribe(
+			Barrel_GetBarrelPtr(node->_barrelStart + i),
+			Barrel_GetBarrelPtr(node->_barrelStart + node->_barrelCount + i),
+			-request);
+
+	Barrel_Offset(node, request);
+}
+
+inline void Barrel_RollForward(BarrelNode* node, int request) {
+	for (int i = 0; i < request; i++)
+		barrelTranscribe(
+			Barrel_GetBarrelPtr(node->_barrelStart + node->_barrelCount + i),
+			Barrel_GetBarrelPtr(node->_barrelStart + i),
+			request);
+
+	Barrel_Offset(node, request);
+}
+
+inline void Barrel_Grow(BarrelNode* node, int request) {
+	int newCount = (int)(node->_barrelCount) + request;
+	int newOffset = node->_barrelOffset + request;
+
+	if (node->_barrelCount != node->_barrelOffset) {
+
+		for (int i = newCount; i > node->_barrelOffset; i--)
+			barrelTranscribe(
+				Barrel_GetBarrelPtr(i - 1),				// last barrel working backwards
+				Barrel_GetBarrelPtr(i - (1 + request)),	// barrel request distance from the last
+				1);
+	}
+
+	node->_barrelCount = newCount;
+	node->_barrelOffset = newOffset;
+}
+
+inline void Barrel_Shrink(BarrelNode* node, int request) {
+	int newCount = (int)(node->_barrelCount) + request;
+	int newOffset = node->_barrelOffset + request;
+
+	if (node->_barrelCount != node->_barrelOffset) {
+
+		request = newOffset < 0 ? request - newOffset : request;
+		newOffset = newOffset < 0 ? 0 : newOffset;
+
+		for (int i = newOffset; i < newCount; i++)
+			barrelTranscribe(
+				Barrel_GetBarrelPtr(i),					// offset barrel working forwards
+				Barrel_GetBarrelPtr(i - request),		// barrel request distance from the offset
+				1);
+
+		newOffset = newOffset < 1 ? newCount : newOffset;
+	}
+
+	node->_barrelCount = newCount;
+	node->_barrelOffset = newOffset;
+}
+
+	// Returns whether the "Barrel-Roll" completed successfully
+bool Barrel_Roll(BarrelNode* node, int request) {
+
+	if (request == 0)
+		return true;
+
+	if (!Collection_Request(node))
+		return false;
+
+	if (request < 0) 
+		Barrel_RollBack(node, request);
+	
+	if (node->_nextNode > -1)
+		return Barrel_Roll(Barrel_GetNode(node->_nextNode), request);
+
+	if (request > 0 && heap_Remaining() < request * sizeof(Barrel))
+		return false;
+
+	if (request > 0)
+		Barrel_RollForward(node, request);
+
+	Collection_Release(node);
+	return true;
+}
+bool Barrel_DeltaSize(REQUEST request)
+{
+	int unitDelta = (int)(request._params[tCOUNT]);
+	BarrelNode* node = request._params[tTRG];
+	size_t unitSize = node->_collection._extensions->_type->_size;
+	
+	// no action needed
+	if (unitDelta == 0)
+		return true;
+
+	int deltaMag = unitDelta < 0 ? -unitDelta : unitDelta;
+
+	size_t remainingCapacity = Barrel_RemainingSizeCap(node);
+	size_t deltaSize = deltaMag * node->_collection._extensions->_type->_size;
+
+	// determine initial block 'delta', rounding up if positive, to cover any trailing elements
+	int barrelDelta =
+		unitDelta > 0 ? ((deltaSize - remainingCapacity) / sizeof(Barrel)) + ((deltaSize - remainingCapacity) % sizeof(Barrel) > 0 ? 1 : 0) :
+		unitDelta < 0 ? (-(int)(remainingCapacity - deltaSize) / sizeof(Barrel)) : 0;
+
+	// no action needed
+	if (barrelDelta == 0)
+		return true;
+
+	// shrink first
+	if (barrelDelta < 0)
+		Barrel_Shrink(node, barrelDelta);
+
+	// roll necessary Barrels
+	if (node->_nextNode > NONE && !Barrel_Roll(Barrel_GetNode(node->_nextNode), barrelDelta))
+		return false;
+
+	// grow after
+	if (barrelDelta > 0) {
+		if (node->_nextNode <= NONE && heap_Remaining() < barrelDelta * sizeof(Barrel))
+			return false;
+
+		Barrel_Grow(node, barrelDelta);
+	}
+
+	return true;
+}
+
+// Sets the size of the Barrel.
+// Parameters:
+// [tTRG] = BarrelNode* targetNode
+// [tSRC] = void* initializerSource (for increase)
+// [tVARIANT] = tRAW, tCOLLECTION
+// [tCOUNT] = uint newSize
+bool Barrel_Resize(REQUEST request) {
+	BarrelNode* node = request._params[tTRG];
+	*((uint*)request._params[tCOUNT]) -= node->_collection._count;
+	return Barrel_DeltaSize(request);
+}
 //void barrel_AppendRequest(LinkedRequest* linkedRequest) {
 //	Request request = linkedRequest->_request;
 //	BarrelNode* node = (BarrelNode*)(request._trg);
@@ -140,11 +247,7 @@
 //
 //	return next;
 //}
-//int barrel_maximumAvailableBarrels(int requested)
-//{
-//	int availableBarrels = heap_Remaining(GlobalBarrelService._heap) / sizeof(Barrel);
-//	return availableBarrels < requested ? availableBarrels : requested;
-//}
+
 //
 //bool barrel_Read(Request request) {
 //
@@ -245,41 +348,115 @@
 //	return true;
 //}
 //
-//bool barrel_Extensions(Request* request) {
-//	switch (request->_type)
-//	{
-//	case COLLECTION_USE:
-//		return barrel_Use(request);
-//
-//	case MODIFY_DELTA_CAPACITY:
-//		return barrel_Resize(*request);
-//
-//	case TRANSCRIBE_RAW_TO_COLLECTION:
-//	case TRANSCRIBE_COLLECTIONS:
-//		return barrel_Write(*request);
-//
-//	case TRANSCRIBE_COLLECTION_TO_RAW:
-//		return barrel_Read(*request);
-//
-//	case MODIFY_INSERT:
-//		return barrel_Insert(*request);
-//
-//	case MODIFY_REMOVE_FIRST_FOUND:
-//		return barrel_Remove(*request);
-//
-//	case MODIFY_REMOVE_AT:
-//		return barrel_RemoveAt(*request);
-//
-//	case LOCATION:
-//		return barrel_Head(*request);
-//
-//	case ITERATE:
-//		return barrel_Iterate(request);
-//
-//	default:
-//		return false;
-//	}
-//}
+
+
+// Get the corresponding chunk snapshot of the target Barrel. Note: request is not thread safe.
+// Use in conjunction with Collection_Request(COLLECTION) and Collection_Free(COLLECTION).
+bool Barrel_GetChunk(BarrelNode* node, Chunk* loc) {
+	Chunk_ctor(loc, Barrel_GetHead(node), Barrel_GetSize(node));
+	return true;
+}
+
+uint Barrel_Capacity(BarrelNode* node) {
+	size_t unitSize = node->_collection._extensions->_type->_size;
+	size_t memSize = node->_barrelCount * sizeof(Barrel);
+	return memSize / unitSize;
+}
+
+inline bool Barrel_Manage(REQUEST request) {
+	ParamType var = (ParamType)request._params[tVARIANT];
+	BarrelNode* barrelNode = request._params[tSRC];
+
+	switch (var)
+	{
+	case tCHUNK:
+		return Barrel_GetChunk(barrelNode, request._params[tTRG]);
+
+	case tRELEASE:
+		return Collection_Release(barrelNode);
+
+	case INSERT:
+
+
+	default:
+		return false;
+	}
+}
+
+inline bool Barrel_Transcribe(REQUEST request) {
+
+}
+
+inline bool Barrel_Info(REQUEST request) {
+	BarrelNode* barrelNode = request._params[tSRC];
+	ParamType var = (ParamType)request._params[tVARIANT];
+	void* output = request._params[tTRG];
+
+	switch (var) {
+
+	case tCOUNT:
+		*((uint*)output) = barrelNode->_collection._count;
+		return true;
+
+	case tCAPACITY:
+		*((uint*)output) = Barrel_Capacity(barrelNode);
+		return true;
+
+	case tNAME:
+	case tSIZE:
+		return TypeInfo_GetInfo(request);
+
+	default:
+		return false;
+	}
+}
+
+bool Barrel_Extensions(REQUEST request) {
+	switch (request._type)
+	{
+
+	case INFO:
+		return Barrel_Info(request);
+
+	case TRANSCRIBE:
+		return Barrel_Transcribe(request);
+
+	case MANAGE:
+		return Barrel_Manage(request);
+
+
+	//case COLLECTION_USE:
+	//	return barrel_Use(request);
+	//
+	//case MODIFY_DELTA_CAPACITY:
+	//	return barrel_Resize(*request);
+	//
+	//case TRANSCRIBE_RAW_TO_COLLECTION:
+	//case TRANSCRIBE_COLLECTIONS:
+	//	return barrel_Write(*request);
+	//
+	//case TRANSCRIBE_COLLECTION_TO_RAW:
+	//	return barrel_Read(*request);
+	//
+	//case MODIFY_INSERT:
+	//	return barrel_Insert(*request);
+	//
+	//case MODIFY_REMOVE_FIRST_FOUND:
+	//	return barrel_Remove(*request);
+	//
+	//case MODIFY_REMOVE_AT:
+	//	return barrel_RemoveAt(*request);
+	//
+	//case LOCATION:
+	//	return barrel_Head(*request);
+	//
+	//case ITERATE:
+	//	return barrel_Iterate(request);
+
+	default:
+		return false;
+	}
+}
 //
 //void barrelRoll(int index, int delta, int dir)
 //{

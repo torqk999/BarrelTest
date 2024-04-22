@@ -24,15 +24,15 @@ typedef struct _Link {
 typedef struct { // Contextualized chunk of memory
 	const size_t _head;
 	const size_t _size;
-	const int _flags;
+	//const int _flags;
 } Chunk;
 
 typedef struct { // What kind of data is expected to be there
 	const char* const _name;
 	const size_t _size;
 	const void* const _nullLoc;
-	const unsigned int _unitsPerBlock;
-	const unsigned int _barrelsPerBlock;
+	//const unsigned int _unitsPerBlock;
+	//const unsigned int _barrelsPerBlock;
 } TypeInfo;
 
 typedef struct { // What global class of data is being represented
@@ -40,15 +40,21 @@ typedef struct { // What global class of data is being represented
 	const TypeInfo* const _type;
 } Property;
 
-typedef struct { // How to manage the data
+typedef struct { // How to manage the collection
 	const TypeInfo* const _type;
-	int (*_extensions)(REQUEST request);
+	int (*_methods)(REQUEST request);
+	int _memFlags;
+} CollectionExtensions;
+
+typedef struct { // Base class for collections
+	const CollectionExtensions* const _extensions;
+	uint _count;
+	volatile LONG _spinLock;
 } Collection;
 
 typedef struct { // Fixed chunk of memory
 	Collection _collection;
 	Chunk _chunk;
-	uint _count;
 } Bucket;
 
 typedef struct {
@@ -70,12 +76,6 @@ typedef struct {
 	REQUEST _request;
 } LinkedRequest;
 
-typedef struct {
-	Collection _collection;
-	volatile LONG _userCount;
-	volatile LONG _pointerCount;
-} ManagedCollection;
-
 typedef Collection* COLLECTION;
 
 typedef struct {
@@ -85,12 +85,8 @@ typedef struct {
 } RollingQue;
 
 typedef struct {
-	ManagedCollection _managed;
-	LinkedRequest* _requests;
+	Collection _collection;
 
-	BarrelFlags _flags;
-
-	uint _batchOffset;
 	uint _barrelCount;
 	uint _barrelOffset;
 	int _barrelStart;
@@ -98,7 +94,7 @@ typedef struct {
 } BarrelNode;
 
 typedef struct {
-	Collection* _collection;
+	CollectionExtensions* _collection;
 	float _threshold;
 	unsigned int _first;
 	unsigned int _last;

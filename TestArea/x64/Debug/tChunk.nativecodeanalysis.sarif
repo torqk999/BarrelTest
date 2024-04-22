@@ -1,0 +1,83 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.39.33523.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/tchunk.c"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "b63c81cbc8eed734d7df084b9904cd70b1664f5527217f62a422c0b65f712d79"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/tchunk.h"
+          },
+          "hashes": {
+            "sha-256": "b2f43459b5f5c84392f872dd135232a0a2bbf563074c66ba042fda34b79cf6c8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/thelpers.h"
+          },
+          "hashes": {
+            "sha-256": "ce9d64222ddce64cd20ba3747e5745876039bedf764c5980409f45e31a01bd63"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/tpreent.h"
+          },
+          "hashes": {
+            "sha-256": "38c28cd0f76e550b4de46c67cc248c4ccedb5b105e2707bb4c1aa163ff51f6cd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/tmodules.h"
+          },
+          "hashes": {
+            "sha-256": "180f94e214257af9c6b2f908880939a61f818270e412170903cb1da0242da50c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/tenums.h"
+          },
+          "hashes": {
+            "sha-256": "cff7cee6753a1e05be0125d063067c4e59a1318389c9eb249d47f91da0f61fc3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/repos/barreltest/tdefines.h"
+          },
+          "hashes": {
+            "sha-256": "82b8b85a1d283933c6348c087c753c25df0f07e894bbf319a8ac73e9bccd7d24"
+          }
+        }
+      ]
+    }
+  ]
+}

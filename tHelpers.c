@@ -8,11 +8,14 @@ REQUEST CreateRequest(RequestType type, Parameter* params, void** buffer)
 		buffer[i] = NONE;
 
 	uint seek = 0;
+
 	while (params[seek]._type > -1 && params[seek]._type < MaxParamCount) {
-		buffer[params[seek]._type] = params[seek]._ptr;
+		int index = params[seek]._type;
+		void* ptr = params[seek]._ptr;;
+		buffer[index] = ptr;
 		seek++;
 	}
-	buffer[seek] = NULL;
+	//buffer[seek] = NULL;
 	return output;
 }
 

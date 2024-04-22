@@ -18,7 +18,7 @@
 //bool Bucket_Location(REQUEST* request);
 //bool Bucket_Iterate(REQUEST* request);
 
-bool Bucket_Extensions(REQUEST request);
+//bool Bucket_Extensions(REQUEST request);
 
 COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, int memFlags, uint count);
 

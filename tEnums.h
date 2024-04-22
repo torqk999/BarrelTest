@@ -34,12 +34,14 @@ typedef enum {
 } MemFlag;
 
 typedef enum {
-	UNSIGNED = 1,
-	ALPHA = 2,
-	INTEGRAL = 4,
-	FLOATING = 8,
-	STRUCT = 16,
-	UNION = 32
+	
+	ALPHA = 1,
+	INTEGRAL = 2,
+	FLOATING = 4,
+	TYPE_DEF = 8,
+	POINTER = 16,
+	UNSIGNED = 32,
+	CONST = 64,
 } TypeFlag;
 
 typedef enum {
@@ -47,6 +49,70 @@ typedef enum {
 	BARREL,
 	LIST,
 } ClassFlag;
+
+typedef enum {
+
+	// Main
+	NONE = -2,
+	OMEGA = -1,
+
+	// Generic
+	tVARIANT = 0,
+	tTRG = 1,
+
+	// Transcribe
+	tSRC = 2,
+	Ix_TRG = 3,
+	Ix_SRC = 4,
+	tDIRECTION = 5,
+
+	// Info
+	tSIZE = 6,
+	tCOUNT = 7,
+	tCAPACITY = 8,
+	tNAME = 9,
+
+} ParamType;
+
+typedef enum {
+	tWRITE,
+	tREAD,
+	tRAW,
+	tCOLLECTION,
+	tPOINTER,
+	tCHUNK,
+
+	DONE,
+	tUSE,
+	FREE,
+	tRELEASE,
+
+	CREATE_NODE_BARREL,
+
+	EQUIVALENCE,
+	COMPATIBILITY_FULL,
+	COMPATIBILITY_WRITE_ALLOWED,
+	COMPATIBILITY_SIZE,
+
+	INSERT,
+	REMOVE_AT,
+	REMOVE_FIRST_FOUND,
+	DELTA_CAPACITY,
+	DELTA_COUNT,
+
+	__c,
+	__s,
+	__L,
+	__I,
+	__x,
+	__l,
+	__O,
+	__h,
+	__i,
+	__o,
+	__f,
+	__d
+} ParamOption;
 
 typedef enum {
 	FLAGS,
@@ -62,78 +128,3 @@ typedef enum {
 	TRANSCRIBE
 } RequestType;
 
-typedef enum {
-
-	// Main
-	NONE = -2,
-	OMEGA = -1,
-	FLAG = 1,
-
-
-
-	tVARIANT = 0,
-	tTRG = 1,
-
-	tREAD,
-	tWRITE,
-	tRAW,
-	tCOLLECTION,
-	tPOINTER,
-	tCHUNK,
-
-	// Transcribe
-	tSRC = 2,
-	Ix_TRG = 3,
-	Ix_SRC = 4,
-	tDIRECTION = 5,
-
-	// Info
-	tSIZE = 6,
-	tCOUNT = 7,
-	tCAPACITY = 8,
-	tNAME = 9,
-	
-	PROVIDE,
-	
-	DONE,
-	USE,
-	FREE,
-	RELEASE,
-
-
-
-	CREATE_NODE_BARREL,
-
-
-	COMPARE_EQUIVALENCE,
-	COMPARE_FLAG,
-	COMPARE_COMPATIBILITY_FULL,
-	COMPARE_COMPATIBILITY_WRITE_ALLOWED,
-	COMPARE_COMPATIBILITY_SIZE,
-
-	//TRANSCRIBE,
-
-	RAW_TO_RAW,
-	COLLECTIONS,
-	RAW_TO_COLLECTION,
-	COLLECTION_TO_RAW,
-
-	MODIFY_INSERT,
-	MODIFY_REMOVE_AT,
-	MODIFY_REMOVE_FIRST_FOUND,
-	MODIFY_DELTA_CAPACITY,
-	MODIFY_DELTA_COUNT,
-
-	__c,
-	__s,
-	__L,
-	__I,
-	__x,
-	__l,
-	__O,
-	__h,
-	__i,
-	__o,
-	__f,
-	__d
-} ParamType;

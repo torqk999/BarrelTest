@@ -3,6 +3,6 @@
 #include <tCollection.h>
 #include <tChunk.h>
 
-void Vector_Transcribe(REQUEST request);
+bool Vector_Transcribe(REQUEST request);
 
 #endif

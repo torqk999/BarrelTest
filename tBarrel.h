@@ -17,8 +17,8 @@ BarrelNode* barrel_LastPhysicalNode();
 void* barrel_GetPtr(BarrelNode* node, uint index);
 
 
-size_t barrel_RemainingSizeCap(BarrelNode* node);
-uint barrel_RemainingUnitCap(BarrelNode* node);
+size_t Barrel_RemainingSizeCap(BarrelNode* node);
+uint Barrel_RemainingUnitCap(BarrelNode* node);
 
 bool barrel_Use(REQUEST* request);
 
@@ -27,7 +27,7 @@ bool barrel_Resize(REQUEST request);
 void barrel_AppendRequest(LinkedRequest* linkedRequest);
 
 int barrel_NextAvailableNode();
-int barrel_maximumAvailableBarrels(int requested);
+int Barrel_maximumAvailableBarrels(int requested);
 
 bool barrel_Head(REQUEST request);
 bool barrel_Iterate(REQUEST* request);
@@ -39,7 +39,7 @@ bool barrel_Remove(REQUEST request);
 bool barrel_RemoveAt(REQUEST request);
 bool barrel_Location(REQUEST request);
 
-bool barrel_Extensions(REQUEST* request);
+bool Barrel_Extensions(REQUEST request);
 
 void barrelRoll(int index, int delta, int dir);
 

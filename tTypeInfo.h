@@ -2,18 +2,16 @@
 #define	tTypeInfo
 #include <tHelpers.h>
 
+#define testTypeBinCount 32
 //#define testTypeBinCount 32
 //TypeInfo testTypeBin[testTypeBinCount];
 //uint testTypeBinCurrentCount;
 
-//bool TypeID_Compare(Request request);
+bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b);
 
 //bool TypeID_GetNullValue(TypeInfo* type, void* writeLoc);
-
 //bool TypeID_CheckFlags(TypeInfo* info, uint flags);
-
 //uint Type_BuildFlags(const char* name, ClassFlag classFlag);
-
 //inline TypeRaw Type_CreateRaw(size_t size, const char* name);
 
 TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc);
