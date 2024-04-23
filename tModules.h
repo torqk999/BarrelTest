@@ -10,6 +10,11 @@ typedef struct {
 	void* _ptr;
 } Parameter;
 
+typedef union {
+	void* PTR;
+	size_t VAL;
+} PARAM;
+
 typedef struct {
 	const RequestType _type;
 	void** _params;

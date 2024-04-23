@@ -264,6 +264,7 @@ CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extension
 
 Collection Collection_Create(CollectionExtensions* extensions, uint count)
 {
+
 	return (Collection) {
 		extensions,
 		count,
