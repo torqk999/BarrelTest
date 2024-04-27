@@ -480,7 +480,7 @@ inline void* Barrel_GetBarrelPtr(uint index) {
 	return (size_t)(GlobalBarrelService._heap->_heapStart) + (index * sizeof(Barrel));
 }
 
-inline void* Barrel_GetUnitPtr(BarrelNode* nodePtr, uint index) {
+void* Barrel_GetUnitPtr(BarrelNode* nodePtr, uint index) {
 	return (void*)(
 		((nodePtr->_barrelStart * sizeof(Barrel)) + (ullong)GlobalBarrelService._heap->_heapStart) + // Head
 		(((nodePtr->_collection._extensions->_type->_size * index) + (nodePtr->_barrelOffset * sizeof(Barrel))) % // Target
@@ -656,7 +656,6 @@ bool Barrel_DeltaSize(REQUEST request)
 // Parameters:
 // [tTRG] = BarrelNode* targetNode
 // [tSRC] = void* initializerSource (for increase)
-// [tVARIANT] = tRAW, tCOLLECTION
 // [tCOUNT] = uint newSize
 
 bool Barrel_Resize(REQUEST request) {
@@ -736,7 +735,7 @@ inline bool Barrel_Manage(REQUEST request){
 	}
 }
 inline bool Barrel_Transcribe(REQUEST request){
-
+	return false;
 }
 inline bool Barrel_Info(REQUEST request){
 	BarrelNode* barrelNode = request._params[tSRC];
@@ -786,6 +785,12 @@ void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, voi
 
 	loc->_barrelStart = startBarrel;
 
+	bool empty = memFlags & EMPTY;
+	bool fill = memFlags & FILL;
+	memFlags &= !(EMPTY);
+	memFlags &= !(FILL);
+	memFlags |= FIXED_SIZE;
+
 	int newBarrelCount = 1;
 	size_t neededSpace = unitSize * initCapacity;
 
@@ -793,7 +798,7 @@ void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, voi
 			(newBarrelCount * sizeof(Barrel) < Heap_Remaining()))
 		newBarrelCount *= 2;
 
-	loc->_barrelCount = newBarrelCount;
+	loc->_barrelCount = empty ? 0 : newBarrelCount;
 
 	size_t newSize = newBarrelCount * sizeof(Barrel);
 
@@ -828,12 +833,14 @@ COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int
 	if (!lastPhysicalNode)
 		return NULL;
 
+	lastPhysicalNode->_nextNode = newNodeIx;
+
 	// Increment the global collection's counter before retrieving the ptr
 	GlobalBarrelService.Omegus._collection._count++;
 
 	// Initialize the requestedNode once one has been retrieved
 	BarrelNode* newNodePtr = Barrel_GetNode(newNodeIx);
-	Barrel_NodeCtor(typeName, unitSize, newNodePtr, srcHead, memFlags, initCapacity, lastPhysicalNode->_barrelStart + lastPhysicalNode->_barrelCount);
+	Barrel_NodeCtor(typeName, unitSize, newNodePtr, srcHead, MANAGED | memFlags, initCapacity, lastPhysicalNode->_barrelStart + lastPhysicalNode->_barrelCount);
 
 	// Set the last physical node
 	Barrel_SetLastPhysicalNode(newNodeIx);
@@ -855,7 +862,7 @@ bool Barrel_ServiceInit(HeapService* heapService)
 
 	GlobalBarrelService._heap = heapService;
 
-	Barrel_NodeCtor("BarrelNode", sizeof(BarrelNode),  &(GlobalBarrelService.Omegus), NULL , MANAGED, 0, 0);
+	Barrel_NodeCtor("BarrelNode", sizeof(BarrelNode),  &(GlobalBarrelService.Omegus), NULL , MANAGED | EMPTY, 0, 0);
 
 	GlobalBarrelService._nextAvailable = NONE;
 	GlobalBarrelService._lastPhysicalNode = OMEGA;

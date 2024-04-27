@@ -83,7 +83,7 @@ void barrelTest_RESIZE()
 
 void barrelTest_WRITE()
 {
-	if (barrel_NodeCount() < 1)
+	if (!Barrel_NodeCount())
 	{
 		PREENT("No Collections to write to!\n");
 		return;
@@ -101,7 +101,7 @@ void barrelTest_WRITE()
 	int index = strToInt(input);
 
 	if (index < 0 || index >= Barrel_NodeCount()) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(barrel_NodeCount()));
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
 		return;
 	}
 
@@ -124,13 +124,13 @@ void barrelTest_WRITE()
 	int delta = strToInt(input);
 	int deltaDir = delta < 0 ? -1 : 1;
 
-	targetPtr = Barrel_GetBarrelPtr(targetBoop->_barrelStart);
+	
 
-	for (int i = 0; i < delta; i += deltaDir)
+	for (int i = 0; i != delta; i += deltaDir)
 	{
 		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
-		//targetPtr = Barrel_GetBarrelPtr(startIndex + targetBoop->_barrelStart + i);
-		targetPtr[startIndex + i] = strToInt(Geet());
+		targetPtr = Barrel_GetUnitPtr(targetBoop, startIndex + i);
+		*targetPtr = strToInt(Geet());
 	}
 
 	PREENT("Write Complete!\n");
@@ -138,7 +138,7 @@ void barrelTest_WRITE()
 
 void barrelTest_READ()
 {
-	if (barrel_NodeCount() < 1)
+	if (!Barrel_NodeCount())
 	{
 		PREENT("No Collections to read from!\n");
 		return;
@@ -160,7 +160,7 @@ void barrelTest_READ()
 		return;
 	}
 
-	BarrelNode* targetBoop = barrel_NodeLocation(index);
+	BarrelNode* targetBoop = Barrel_GetNode(index);
 
 	PREENT("Start Index: ");
 
@@ -179,10 +179,10 @@ void barrelTest_READ()
 	int delta = strToInt(input);
 	int deltaDir = delta < 0 ? -1 : 1;
 
-	targetPtr = Barrel_GetBarrelPtr(targetBoop->_barrelStart);
-
+	
 	for (int i = 0; i < delta; i += deltaDir) {
-		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(targetPtr[startIndex + i]));
+		targetPtr = Barrel_GetUnitPtr(targetBoop, startIndex + i);
+		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
 	}
 }
 
@@ -214,15 +214,15 @@ void barrelTest_VIEW_HEAP()
 	}
 }
 
-unsigned int mainMenuActionCount = 6;
+unsigned int mainMenuActionCount = 8;
 
 ButtonAction mainMenuActions[] = {
 	{ 'q', "Quit Program", &barrelTest_ESCAPE },
 	{ 'n', "New Collection", &barrelTest_NEW },
 	{ 'm', "Remove Collection", &barrelTest_REMOVE },
 	{ 's', "Re-size Collection", &barrelTest_RESIZE },
-	//{ 'r', "Read from Collection to span", &barrelTest_READ },
-	//{ 'w', "Write to Collection from span", &barrelTest_WRITE },
+	{ 'r', "Read from Collection to span", &barrelTest_READ },
+	{ 'w', "Write to Collection from span", &barrelTest_WRITE },
 	{ 'v', "View entire heap", &barrelTest_VIEW_HEAP },
 	{ 'c', "Clear Screen", &clear_screen },
 };

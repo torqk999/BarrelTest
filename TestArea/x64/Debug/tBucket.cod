@@ -1021,7 +1021,7 @@ memFlags$ = 384
 capacity$ = 392
 Bucket_ctor PROC					; COMDAT
 
-; 268  : COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* head, int memFlags, uint capacity) {
+; 270  : COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* head, int memFlags, uint capacity) {
 
 $LN3:
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
@@ -1049,8 +1049,8 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
   00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 269  : 
-; 270  : 	Bucket tmpBucket = Bucket_Create(name, unitSize, head, memFlags, capacity);
+; 271  : 
+; 272  : 	Bucket tmpBucket = Bucket_Create(name, unitSize, head, memFlags, capacity);
 
   00059	8b 85 88 01 00
 	00		 mov	 eax, DWORD PTR capacity$[rbp]
@@ -1073,7 +1073,7 @@ $LN3:
   00098	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
   0009d	f3 a4		 rep movsb
 
-; 271  : 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
+; 273  : 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
 
   0009f	41 b8 20 00 00
 	00		 mov	 r8d, 32			; 00000020H
@@ -1082,12 +1082,12 @@ $LN3:
 	00 00		 mov	 rcx, QWORD PTR loc$[rbp]
   000b0	e8 00 00 00 00	 call	 rawTranscribe
 
-; 272  : 	return loc;
+; 274  : 	return loc;
 
   000b5	48 8b 85 70 01
 	00 00		 mov	 rax, QWORD PTR loc$[rbp]
 
-; 273  : }
+; 275  : }
 
   000bc	48 8b f8	 mov	 rdi, rax
   000bf	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
@@ -1149,7 +1149,8 @@ $LN9:
 	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
   00043	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 249  : 	TypeInfo* info = TypeInfo_Get(name, unitSize);
+; 249  : 	
+; 250  : 	TypeInfo* info = TypeInfo_Get(name, unitSize);
 
   00048	48 8b 95 10 02
 	00 00		 mov	 rdx, QWORD PTR unitSize$[rbp]
@@ -1158,21 +1159,22 @@ $LN9:
   00056	e8 00 00 00 00	 call	 TypeInfo_Get
   0005b	48 89 45 08	 mov	 QWORD PTR info$[rbp], rax
 
-; 250  : 	bool empty = memFlags & EMPTY;
+; 251  : 	
+; 252  : 	bool empty = memFlags & EMPTY;
 
   0005f	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
   00065	83 e0 20	 and	 eax, 32			; 00000020H
   00068	89 45 24	 mov	 DWORD PTR empty$[rbp], eax
 
-; 251  : 	bool fill = memFlags & FILL;
+; 253  : 	bool fill = memFlags & FILL;
 
   0006b	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
   00071	83 e0 40	 and	 eax, 64			; 00000040H
   00074	89 45 44	 mov	 DWORD PTR fill$[rbp], eax
 
-; 252  : 	memFlags &= !(EMPTY);
+; 254  : 	memFlags &= !(EMPTY);
 
   00077	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -1180,7 +1182,7 @@ $LN9:
   00080	89 85 20 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 253  : 	memFlags &= !(FILL);
+; 255  : 	memFlags &= !(FILL);
 
   00086	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -1188,7 +1190,7 @@ $LN9:
   0008f	89 85 20 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 254  : 	memFlags |= FIXED_SIZE;
+; 256  : 	memFlags |= FIXED_SIZE;
 
   00095	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -1196,8 +1198,8 @@ $LN9:
   0009e	89 85 20 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 255  : 
-; 256  : 	Bucket tmpBucket = {
+; 257  : 
+; 258  : 	Bucket tmpBucket = {
 
   000a4	83 7d 24 00	 cmp	 DWORD PTR empty$[rbp], 0
   000a8	74 0c		 je	 SHORT $LN7@Bucket_Cre
@@ -1246,16 +1248,16 @@ $LN8@Bucket_Cre:
   00139	b9 10 00 00 00	 mov	 ecx, 16
   0013e	f3 a4		 rep movsb
 
-; 257  : 		Collection_Create(Collection_GetExtensions(info, Bucket_Methods, memFlags), empty ? 0 : capacity),
-; 258  : 		Chunk_Create(head, info->_size * capacity)
-; 259  : 	};
-; 260  : 
-; 261  : 	if (fill)
+; 259  : 		Collection_Create(Collection_GetExtensions(info, Bucket_Methods, memFlags), empty ? 0 : capacity),
+; 260  : 		Chunk_Create(head, info->_size * capacity)
+; 261  : 	};
+; 262  : 
+; 263  : 	if (fill)
 
   00140	83 7d 44 00	 cmp	 DWORD PTR fill$[rbp], 0
   00144	74 5c		 je	 SHORT $LN5@Bucket_Cre
 
-; 262  : 		for (int i = 1; i < capacity; i++)
+; 264  : 		for (int i = 1; i < capacity; i++)
 
   00146	c7 85 a4 00 00
 	00 01 00 00 00	 mov	 DWORD PTR i$4[rbp], 1
@@ -1273,7 +1275,7 @@ $LN4@Bucket_Cre:
 	00		 cmp	 DWORD PTR i$4[rbp], eax
   0016c	73 34		 jae	 SHORT $LN3@Bucket_Cre
 
-; 263  : 			rawTranscribe(&((char*)head)[i * unitSize], head, unitSize);
+; 265  : 			rawTranscribe(&((char*)head)[i * unitSize], head, unitSize);
 
   0016e	48 63 85 a4 00
 	00 00		 movsxd	 rax, DWORD PTR i$4[rbp]
@@ -1293,13 +1295,13 @@ $LN4@Bucket_Cre:
 $LN3@Bucket_Cre:
 $LN5@Bucket_Cre:
 
-; 264  : 
-; 265  : 	return tmpBucket;
+; 266  : 
+; 267  : 	return tmpBucket;
 
   001a2	48 8b 85 00 02
 	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
 
-; 266  : }
+; 268  : }
 
   001a9	48 8b f8	 mov	 rdi, rax
   001ac	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]

@@ -246,7 +246,9 @@ bool Bucket_Methods(REQUEST request)
 }
 
 Bucket Bucket_Create(const char* name, size_t unitSize, void* head, int memFlags, uint capacity) {
+	
 	TypeInfo* info = TypeInfo_Get(name, unitSize);
+	
 	bool empty = memFlags & EMPTY;
 	bool fill = memFlags & FILL;
 	memFlags &= !(EMPTY);
