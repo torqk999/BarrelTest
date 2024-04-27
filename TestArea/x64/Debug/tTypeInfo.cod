@@ -786,7 +786,7 @@ _TEXT	SEGMENT
 collection$ = 224
 TypeInfo_Size PROC					; COMDAT
 
-; 177  : {
+; 176  : {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -799,7 +799,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 178  : 	return collection->_extensions->_type->_size;
+; 177  : 	return collection->_extensions->_type->_size;
 
   0001f	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR collection$[rbp]
@@ -807,7 +807,7 @@ $LN3:
   00029	48 8b 00	 mov	 rax, QWORD PTR [rax]
   0002c	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
 
-; 179  : }
+; 178  : }
 
   00030	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -823,7 +823,7 @@ _TEXT	SEGMENT
 collection$ = 224
 TypeInfo_Name PROC					; COMDAT
 
-; 172  : {
+; 171  : {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -836,7 +836,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 173  : 	return collection->_extensions->_type->_name;
+; 172  : 	return collection->_extensions->_type->_name;
 
   0001f	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR collection$[rbp]
@@ -844,7 +844,7 @@ $LN3:
   00029	48 8b 00	 mov	 rax, QWORD PTR [rax]
   0002c	48 8b 00	 mov	 rax, QWORD PTR [rax]
 
-; 174  : }
+; 173  : }
 
   0002f	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -861,7 +861,7 @@ name$ = 224
 size$ = 232
 TypeInfo_Get PROC					; COMDAT
 
-; 200  : TypeInfo* TypeInfo_Get(const char* name, size_t size) { return TypeInfo_GetNullable(name, size, NULL); }
+; 199  : TypeInfo* TypeInfo_Get(const char* name, size_t size) { return TypeInfo_GetNullable(name, size, NULL); }
 
 $LN3:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -896,7 +896,7 @@ tv70 = 212
 request$ = 256
 TypeInfo_GetInfo PROC					; COMDAT
 
-; 182  : {
+; 181  : {
 
 $LN8:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -909,7 +909,7 @@ $LN8:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 183  : 	TypeInfo* info = request._params[tSRC];
+; 182  : 	TypeInfo* info = request._params[tSRC];
 
   0001f	b8 08 00 00 00	 mov	 eax, 8
   00024	48 6b c0 02	 imul	 rax, rax, 2
@@ -919,8 +919,8 @@ $LN8:
   00033	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
   00037	48 89 45 08	 mov	 QWORD PTR info$[rbp], rax
 
-; 184  : 
-; 185  : 	switch ((ParamType)request._params[tVARIANT]) {
+; 183  : 
+; 184  : 	switch ((ParamType)request._params[tVARIANT]) {
 
   0003b	b8 08 00 00 00	 mov	 eax, 8
   00040	48 6b c0 00	 imul	 rax, rax, 0
@@ -939,8 +939,8 @@ $LN8:
   0006a	eb 53		 jmp	 SHORT $LN6@TypeInfo_G
 $LN4@TypeInfo_G:
 
-; 186  : 	case tNAME:
-; 187  : 		*((char**)request._params[tNAME]) = info->_name;
+; 185  : 	case tNAME:
+; 186  : 		*((char**)request._params[tNAME]) = info->_name;
 
   0006c	b8 08 00 00 00	 mov	 eax, 8
   00071	48 6b c0 09	 imul	 rax, rax, 9
@@ -952,15 +952,15 @@ $LN4@TypeInfo_G:
   00088	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
   0008b	48 89 08	 mov	 QWORD PTR [rax], rcx
 
-; 188  : 		return true;
+; 187  : 		return true;
 
   0008e	b8 01 00 00 00	 mov	 eax, 1
   00093	eb 2c		 jmp	 SHORT $LN1@TypeInfo_G
 $LN5@TypeInfo_G:
 
-; 189  : 
-; 190  : 	case  tSIZE:
-; 191  : 		*((size_t*)request._params[tSIZE]) = info->_size;
+; 188  : 
+; 189  : 	case  tSIZE:
+; 190  : 		*((size_t*)request._params[tSIZE]) = info->_size;
 
   00095	b8 08 00 00 00	 mov	 eax, 8
   0009a	48 6b c0 06	 imul	 rax, rax, 6
@@ -972,22 +972,22 @@ $LN5@TypeInfo_G:
   000b1	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
   000b5	48 89 08	 mov	 QWORD PTR [rax], rcx
 
-; 192  : 		return true;
+; 191  : 		return true;
 
   000b8	b8 01 00 00 00	 mov	 eax, 1
   000bd	eb 02		 jmp	 SHORT $LN1@TypeInfo_G
 $LN6@TypeInfo_G:
 
+; 192  : 
 ; 193  : 
-; 194  : 
-; 195  : 	default:
-; 196  : 		return false;
+; 194  : 	default:
+; 195  : 		return false;
 
   000bf	33 c0		 xor	 eax, eax
 $LN1@TypeInfo_G:
 
-; 197  : 	}
-; 198  : }
+; 196  : 	}
+; 197  : }
 
   000c1	48 8d a5 e8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+232]
@@ -1010,7 +1010,7 @@ size$ = 376
 nullLoc$ = 384
 TypeInfo_GetNullable PROC				; COMDAT
 
-; 139  : TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc) {
+; 138  : TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc) {
 
 $LN8:
   00000	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
@@ -1036,8 +1036,8 @@ $LN8:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0004e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 140  : 
-; 141  : 	for (int i = 0; i < testTypeBinCurrentCount; i++) {
+; 139  : 
+; 140  : 	for (int i = 0; i < testTypeBinCurrentCount; i++) {
 
   00053	c7 45 04 00 00
 	00 00		 mov	 DWORD PTR i$4[rbp], 0
@@ -1052,7 +1052,7 @@ $LN4@TypeInfo_G:
   0006a	39 45 04	 cmp	 DWORD PTR i$4[rbp], eax
   0006d	73 38		 jae	 SHORT $LN3@TypeInfo_G
 
-; 142  : 		if (testTypeBin[i]._name == name)
+; 141  : 		if (testTypeBin[i]._name == name)
 
   0006f	48 63 45 04	 movsxd	 rax, DWORD PTR i$4[rbp]
   00073	48 6b c0 18	 imul	 rax, rax, 24
@@ -1063,7 +1063,7 @@ $LN4@TypeInfo_G:
   00085	48 39 14 01	 cmp	 QWORD PTR [rcx+rax], rdx
   00089	75 1a		 jne	 SHORT $LN5@TypeInfo_G
 
-; 143  : 			return &testTypeBin[i];
+; 142  : 			return &testTypeBin[i];
 
   0008b	48 63 45 04	 movsxd	 rax, DWORD PTR i$4[rbp]
   0008f	48 6b c0 18	 imul	 rax, rax, 24
@@ -1074,38 +1074,38 @@ $LN4@TypeInfo_G:
   000a0	e9 92 00 00 00	 jmp	 $LN1@TypeInfo_G
 $LN5@TypeInfo_G:
 
-; 144  : 	}
+; 143  : 	}
 
   000a5	eb b5		 jmp	 SHORT $LN2@TypeInfo_G
 $LN3@TypeInfo_G:
 
-; 145  : 
-; 146  : 	if (testTypeBinCurrentCount >= testTypeBinCount)
+; 144  : 
+; 145  : 	if (testTypeBinCurrentCount >= testTypeBinCount)
 
   000a7	83 3d 00 00 00
 	00 20		 cmp	 DWORD PTR testTypeBinCurrentCount, 32 ; 00000020H
   000ae	72 12		 jb	 SHORT $LN6@TypeInfo_G
 
-; 147  : 	{
-; 148  : 		PREENT("No type slots available...\n");
+; 146  : 	{
+; 147  : 		PREENT("No type slots available...\n");
 
   000b0	33 d2		 xor	 edx, edx
   000b2	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@KPOEFPPK@No?5type?5slots?5available?4?4?4?6@
   000b9	e8 00 00 00 00	 call	 Preent
 
-; 149  : 		return NULL;
+; 148  : 		return NULL;
 
   000be	33 c0		 xor	 eax, eax
   000c0	eb 75		 jmp	 SHORT $LN1@TypeInfo_G
 $LN6@TypeInfo_G:
 
-; 150  : 	}
-; 151  : 
-; 152  : 	//uint flags = TypeInfo_BuildTypeFlags(name);
-; 153  : 	//uint unitsPerBlock, barrelsPerBlock;
-; 154  : 	//TypeInfo_BarrelBlockCounts(size, &unitsPerBlock, &barrelsPerBlock);
-; 155  : 	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
+; 149  : 	}
+; 150  : 
+; 151  : 	//uint flags = TypeInfo_BuildTypeFlags(name);
+; 152  : 	//uint unitsPerBlock, barrelsPerBlock;
+; 153  : 	//TypeInfo_BarrelBlockCounts(size, &unitsPerBlock, &barrelsPerBlock);
+; 154  : 	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
 
   000c2	48 8b 95 80 01
 	00 00		 mov	 rdx, QWORD PTR nullLoc$[rbp]
@@ -1114,8 +1114,8 @@ $LN6@TypeInfo_G:
   000d0	e8 00 00 00 00	 call	 TypeInfo_GetNullableTemplate
   000d5	48 89 45 28	 mov	 QWORD PTR nullTmp$[rbp], rax
 
-; 156  : 
-; 157  : 	TypeInfo newInfo = {
+; 155  : 
+; 156  : 	TypeInfo newInfo = {
 
   000d9	48 8b 85 70 01
 	00 00		 mov	 rax, QWORD PTR name$[rbp]
@@ -1126,14 +1126,14 @@ $LN6@TypeInfo_G:
   000ef	48 8b 45 28	 mov	 rax, QWORD PTR nullTmp$[rbp]
   000f3	48 89 45 58	 mov	 QWORD PTR newInfo$[rbp+16], rax
 
-; 158  : 		name,
-; 159  : 		size,
-; 160  : 		nullTmp,
-; 161  : 		//unitsPerBlock,
-; 162  : 		//barrelsPerBlock
-; 163  : 	};
-; 164  : 
-; 165  : 	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
+; 157  : 		name,
+; 158  : 		size,
+; 159  : 		nullTmp,
+; 160  : 		//unitsPerBlock,
+; 161  : 		//barrelsPerBlock
+; 162  : 	};
+; 163  : 
+; 164  : 	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
 
   000f7	8b 05 00 00 00
 	00		 mov	 eax, DWORD PTR testTypeBinCurrentCount
@@ -1144,7 +1144,7 @@ $LN6@TypeInfo_G:
   0010b	48 8b c1	 mov	 rax, rcx
   0010e	48 89 45 78	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 166  : 	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
+; 165  : 	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
 
   00112	41 b8 18 00 00
 	00		 mov	 r8d, 24
@@ -1152,7 +1152,7 @@ $LN6@TypeInfo_G:
   0011c	48 8b 4d 78	 mov	 rcx, QWORD PTR ptr$[rbp]
   00120	e8 00 00 00 00	 call	 rawTranscribe
 
-; 167  : 	testTypeBinCurrentCount++;
+; 166  : 	testTypeBinCurrentCount++;
 
   00125	8b 05 00 00 00
 	00		 mov	 eax, DWORD PTR testTypeBinCurrentCount
@@ -1160,12 +1160,12 @@ $LN6@TypeInfo_G:
   0012d	89 05 00 00 00
 	00		 mov	 DWORD PTR testTypeBinCurrentCount, eax
 
-; 168  : 	return ptr;
+; 167  : 	return ptr;
 
   00133	48 8b 45 78	 mov	 rax, QWORD PTR ptr$[rbp]
 $LN1@TypeInfo_G:
 
-; 169  : }
+; 168  : }
 
   00137	48 8b f8	 mov	 rdi, rax
   0013a	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
@@ -1192,7 +1192,7 @@ a$ = 224
 b$ = 232
 TypeInfo_Compare PROC					; COMDAT
 
-; 135  : {
+; 134  : bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b) {
 
 $LN3:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -1206,7 +1206,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 136  : 	return defaultStringCompare(a->_name, b->_name);
+; 135  : 	return defaultStringCompare(a->_name, b->_name);
 
   00024	48 8b 85 e8 00
 	00 00		 mov	 rax, QWORD PTR b$[rbp]
@@ -1216,7 +1216,7 @@ $LN3:
   00035	48 8b 08	 mov	 rcx, QWORD PTR [rax]
   00038	e8 00 00 00 00	 call	 defaultStringCompare
 
-; 137  : }
+; 136  : }
 
   0003d	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]

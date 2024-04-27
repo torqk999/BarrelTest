@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MothBalled">
+      <UniqueIdentifier>{973d3085-97fe-43bc-88a5-24e5582dc031}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tHelpers.c">
@@ -30,12 +33,6 @@
     <ClCompile Include="tTypeInfo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tQues.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tThreads.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tServices.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,17 +42,11 @@
     <ClCompile Include="tHashMap.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tLink.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tCollection.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tModules.h">
       <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tVector.c">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestArea.c">
       <Filter>Resource Files</Filter>
@@ -63,15 +54,24 @@
     <ClCompile Include="tChunk.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tThreads.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tQues.c">
+      <Filter>MothBalled</Filter>
+    </ClCompile>
+    <ClCompile Include="tLink.c">
+      <Filter>MothBalled</Filter>
+    </ClCompile>
+    <ClCompile Include="tVector.c">
+      <Filter>MothBalled</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tPreent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tCollection.h">
@@ -86,13 +86,7 @@
     <ClInclude Include="tHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tThreads.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tServices.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tQues.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tTypeInfo.h">
@@ -107,11 +101,20 @@
     <ClInclude Include="tDefines.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="tVector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tChunk.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tThreads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tQues.h">
+      <Filter>MothBalled</Filter>
+    </ClInclude>
+    <ClInclude Include="tLink.h">
+      <Filter>MothBalled</Filter>
+    </ClInclude>
+    <ClInclude Include="tVector.h">
+      <Filter>MothBalled</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

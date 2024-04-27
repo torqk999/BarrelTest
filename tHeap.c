@@ -3,7 +3,7 @@
 static HeapService GlobalHeapService;
 static TypeInfo GlobalPageType;
 
-bool heapDeltaPages(int delta)
+bool Heap_DeltaPages(int delta)
 {
 	int theDelta = delta;
 	delta = delta < 0 && (unsigned int)(delta * -1) > GlobalHeapService._pageCount ? -1 * (GlobalHeapService._pageCount) : delta; // auto-clamp
@@ -24,12 +24,14 @@ bool heapDeltaPages(int delta)
 	}
 }
 
-size_t heap_Remaining()
+size_t Heap_Remaining()
 {
 	return ((size_t)(GlobalHeapService._heapStart) + (GlobalHeapService._pageCount * sizeof(Page))) - (size_t)(GlobalHeapService._heapEnd);
 }
 
-DWORD WINAPI heapServiceWork(void* target)
+void* Heap_Head() { return GlobalHeapService._heapStart; }
+
+DWORD WINAPI Heap_ServiceWork(void* target)
 {
 	if (!target)
 		return 1;
@@ -52,14 +54,14 @@ DWORD WINAPI heapServiceWork(void* target)
 
 		int pageDelta = ((target > current ? target - current : current - target) / sizeof(Page)) - 1;
 
-		if (!heapDeltaPages(pageDelta))
+		if (!Heap_DeltaPages(pageDelta))
 			break;
 	}
 
 	return 0;
 }
 
-void ClearPage(int index)
+void Heap_ClearPage(int index)
 {
 	Page* targetPage = &(((Page*)GlobalHeapService._heapStart)[index]);
 
@@ -67,7 +69,7 @@ void ClearPage(int index)
 		targetPage->_mem[i] = 0;
 }
 
-HeapService* HeapServiceInit(bool clear)
+HeapService* Heap_ServiceInit(bool clear)
 {
 	GlobalHeapService._heapStart = HeapCreate(0, 0, 0);
 
@@ -90,14 +92,14 @@ HeapService* HeapServiceInit(bool clear)
 	GlobalHeapService._pageCount = 0;
 
 	// Initialize service
-	Service_Start(&(GlobalHeapService._pages), heapServiceWork);
+	Service_Start(&(GlobalHeapService._pages), Heap_ServiceWork);
 
 	// Add first Page
-	heapDeltaPages(1);
+	Heap_DeltaPages(1);
 
 	// Initialize the mapSpace to zeros
 	if (clear)
-		ClearPage(0);
+		Heap_ClearPage(0);
 
 	return &GlobalHeapService;
 }

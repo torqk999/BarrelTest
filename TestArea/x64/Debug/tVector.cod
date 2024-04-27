@@ -180,7 +180,6 @@ PUBLIC	Vector_Transcribe
 PUBLIC	Vector_Transcribe0
 PUBLIC	__JustMyCode_Default
 EXTRN	CreateRequest:PROC
-EXTRN	rawTranscribe:PROC
 EXTRN	Chunk_ctor:PROC
 EXTRN	_RTC_CheckStackVars:PROC
 EXTRN	_RTC_InitBase:PROC
@@ -191,14 +190,14 @@ EXTRN	__security_check_cookie:PROC
 EXTRN	__security_cookie:QWORD
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$Vector_Transcribe DD imagerel $LN15
-	DD	imagerel $LN15+1244
+$pdata$Vector_Transcribe DD imagerel $LN6
+	DD	imagerel $LN6+492
 	DD	imagerel $unwind$Vector_Transcribe
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$Vector_Transcribe0 DD imagerel $LN17
-	DD	imagerel $LN17+846
+$pdata$Vector_Transcribe0 DD imagerel $LN15
+	DD	imagerel $LN15+1244
 	DD	imagerel $unwind$Vector_Transcribe0
 pdata	ENDS
 ;	COMDAT rtc$TMZ
@@ -209,35 +208,6 @@ rtc$TMZ	ENDS
 rtc$IMZ	SEGMENT
 _RTC_InitBase.rtc$IMZ DQ FLAT:_RTC_InitBase
 rtc$IMZ	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Vector_Transcribe0 DD 025062d01H
-	DD	010f2314H
-	DD	070080052H
-	DD	050066007H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Vector_Transcribe0$rtcName$0 DB 074H
-	DB	072H
-	DB	067H
-	DB	00H
-Vector_Transcribe0$rtcName$1 DB 073H
-	DB	072H
-	DB	063H
-	DB	00H
-	ORG $+8
-Vector_Transcribe0$rtcVarDesc DD 058H
-	DD	010H
-	DQ	FLAT:Vector_Transcribe0$rtcName$1
-	DD	028H
-	DD	010H
-	DQ	FLAT:Vector_Transcribe0$rtcName$0
-	ORG $+96
-Vector_Transcribe0$rtcFrameData DD 02H
-	DD	00H
-	DQ	FLAT:Vector_Transcribe0$rtcVarDesc
-CONST	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DW	037H
@@ -245,7 +215,7 @@ _volmd	DW	037H
 voltbl	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$Vector_Transcribe DD 025063e19H
+$unwind$Vector_Transcribe0 DD 025063e19H
 	DD	010f2314H
 	DD	070080142H
 	DD	050066007H
@@ -254,116 +224,145 @@ $unwind$Vector_Transcribe DD 025063e19H
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-Vector_Transcribe$rtcName$0 DB 068H
+Vector_Transcribe0$rtcName$0 DB 068H
 	DB	06fH
 	DB	073H
 	DB	074H
 	DB	00H
 	ORG $+3
-Vector_Transcribe$rtcName$1 DB 061H
+Vector_Transcribe0$rtcName$1 DB 061H
 	DB	067H
 	DB	067H
 	DB	072H
 	DB	00H
 	ORG $+3
-Vector_Transcribe$rtcName$2 DB 024H
+Vector_Transcribe0$rtcName$2 DB 024H
 	DB	053H
 	DB	031H
 	DB	00H
-Vector_Transcribe$rtcName$3 DB 024H
+Vector_Transcribe0$rtcName$3 DB 024H
 	DB	053H
 	DB	032H
 	DB	00H
-Vector_Transcribe$rtcName$4 DB 024H
+Vector_Transcribe0$rtcName$4 DB 024H
 	DB	053H
 	DB	033H
 	DB	00H
-Vector_Transcribe$rtcName$5 DB 024H
+Vector_Transcribe0$rtcName$5 DB 024H
 	DB	053H
 	DB	034H
 	DB	00H
-Vector_Transcribe$rtcName$6 DB 024H
+Vector_Transcribe0$rtcName$6 DB 024H
 	DB	053H
 	DB	035H
 	DB	00H
-Vector_Transcribe$rtcName$7 DB 024H
+Vector_Transcribe0$rtcName$7 DB 024H
 	DB	053H
 	DB	036H
 	DB	00H
-Vector_Transcribe$rtcName$8 DB 024H
+Vector_Transcribe0$rtcName$8 DB 024H
 	DB	053H
 	DB	037H
 	DB	00H
-Vector_Transcribe$rtcName$9 DB 024H
+Vector_Transcribe0$rtcName$9 DB 024H
 	DB	053H
 	DB	038H
 	DB	00H
-Vector_Transcribe$rtcName$10 DB 024H
+Vector_Transcribe0$rtcName$10 DB 024H
 	DB	053H
 	DB	039H
 	DB	00H
-Vector_Transcribe$rtcName$11 DB 024H
+Vector_Transcribe0$rtcName$11 DB 024H
 	DB	053H
 	DB	031H
 	DB	030H
 	DB	00H
 	ORG $+3
-Vector_Transcribe$rtcName$12 DB 024H
+Vector_Transcribe0$rtcName$12 DB 024H
 	DB	053H
 	DB	031H
 	DB	031H
 	DB	00H
 	ORG $+3
-Vector_Transcribe$rtcName$13 DB 024H
+Vector_Transcribe0$rtcName$13 DB 024H
 	DB	053H
 	DB	031H
 	DB	032H
 	DB	00H
 	ORG $+7
-Vector_Transcribe$rtcVarDesc DD 0500H
+Vector_Transcribe0$rtcVarDesc DD 0500H
 	DD	0110H
-	DQ	FLAT:Vector_Transcribe$rtcName$13
+	DQ	FLAT:Vector_Transcribe0$rtcName$13
 	DD	04c8H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$12
+	DQ	FLAT:Vector_Transcribe0$rtcName$12
 	DD	0498H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$11
+	DQ	FLAT:Vector_Transcribe0$rtcName$11
 	DD	0468H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$10
+	DQ	FLAT:Vector_Transcribe0$rtcName$10
 	DD	0438H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$9
+	DQ	FLAT:Vector_Transcribe0$rtcName$9
 	DD	03e0H
 	DD	040H
-	DQ	FLAT:Vector_Transcribe$rtcName$8
+	DQ	FLAT:Vector_Transcribe0$rtcName$8
 	DD	02b0H
 	DD	0110H
-	DQ	FLAT:Vector_Transcribe$rtcName$7
+	DQ	FLAT:Vector_Transcribe0$rtcName$7
 	DD	0278H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$6
+	DQ	FLAT:Vector_Transcribe0$rtcName$6
 	DD	0248H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$5
+	DQ	FLAT:Vector_Transcribe0$rtcName$5
 	DD	0218H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$4
+	DQ	FLAT:Vector_Transcribe0$rtcName$4
 	DD	01e8H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$3
+	DQ	FLAT:Vector_Transcribe0$rtcName$3
 	DD	0190H
 	DD	040H
-	DQ	FLAT:Vector_Transcribe$rtcName$2
+	DQ	FLAT:Vector_Transcribe0$rtcName$2
 	DD	0118H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$1
+	DQ	FLAT:Vector_Transcribe0$rtcName$1
 	DD	0e8H
 	DD	010H
-	DQ	FLAT:Vector_Transcribe$rtcName$0
+	DQ	FLAT:Vector_Transcribe0$rtcName$0
 	ORG $+672
-Vector_Transcribe$rtcFrameData DD 0eH
+Vector_Transcribe0$rtcFrameData DD 0eH
+	DD	00H
+	DQ	FLAT:Vector_Transcribe0$rtcVarDesc
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Vector_Transcribe DD 025062d01H
+	DD	010f2314H
+	DD	070080048H
+	DD	050066007H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Vector_Transcribe$rtcName$0 DB 074H
+	DB	072H
+	DB	067H
+	DB	00H
+Vector_Transcribe$rtcName$1 DB 073H
+	DB	072H
+	DB	063H
+	DB	00H
+	ORG $+8
+Vector_Transcribe$rtcVarDesc DD 058H
+	DD	010H
+	DQ	FLAT:Vector_Transcribe$rtcName$1
+	DD	028H
+	DD	010H
+	DQ	FLAT:Vector_Transcribe$rtcName$0
+	ORG $+96
+Vector_Transcribe$rtcFrameData DD 02H
 	DD	00H
 	DQ	FLAT:Vector_Transcribe$rtcVarDesc
 CONST	ENDS
@@ -377,384 +376,6 @@ _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tVector.c
 ;	COMDAT Vector_Transcribe0
-_TEXT	SEGMENT
-trg$ = 8
-src$ = 56
-unitSize$ = 104
-count$ = 136
-trgIx$ = 168
-srcIx$ = 200
-span$ = 232
-trgPtr$ = 264
-srcPtr$ = 296
-trgRemain$5 = 328
-srcRemain$6 = 360
-delta$7 = 392
-tv137 = 600
-tv134 = 600
-tv132 = 600
-tv128 = 600
-tv94 = 600
-tv138 = 608
-request$ = 656
-Vector_Transcribe0 PROC					; COMDAT
-
-; 5    : {
-
-$LN17:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	56		 push	 rsi
-  00007	57		 push	 rdi
-  00008	48 81 ec 90 02
-	00 00		 sub	 rsp, 656		; 00000290H
-  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00014	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00019	b9 6c 00 00 00	 mov	 ecx, 108		; 0000006cH
-  0001e	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00023	f3 ab		 rep stosd
-  00025	48 8b 8c 24 b8
-	02 00 00	 mov	 rcx, QWORD PTR [rsp+696]
-  0002d	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6B95FB9E_tVector@c
-  00034	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 6    : 	Chunk trg = *((Chunk*)request._params[tTRG]);
-
-  00039	b8 08 00 00 00	 mov	 eax, 8
-  0003e	48 6b c0 01	 imul	 rax, rax, 1
-  00042	48 8b 8d 90 02
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00049	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  0004d	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  00051	48 8d 4d 08	 lea	 rcx, QWORD PTR trg$[rbp]
-  00055	48 8b f9	 mov	 rdi, rcx
-  00058	48 8b f0	 mov	 rsi, rax
-  0005b	b9 10 00 00 00	 mov	 ecx, 16
-  00060	f3 a4		 rep movsb
-
-; 7    : 	Chunk src = *((Chunk*)request._params[tSRC]);
-
-  00062	b8 08 00 00 00	 mov	 eax, 8
-  00067	48 6b c0 02	 imul	 rax, rax, 2
-  0006b	48 8b 8d 90 02
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00072	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00076	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  0007a	48 8d 4d 38	 lea	 rcx, QWORD PTR src$[rbp]
-  0007e	48 8b f9	 mov	 rdi, rcx
-  00081	48 8b f0	 mov	 rsi, rax
-  00084	b9 10 00 00 00	 mov	 ecx, 16
-  00089	f3 a4		 rep movsb
-
-; 8    : 
-; 9    : 	size_t unitSize = request._params[tSIZE];
-
-  0008b	b8 08 00 00 00	 mov	 eax, 8
-  00090	48 6b c0 06	 imul	 rax, rax, 6
-  00094	48 8b 8d 90 02
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  0009b	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  0009f	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  000a3	48 89 45 68	 mov	 QWORD PTR unitSize$[rbp], rax
-
-; 10   : 	size_t count = request._params[tCOUNT];
-
-  000a7	b8 08 00 00 00	 mov	 eax, 8
-  000ac	48 6b c0 07	 imul	 rax, rax, 7
-  000b0	48 8b 8d 90 02
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  000b7	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  000bb	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  000bf	48 89 85 88 00
-	00 00		 mov	 QWORD PTR count$[rbp], rax
-
-; 11   : 	size_t trgIx = request._params[Ix_TRG];
-
-  000c6	b8 08 00 00 00	 mov	 eax, 8
-  000cb	48 6b c0 03	 imul	 rax, rax, 3
-  000cf	48 8b 8d 90 02
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  000d6	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  000da	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  000de	48 89 85 a8 00
-	00 00		 mov	 QWORD PTR trgIx$[rbp], rax
-
-; 12   : 	size_t srcIx = request._params[Ix_SRC];
-
-  000e5	b8 08 00 00 00	 mov	 eax, 8
-  000ea	48 6b c0 04	 imul	 rax, rax, 4
-  000ee	48 8b 8d 90 02
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  000f5	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  000f9	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  000fd	48 89 85 c8 00
-	00 00		 mov	 QWORD PTR srcIx$[rbp], rax
-
-; 13   : 
-; 14   : 	size_t span = unitSize * count;
-
-  00104	48 8b 45 68	 mov	 rax, QWORD PTR unitSize$[rbp]
-  00108	48 0f af 85 88
-	00 00 00	 imul	 rax, QWORD PTR count$[rbp]
-  00110	48 89 85 e8 00
-	00 00		 mov	 QWORD PTR span$[rbp], rax
-
-; 15   : 	size_t trgPtr = (unitSize * trgIx);
-
-  00117	48 8b 45 68	 mov	 rax, QWORD PTR unitSize$[rbp]
-  0011b	48 0f af 85 a8
-	00 00 00	 imul	 rax, QWORD PTR trgIx$[rbp]
-  00123	48 89 85 08 01
-	00 00		 mov	 QWORD PTR trgPtr$[rbp], rax
-
-; 16   : 	size_t srcPtr = src._head + (unitSize * srcIx);
-
-  0012a	48 8b 45 68	 mov	 rax, QWORD PTR unitSize$[rbp]
-  0012e	48 0f af 85 c8
-	00 00 00	 imul	 rax, QWORD PTR srcIx$[rbp]
-  00136	48 8b 4d 38	 mov	 rcx, QWORD PTR src$[rbp]
-  0013a	48 03 c8	 add	 rcx, rax
-  0013d	48 8b c1	 mov	 rax, rcx
-  00140	48 89 85 28 01
-	00 00		 mov	 QWORD PTR srcPtr$[rbp], rax
-$LN2@Vector_Tra:
-
-; 17   : 	
-; 18   : 	//for (size_t i = 0; i < span; i++)
-; 19   : 	//	*((char*)(((trgPtr + i) % trg._size) + trg._head)) = src ? ((char*)src)[i] : NULL;
-; 20   : 
-; 21   : 	while (span)
-
-  00147	48 83 bd e8 00
-	00 00 00	 cmp	 QWORD PTR span$[rbp], 0
-  0014f	0f 84 de 01 00
-	00		 je	 $LN3@Vector_Tra
-
-; 22   : 	{
-; 23   : 		
-; 24   : 
-; 25   : 
-; 26   : 		size_t trgRemain = (trg._head + trg._size) - trgPtr;
-
-  00155	48 8b 45 10	 mov	 rax, QWORD PTR trg$[rbp+8]
-  00159	48 8b 4d 08	 mov	 rcx, QWORD PTR trg$[rbp]
-  0015d	48 03 c8	 add	 rcx, rax
-  00160	48 8b c1	 mov	 rax, rcx
-  00163	48 2b 85 08 01
-	00 00		 sub	 rax, QWORD PTR trgPtr$[rbp]
-  0016a	48 89 85 48 01
-	00 00		 mov	 QWORD PTR trgRemain$5[rbp], rax
-
-; 27   : 		trgPtr = trgRemain == 0 ? trg._head : trgPtr;
-
-  00171	48 83 bd 48 01
-	00 00 00	 cmp	 QWORD PTR trgRemain$5[rbp], 0
-  00179	75 0d		 jne	 SHORT $LN5@Vector_Tra
-  0017b	48 8b 45 08	 mov	 rax, QWORD PTR trg$[rbp]
-  0017f	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv94[rbp], rax
-  00186	eb 0e		 jmp	 SHORT $LN6@Vector_Tra
-$LN5@Vector_Tra:
-  00188	48 8b 85 08 01
-	00 00		 mov	 rax, QWORD PTR trgPtr$[rbp]
-  0018f	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv94[rbp], rax
-$LN6@Vector_Tra:
-  00196	48 8b 85 58 02
-	00 00		 mov	 rax, QWORD PTR tv94[rbp]
-  0019d	48 89 85 08 01
-	00 00		 mov	 QWORD PTR trgPtr$[rbp], rax
-
-; 28   : 		trgRemain = trgRemain == 0 ? trg._size : trgRemain;
-
-  001a4	48 83 bd 48 01
-	00 00 00	 cmp	 QWORD PTR trgRemain$5[rbp], 0
-  001ac	75 0d		 jne	 SHORT $LN7@Vector_Tra
-  001ae	48 8b 45 10	 mov	 rax, QWORD PTR trg$[rbp+8]
-  001b2	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv128[rbp], rax
-  001b9	eb 0e		 jmp	 SHORT $LN8@Vector_Tra
-$LN7@Vector_Tra:
-  001bb	48 8b 85 48 01
-	00 00		 mov	 rax, QWORD PTR trgRemain$5[rbp]
-  001c2	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv128[rbp], rax
-$LN8@Vector_Tra:
-  001c9	48 8b 85 58 02
-	00 00		 mov	 rax, QWORD PTR tv128[rbp]
-  001d0	48 89 85 48 01
-	00 00		 mov	 QWORD PTR trgRemain$5[rbp], rax
-
-; 29   : 
-; 30   : 		size_t srcRemain = (src._head + src._size) - srcPtr;
-
-  001d7	48 8b 45 40	 mov	 rax, QWORD PTR src$[rbp+8]
-  001db	48 8b 4d 38	 mov	 rcx, QWORD PTR src$[rbp]
-  001df	48 03 c8	 add	 rcx, rax
-  001e2	48 8b c1	 mov	 rax, rcx
-  001e5	48 2b 85 28 01
-	00 00		 sub	 rax, QWORD PTR srcPtr$[rbp]
-  001ec	48 89 85 68 01
-	00 00		 mov	 QWORD PTR srcRemain$6[rbp], rax
-
-; 31   : 		srcPtr = srcRemain == 0 ? src._head : srcPtr;
-
-  001f3	48 83 bd 68 01
-	00 00 00	 cmp	 QWORD PTR srcRemain$6[rbp], 0
-  001fb	75 0d		 jne	 SHORT $LN9@Vector_Tra
-  001fd	48 8b 45 38	 mov	 rax, QWORD PTR src$[rbp]
-  00201	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv132[rbp], rax
-  00208	eb 0e		 jmp	 SHORT $LN10@Vector_Tra
-$LN9@Vector_Tra:
-  0020a	48 8b 85 28 01
-	00 00		 mov	 rax, QWORD PTR srcPtr$[rbp]
-  00211	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv132[rbp], rax
-$LN10@Vector_Tra:
-  00218	48 8b 85 58 02
-	00 00		 mov	 rax, QWORD PTR tv132[rbp]
-  0021f	48 89 85 28 01
-	00 00		 mov	 QWORD PTR srcPtr$[rbp], rax
-
-; 32   : 		srcRemain = srcRemain == 0 ? src._size : srcRemain;
-
-  00226	48 83 bd 68 01
-	00 00 00	 cmp	 QWORD PTR srcRemain$6[rbp], 0
-  0022e	75 0d		 jne	 SHORT $LN11@Vector_Tra
-  00230	48 8b 45 40	 mov	 rax, QWORD PTR src$[rbp+8]
-  00234	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv134[rbp], rax
-  0023b	eb 0e		 jmp	 SHORT $LN12@Vector_Tra
-$LN11@Vector_Tra:
-  0023d	48 8b 85 68 01
-	00 00		 mov	 rax, QWORD PTR srcRemain$6[rbp]
-  00244	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv134[rbp], rax
-$LN12@Vector_Tra:
-  0024b	48 8b 85 58 02
-	00 00		 mov	 rax, QWORD PTR tv134[rbp]
-  00252	48 89 85 68 01
-	00 00		 mov	 QWORD PTR srcRemain$6[rbp], rax
-
-; 33   : 
-; 34   : 		size_t delta = trgRemain < span ? srcRemain < trgRemain ? srcRemain : trgRemain : span;
-
-  00259	48 8b 85 e8 00
-	00 00		 mov	 rax, QWORD PTR span$[rbp]
-  00260	48 39 85 48 01
-	00 00		 cmp	 QWORD PTR trgRemain$5[rbp], rax
-  00267	73 3e		 jae	 SHORT $LN15@Vector_Tra
-  00269	48 8b 85 48 01
-	00 00		 mov	 rax, QWORD PTR trgRemain$5[rbp]
-  00270	48 39 85 68 01
-	00 00		 cmp	 QWORD PTR srcRemain$6[rbp], rax
-  00277	73 10		 jae	 SHORT $LN13@Vector_Tra
-  00279	48 8b 85 68 01
-	00 00		 mov	 rax, QWORD PTR srcRemain$6[rbp]
-  00280	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv137[rbp], rax
-  00287	eb 0e		 jmp	 SHORT $LN14@Vector_Tra
-$LN13@Vector_Tra:
-  00289	48 8b 85 48 01
-	00 00		 mov	 rax, QWORD PTR trgRemain$5[rbp]
-  00290	48 89 85 58 02
-	00 00		 mov	 QWORD PTR tv137[rbp], rax
-$LN14@Vector_Tra:
-  00297	48 8b 85 58 02
-	00 00		 mov	 rax, QWORD PTR tv137[rbp]
-  0029e	48 89 85 60 02
-	00 00		 mov	 QWORD PTR tv138[rbp], rax
-  002a5	eb 0e		 jmp	 SHORT $LN16@Vector_Tra
-$LN15@Vector_Tra:
-  002a7	48 8b 85 e8 00
-	00 00		 mov	 rax, QWORD PTR span$[rbp]
-  002ae	48 89 85 60 02
-	00 00		 mov	 QWORD PTR tv138[rbp], rax
-$LN16@Vector_Tra:
-  002b5	48 8b 85 60 02
-	00 00		 mov	 rax, QWORD PTR tv138[rbp]
-  002bc	48 89 85 88 01
-	00 00		 mov	 QWORD PTR delta$7[rbp], rax
-
-; 35   : 		
-; 36   : 		//if (delta >= sizeof(Barrel)) {
-; 37   : 		//	
-; 38   : 		//	uint barrelCount = delta / sizeof(Barrel);
-; 39   : 		//	delta = barrelCount * sizeof(Barrel);
-; 40   : 		//	
-; 41   : 		//	barrelTranscribe(trgPtr, srcPtr, barrelCount);
-; 42   : 		//}
-; 43   : 		//else {
-; 44   : 		rawTranscribe(trgPtr, srcPtr, delta);
-
-  002c3	4c 8b 85 88 01
-	00 00		 mov	 r8, QWORD PTR delta$7[rbp]
-  002ca	48 8b 95 28 01
-	00 00		 mov	 rdx, QWORD PTR srcPtr$[rbp]
-  002d1	48 8b 8d 08 01
-	00 00		 mov	 rcx, QWORD PTR trgPtr$[rbp]
-  002d8	e8 00 00 00 00	 call	 rawTranscribe
-
-; 45   : 		//}
-; 46   : 
-; 47   : 		trgPtr += delta;
-
-  002dd	48 8b 85 88 01
-	00 00		 mov	 rax, QWORD PTR delta$7[rbp]
-  002e4	48 8b 8d 08 01
-	00 00		 mov	 rcx, QWORD PTR trgPtr$[rbp]
-  002eb	48 03 c8	 add	 rcx, rax
-  002ee	48 8b c1	 mov	 rax, rcx
-  002f1	48 89 85 08 01
-	00 00		 mov	 QWORD PTR trgPtr$[rbp], rax
-
-; 48   : 		srcPtr += delta;
-
-  002f8	48 8b 85 88 01
-	00 00		 mov	 rax, QWORD PTR delta$7[rbp]
-  002ff	48 8b 8d 28 01
-	00 00		 mov	 rcx, QWORD PTR srcPtr$[rbp]
-  00306	48 03 c8	 add	 rcx, rax
-  00309	48 8b c1	 mov	 rax, rcx
-  0030c	48 89 85 28 01
-	00 00		 mov	 QWORD PTR srcPtr$[rbp], rax
-
-; 49   : 		span -= delta;
-
-  00313	48 8b 85 88 01
-	00 00		 mov	 rax, QWORD PTR delta$7[rbp]
-  0031a	48 8b 8d e8 00
-	00 00		 mov	 rcx, QWORD PTR span$[rbp]
-  00321	48 2b c8	 sub	 rcx, rax
-  00324	48 8b c1	 mov	 rax, rcx
-  00327	48 89 85 e8 00
-	00 00		 mov	 QWORD PTR span$[rbp], rax
-
-; 50   : 	}
-
-  0032e	e9 14 fe ff ff	 jmp	 $LN2@Vector_Tra
-$LN3@Vector_Tra:
-
-; 51   : 
-; 52   : }
-
-  00333	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  00337	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Vector_Transcribe0$rtcFrameData
-  0033e	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00343	48 8d a5 70 02
-	00 00		 lea	 rsp, QWORD PTR [rbp+624]
-  0034a	5f		 pop	 rdi
-  0034b	5e		 pop	 rsi
-  0034c	5d		 pop	 rbp
-  0034d	c3		 ret	 0
-Vector_Transcribe0 ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tVector.c
-;	COMDAT Vector_Transcribe
 _TEXT	SEGMENT
 dir$ = 4
 var$ = 36
@@ -788,9 +409,9 @@ tv73 = 2532
 tv71 = 2532
 __$ArrayPad$ = 2536
 request$ = 2576
-Vector_Transcribe PROC					; COMDAT
+Vector_Transcribe0 PROC					; COMDAT
 
-; 54   : bool Vector_Transcribe(REQUEST request) {
+; 54   : bool Vector_Transcribe0(REQUEST request) {
 
 $LN15:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -1238,7 +859,7 @@ $LN1@Vector_Tra:
   004ac	48 8b f8	 mov	 rdi, rax
   004af	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
   004b3	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Vector_Transcribe$rtcFrameData
+	00 00		 lea	 rdx, OFFSET FLAT:Vector_Transcribe0$rtcFrameData
   004ba	e8 00 00 00 00	 call	 _RTC_CheckStackVars
   004bf	48 8b c7	 mov	 rax, rdi
   004c2	48 8b 8d e8 09
@@ -1251,6 +872,242 @@ $LN1@Vector_Tra:
   004d9	5e		 pop	 rsi
   004da	5d		 pop	 rbp
   004db	c3		 ret	 0
+Vector_Transcribe0 ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tVector.c
+;	COMDAT Vector_Transcribe
+_TEXT	SEGMENT
+trg$ = 8
+src$ = 56
+unitSize$ = 104
+count$ = 136
+trgIx$ = 168
+srcIx$ = 200
+span$ = 232
+trgPtr$ = 264
+srcPtr$ = 296
+i$5 = 328
+tv128 = 536
+request$ = 576
+Vector_Transcribe PROC					; COMDAT
+
+; 5    : {
+
+$LN6:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	56		 push	 rsi
+  00007	57		 push	 rdi
+  00008	48 81 ec 40 02
+	00 00		 sub	 rsp, 576		; 00000240H
+  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00014	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00019	b9 58 00 00 00	 mov	 ecx, 88			; 00000058H
+  0001e	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00023	f3 ab		 rep stosd
+  00025	48 8b 8c 24 68
+	02 00 00	 mov	 rcx, QWORD PTR [rsp+616]
+  0002d	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__6B95FB9E_tVector@c
+  00034	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 6    : 	Chunk trg = *((Chunk*)request._params[tTRG]);
+
+  00039	b8 08 00 00 00	 mov	 eax, 8
+  0003e	48 6b c0 01	 imul	 rax, rax, 1
+  00042	48 8b 8d 40 02
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00049	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  0004d	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  00051	48 8d 4d 08	 lea	 rcx, QWORD PTR trg$[rbp]
+  00055	48 8b f9	 mov	 rdi, rcx
+  00058	48 8b f0	 mov	 rsi, rax
+  0005b	b9 10 00 00 00	 mov	 ecx, 16
+  00060	f3 a4		 rep movsb
+
+; 7    : 	Chunk src = *((Chunk*)request._params[tSRC]);
+
+  00062	b8 08 00 00 00	 mov	 eax, 8
+  00067	48 6b c0 02	 imul	 rax, rax, 2
+  0006b	48 8b 8d 40 02
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00072	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00076	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  0007a	48 8d 4d 38	 lea	 rcx, QWORD PTR src$[rbp]
+  0007e	48 8b f9	 mov	 rdi, rcx
+  00081	48 8b f0	 mov	 rsi, rax
+  00084	b9 10 00 00 00	 mov	 ecx, 16
+  00089	f3 a4		 rep movsb
+
+; 8    : 
+; 9    : 	size_t unitSize = request._params[tSIZE];
+
+  0008b	b8 08 00 00 00	 mov	 eax, 8
+  00090	48 6b c0 06	 imul	 rax, rax, 6
+  00094	48 8b 8d 40 02
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  0009b	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  0009f	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  000a3	48 89 45 68	 mov	 QWORD PTR unitSize$[rbp], rax
+
+; 10   : 	size_t count = request._params[tCOUNT];
+
+  000a7	b8 08 00 00 00	 mov	 eax, 8
+  000ac	48 6b c0 07	 imul	 rax, rax, 7
+  000b0	48 8b 8d 40 02
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  000b7	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  000bb	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  000bf	48 89 85 88 00
+	00 00		 mov	 QWORD PTR count$[rbp], rax
+
+; 11   : 	size_t trgIx = request._params[Ix_TRG];
+
+  000c6	b8 08 00 00 00	 mov	 eax, 8
+  000cb	48 6b c0 03	 imul	 rax, rax, 3
+  000cf	48 8b 8d 40 02
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  000d6	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  000da	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  000de	48 89 85 a8 00
+	00 00		 mov	 QWORD PTR trgIx$[rbp], rax
+
+; 12   : 	size_t srcIx = request._params[Ix_SRC];
+
+  000e5	b8 08 00 00 00	 mov	 eax, 8
+  000ea	48 6b c0 04	 imul	 rax, rax, 4
+  000ee	48 8b 8d 40 02
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  000f5	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  000f9	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  000fd	48 89 85 c8 00
+	00 00		 mov	 QWORD PTR srcIx$[rbp], rax
+
+; 13   : 
+; 14   : 	size_t span = unitSize * count;
+
+  00104	48 8b 45 68	 mov	 rax, QWORD PTR unitSize$[rbp]
+  00108	48 0f af 85 88
+	00 00 00	 imul	 rax, QWORD PTR count$[rbp]
+  00110	48 89 85 e8 00
+	00 00		 mov	 QWORD PTR span$[rbp], rax
+
+; 15   : 	size_t trgPtr = (unitSize * trgIx);
+
+  00117	48 8b 45 68	 mov	 rax, QWORD PTR unitSize$[rbp]
+  0011b	48 0f af 85 a8
+	00 00 00	 imul	 rax, QWORD PTR trgIx$[rbp]
+  00123	48 89 85 08 01
+	00 00		 mov	 QWORD PTR trgPtr$[rbp], rax
+
+; 16   : 	size_t srcPtr = src._head + (unitSize * srcIx);
+
+  0012a	48 8b 45 68	 mov	 rax, QWORD PTR unitSize$[rbp]
+  0012e	48 0f af 85 c8
+	00 00 00	 imul	 rax, QWORD PTR srcIx$[rbp]
+  00136	48 8b 4d 38	 mov	 rcx, QWORD PTR src$[rbp]
+  0013a	48 03 c8	 add	 rcx, rax
+  0013d	48 8b c1	 mov	 rax, rcx
+  00140	48 89 85 28 01
+	00 00		 mov	 QWORD PTR srcPtr$[rbp], rax
+
+; 17   : 	
+; 18   : 	for (size_t i = 0; i < span; i++)
+
+  00147	48 c7 85 48 01
+	00 00 00 00 00
+	00		 mov	 QWORD PTR i$5[rbp], 0
+  00152	eb 11		 jmp	 SHORT $LN4@Vector_Tra
+$LN2@Vector_Tra:
+  00154	48 8b 85 48 01
+	00 00		 mov	 rax, QWORD PTR i$5[rbp]
+  0015b	48 ff c0	 inc	 rax
+  0015e	48 89 85 48 01
+	00 00		 mov	 QWORD PTR i$5[rbp], rax
+$LN4@Vector_Tra:
+  00165	48 8b 85 e8 00
+	00 00		 mov	 rax, QWORD PTR span$[rbp]
+  0016c	48 39 85 48 01
+	00 00		 cmp	 QWORD PTR i$5[rbp], rax
+  00173	73 5c		 jae	 SHORT $LN3@Vector_Tra
+
+; 19   : 		*((char*)(((trgPtr + i) % trg._size) + trg._head)) = *((char*)(((srcPtr + i) % src._size) + src._head));
+
+  00175	48 8b 85 48 01
+	00 00		 mov	 rax, QWORD PTR i$5[rbp]
+  0017c	48 8b 8d 28 01
+	00 00		 mov	 rcx, QWORD PTR srcPtr$[rbp]
+  00183	48 03 c8	 add	 rcx, rax
+  00186	48 8b c1	 mov	 rax, rcx
+  00189	33 d2		 xor	 edx, edx
+  0018b	48 f7 75 40	 div	 QWORD PTR src$[rbp+8]
+  0018f	48 8b c2	 mov	 rax, rdx
+  00192	48 89 85 18 02
+	00 00		 mov	 QWORD PTR tv128[rbp], rax
+  00199	48 8b 8d 48 01
+	00 00		 mov	 rcx, QWORD PTR i$5[rbp]
+  001a0	48 8b 95 08 01
+	00 00		 mov	 rdx, QWORD PTR trgPtr$[rbp]
+  001a7	48 03 d1	 add	 rdx, rcx
+  001aa	48 8b ca	 mov	 rcx, rdx
+  001ad	33 d2		 xor	 edx, edx
+  001af	48 8b c1	 mov	 rax, rcx
+  001b2	48 f7 75 10	 div	 QWORD PTR trg$[rbp+8]
+  001b6	48 8b c2	 mov	 rax, rdx
+  001b9	48 8b 4d 08	 mov	 rcx, QWORD PTR trg$[rbp]
+  001bd	48 8b 55 38	 mov	 rdx, QWORD PTR src$[rbp]
+  001c1	48 8b bd 18 02
+	00 00		 mov	 rdi, QWORD PTR tv128[rbp]
+  001c8	0f b6 14 17	 movzx	 edx, BYTE PTR [rdi+rdx]
+  001cc	88 14 08	 mov	 BYTE PTR [rax+rcx], dl
+  001cf	eb 83		 jmp	 SHORT $LN2@Vector_Tra
+$LN3@Vector_Tra:
+
+; 20   : 
+; 21   : 	//while (span)
+; 22   : 	//{
+; 23   : 	//	
+; 24   : 	//
+; 25   : 	//
+; 26   : 	//	size_t trgRemain = (trg._head + trg._size) - trgPtr;
+; 27   : 	//	trgPtr = trgRemain == 0 ? trg._head : trgPtr;
+; 28   : 	//	trgRemain = trgRemain == 0 ? trg._size : trgRemain;
+; 29   : 	//
+; 30   : 	//	size_t srcRemain = (src._head + src._size) - srcPtr;
+; 31   : 	//	srcPtr = srcRemain == 0 ? src._head : srcPtr;
+; 32   : 	//	srcRemain = srcRemain == 0 ? src._size : srcRemain;
+; 33   : 	//
+; 34   : 	//	size_t delta = trgRemain < span ? srcRemain < trgRemain ? srcRemain : trgRemain : span;
+; 35   : 	//	
+; 36   : 	//	//if (delta >= sizeof(Barrel)) {
+; 37   : 	//	//	
+; 38   : 	//	//	uint barrelCount = delta / sizeof(Barrel);
+; 39   : 	//	//	delta = barrelCount * sizeof(Barrel);
+; 40   : 	//	//	
+; 41   : 	//	//	barrelTranscribe(trgPtr, srcPtr, barrelCount);
+; 42   : 	//	//}
+; 43   : 	//	//else {
+; 44   : 	//	rawTranscribe(trgPtr, srcPtr, delta);
+; 45   : 	//	//}
+; 46   : 	//
+; 47   : 	//	trgPtr += delta;
+; 48   : 	//	srcPtr += delta;
+; 49   : 	//	span -= delta;
+; 50   : 	//}
+; 51   : 
+; 52   : }
+
+  001d1	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  001d5	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Vector_Transcribe$rtcFrameData
+  001dc	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  001e1	48 8d a5 20 02
+	00 00		 lea	 rsp, QWORD PTR [rbp+544]
+  001e8	5f		 pop	 rdi
+  001e9	5e		 pop	 rsi
+  001ea	5d		 pop	 rbp
+  001eb	c3		 ret	 0
 Vector_Transcribe ENDP
 _TEXT	ENDS
 END

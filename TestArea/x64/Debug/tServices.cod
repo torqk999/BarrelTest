@@ -7,7 +7,6 @@ INCLUDELIB OLDNAMES
 
 _DATA	SEGMENT
 COMM	ThreadHandle_TypeID:BYTE:018H
-COMM	Request_TypeID:BYTE:018H
 _DATA	ENDS
 msvcjmc	SEGMENT
 __9C67CA7D_tEnums@h DB 01H
@@ -176,11 +175,6 @@ __AFB9CF29_tPreent@h DB 01H
 __366DFDC4_tHelpers@h DB 01H
 __D300D227_tTypeInfo@h DB 01H
 __03948348_tThreads@h DB 01H
-__296E417C_tChunk@h DB 01H
-__7CF1EC1E_tCollection@h DB 01H
-__FC472216_tVector@h DB 01H
-__EAE81D8C_tBucket@h DB 01H
-__37B02CEB_tQues@h DB 01H
 __978ECD68_tServices@h DB 01H
 __005C14E0_tServices@c DB 01H
 msvcjmc	ENDS

@@ -1,7 +1,8 @@
 #ifndef	tBucket
 #define	tBucket
 
-#include <tVector.h>
+#include <tCollection.h>
+#include <tChunk.h>
 
 //void* Bucket_GetPtr(Bucket* bucketVector, uint index);
 //
@@ -20,13 +21,9 @@
 
 //bool Bucket_Extensions(REQUEST request);
 
+Bucket Bucket_Create(const char* name, size_t unitSize, void* head, int memFlags, uint capacity);
+
 COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* src, int memFlags, uint count);
 
-#define bucket_custom(typeName, flags, ...) Bucket_ctor(#typeName, sizeof(tyeName), (Bucket){0},(typeName[]){__VA_ARGS__}, flags, PARAM_COUNT( __VA_ARGS__ ))
-#define bucket(typeName, ...) bucket_custom(typeName, 0, __VA_ARGS__)
-
-#define Bucket_List(typeName, ...) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[]){ __VA_ARGS__ }, 0, PARAM_COUNT( __VA_ARGS__ ) )
-#define Bucket_Empty(typeName, capacity) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[capacity]){ 0 }, EMPTY, capacity )
-#define Bucket_Fill(typeName, capacity, fill) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[capacity]){ fill }, FILL, capacity )
 
 #endif

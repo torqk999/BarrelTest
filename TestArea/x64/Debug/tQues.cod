@@ -176,7 +176,6 @@ __366DFDC4_tHelpers@h DB 01H
 __D300D227_tTypeInfo@h DB 01H
 __296E417C_tChunk@h DB 01H
 __7CF1EC1E_tCollection@h DB 01H
-__FC472216_tVector@h DB 01H
 __EAE81D8C_tBucket@h DB 01H
 __37B02CEB_tQues@h DB 01H
 __A062F563_tQues@c DB 01H

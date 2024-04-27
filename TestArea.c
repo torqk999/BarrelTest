@@ -39,33 +39,36 @@ void fill_screen(char* fill) {
 
 void clear_screen() { fill_screen(NULL); }
 
-//void barrelTest_NEW()
-//{
-//	int* targetPtr = NULL;
-//	const char* input = NULL;
-//
-//	PREENT("At any time, enter 'q' to leave\nChoose Initial Capacity: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		goto End;
-//
-//	int capacity = strToInt(input);
-//
-//	if (capacity < 1) {
-//		PREENT_ARGS("Bad Capacity! Must be greater than 0: %\n", fmt_i(capacity));
-//		goto End;
-//	}
-//
-//	BarrelNode* newNode;
-//	if (barrel_RequestNode(&newNode, (Bucket) { test_intTypeID, capacity, capacity}))
-//		PREENT("Node created!\n");
-//	else
-//		PREENT("Node failed to create!\n");
-//	//test_heapService._heapEnd;
-//
-//End: {}
-//}
+void barrelTest_NEW()
+{
+	int* targetPtr = NULL;
+	const char* input = NULL;
+
+	PREENT("At any time, enter 'q' to leave\nChoose Initial Capacity: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		goto End;
+
+	int capacity = strToInt(input);
+
+	if (capacity < 1) {
+		PREENT_ARGS("Bad Capacity! Must be greater than 0: %\n", fmt_i(capacity));
+		goto End;
+	}
+
+	COLLECTION newNode = Barrel_Empty(int, 1);
+
+	if (newNode)
+		PREENT("Node created!\n");
+	else
+		PREENT("Node failed to create!\n");
+
+	newNode->_extensions->_methods(Request(MANAGE, P_(tVARIANT, tRESIZE), P_(tTRG, newNode), P_(tCOUNT, capacity)));
+	//test_heapService._heapEnd;
+
+End: {}
+}
 
 void barrelTest_REMOVE()
 {
@@ -78,189 +81,192 @@ void barrelTest_RESIZE()
 
 }
 
-//void barrelTest_WRITE()
-//{
-//	if (barrel_NodeCount() < 1)
-//	{
-//		PREENT("No Collections to write to!\n");
-//		return;
-//	}
-//
-//	int* targetPtr = NULL;
-//	const char* input = NULL;
-//
-//	PREENT("At any time, enter 'q' to leave\nSet Target: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		return;
-//
-//	int index = strToInt(input);
-//
-//	if (index < 0 || index >= barrel_NodeCount()) {
-//		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(barrel_NodeCount()));
-//		return;
-//	}
-//
-//	BarrelNode* targetBoop = barrel_NodeLocation(index);
-//
-//	PREENT("Start Index: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		return;
-//
-//	int startIndex = strToInt(input);
-//
-//	PREENT("Delta Count: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		return;
-//
-//	int delta = strToInt(input);
-//	int deltaDir = delta < 0 ? -1 : 1;
-//
-//	for (int i = 0; i < delta; i += deltaDir)
-//	{
-//		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
-//		targetPtr = barrel_GetPtr(targetBoop, startIndex + i);
-//		*targetPtr = strToInt(Geet());
-//	}
-//
-//	PREENT("Write Complete!\n");
-//}
+void barrelTest_WRITE()
+{
+	if (barrel_NodeCount() < 1)
+	{
+		PREENT("No Collections to write to!\n");
+		return;
+	}
 
-//void barrelTest_READ()
-//{
-//	if (barrel_NodeCount() < 1)
-//	{
-//		PREENT("No Collections to read from!\n");
-//		return;
-//	}
-//
-//	int* targetPtr = NULL;
-//	const char* input = NULL;
-//
-//	PREENT("At any time, enter 'q' to leave\nSet Target: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		return;
-//
-//	int index = strToInt(input);
-//
-//	if (index < 0 || index >= barrel_NodeCount()) {
-//		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(barrel_NodeCount()));
-//		return;
-//	}
-//
-//	BarrelNode* targetBoop = barrel_NodeLocation(index);
-//
-//	PREENT("Start Index: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		return;
-//
-//	int startIndex = strToInt(input);
-//
-//	PREENT("Delta Count: ");
-//
-//	input = Geet();
-//	if (input[0] == 'q')
-//		return;
-//
-//	int delta = strToInt(input);
-//	int deltaDir = delta < 0 ? -1 : 1;
-//
-//	for (int i = 0; i < delta; i += deltaDir)
-//	{
-//		targetPtr = barrel_GetPtr(targetBoop, startIndex + i);
-//		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
-//	}
-//}
+	int* targetPtr = NULL;
+	const char* input = NULL;
+
+	PREENT("At any time, enter 'q' to leave\nSet Target: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int index = strToInt(input);
+
+	if (index < 0 || index >= Barrel_NodeCount()) {
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(barrel_NodeCount()));
+		return;
+	}
+
+	BarrelNode* targetBoop = Barrel_GetNode(index);
+
+	PREENT("Start Index: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int startIndex = strToInt(input);
+
+	PREENT("Delta Count: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int delta = strToInt(input);
+	int deltaDir = delta < 0 ? -1 : 1;
+
+	targetPtr = Barrel_GetBarrelPtr(targetBoop->_barrelStart);
+
+	for (int i = 0; i < delta; i += deltaDir)
+	{
+		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
+		//targetPtr = Barrel_GetBarrelPtr(startIndex + targetBoop->_barrelStart + i);
+		targetPtr[startIndex + i] = strToInt(Geet());
+	}
+
+	PREENT("Write Complete!\n");
+}
+
+void barrelTest_READ()
+{
+	if (barrel_NodeCount() < 1)
+	{
+		PREENT("No Collections to read from!\n");
+		return;
+	}
+
+	int* targetPtr = NULL;
+	const char* input = NULL;
+
+	PREENT("At any time, enter 'q' to leave\nSet Target: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int index = strToInt(input);
+
+	if (index < 0 || index >= Barrel_NodeCount()) {
+		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
+		return;
+	}
+
+	BarrelNode* targetBoop = barrel_NodeLocation(index);
+
+	PREENT("Start Index: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int startIndex = strToInt(input);
+
+	PREENT("Delta Count: ");
+
+	input = Geet();
+	if (input[0] == 'q')
+		return;
+
+	int delta = strToInt(input);
+	int deltaDir = delta < 0 ? -1 : 1;
+
+	targetPtr = Barrel_GetBarrelPtr(targetBoop->_barrelStart);
+
+	for (int i = 0; i < delta; i += deltaDir) {
+		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(targetPtr[startIndex + i]));
+	}
+}
 
 void barrelTest_VIEW_HEAP()
 {
-	//PREENT("bCount | vCount | offset | bStart | bRequests | flags\n");
-	//
-	//for (int i = 0; i < barrel_NodeCount(); i++)
-	//{
-	//	BarrelNode nextNode = *barrel_NodeLocation(i);
-	//	PREENT_ARGS("[%]: % | % | % | % | % | % \n",
-	//		fmt_I(i),
-	//		fmt_I(nextNode._managed._collection._capacity),
-	//		fmt_I(nextNode._managed._collection._count),
-	//		fmt_I(nextNode._barrelOffset),
-	//		fmt_I(nextNode._barrelStart),
-	//		fmt_I(nextNode._requests),
-	//		fmt_I(nextNode._flags));
-	//}
-	//
-	//PREENT("\n[HEEP MAP]\n");
+	PREENT("bCount | vCount | offset | bStart \n");
 
-	//for (int i = 0; i < 32; i++) {
-	//	PREENT("|");
-	//	for (int j = 0; j < 8; j++) {
-	//		PREENT_ARGS("| % ", fmt_I(((int*)test_heapService->_heapStart)[(i * 8) + j]));
-	//	}
-	//
-	//	PREENT("||\n");
-	//}
+	for (int i = 0; i < Barrel_NodeCount(); i++)
+	{
+		BarrelNode* nextNode = Heap_Head();
+		PREENT_ARGS("[%]: % | % | % | %\n",
+			fmt_I(i),
+			fmt_I(nextNode->_barrelCount),
+			fmt_I(nextNode->_collection._count),
+			fmt_I(nextNode->_barrelOffset),
+			fmt_I(nextNode->_barrelStart)
+			);
+	}
+	
+	PREENT("\n[HEEP MAP]\n");
+
+	for (int i = 0; i < 32; i++) {
+		PREENT("|");
+		for (int j = 0; j < 8; j++) {
+			PREENT_ARGS("| % ", fmt_I(((int*)Heap_Head())[(i * 8) + j]));
+		}
+	
+		PREENT("||\n");
+	}
 }
 
-unsigned int mainMenuActionCount = 8;
+unsigned int mainMenuActionCount = 6;
 
 ButtonAction mainMenuActions[] = {
 	{ 'q', "Quit Program", &barrelTest_ESCAPE },
-	//{ 'n', "New Collection", &barrelTest_NEW },
+	{ 'n', "New Collection", &barrelTest_NEW },
 	{ 'm', "Remove Collection", &barrelTest_REMOVE },
 	{ 's', "Re-size Collection", &barrelTest_RESIZE },
-	//{ 'r', "Read from Collection span", &barrelTest_READ },
-	//{ 'w', "Write to Collection span", &barrelTest_WRITE },
+	//{ 'r', "Read from Collection to span", &barrelTest_READ },
+	//{ 'w', "Write to Collection from span", &barrelTest_WRITE },
 	{ 'v', "View entire heap", &barrelTest_VIEW_HEAP },
 	{ 'c', "Clear Screen", &clear_screen },
 };
 
-//void barrelTest_MAIN() {
-//
-//	const char* input = NULL;
-//
-//	while (!ESCAPE) {
-//
-//		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(barrel_NodeCount()));
-//		for (int i = 0; i < mainMenuActionCount; i++)
-//			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
-//
-//		input = Geet();
-//
-//		for (int i = 0; i < mainMenuActionCount; i++)
-//			if (mainMenuActions[i]._keyPress == input[0])
-//				mainMenuActions[i]._action();
-//	}
-//}
+void barrelTest_MAIN() {
 
-//void barrelTest()
-//{
-//	TypeInfo* intTypeID = TYPE_ID(int, BARREL);
-//
-//	//test_intTypeID = &intTypeID;
-//
-//	long derp = 5;
-//	long* ptrDerp = &derp;
-//
-//	Request blah = DeConstruct((void*) { 0 });
-//
-//	if (!BarrelServiceInit(HeapServiceInit(true)))
-//	{
-//		PREENT("Services failed to start!\n");
-//		return;
-//	}
-//
-//
-//	barrelTest_MAIN();
-//}
+	const char* input = NULL;
+
+	while (!ESCAPE) {
+
+		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(Barrel_NodeCount()));
+		for (int i = 0; i < mainMenuActionCount; i++)
+			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
+
+		input = Geet();
+
+		for (int i = 0; i < mainMenuActionCount; i++)
+			if (mainMenuActions[i]._keyPress == input[0])
+				mainMenuActions[i]._action();
+	}
+}
+
+void barrelTest()
+{
+	PREENT("Collections Testing...\n\n");
+
+	//TypeInfo* intTypeID = TYPE_ID(int, BARREL);
+
+	//test_intTypeID = &intTypeID;
+
+	//long derp = 5;
+	//long* ptrDerp = &derp;
+
+	//Request blah = DeConstruct((void*) { 0 });
+
+	if (!Barrel_ServiceInit(Heap_ServiceInit(true)))
+	{
+		PREENT("Services failed to start!\n");
+		return;
+	}
+
+
+	barrelTest_MAIN();
+}
 
 //#define Derp(x) _Generic
 
@@ -280,11 +286,23 @@ ButtonAction mainMenuActions[] = {
 
 int main() {
 
+	barrelTest();
+
+	return 0;
+
+	int output = 0;
+
+	COLLECTION myBarrel = Barrel_List(int, 0, 1, 2, 3, 4, 5, 6);
+
+	if (!Collection_Read(myBarrel, &output, 3))
+		return 1;
+
+	PREENT_ARGS("value at index 3 of myBarrel: %\n", fmt_i(output));
+
 	COLLECTION myBucket = Bucket_List(int, 0, 1.0f, 2, 3, 4, 5);
 
 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
 
-	int output = 0;
 	if (!Collection_Read(myBucket, &output, 3))
 		return 1;
 

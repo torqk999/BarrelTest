@@ -123,49 +123,6 @@
 CollectionExtensions GlobalCollectionInfo[testTypeBinCount];
 uint GlobalCollectionInfoCurrentCount = 0;
 
-Bucket Collection_RawBucket(COLLECTION col, void* head, unsigned int count) {
-	return (Bucket) {
-		Collection_Create(Collection_ReadOnlyExtensions(col->_extensions), count),
-		Chunk_Create(head, col->_extensions->_type->_size * count)
-	};
-}
-
-bool Collection_Transcribe(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
-
-	if (!Collection_InfoCompare(trg->_extensions, src->_extensions))
-		return false;
-
-	if (!Collection_Request(trg) || !Collection_Request(src))
-		return false;
-
-	void* trgPtr;
-	REQUEST trgIter = Request(ITERATE, P_(tSRC, trg), P_(tTRG, &trgPtr), P_(Ix_TRG, &trgStart));
-
-	void* srcPtr;
-	REQUEST srcIter = Request(ITERATE, P_(tSRC, src), P_(tTRG, &srcPtr), P_(Ix_TRG, &srcStart));
-
-	size_t size = trg->_extensions->_type->_size;
-
-	for (int i = 0; i < count; i++) {
-		trg->_extensions->_methods(trgIter);
-		src->_extensions->_methods(srcIter);
-		rawTranscribe(trgPtr, srcPtr, size);
-	}
-
-	Collection_Release(trg);
-	Collection_Release(src);
-
-	return true;
-}
-
-bool Collection_ReadSpan(COLLECTION src, void* trg, unsigned int start, unsigned int count) {
-	Bucket trgBucket = Collection_RawBucket(src, trg, count);
-	return Collection_Transcribe(src, &trgBucket, 0, start, count);
-}
-bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count) {
-	Bucket srcBucket = Collection_RawBucket(trg, src, count);
-	return Collection_Transcribe(trg, &srcBucket, start, 0, count);;
-}
 
 //bool Collection_InsertSpan(Collection* trg, void* src, unsigned int index, unsigned int count) {
 //	return trg->_extensions(&(Request) { MODIFY_INSERT, trg, src, index, 0, count });
@@ -174,12 +131,7 @@ bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigne
 //	return trg->_extensions(&(Request) { MODIFY_REMOVE_AT, trg, NULL, index, 0, count });
 //}
 //
-bool Collection_Read(COLLECTION src, void* trg, unsigned int index) {
-	return Collection_ReadSpan(src, trg, index, 1);
-}
-bool Collection_Write(COLLECTION trg, void* src, unsigned int index) {
-	return Collection_WriteSpan(trg, src, index, 1);
-}
+
 uint Collection_Capacity(COLLECTION collection) {
 	uint output;
 	if (!collection->_extensions->_methods(Request(INFO, P_(tTRG, collection) , P_(tCAPACITY, &output))))
@@ -195,15 +147,17 @@ uint Collection_Count(COLLECTION collection) {
 bool Collection_ReadOnly(COLLECTION collection) {
 	return collection->_extensions->_memFlags & READ_ONLY;
 }
-inline bool Collection_Compare(COLLECTION a, COLLECTION b)
+inline bool Collection_Compare(CollectionExtensions* a, CollectionExtensions* b)
 {
-	return a->_extensions == b->_extensions;
+	return (a->_methods == b->_methods) &&
+		(a->_type == b->_type) &&
+		(a->_memFlags == b->_memFlags);
 }
-inline bool Collection_InfoCompare(CollectionExtensions* trg, CollectionExtensions* src) {
+inline bool Collection_TranscribeCompare(CollectionExtensions* trg, CollectionExtensions* src) {
 	if (trg->_memFlags & READ_ONLY)
 		return false;
 	
-	if (trg->_methods != src->_methods ||
+	if (//trg->_methods != src->_methods ||
 		//A._memFlags != B._memFlags ||
 		!TypeInfo_Compare(trg->_type, src->_type))
 		return false;
@@ -252,7 +206,44 @@ inline bool Collection_Release(COLLECTION collection)
 //}
 //
 
+bool Collection_Transcribe(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
 
+	if (!Collection_TranscribeCompare(trg->_extensions, src->_extensions))
+		return false;
+
+	if (!Collection_Request(trg) || !Collection_Request(src))
+		return false;
+
+	BarrelNode* testNode = src;
+	Bucket* testBucket = trg;
+
+	Chunk trgChunk;
+	REQUEST trgReq = Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, trg), P_(tTRG, &trgChunk));
+	trg->_extensions->_methods(trgReq);
+	size_t trgOffset = trgReq._params[tSIZE];
+
+	Chunk srcChunk;
+	REQUEST srcReq = Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, src), P_(tTRG, &srcChunk));
+	src->_extensions->_methods(srcReq);
+	size_t srcOffset = srcReq._params[tSIZE];
+
+	size_t size = trg->_extensions->_type->_size;
+
+	for (int i = 0; i < count; i++) {
+		rawTranscribe(
+			trgChunk._head + ((trgOffset + (size * (trgStart + i))) % trgChunk._size),
+			srcChunk._head + ((srcOffset + (size * (srcStart + i))) % srcChunk._size),
+			size);
+	}
+
+	Collection_Release(trg);
+	Collection_Release(src);
+
+	return true;
+}
+bool Collection_Insertion(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
+
+}
 
 CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extensions)(RequestType* request), int memFlags) {
 	return (CollectionExtensions) {
@@ -262,47 +253,16 @@ CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extension
 	};
 }
 
-Collection Collection_Create(CollectionExtensions* extensions, uint count)
-{
+CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods)(RequestType* request), int memFlags) {
 
-	return (Collection) {
-		extensions,
-		count,
-		0
-	};
-}
-
-bool Collection_RawMethods(REQUEST request) {
-	Bucket* rawBucket = request._params[tSRC];
-	switch (request._type) {
-	case ITERATE:;
-		uint index = request._params[Ix_TRG];
-		request._params[tTRG] = index >= rawBucket->_collection._count ? NULL : rawBucket->_chunk._head + (index * rawBucket->_collection._extensions->_type->_size);
-		((size_t)request._params[Ix_TRG])++;
-		return true;
-	default:
-		return false;
-	}
-}
-
-CollectionExtensions* Collection_GetRawExtensions(CollectionExtensions* src) {
-	return Collection_GetExtensions(src->_type, Collection_RawMethods, src->_memFlags | READ_ONLY);
-}
-
-CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods)(RequestType* request), int memFlags)  {
-
-	CollectionExtensions newInfo = {
-		typeInfo,
-		methods,
-		memFlags
-	};
+	CollectionExtensions newInfo = CollectionExtensions_Create(typeInfo, methods, memFlags);
 
 	for (int i = 0; i < GlobalCollectionInfoCurrentCount; i++) {
-		if (Collection_InfoCompare(&GlobalCollectionInfo[i], &newInfo)) {
+		if (Collection_Compare(&GlobalCollectionInfo[i], &newInfo)) {
 			PREENT("CollectionInfo found!\n");
 			return &GlobalCollectionInfo[i];
 		}
-			
+
 	}
 
 	if (GlobalCollectionInfoCurrentCount >= testTypeBinCount)
@@ -319,6 +279,70 @@ CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods
 	GlobalCollectionInfoCurrentCount++;
 	return ptr;
 }
+
+//bool Collection_RawMethods(REQUEST request) {
+//	Bucket* rawBucket = request._params[tSRC];
+//	ParamOption var = request._params[tVARIANT];
+//
+//	switch (request._type) {
+//	case MANAGE:
+//		switch (var) {
+//		case tCHUNK:
+//			return 
+//		}
+//		break;
+//
+//	//case ITERATE:;
+//	//	uint index = request._params[Ix_TRG];
+//	//	request._params[tTRG] = index >= rawBucket->_collection._count ? NULL : rawBucket->_chunk._head + (index * rawBucket->_collection._extensions->_type->_size);
+//	//	((size_t)request._params[Ix_TRG])++;
+//	//	return true;
+//	default:
+//		return false;
+//	}
+//}
+
+bool Bucket_Methods(REQUEST request);
+
+CollectionExtensions* Collection_GetRawExtensions(CollectionExtensions* src) {
+	return Collection_GetExtensions(src->_type, Bucket_Methods, src->_memFlags);
+}
+
+Collection Collection_Create(CollectionExtensions* extensions, uint count)
+{
+
+	return (Collection) {
+		extensions,
+		count,
+		0
+	};
+}
+
+Bucket Collection_RawBucket(COLLECTION col, void* head, unsigned int count) {
+	return (Bucket) {
+		Collection_Create(Collection_GetRawExtensions(col->_extensions), count),
+		Chunk_Create(head, col->_extensions->_type->_size * count)
+	};
+}
+
+
+bool Collection_ReadSpan(COLLECTION src, void* trg, unsigned int start, unsigned int count) {
+	Bucket trgBucket = Collection_RawBucket(src, trg, count);
+	return Collection_Transcribe(&trgBucket, src, 0, start, count);
+}
+bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count) {
+	Bucket srcBucket = Collection_RawBucket(trg, src, count);
+	return Collection_Transcribe(trg, &srcBucket, start, 0, count);
+}
+bool Collection_Read(COLLECTION src, void* trg, unsigned int index) {
+	return Collection_ReadSpan(src, trg, index, 1);
+}
+bool Collection_Write(COLLECTION trg, void* src, unsigned int index) {
+	return Collection_WriteSpan(trg, src, index, 1);
+}
+
+
+
 
 //ManagedCollection Managed_ctor(Collection collection)
 //{

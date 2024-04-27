@@ -2,6 +2,8 @@
 
 unsigned int strLenSafe(const char* str)
 {
+	if (!str)
+		return 0;
 	unsigned int count = 1;
 	while (str[count - 1] != '\0')
 	{

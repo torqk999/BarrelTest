@@ -34,7 +34,6 @@ typedef enum {
 } MemFlag;
 
 typedef enum {
-	
 	ALPHA = 1,
 	INTEGRAL = 2,
 	FLOATING = 4,
@@ -97,8 +96,9 @@ typedef enum {
 	INSERT,
 	REMOVE_AT,
 	REMOVE_FIRST_FOUND,
-	DELTA_CAPACITY,
+	DELTA_SIZE,
 	DELTA_COUNT,
+	tRESIZE,
 
 	__c,
 	__s,

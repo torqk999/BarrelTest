@@ -154,7 +154,8 @@ inline bool Bucket_Manage(REQUEST request) {
 
 	switch (var)
 	{
-	case tCHUNK:;
+	case tCHUNK:
+		request._params[tSIZE] = 0;
 		return Bucket_GetChunk(bucket, request._params[tTRG]);
 
 	case tRELEASE:
@@ -195,7 +196,7 @@ inline bool Bucket_Info(REQUEST request) {
 
 }
 
-bool Bucket_Extensions(REQUEST request)
+bool Bucket_Methods(REQUEST request)
 {
 	switch (request._type) {
 
@@ -253,7 +254,7 @@ Bucket Bucket_Create(const char* name, size_t unitSize, void* head, int memFlags
 	memFlags |= FIXED_SIZE;
 
 	Bucket tmpBucket = {
-		Collection_Create(Collection_GetExtensions(info, Bucket_Extensions, memFlags), empty ? 0 : capacity),
+		Collection_Create(Collection_GetExtensions(info, Bucket_Methods, memFlags), empty ? 0 : capacity),
 		Chunk_Create(head, info->_size * capacity)
 	};
 

@@ -2,14 +2,18 @@
 #define	tHeap
 #include <tServices.h>
 
-bool heapDeltaPages(int delta);
 
-size_t heap_Remaining();
 
-DWORD WINAPI heapServiceWork(void* target);
+bool Heap_DeltaPages(int delta);
 
-void ClearPage(int index);
+size_t Heap_Remaining();
 
-HeapService* HeapServiceInit(bool clear);
+void* Heap_Head();
+
+DWORD WINAPI Heap_ServiceWork(void* target);
+
+void Heap_ClearPage(int index);
+
+HeapService* Heap_ServiceInit(bool clear);
 
 #endif

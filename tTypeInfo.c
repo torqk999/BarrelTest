@@ -131,8 +131,7 @@ void* TypeInfo_GetNullableTemplate(size_t size, void* nullLoc) {
 	return ptr;
 }
 
-bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b)
-{
+bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b) {
 	return defaultStringCompare(a->_name, b->_name);
 }
 

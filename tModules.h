@@ -126,13 +126,12 @@ typedef struct {
 } HeapService;
 
 typedef struct {
-	tService _barrelNodes;
+	//tService _barrelNodes;
+	//Bucket _threadBin;
+	//RollingQue _requests;
 
 	HeapService* _heap;
-
 	BarrelNode Omegus;
-	Bucket _threadBin;
-	//RollingQue _requests;
 
 	int _nextAvailable;
 	int _lastPhysicalNode;

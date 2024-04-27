@@ -7,7 +7,6 @@ INCLUDELIB OLDNAMES
 
 _DATA	SEGMENT
 COMM	ThreadHandle_TypeID:BYTE:018H
-COMM	Request_TypeID:BYTE:018H
 _DATA	ENDS
 msvcjmc	SEGMENT
 __9C67CA7D_tEnums@h DB 01H
@@ -176,20 +175,16 @@ __AFB9CF29_tPreent@h DB 01H
 __366DFDC4_tHelpers@h DB 01H
 __D300D227_tTypeInfo@h DB 01H
 __03948348_tThreads@h DB 01H
-__296E417C_tChunk@h DB 01H
-__7CF1EC1E_tCollection@h DB 01H
-__FC472216_tVector@h DB 01H
-__EAE81D8C_tBucket@h DB 01H
-__37B02CEB_tQues@h DB 01H
 __978ECD68_tServices@h DB 01H
 __FEADC134_tHeap@h DB 01H
 __697F18BC_tHeap@c DB 01H
 msvcjmc	ENDS
-PUBLIC	heapDeltaPages
-PUBLIC	heap_Remaining
-PUBLIC	heapServiceWork
-PUBLIC	ClearPage
-PUBLIC	HeapServiceInit
+PUBLIC	Heap_DeltaPages
+PUBLIC	Heap_Remaining
+PUBLIC	Heap_Head
+PUBLIC	Heap_ServiceWork
+PUBLIC	Heap_ClearPage
+PUBLIC	Heap_ServiceInit
 PUBLIC	__JustMyCode_Default
 PUBLIC	??_C@_0BF@PNABOKCH@Heap?5Create?5Failed?$CB?6@	; `string'
 PUBLIC	??_C@_0BJ@PFBKCHAI@Information?5Set?5Failed?$CB?6@ ; `string'
@@ -211,33 +206,39 @@ GlobalHeapService DB 040H DUP (?)
 _BSS	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$heapDeltaPages DD imagerel $LN8
+$pdata$Heap_DeltaPages DD imagerel $LN8
 	DD	imagerel $LN8+239
-	DD	imagerel $unwind$heapDeltaPages
+	DD	imagerel $unwind$Heap_DeltaPages
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$heap_Remaining DD imagerel $LN3
+$pdata$Heap_Remaining DD imagerel $LN3
 	DD	imagerel $LN3+70
-	DD	imagerel $unwind$heap_Remaining
+	DD	imagerel $unwind$Heap_Remaining
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$heapServiceWork DD imagerel $LN11
+$pdata$Heap_Head DD imagerel $LN3
+	DD	imagerel $LN3+44
+	DD	imagerel $unwind$Heap_Head
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Heap_ServiceWork DD imagerel $LN11
 	DD	imagerel $LN11+301
-	DD	imagerel $unwind$heapServiceWork
+	DD	imagerel $unwind$Heap_ServiceWork
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$ClearPage DD imagerel $LN6
+$pdata$Heap_ClearPage DD imagerel $LN6
 	DD	imagerel $LN6+115
-	DD	imagerel $unwind$ClearPage
+	DD	imagerel $unwind$Heap_ClearPage
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$HeapServiceInit DD imagerel $LN6
+$pdata$Heap_ServiceInit DD imagerel $LN6
 	DD	imagerel $LN6+299
-	DD	imagerel $unwind$HeapServiceInit
+	DD	imagerel $unwind$Heap_ServiceInit
 pdata	ENDS
 ;	COMDAT rtc$TMZ
 rtc$TMZ	SEGMENT
@@ -264,7 +265,7 @@ _volmd	DW	034H
 voltbl	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$HeapServiceInit DD 025053b19H
+$unwind$Heap_ServiceInit DD 025053b19H
 	DD	010d2312H
 	DD	070060021H
 	DD	05005H
@@ -273,7 +274,7 @@ $unwind$HeapServiceInit DD 025053b19H
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-HeapServiceInit$rtcName$0 DB 075H
+Heap_ServiceInit$rtcName$0 DB 075H
 	DB	06cH
 	DB	045H
 	DB	06eH
@@ -286,38 +287,45 @@ HeapServiceInit$rtcName$0 DB 075H
 	DB	048H
 	DB	00H
 	ORG $+4
-HeapServiceInit$rtcVarDesc DD 024H
+Heap_ServiceInit$rtcVarDesc DD 024H
 	DD	04H
-	DQ	FLAT:HeapServiceInit$rtcName$0
+	DQ	FLAT:Heap_ServiceInit$rtcName$0
 	ORG $+48
-HeapServiceInit$rtcFrameData DD 01H
+Heap_ServiceInit$rtcFrameData DD 01H
 	DD	00H
-	DQ	FLAT:HeapServiceInit$rtcVarDesc
+	DQ	FLAT:Heap_ServiceInit$rtcVarDesc
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$ClearPage DD 025051201H
+$unwind$Heap_ClearPage DD 025051201H
 	DD	010d2312H
 	DD	070060025H
 	DD	05005H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$heapServiceWork DD 025051301H
+$unwind$Heap_ServiceWork DD 025051301H
 	DD	010e2313H
 	DD	070070035H
 	DD	05006H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$heap_Remaining DD 025050f01H
+$unwind$Heap_Head DD 025050f01H
 	DD	010a230fH
 	DD	07003001dH
 	DD	05002H
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$heapDeltaPages DD 025051201H
+$unwind$Heap_Remaining DD 025050f01H
+	DD	010a230fH
+	DD	07003001dH
+	DD	05002H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Heap_DeltaPages DD 025051201H
 	DD	010d2312H
 	DD	070060021H
 	DD	05005H
@@ -331,14 +339,14 @@ __JustMyCode_Default ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tHeap.c
-;	COMDAT HeapServiceInit
+;	COMDAT Heap_ServiceInit
 _TEXT	SEGMENT
 ulEnableLFH$ = 4
 __$ArrayPad$ = 216
 clear$ = 256
-HeapServiceInit PROC					; COMDAT
+Heap_ServiceInit PROC					; COMDAT
 
-; 71   : {
+; 73   : {
 
 $LN6:
   00000	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
@@ -362,7 +370,7 @@ $LN6:
 	00 00		 lea	 rcx, OFFSET FLAT:__697F18BC_tHeap@c
   00042	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 72   : 	GlobalHeapService._heapStart = HeapCreate(0, 0, 0);
+; 74   : 	GlobalHeapService._heapStart = HeapCreate(0, 0, 0);
 
   00047	45 33 c0	 xor	 r8d, r8d
   0004a	33 d2		 xor	 edx, edx
@@ -372,37 +380,37 @@ $LN6:
   00054	48 89 05 28 00
 	00 00		 mov	 QWORD PTR GlobalHeapService+40, rax
 
-; 73   : 
-; 74   : 	if (!GlobalHeapService._heapStart)
+; 75   : 
+; 76   : 	if (!GlobalHeapService._heapStart)
 
   0005b	48 83 3d 28 00
 	00 00 00	 cmp	 QWORD PTR GlobalHeapService+40, 0
-  00063	75 15		 jne	 SHORT $LN2@HeapServic
+  00063	75 15		 jne	 SHORT $LN2@Heap_Servi
 
-; 75   : 	{
-; 76   : 		PREENT("Heap Create Failed!\n");
+; 77   : 	{
+; 78   : 		PREENT("Heap Create Failed!\n");
 
   00065	33 d2		 xor	 edx, edx
   00067	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BF@PNABOKCH@Heap?5Create?5Failed?$CB?6@
   0006e	e8 00 00 00 00	 call	 Preent
 
-; 77   : 		return NULL;
+; 79   : 		return NULL;
 
   00073	33 c0		 xor	 eax, eax
-  00075	e9 82 00 00 00	 jmp	 $LN1@HeapServic
-$LN2@HeapServic:
+  00075	e9 82 00 00 00	 jmp	 $LN1@Heap_Servi
+$LN2@Heap_Servi:
 
-; 78   : 	}
-; 79   : 		
-; 80   : 
-; 81   : 	ULONG ulEnableLFH = 2;
+; 80   : 	}
+; 81   : 		
+; 82   : 
+; 83   : 	ULONG ulEnableLFH = 2;
 
   0007a	c7 45 04 02 00
 	00 00		 mov	 DWORD PTR ulEnableLFH$[rbp], 2
 
-; 82   : 
-; 83   : 	if (!HeapSetInformation(GlobalHeapService._heapStart, HeapCompatibilityInformation, &ulEnableLFH, sizeof(ulEnableLFH)))
+; 84   : 
+; 85   : 	if (!HeapSetInformation(GlobalHeapService._heapStart, HeapCompatibilityInformation, &ulEnableLFH, sizeof(ulEnableLFH)))
 
   00081	41 b9 04 00 00
 	00		 mov	 r9d, 4
@@ -413,80 +421,80 @@ $LN2@HeapServic:
   00094	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_HeapSetInformation
   0009a	85 c0		 test	 eax, eax
-  0009c	75 12		 jne	 SHORT $LN3@HeapServic
+  0009c	75 12		 jne	 SHORT $LN3@Heap_Servi
 
-; 84   : 	{
-; 85   : 		PREENT("Information Set Failed!\n");
+; 86   : 	{
+; 87   : 		PREENT("Information Set Failed!\n");
 
   0009e	33 d2		 xor	 edx, edx
   000a0	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BJ@PFBKCHAI@Information?5Set?5Failed?$CB?6@
   000a7	e8 00 00 00 00	 call	 Preent
 
-; 86   : 		return NULL;
+; 88   : 		return NULL;
 
   000ac	33 c0		 xor	 eax, eax
-  000ae	eb 4c		 jmp	 SHORT $LN1@HeapServic
-$LN3@HeapServic:
+  000ae	eb 4c		 jmp	 SHORT $LN1@Heap_Servi
+$LN3@Heap_Servi:
 
-; 87   : 	}
-; 88   : 
-; 89   : 	GlobalHeapService._heapEnd = GlobalHeapService._heapStart;
+; 89   : 	}
+; 90   : 
+; 91   : 	GlobalHeapService._heapEnd = GlobalHeapService._heapStart;
 
   000b0	48 8b 05 28 00
 	00 00		 mov	 rax, QWORD PTR GlobalHeapService+40
   000b7	48 89 05 30 00
 	00 00		 mov	 QWORD PTR GlobalHeapService+48, rax
 
-; 90   : 	GlobalHeapService._pageCount = 0;
+; 92   : 	GlobalHeapService._pageCount = 0;
 
   000be	c7 05 38 00 00
 	00 00 00 00 00	 mov	 DWORD PTR GlobalHeapService+56, 0
 
-; 91   : 
-; 92   : 	// Initialize service
-; 93   : 	Service_Start(&(GlobalHeapService._pages), heapServiceWork);
+; 93   : 
+; 94   : 	// Initialize service
+; 95   : 	Service_Start(&(GlobalHeapService._pages), Heap_ServiceWork);
 
   000c8	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:heapServiceWork
+	00 00		 lea	 rdx, OFFSET FLAT:Heap_ServiceWork
   000cf	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:GlobalHeapService
   000d6	e8 00 00 00 00	 call	 Service_Start
 
-; 94   : 
-; 95   : 	// Add first Page
-; 96   : 	heapDeltaPages(1);
+; 96   : 
+; 97   : 	// Add first Page
+; 98   : 	Heap_DeltaPages(1);
 
   000db	b9 01 00 00 00	 mov	 ecx, 1
-  000e0	e8 00 00 00 00	 call	 heapDeltaPages
+  000e0	e8 00 00 00 00	 call	 Heap_DeltaPages
 
-; 97   : 
-; 98   : 	// Initialize the mapSpace to zeros
-; 99   : 	if (clear)
+; 99   : 
+; 100  : 	// Initialize the mapSpace to zeros
+; 101  : 	if (clear)
 
   000e5	83 bd 00 01 00
 	00 00		 cmp	 DWORD PTR clear$[rbp], 0
-  000ec	74 07		 je	 SHORT $LN4@HeapServic
+  000ec	74 07		 je	 SHORT $LN4@Heap_Servi
 
-; 100  : 		ClearPage(0);
+; 102  : 		Heap_ClearPage(0);
 
   000ee	33 c9		 xor	 ecx, ecx
-  000f0	e8 00 00 00 00	 call	 ClearPage
-$LN4@HeapServic:
+  000f0	e8 00 00 00 00	 call	 Heap_ClearPage
+$LN4@Heap_Servi:
 
-; 101  : 
-; 102  : 	return &GlobalHeapService;
+; 103  : 
+; 104  : 	return &GlobalHeapService;
 
   000f5	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:GlobalHeapService
-$LN1@HeapServic:
+$LN1@Heap_Servi:
 
-; 103  : }
+; 105  : }
 
   000fc	48 8b f8	 mov	 rdi, rax
   000ff	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
   00103	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:HeapServiceInit$rtcFrameData
+	00 00		 lea	 rdx, OFFSET FLAT:Heap_ServiceInit$rtcFrameData
   0010a	e8 00 00 00 00	 call	 _RTC_CheckStackVars
   0010f	48 8b c7	 mov	 rax, rdi
   00112	48 8b 8d d8 00
@@ -498,18 +506,18 @@ $LN1@HeapServic:
   00128	5f		 pop	 rdi
   00129	5d		 pop	 rbp
   0012a	c3		 ret	 0
-HeapServiceInit ENDP
+Heap_ServiceInit ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tHeap.c
-;	COMDAT ClearPage
+;	COMDAT Heap_ClearPage
 _TEXT	SEGMENT
 targetPage$ = 8
 i$1 = 36
 index$ = 288
-ClearPage PROC						; COMDAT
+Heap_ClearPage PROC					; COMDAT
 
-; 63   : {
+; 65   : {
 
 $LN6:
   00000	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
@@ -522,7 +530,7 @@ $LN6:
 	00 00		 lea	 rcx, OFFSET FLAT:__697F18BC_tHeap@c
   00019	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 64   : 	Page* targetPage = &(((Page*)GlobalHeapService._heapStart)[index]);
+; 66   : 	Page* targetPage = &(((Page*)GlobalHeapService._heapStart)[index]);
 
   0001e	48 63 85 20 01
 	00 00		 movsxd	 rax, DWORD PTR index$[rbp]
@@ -534,42 +542,42 @@ $LN6:
   00036	48 8b c1	 mov	 rax, rcx
   00039	48 89 45 08	 mov	 QWORD PTR targetPage$[rbp], rax
 
-; 65   : 
-; 66   : 	for (int i = 0; i < 512; i++)
+; 67   : 
+; 68   : 	for (int i = 0; i < 512; i++)
 
   0003d	c7 45 24 00 00
 	00 00		 mov	 DWORD PTR i$1[rbp], 0
-  00044	eb 08		 jmp	 SHORT $LN4@ClearPage
-$LN2@ClearPage:
+  00044	eb 08		 jmp	 SHORT $LN4@Heap_Clear
+$LN2@Heap_Clear:
   00046	8b 45 24	 mov	 eax, DWORD PTR i$1[rbp]
   00049	ff c0		 inc	 eax
   0004b	89 45 24	 mov	 DWORD PTR i$1[rbp], eax
-$LN4@ClearPage:
+$LN4@Heap_Clear:
   0004e	81 7d 24 00 02
 	00 00		 cmp	 DWORD PTR i$1[rbp], 512	; 00000200H
-  00055	7d 12		 jge	 SHORT $LN3@ClearPage
+  00055	7d 12		 jge	 SHORT $LN3@Heap_Clear
 
-; 67   : 		targetPage->_mem[i] = 0;
+; 69   : 		targetPage->_mem[i] = 0;
 
   00057	48 63 45 24	 movsxd	 rax, DWORD PTR i$1[rbp]
   0005b	48 8b 4d 08	 mov	 rcx, QWORD PTR targetPage$[rbp]
   0005f	48 c7 04 c1 00
 	00 00 00	 mov	 QWORD PTR [rcx+rax*8], 0
-  00067	eb dd		 jmp	 SHORT $LN2@ClearPage
-$LN3@ClearPage:
+  00067	eb dd		 jmp	 SHORT $LN2@Heap_Clear
+$LN3@Heap_Clear:
 
-; 68   : }
+; 70   : }
 
   00069	48 8d a5 08 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+264]
   00070	5f		 pop	 rdi
   00071	5d		 pop	 rbp
   00072	c3		 ret	 0
-ClearPage ENDP
+Heap_ClearPage ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tHeap.c
-;	COMDAT heapServiceWork
+;	COMDAT Heap_ServiceWork
 _TEXT	SEGMENT
 myThreadHandle$ = 8
 service$ = 40
@@ -579,9 +587,9 @@ current$2 = 136
 pageDelta$3 = 164
 tv81 = 376
 target$ = 416
-heapServiceWork PROC					; COMDAT
+Heap_ServiceWork PROC					; COMDAT
 
-; 33   : {
+; 35   : {
 
 $LN11:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -594,81 +602,81 @@ $LN11:
 	00 00		 lea	 rcx, OFFSET FLAT:__697F18BC_tHeap@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 34   : 	if (!target)
+; 36   : 	if (!target)
 
   0001f	48 83 bd a0 01
 	00 00 00	 cmp	 QWORD PTR target$[rbp], 0
-  00027	75 0a		 jne	 SHORT $LN4@heapServic
+  00027	75 0a		 jne	 SHORT $LN4@Heap_Servi
 
-; 35   : 		return 1;
+; 37   : 		return 1;
 
   00029	b8 01 00 00 00	 mov	 eax, 1
-  0002e	e9 f0 00 00 00	 jmp	 $LN1@heapServic
-$LN4@heapServic:
+  0002e	e9 f0 00 00 00	 jmp	 $LN1@Heap_Servi
+$LN4@Heap_Servi:
 
-; 36   : 
-; 37   : 	ThreadHandle* myThreadHandle = (ThreadHandle*)target;
+; 38   : 
+; 39   : 	ThreadHandle* myThreadHandle = (ThreadHandle*)target;
 
   00033	48 8b 85 a0 01
 	00 00		 mov	 rax, QWORD PTR target$[rbp]
   0003a	48 89 45 08	 mov	 QWORD PTR myThreadHandle$[rbp], rax
 
-; 38   : 	HeapService* service = (HeapService*)(myThreadHandle->_service);
+; 40   : 	HeapService* service = (HeapService*)(myThreadHandle->_service);
 
   0003e	48 8b 45 08	 mov	 rax, QWORD PTR myThreadHandle$[rbp]
   00042	48 8b 40 10	 mov	 rax, QWORD PTR [rax+16]
   00046	48 89 45 28	 mov	 QWORD PTR service$[rbp], rax
 
-; 39   : 
-; 40   : 	if (!service)
+; 41   : 
+; 42   : 	if (!service)
 
   0004a	48 83 7d 28 00	 cmp	 QWORD PTR service$[rbp], 0
-  0004f	75 0a		 jne	 SHORT $LN5@heapServic
+  0004f	75 0a		 jne	 SHORT $LN5@Heap_Servi
 
-; 41   : 		return 1;
+; 43   : 		return 1;
 
   00051	b8 01 00 00 00	 mov	 eax, 1
-  00056	e9 c8 00 00 00	 jmp	 $LN1@heapServic
-$LN5@heapServic:
+  00056	e9 c8 00 00 00	 jmp	 $LN1@Heap_Servi
+$LN5@Heap_Servi:
 
-; 42   : 
-; 43   : 	Page* heapStart = (Page*)(service->_heapStart);
+; 44   : 
+; 45   : 	Page* heapStart = (Page*)(service->_heapStart);
 
   0005b	48 8b 45 28	 mov	 rax, QWORD PTR service$[rbp]
   0005f	48 8b 40 28	 mov	 rax, QWORD PTR [rax+40]
   00063	48 89 45 48	 mov	 QWORD PTR heapStart$[rbp], rax
 
-; 44   : 
-; 45   : 	if (!heapStart)
+; 46   : 
+; 47   : 	if (!heapStart)
 
   00067	48 83 7d 48 00	 cmp	 QWORD PTR heapStart$[rbp], 0
-  0006c	75 0a		 jne	 SHORT $LN6@heapServic
+  0006c	75 0a		 jne	 SHORT $LN6@Heap_Servi
 
-; 46   : 		return 1;
+; 48   : 		return 1;
 
   0006e	b8 01 00 00 00	 mov	 eax, 1
-  00073	e9 ab 00 00 00	 jmp	 $LN1@heapServic
-$LN6@heapServic:
-$LN2@heapServic:
+  00073	e9 ab 00 00 00	 jmp	 $LN1@Heap_Servi
+$LN6@Heap_Servi:
+$LN2@Heap_Servi:
 
-; 47   : 
-; 48   : 	while (service->_pages._localFlags & RUN)
+; 49   : 
+; 50   : 	while (service->_pages._localFlags & RUN)
 
   00078	48 8b 45 28	 mov	 rax, QWORD PTR service$[rbp]
   0007c	8b 00		 mov	 eax, DWORD PTR [rax]
   0007e	83 e0 01	 and	 eax, 1
   00081	85 c0		 test	 eax, eax
   00083	0f 84 98 00 00
-	00		 je	 $LN3@heapServic
+	00		 je	 $LN3@Heap_Servi
 
-; 49   : 	{
-; 50   : 		size_t target = (size_t)(service->_heapEnd);
+; 51   : 	{
+; 52   : 		size_t target = (size_t)(service->_heapEnd);
 
   00089	48 8b 45 28	 mov	 rax, QWORD PTR service$[rbp]
   0008d	48 8b 40 30	 mov	 rax, QWORD PTR [rax+48]
   00091	48 89 45 68	 mov	 QWORD PTR target$1[rbp], rax
 
-; 51   : 		size_t current = (size_t)(service->_heapStart) + (sizeof(Page) * service->_pageCount);
+; 53   : 		size_t current = (size_t)(service->_heapStart) + (sizeof(Page) * service->_pageCount);
 
   00095	48 8b 45 28	 mov	 rax, QWORD PTR service$[rbp]
   00099	8b 40 38	 mov	 eax, DWORD PTR [rax+56]
@@ -679,13 +687,13 @@ $LN2@heapServic:
   000ab	48 89 85 88 00
 	00 00		 mov	 QWORD PTR current$2[rbp], rax
 
-; 52   : 
-; 53   : 		int pageDelta = ((target > current ? target - current : current - target) / sizeof(Page)) - 1;
+; 54   : 
+; 55   : 		int pageDelta = ((target > current ? target - current : current - target) / sizeof(Page)) - 1;
 
   000b2	48 8b 85 88 00
 	00 00		 mov	 rax, QWORD PTR current$2[rbp]
   000b9	48 39 45 68	 cmp	 QWORD PTR target$1[rbp], rax
-  000bd	76 1a		 jbe	 SHORT $LN9@heapServic
+  000bd	76 1a		 jbe	 SHORT $LN9@Heap_Servi
   000bf	48 8b 85 88 00
 	00 00		 mov	 rax, QWORD PTR current$2[rbp]
   000c6	48 8b 4d 68	 mov	 rcx, QWORD PTR target$1[rbp]
@@ -693,8 +701,8 @@ $LN2@heapServic:
   000cd	48 8b c1	 mov	 rax, rcx
   000d0	48 89 85 78 01
 	00 00		 mov	 QWORD PTR tv81[rbp], rax
-  000d7	eb 18		 jmp	 SHORT $LN10@heapServic
-$LN9@heapServic:
+  000d7	eb 18		 jmp	 SHORT $LN10@Heap_Servi
+$LN9@Heap_Servi:
   000d9	48 8b 45 68	 mov	 rax, QWORD PTR target$1[rbp]
   000dd	48 8b 8d 88 00
 	00 00		 mov	 rcx, QWORD PTR current$2[rbp]
@@ -702,7 +710,7 @@ $LN9@heapServic:
   000e7	48 8b c1	 mov	 rax, rcx
   000ea	48 89 85 78 01
 	00 00		 mov	 QWORD PTR tv81[rbp], rax
-$LN10@heapServic:
+$LN10@Heap_Servi:
   000f1	33 d2		 xor	 edx, edx
   000f3	48 8b 85 78 01
 	00 00		 mov	 rax, QWORD PTR tv81[rbp]
@@ -712,45 +720,71 @@ $LN10@heapServic:
   00105	89 85 a4 00 00
 	00		 mov	 DWORD PTR pageDelta$3[rbp], eax
 
-; 54   : 
-; 55   : 		if (!heapDeltaPages(pageDelta))
+; 56   : 
+; 57   : 		if (!Heap_DeltaPages(pageDelta))
 
   0010b	8b 8d a4 00 00
 	00		 mov	 ecx, DWORD PTR pageDelta$3[rbp]
-  00111	e8 00 00 00 00	 call	 heapDeltaPages
+  00111	e8 00 00 00 00	 call	 Heap_DeltaPages
   00116	85 c0		 test	 eax, eax
-  00118	75 02		 jne	 SHORT $LN7@heapServic
+  00118	75 02		 jne	 SHORT $LN7@Heap_Servi
 
-; 56   : 			break;
+; 58   : 			break;
 
-  0011a	eb 05		 jmp	 SHORT $LN3@heapServic
-$LN7@heapServic:
+  0011a	eb 05		 jmp	 SHORT $LN3@Heap_Servi
+$LN7@Heap_Servi:
 
-; 57   : 	}
+; 59   : 	}
 
-  0011c	e9 57 ff ff ff	 jmp	 $LN2@heapServic
-$LN3@heapServic:
+  0011c	e9 57 ff ff ff	 jmp	 $LN2@Heap_Servi
+$LN3@Heap_Servi:
 
-; 58   : 
-; 59   : 	return 0;
+; 60   : 
+; 61   : 	return 0;
 
   00121	33 c0		 xor	 eax, eax
-$LN1@heapServic:
+$LN1@Heap_Servi:
 
-; 60   : }
+; 62   : }
 
   00123	48 8d a5 88 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+392]
   0012a	5f		 pop	 rdi
   0012b	5d		 pop	 rbp
   0012c	c3		 ret	 0
-heapServiceWork ENDP
+Heap_ServiceWork ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tHeap.c
-;	COMDAT heap_Remaining
+;	COMDAT Heap_Head
 _TEXT	SEGMENT
-heap_Remaining PROC					; COMDAT
+Heap_Head PROC						; COMDAT
+
+; 32   : void* Heap_Head() { return GlobalHeapService._heapStart; }
+
+$LN3:
+  00000	40 55		 push	 rbp
+  00002	57		 push	 rdi
+  00003	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  0000f	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__697F18BC_tHeap@c
+  00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+  0001b	48 8b 05 28 00
+	00 00		 mov	 rax, QWORD PTR GlobalHeapService+40
+  00022	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  00029	5f		 pop	 rdi
+  0002a	5d		 pop	 rbp
+  0002b	c3		 ret	 0
+Heap_Head ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tHeap.c
+;	COMDAT Heap_Remaining
+_TEXT	SEGMENT
+Heap_Remaining PROC					; COMDAT
 
 ; 28   : {
 
@@ -784,16 +818,16 @@ $LN3:
   00043	5f		 pop	 rdi
   00044	5d		 pop	 rbp
   00045	c3		 ret	 0
-heap_Remaining ENDP
+Heap_Remaining ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tHeap.c
-;	COMDAT heapDeltaPages
+;	COMDAT Heap_DeltaPages
 _TEXT	SEGMENT
 theDelta$ = 4
 tv68 = 212
 delta$ = 256
-heapDeltaPages PROC					; COMDAT
+Heap_DeltaPages PROC					; COMDAT
 
 ; 7    : {
 
@@ -818,23 +852,23 @@ $LN8:
 
   00027	83 bd 00 01 00
 	00 00		 cmp	 DWORD PTR delta$[rbp], 0
-  0002e	7d 1e		 jge	 SHORT $LN6@heapDeltaP
+  0002e	7d 1e		 jge	 SHORT $LN6@Heap_Delta
   00030	6b 85 00 01 00
 	00 ff		 imul	 eax, DWORD PTR delta$[rbp], -1
   00037	3b 05 38 00 00
 	00		 cmp	 eax, DWORD PTR GlobalHeapService+56
-  0003d	76 0f		 jbe	 SHORT $LN6@heapDeltaP
+  0003d	76 0f		 jbe	 SHORT $LN6@Heap_Delta
   0003f	6b 05 38 00 00
 	00 ff		 imul	 eax, DWORD PTR GlobalHeapService+56, -1 ; ffffffffH
   00046	89 85 d4 00 00
 	00		 mov	 DWORD PTR tv68[rbp], eax
-  0004c	eb 0c		 jmp	 SHORT $LN7@heapDeltaP
-$LN6@heapDeltaP:
+  0004c	eb 0c		 jmp	 SHORT $LN7@Heap_Delta
+$LN6@Heap_Delta:
   0004e	8b 85 00 01 00
 	00		 mov	 eax, DWORD PTR delta$[rbp]
   00054	89 85 d4 00 00
 	00		 mov	 DWORD PTR tv68[rbp], eax
-$LN7@heapDeltaP:
+$LN7@Heap_Delta:
   0005a	8b 85 d4 00 00
 	00		 mov	 eax, DWORD PTR tv68[rbp]
   00060	89 85 00 01 00
@@ -845,20 +879,20 @@ $LN7@heapDeltaP:
 
   00066	83 bd 00 01 00
 	00 00		 cmp	 DWORD PTR delta$[rbp], 0
-  0006d	75 04		 jne	 SHORT $LN2@heapDeltaP
+  0006d	75 04		 jne	 SHORT $LN2@Heap_Delta
 
 ; 12   : 		return false; // no action taken
 
   0006f	33 c0		 xor	 eax, eax
-  00071	eb 72		 jmp	 SHORT $LN1@heapDeltaP
-$LN2@heapDeltaP:
+  00071	eb 72		 jmp	 SHORT $LN1@Heap_Delta
+$LN2@Heap_Delta:
 
 ; 13   : 
 ; 14   : 	if (delta > 0)
 
   00073	83 bd 00 01 00
 	00 00		 cmp	 DWORD PTR delta$[rbp], 0
-  0007a	7e 1e		 jle	 SHORT $LN3@heapDeltaP
+  0007a	7e 1e		 jle	 SHORT $LN3@Heap_Delta
 
 ; 15   : 	{
 ; 16   : 		HeapAlloc(GlobalHeapService._heapStart, 0, delta * PageSize);
@@ -872,7 +906,7 @@ $LN2@heapDeltaP:
 	00 00		 mov	 rcx, QWORD PTR GlobalHeapService+40
   00094	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_HeapAlloc
-$LN3@heapDeltaP:
+$LN3@Heap_Delta:
 
 ; 17   : 	}
 ; 18   : 
@@ -892,7 +926,7 @@ $LN3@heapDeltaP:
 
   000b0	83 bd 00 01 00
 	00 00		 cmp	 DWORD PTR delta$[rbp], 0
-  000b7	7d 2c		 jge	 SHORT $LN4@heapDeltaP
+  000b7	7d 2c		 jge	 SHORT $LN4@Heap_Delta
 
 ; 22   : 	{
 ; 23   : 		HeapFree(GlobalHeapService._heapStart, 0, (void*)((size_t)GlobalHeapService._heapStart + (GlobalHeapService._pageCount * (size_t)PageSize)));
@@ -911,8 +945,8 @@ $LN3@heapDeltaP:
 	00 00		 mov	 rcx, QWORD PTR GlobalHeapService+40
   000df	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_HeapFree
-$LN4@heapDeltaP:
-$LN1@heapDeltaP:
+$LN4@Heap_Delta:
+$LN1@Heap_Delta:
 
 ; 24   : 	}
 ; 25   : }
@@ -922,6 +956,6 @@ $LN1@heapDeltaP:
   000ec	5f		 pop	 rdi
   000ed	5d		 pop	 rbp
   000ee	c3		 ret	 0
-heapDeltaPages ENDP
+Heap_DeltaPages ENDP
 _TEXT	ENDS
 END

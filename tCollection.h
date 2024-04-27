@@ -38,12 +38,12 @@ uint Collection_Capacity(COLLECTION collection);
 uint Collection_Count(COLLECTION collection);
 bool Collection_ReadOnly(COLLECTION collection);
 bool Collection_Compare(COLLECTION a, COLLECTION b);
-bool Collection_InfoCompare(CollectionExtensions* A, CollectionExtensions* B);
+bool Collection_TranscribeCompare(CollectionExtensions* A, CollectionExtensions* B);
 inline bool Collection_Request(COLLECTION collection);
 inline bool Collection_Release(COLLECTION collection);
 CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extensions)(RequestType* request), int memFlags);
 Collection Collection_Create(CollectionExtensions* extensions, uint count);
-CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*extensions)(RequestType* request), int memFlags);
+CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods)(RequestType* request), int memFlags);
 ////Collection Collection_ctor0(TypeRaw type, ClassFlag classFlag, bool(*extensions)(Request* request), uint init);
 //
 //ManagedCollection Managed_ctor(Collection collection);
@@ -51,7 +51,18 @@ CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*extensi
 //bool Collection_dtor(Collection* vector);
 
 
+#define bucket_custom(typeName, flags, ...) Bucket_ctor(#typeName, sizeof(tyeName), (Bucket){0},(typeName[]){__VA_ARGS__}, flags, PARAM_COUNT( __VA_ARGS__ ))
+#define bucket(typeName, ...) bucket_custom(typeName, 0, __VA_ARGS__)
 
+#define Bucket_List(typeName, ...) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[]){ __VA_ARGS__ }, 0, PARAM_COUNT( __VA_ARGS__ ) )
+#define Bucket_Empty(typeName, capacity) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[capacity]){ 0 }, EMPTY, capacity )
+#define Bucket_Fill(typeName, capacity, fill) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, (typeName[capacity]){ fill }, FILL, capacity )
+#define Bucket_Inject(typeName, capacity, inject) Bucket_ctor(#typeName, sizeof(typeName), &(Bucket){0}, inject, 0, capacity )
+
+#define Barrel_List(typeName, ...) Barrel_ctor(#typeName, sizeof(typeName), (typeName[]){ __VA_ARGS__ }, 0, PARAM_COUNT( __VA_ARGS__ ) )
+#define Barrel_Empty(typeName, capacity) Barrel_ctor(#typeName, sizeof(typeName), (typeName[capacity]){ 0 }, EMPTY, capacity )
+#define Barrel_Fill(typeName, capacity, fill) Barrel_ctor(#typeName, sizeof(typeName), (typeName[capacity]){ fill }, FILL, capacity )
+#define Barrel_Inject(typeName, capacity, inject) Barrel_ctor(#typeName, sizeof(typeName), inject , 0, capacity )
 
 #endif
 //
