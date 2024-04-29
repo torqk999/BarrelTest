@@ -182,28 +182,33 @@ __296E417C_tChunk@h DB 01H
 __7CF1EC1E_tCollection@h DB 01H
 __EB233596_tCollection@c DB 01H
 msvcjmc	ENDS
-PUBLIC	Collection_Transcribe
-PUBLIC	Collection_ReadSpan
-PUBLIC	Collection_Read
-PUBLIC	Collection_WriteSpan
-PUBLIC	Collection_Write
-PUBLIC	Collection_Capacity
-PUBLIC	Collection_Count
-PUBLIC	Collection_ReadOnly
 PUBLIC	Collection_Compare
 PUBLIC	Collection_TranscribeCompare
-PUBLIC	Collection_Request
-PUBLIC	Collection_Release
 PUBLIC	CollectionExtensions_Create
 PUBLIC	Collection_Create
 PUBLIC	Collection_GetExtensions
-PUBLIC	Collection_Insertion
 PUBLIC	Collection_GetRawExtensions
 PUBLIC	Collection_RawBucket
+PUBLIC	Collection_Request
+PUBLIC	Collection_Release
+PUBLIC	Collection_Index
+PUBLIC	Collection_Capacity
+PUBLIC	Collection_Count
+PUBLIC	Collection_Resize
+PUBLIC	Collection_ReadOnly
+PUBLIC	Collection_ReadSpan
+PUBLIC	Collection_Transcribe
+PUBLIC	Collection_WriteSpan
+PUBLIC	Collection_Read
+PUBLIC	Collection_Write
+PUBLIC	Collection_Insertion
+PUBLIC	Collection_Collapse
 PUBLIC	__JustMyCode_Default
 PUBLIC	??_C@_0BH@LCKCAPHB@CollectionInfo?5found?$CB?6@	; `string'
 PUBLIC	??_C@_0BM@KPOEFPPK@No?5type?5slots?5available?4?4?4?6@ ; `string'
 PUBLIC	??_C@_0BN@DBMNBHNG@Created?5new?5CollectionInfo?$CB?6@ ; `string'
+PUBLIC	??_C@_0BJ@PDAHBIE@Failed?5to?5get?5Capacity?$CB?6@ ; `string'
+PUBLIC	??_C@_0BG@DOLFGBMF@Failed?5to?5get?5Count?$CB?6@ ; `string'
 EXTRN	Preent:PROC
 EXTRN	CreateRequest:PROC
 EXTRN	rawTranscribe:PROC
@@ -219,54 +224,6 @@ EXTRN	__security_check_cookie:PROC
 EXTRN	__security_cookie:QWORD
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$Collection_Transcribe DD imagerel $LN9
-	DD	imagerel $LN9+1180
-	DD	imagerel $unwind$Collection_Transcribe
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_ReadSpan DD imagerel $LN3
-	DD	imagerel $LN3+223
-	DD	imagerel $unwind$Collection_ReadSpan
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_Read DD imagerel $LN3
-	DD	imagerel $LN3+83
-	DD	imagerel $unwind$Collection_Read
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_WriteSpan DD imagerel $LN3
-	DD	imagerel $LN3+223
-	DD	imagerel $unwind$Collection_WriteSpan
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_Write DD imagerel $LN3
-	DD	imagerel $LN3+83
-	DD	imagerel $unwind$Collection_Write
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_Capacity DD imagerel $LN4
-	DD	imagerel $LN4+352
-	DD	imagerel $unwind$Collection_Capacity
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_Count DD imagerel $LN4
-	DD	imagerel $LN4+403
-	DD	imagerel $unwind$Collection_Count
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_ReadOnly DD imagerel $LN3
-	DD	imagerel $LN3+57
-	DD	imagerel $unwind$Collection_ReadOnly
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
 $pdata$Collection_Compare DD imagerel $LN5
 	DD	imagerel $LN5+142
 	DD	imagerel $unwind$Collection_Compare
@@ -276,18 +233,6 @@ pdata	SEGMENT
 $pdata$Collection_TranscribeCompare DD imagerel $LN5
 	DD	imagerel $LN5+105
 	DD	imagerel $unwind$Collection_TranscribeCompare
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_Request DD imagerel $LN5
-	DD	imagerel $LN5+95
-	DD	imagerel $unwind$Collection_Request
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Collection_Release DD imagerel $LN3
-	DD	imagerel $LN3+61
-	DD	imagerel $unwind$Collection_Release
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -309,12 +254,6 @@ $pdata$Collection_GetExtensions DD imagerel $LN8
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$Collection_Insertion DD imagerel $LN3
-	DD	imagerel $LN3+56
-	DD	imagerel $unwind$Collection_Insertion
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
 $pdata$Collection_GetRawExtensions DD imagerel $LN3
 	DD	imagerel $LN3+74
 	DD	imagerel $unwind$Collection_GetRawExtensions
@@ -325,6 +264,90 @@ $pdata$Collection_RawBucket DD imagerel $LN3
 	DD	imagerel $LN3+236
 	DD	imagerel $unwind$Collection_RawBucket
 pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Request DD imagerel $LN5
+	DD	imagerel $LN5+95
+	DD	imagerel $unwind$Collection_Request
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Release DD imagerel $LN3
+	DD	imagerel $LN3+61
+	DD	imagerel $unwind$Collection_Release
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Index DD imagerel $LN3
+	DD	imagerel $LN3+45
+	DD	imagerel $unwind$Collection_Index
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Capacity DD imagerel $LN4
+	DD	imagerel $LN4+360
+	DD	imagerel $unwind$Collection_Capacity
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Count DD imagerel $LN4
+	DD	imagerel $LN4+411
+	DD	imagerel $unwind$Collection_Count
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Resize DD imagerel $LN3
+	DD	imagerel $LN3+389
+	DD	imagerel $unwind$Collection_Resize
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_ReadOnly DD imagerel $LN3
+	DD	imagerel $LN3+57
+	DD	imagerel $unwind$Collection_ReadOnly
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_ReadSpan DD imagerel $LN3
+	DD	imagerel $LN3+223
+	DD	imagerel $unwind$Collection_ReadSpan
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Transcribe DD imagerel $LN9
+	DD	imagerel $LN9+1180
+	DD	imagerel $unwind$Collection_Transcribe
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_WriteSpan DD imagerel $LN3
+	DD	imagerel $LN3+223
+	DD	imagerel $unwind$Collection_WriteSpan
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Read DD imagerel $LN3
+	DD	imagerel $LN3+83
+	DD	imagerel $unwind$Collection_Read
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Write DD imagerel $LN3
+	DD	imagerel $LN3+83
+	DD	imagerel $unwind$Collection_Write
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Insertion DD imagerel $LN3
+	DD	imagerel $LN3+56
+	DD	imagerel $unwind$Collection_Insertion
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Collection_Collapse DD imagerel $LN3
+	DD	imagerel $LN3+50
+	DD	imagerel $unwind$Collection_Collapse
+pdata	ENDS
 ;	COMDAT rtc$TMZ
 rtc$TMZ	SEGMENT
 _RTC_Shutdown.rtc$TMZ DQ FLAT:_RTC_Shutdown
@@ -333,6 +356,16 @@ rtc$TMZ	ENDS
 rtc$IMZ	SEGMENT
 _RTC_InitBase.rtc$IMZ DQ FLAT:_RTC_InitBase
 rtc$IMZ	ENDS
+;	COMDAT ??_C@_0BG@DOLFGBMF@Failed?5to?5get?5Count?$CB?6@
+CONST	SEGMENT
+??_C@_0BG@DOLFGBMF@Failed?5to?5get?5Count?$CB?6@ DB 'Failed to get Count!'
+	DB	0aH, 00H					; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BJ@PDAHBIE@Failed?5to?5get?5Capacity?$CB?6@
+CONST	SEGMENT
+??_C@_0BJ@PDAHBIE@Failed?5to?5get?5Capacity?$CB?6@ DB 'Failed to get Capa'
+	DB	'city!', 0aH, 00H				; `string'
+CONST	ENDS
 ;	COMDAT ??_C@_0BN@DBMNBHNG@Created?5new?5CollectionInfo?$CB?6@
 CONST	SEGMENT
 ??_C@_0BN@DBMNBHNG@Created?5new?5CollectionInfo?$CB?6@ DB 'Created new Co'
@@ -350,49 +383,10 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
-$unwind$Collection_RawBucket DD 025063c01H
-	DD	011e2323H
-	DD	070170034H
-	DD	050156016H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Collection_RawBucket$rtcName$0 DB 024H
-	DB	053H
-	DB	032H
-	DB	036H
-	DB	00H
-	ORG $+3
-Collection_RawBucket$rtcName$1 DB 05fH
-	DB	05fH
-	DB	024H
-	DB	041H
-	DB	072H
-	DB	072H
-	DB	061H
-	DB	079H
-	DB	050H
-	DB	061H
-	DB	064H
-	DB	00H
-	ORG $+12
-Collection_RawBucket$rtcVarDesc DD 068H
-	DD	08H
-	DQ	FLAT:Collection_RawBucket$rtcName$1
-	DD	028H
-	DD	020H
-	DQ	FLAT:Collection_RawBucket$rtcName$0
-	ORG $+96
-Collection_RawBucket$rtcFrameData DD 02H
-	DD	00H
-	DQ	FLAT:Collection_RawBucket$rtcVarDesc
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_GetRawExtensions DD 025051301H
-	DD	010e2313H
-	DD	07007001dH
-	DD	05006H
+$unwind$Collection_Collapse DD 025051c01H
+	DD	0117231cH
+	DD	07010001dH
+	DD	0500fH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -401,301 +395,16 @@ $unwind$Collection_Insertion DD 025052201H
 	DD	07016001dH
 	DD	05015H
 xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	041H
-	DW	016dH
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_GetExtensions DD 025064819H
-	DD	0119231eH
-	DD	070120030H
-	DD	050106011H
-	DD	imagerel __GSHandlerCheck
-	DD	0178H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Collection_GetExtensions$rtcName$0 DB 06eH
-	DB	065H
-	DB	077H
-	DB	049H
-	DB	06eH
-	DB	066H
-	DB	06fH
-	DB	00H
-	ORG $+8
-Collection_GetExtensions$rtcVarDesc DD 028H
-	DD	018H
-	DQ	FLAT:Collection_GetExtensions$rtcName$0
-	ORG $+48
-Collection_GetExtensions$rtcFrameData DD 01H
-	DD	00H
-	DQ	FLAT:Collection_GetExtensions$rtcVarDesc
-CONST	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DB	041H
-	DB	068H
-	DB	0a1H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Create DD 025064819H
-	DD	0119231eH
-	DD	070120022H
-	DD	050106011H
-	DD	imagerel __GSHandlerCheck
-	DD	0108H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Collection_Create$rtcName$0 DB 024H
-	DB	053H
-	DB	032H
-	DB	035H
-	DB	00H
-	ORG $+11
-Collection_Create$rtcVarDesc DD 028H
-	DD	010H
-	DQ	FLAT:Collection_Create$rtcName$0
-	ORG $+48
-Collection_Create$rtcFrameData DD 01H
-	DD	00H
-	DQ	FLAT:Collection_Create$rtcVarDesc
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$CollectionExtensions_Create DD 025053b01H
-	DD	011d2322H
-	DD	070160027H
-	DD	05015H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-CollectionExtensions_Create$rtcName$0 DB 024H
-	DB	053H
-	DB	032H
-	DB	034H
-	DB	00H
-	ORG $+3
-CollectionExtensions_Create$rtcName$1 DB 05fH
-	DB	05fH
-	DB	024H
-	DB	041H
-	DB	072H
-	DB	072H
-	DB	061H
-	DB	079H
-	DB	050H
-	DB	061H
-	DB	064H
-	DB	00H
-	ORG $+12
-CollectionExtensions_Create$rtcVarDesc DD 058H
-	DD	08H
-	DQ	FLAT:CollectionExtensions_Create$rtcName$1
-	DD	028H
-	DD	018H
-	DQ	FLAT:CollectionExtensions_Create$rtcName$0
-	ORG $+96
-CollectionExtensions_Create$rtcFrameData DD 02H
-	DD	00H
-	DQ	FLAT:CollectionExtensions_Create$rtcVarDesc
-CONST	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DB	02cH
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Release DD 025051301H
-	DD	010e2313H
-	DD	07007001dH
-	DD	05006H
-xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DB	046H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Request DD 025051301H
-	DD	010e2313H
-	DD	07007001fH
-	DD	05006H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_TranscribeCompare DD 025051801H
-	DD	01132318H
-	DD	0700c001dH
-	DD	0500bH
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Compare DD 025051801H
-	DD	01132318H
-	DD	0700c001fH
-	DD	0500bH
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_ReadOnly DD 025051301H
-	DD	010e2313H
-	DD	07007001dH
-	DD	05006H
-xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	037H
-	DW	0179H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Count DD 025063e19H
-	DD	010f2314H
-	DD	07008008eH
-	DD	050066007H
-	DD	imagerel __GSHandlerCheck
-	DD	0468H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Collection_Count$rtcName$0 DB 06fH
-	DB	075H
-	DB	074H
-	DB	070H
-	DB	075H
-	DB	074H
-	DB	00H
-	ORG $+1
-Collection_Count$rtcName$1 DB 024H
-	DB	053H
-	DB	036H
-	DB	00H
-Collection_Count$rtcName$2 DB 024H
-	DB	053H
-	DB	037H
-	DB	00H
-Collection_Count$rtcName$3 DB 024H
-	DB	053H
-	DB	038H
-	DB	00H
-Collection_Count$rtcName$4 DB 024H
-	DB	053H
-	DB	039H
-	DB	00H
-Collection_Count$rtcName$5 DB 024H
-	DB	053H
-	DB	031H
-	DB	030H
-	DB	00H
-	ORG $+3
-Collection_Count$rtcName$6 DB 024H
-	DB	053H
-	DB	031H
-	DB	031H
-	DB	00H
-	ORG $+11
-Collection_Count$rtcVarDesc DD 0170H
-	DD	0110H
-	DQ	FLAT:Collection_Count$rtcName$6
-	DD	0138H
-	DD	010H
-	DQ	FLAT:Collection_Count$rtcName$5
-	DD	0108H
-	DD	010H
-	DQ	FLAT:Collection_Count$rtcName$4
-	DD	0d8H
-	DD	010H
-	DQ	FLAT:Collection_Count$rtcName$3
-	DD	0a8H
-	DD	010H
-	DQ	FLAT:Collection_Count$rtcName$2
-	DD	050H
-	DD	040H
-	DQ	FLAT:Collection_Count$rtcName$1
-	DD	024H
-	DD	04H
-	DQ	FLAT:Collection_Count$rtcName$0
-	ORG $+336
-Collection_Count$rtcFrameData DD 07H
-	DD	00H
-	DQ	FLAT:Collection_Count$rtcVarDesc
-CONST	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	037H
-	DW	0146H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Capacity DD 025063e19H
-	DD	010f2314H
-	DD	070080086H
-	DD	050066007H
-	DD	imagerel __GSHandlerCheck
-	DD	0428H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Collection_Capacity$rtcName$0 DB 06fH
-	DB	075H
-	DB	074H
-	DB	070H
-	DB	075H
-	DB	074H
-	DB	00H
-	ORG $+1
-Collection_Capacity$rtcName$1 DB 024H
-	DB	053H
-	DB	031H
-	DB	00H
-Collection_Capacity$rtcName$2 DB 024H
-	DB	053H
-	DB	032H
-	DB	00H
-Collection_Capacity$rtcName$3 DB 024H
-	DB	053H
-	DB	033H
-	DB	00H
-Collection_Capacity$rtcName$4 DB 024H
-	DB	053H
-	DB	034H
-	DB	00H
-Collection_Capacity$rtcName$5 DB 024H
-	DB	053H
-	DB	035H
-	DB	00H
-	ORG $+4
-Collection_Capacity$rtcVarDesc DD 0130H
-	DD	0110H
-	DQ	FLAT:Collection_Capacity$rtcName$5
-	DD	0f8H
-	DD	010H
-	DQ	FLAT:Collection_Capacity$rtcName$4
-	DD	0c8H
-	DD	010H
-	DQ	FLAT:Collection_Capacity$rtcName$3
-	DD	098H
-	DD	010H
-	DQ	FLAT:Collection_Capacity$rtcName$2
-	DD	048H
-	DD	030H
-	DQ	FLAT:Collection_Capacity$rtcName$1
-	DD	024H
-	DD	04H
-	DQ	FLAT:Collection_Capacity$rtcName$0
-	ORG $+288
-Collection_Capacity$rtcFrameData DD 06H
-	DD	00H
-	DQ	FLAT:Collection_Capacity$rtcVarDesc
-CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$Collection_Write DD 025051d01H
+	DD	0118231dH
+	DD	07011001dH
+	DD	05010H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Read DD 025051d01H
 	DD	0118231dH
 	DD	07011001dH
 	DD	05010H
@@ -735,48 +444,6 @@ Collection_WriteSpan$rtcFrameData DD 01H
 	DD	00H
 	DQ	FLAT:Collection_WriteSpan$rtcVarDesc
 CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_Read DD 025051d01H
-	DD	0118231dH
-	DD	07011001dH
-	DD	05010H
-xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DB	046H
-	DB	0c5H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Collection_ReadSpan DD 035064d19H
-	DD	011e3323H
-	DD	07017002eH
-	DD	050156016H
-	DD	imagerel __GSHandlerCheck
-	DD	0168H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-Collection_ReadSpan$rtcName$0 DB 074H
-	DB	072H
-	DB	067H
-	DB	042H
-	DB	075H
-	DB	063H
-	DB	06bH
-	DB	065H
-	DB	074H
-	DB	00H
-	ORG $+6
-Collection_ReadSpan$rtcVarDesc DD 038H
-	DD	020H
-	DQ	FLAT:Collection_ReadSpan$rtcName$0
-	ORG $+48
-Collection_ReadSpan$rtcFrameData DD 01H
-	DD	00H
-	DQ	FLAT:Collection_ReadSpan$rtcVarDesc
-CONST	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DW	046H
@@ -813,38 +480,38 @@ Collection_Transcribe$rtcName$1 DB 074H
 	ORG $+1
 Collection_Transcribe$rtcName$2 DB 024H
 	DB	053H
-	DB	031H
 	DB	032H
+	DB	031H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$3 DB 024H
 	DB	053H
-	DB	031H
-	DB	033H
+	DB	032H
+	DB	032H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$4 DB 024H
 	DB	053H
-	DB	031H
-	DB	034H
+	DB	032H
+	DB	033H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$5 DB 024H
 	DB	053H
-	DB	031H
-	DB	035H
+	DB	032H
+	DB	034H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$6 DB 024H
 	DB	053H
-	DB	031H
-	DB	036H
+	DB	032H
+	DB	035H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$7 DB 024H
 	DB	053H
-	DB	031H
-	DB	037H
+	DB	032H
+	DB	036H
 	DB	00H
 	ORG $+7
 Collection_Transcribe$rtcName$8 DB 073H
@@ -867,38 +534,38 @@ Collection_Transcribe$rtcName$9 DB 073H
 	ORG $+1
 Collection_Transcribe$rtcName$10 DB 024H
 	DB	053H
-	DB	031H
-	DB	038H
+	DB	032H
+	DB	037H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$11 DB 024H
 	DB	053H
-	DB	031H
-	DB	039H
+	DB	032H
+	DB	038H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$12 DB 024H
 	DB	053H
 	DB	032H
-	DB	030H
+	DB	039H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$13 DB 024H
 	DB	053H
-	DB	032H
-	DB	031H
+	DB	033H
+	DB	030H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$14 DB 024H
 	DB	053H
-	DB	032H
-	DB	032H
+	DB	033H
+	DB	031H
 	DB	00H
 	ORG $+3
 Collection_Transcribe$rtcName$15 DB 024H
 	DB	053H
-	DB	032H
 	DB	033H
+	DB	032H
 	DB	00H
 	ORG $+7
 Collection_Transcribe$rtcVarDesc DD 04c0H
@@ -954,6 +621,464 @@ Collection_Transcribe$rtcFrameData DD 010H
 	DD	00H
 	DQ	FLAT:Collection_Transcribe$rtcVarDesc
 CONST	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DB	046H
+	DB	0c5H
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_ReadSpan DD 035064d19H
+	DD	011e3323H
+	DD	07017002eH
+	DD	050156016H
+	DD	imagerel __GSHandlerCheck
+	DD	0168H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_ReadSpan$rtcName$0 DB 074H
+	DB	072H
+	DB	067H
+	DB	042H
+	DB	075H
+	DB	063H
+	DB	06bH
+	DB	065H
+	DB	074H
+	DB	00H
+	ORG $+6
+Collection_ReadSpan$rtcVarDesc DD 038H
+	DD	020H
+	DQ	FLAT:Collection_ReadSpan$rtcName$0
+	ORG $+48
+Collection_ReadSpan$rtcFrameData DD 01H
+	DD	00H
+	DQ	FLAT:Collection_ReadSpan$rtcVarDesc
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_ReadOnly DD 025051301H
+	DD	010e2313H
+	DD	07007001dH
+	DD	05006H
+xdata	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DW	03bH
+	DW	016bH
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Resize DD 025064219H
+	DD	01132318H
+	DD	0700c008aH
+	DD	0500a600bH
+	DD	imagerel __GSHandlerCheck
+	DD	0448H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_Resize$rtcName$0 DB 024H
+	DB	053H
+	DB	031H
+	DB	035H
+	DB	00H
+	ORG $+3
+Collection_Resize$rtcName$1 DB 024H
+	DB	053H
+	DB	031H
+	DB	036H
+	DB	00H
+	ORG $+3
+Collection_Resize$rtcName$2 DB 024H
+	DB	053H
+	DB	031H
+	DB	037H
+	DB	00H
+	ORG $+3
+Collection_Resize$rtcName$3 DB 024H
+	DB	053H
+	DB	031H
+	DB	038H
+	DB	00H
+	ORG $+3
+Collection_Resize$rtcName$4 DB 024H
+	DB	053H
+	DB	031H
+	DB	039H
+	DB	00H
+	ORG $+3
+Collection_Resize$rtcName$5 DB 024H
+	DB	053H
+	DB	032H
+	DB	030H
+	DB	00H
+	ORG $+3
+Collection_Resize$rtcVarDesc DD 0150H
+	DD	0110H
+	DQ	FLAT:Collection_Resize$rtcName$5
+	DD	0118H
+	DD	010H
+	DQ	FLAT:Collection_Resize$rtcName$4
+	DD	0e8H
+	DD	010H
+	DQ	FLAT:Collection_Resize$rtcName$3
+	DD	0b8H
+	DD	010H
+	DQ	FLAT:Collection_Resize$rtcName$2
+	DD	088H
+	DD	010H
+	DQ	FLAT:Collection_Resize$rtcName$1
+	DD	030H
+	DD	040H
+	DQ	FLAT:Collection_Resize$rtcName$0
+	ORG $+288
+Collection_Resize$rtcFrameData DD 06H
+	DD	00H
+	DQ	FLAT:Collection_Resize$rtcVarDesc
+CONST	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DW	037H
+	DW	0181H
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Count DD 025063e19H
+	DD	010f2314H
+	DD	07008008eH
+	DD	050066007H
+	DD	imagerel __GSHandlerCheck
+	DD	0468H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_Count$rtcName$0 DB 06fH
+	DB	075H
+	DB	074H
+	DB	070H
+	DB	075H
+	DB	074H
+	DB	00H
+	ORG $+1
+Collection_Count$rtcName$1 DB 024H
+	DB	053H
+	DB	039H
+	DB	00H
+Collection_Count$rtcName$2 DB 024H
+	DB	053H
+	DB	031H
+	DB	030H
+	DB	00H
+	ORG $+3
+Collection_Count$rtcName$3 DB 024H
+	DB	053H
+	DB	031H
+	DB	031H
+	DB	00H
+	ORG $+3
+Collection_Count$rtcName$4 DB 024H
+	DB	053H
+	DB	031H
+	DB	032H
+	DB	00H
+	ORG $+3
+Collection_Count$rtcName$5 DB 024H
+	DB	053H
+	DB	031H
+	DB	033H
+	DB	00H
+	ORG $+3
+Collection_Count$rtcName$6 DB 024H
+	DB	053H
+	DB	031H
+	DB	034H
+	DB	00H
+	ORG $+15
+Collection_Count$rtcVarDesc DD 0170H
+	DD	0110H
+	DQ	FLAT:Collection_Count$rtcName$6
+	DD	0138H
+	DD	010H
+	DQ	FLAT:Collection_Count$rtcName$5
+	DD	0108H
+	DD	010H
+	DQ	FLAT:Collection_Count$rtcName$4
+	DD	0d8H
+	DD	010H
+	DQ	FLAT:Collection_Count$rtcName$3
+	DD	0a8H
+	DD	010H
+	DQ	FLAT:Collection_Count$rtcName$2
+	DD	050H
+	DD	040H
+	DQ	FLAT:Collection_Count$rtcName$1
+	DD	024H
+	DD	04H
+	DQ	FLAT:Collection_Count$rtcName$0
+	ORG $+336
+Collection_Count$rtcFrameData DD 07H
+	DD	00H
+	DQ	FLAT:Collection_Count$rtcVarDesc
+CONST	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DW	037H
+	DW	014eH
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Capacity DD 025063e19H
+	DD	010f2314H
+	DD	070080086H
+	DD	050066007H
+	DD	imagerel __GSHandlerCheck
+	DD	0428H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_Capacity$rtcName$0 DB 06fH
+	DB	075H
+	DB	074H
+	DB	070H
+	DB	075H
+	DB	074H
+	DB	00H
+	ORG $+1
+Collection_Capacity$rtcName$1 DB 024H
+	DB	053H
+	DB	034H
+	DB	00H
+Collection_Capacity$rtcName$2 DB 024H
+	DB	053H
+	DB	035H
+	DB	00H
+Collection_Capacity$rtcName$3 DB 024H
+	DB	053H
+	DB	036H
+	DB	00H
+Collection_Capacity$rtcName$4 DB 024H
+	DB	053H
+	DB	037H
+	DB	00H
+Collection_Capacity$rtcName$5 DB 024H
+	DB	053H
+	DB	038H
+	DB	00H
+	ORG $+4
+Collection_Capacity$rtcVarDesc DD 0130H
+	DD	0110H
+	DQ	FLAT:Collection_Capacity$rtcName$5
+	DD	0f8H
+	DD	010H
+	DQ	FLAT:Collection_Capacity$rtcName$4
+	DD	0c8H
+	DD	010H
+	DQ	FLAT:Collection_Capacity$rtcName$3
+	DD	098H
+	DD	010H
+	DQ	FLAT:Collection_Capacity$rtcName$2
+	DD	048H
+	DD	030H
+	DQ	FLAT:Collection_Capacity$rtcName$1
+	DD	024H
+	DD	04H
+	DQ	FLAT:Collection_Capacity$rtcName$0
+	ORG $+288
+Collection_Capacity$rtcFrameData DD 06H
+	DD	00H
+	DQ	FLAT:Collection_Capacity$rtcVarDesc
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Index DD 025051701H
+	DD	01122317H
+	DD	0700b001dH
+	DD	0500aH
+xdata	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DB	02cH
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Release DD 025051301H
+	DD	010e2313H
+	DD	07007001dH
+	DD	05006H
+xdata	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DB	046H
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Request DD 025051301H
+	DD	010e2313H
+	DD	07007001fH
+	DD	05006H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_RawBucket DD 025063c01H
+	DD	011e2323H
+	DD	070170034H
+	DD	050156016H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_RawBucket$rtcName$0 DB 024H
+	DB	053H
+	DB	033H
+	DB	00H
+	ORG $+4
+Collection_RawBucket$rtcName$1 DB 05fH
+	DB	05fH
+	DB	024H
+	DB	041H
+	DB	072H
+	DB	072H
+	DB	061H
+	DB	079H
+	DB	050H
+	DB	061H
+	DB	064H
+	DB	00H
+	ORG $+12
+Collection_RawBucket$rtcVarDesc DD 068H
+	DD	08H
+	DQ	FLAT:Collection_RawBucket$rtcName$1
+	DD	028H
+	DD	020H
+	DQ	FLAT:Collection_RawBucket$rtcName$0
+	ORG $+96
+Collection_RawBucket$rtcFrameData DD 02H
+	DD	00H
+	DQ	FLAT:Collection_RawBucket$rtcVarDesc
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_GetRawExtensions DD 025051301H
+	DD	010e2313H
+	DD	07007001dH
+	DD	05006H
+xdata	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DW	041H
+	DW	016dH
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_GetExtensions DD 025064819H
+	DD	0119231eH
+	DD	070120030H
+	DD	050106011H
+	DD	imagerel __GSHandlerCheck
+	DD	0178H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_GetExtensions$rtcName$0 DB 06eH
+	DB	065H
+	DB	077H
+	DB	049H
+	DB	06eH
+	DB	066H
+	DB	06fH
+	DB	00H
+	ORG $+8
+Collection_GetExtensions$rtcVarDesc DD 028H
+	DD	018H
+	DQ	FLAT:Collection_GetExtensions$rtcName$0
+	ORG $+48
+Collection_GetExtensions$rtcFrameData DD 01H
+	DD	00H
+	DQ	FLAT:Collection_GetExtensions$rtcVarDesc
+CONST	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DB	041H
+	DB	068H
+	DB	0a1H
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Create DD 025064819H
+	DD	0119231eH
+	DD	070120022H
+	DD	050106011H
+	DD	imagerel __GSHandlerCheck
+	DD	0108H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Collection_Create$rtcName$0 DB 024H
+	DB	053H
+	DB	032H
+	DB	00H
+	ORG $+12
+Collection_Create$rtcVarDesc DD 028H
+	DD	010H
+	DQ	FLAT:Collection_Create$rtcName$0
+	ORG $+48
+Collection_Create$rtcFrameData DD 01H
+	DD	00H
+	DQ	FLAT:Collection_Create$rtcVarDesc
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$CollectionExtensions_Create DD 025053b01H
+	DD	011d2322H
+	DD	070160027H
+	DD	05015H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+CollectionExtensions_Create$rtcName$0 DB 024H
+	DB	053H
+	DB	031H
+	DB	00H
+	ORG $+4
+CollectionExtensions_Create$rtcName$1 DB 05fH
+	DB	05fH
+	DB	024H
+	DB	041H
+	DB	072H
+	DB	072H
+	DB	061H
+	DB	079H
+	DB	050H
+	DB	061H
+	DB	064H
+	DB	00H
+	ORG $+12
+CollectionExtensions_Create$rtcVarDesc DD 058H
+	DD	08H
+	DQ	FLAT:CollectionExtensions_Create$rtcName$1
+	DD	028H
+	DD	018H
+	DQ	FLAT:CollectionExtensions_Create$rtcName$0
+	ORG $+96
+CollectionExtensions_Create$rtcFrameData DD 02H
+	DD	00H
+	DQ	FLAT:CollectionExtensions_Create$rtcVarDesc
+CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_TranscribeCompare DD 025051801H
+	DD	01132318H
+	DD	0700c001dH
+	DD	0500bH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Collection_Compare DD 025051801H
+	DD	01132318H
+	DD	0700c001fH
+	DD	0500bH
+xdata	ENDS
 ; Function compile flags: /Odt
 ;	COMDAT __JustMyCode_Default
 _TEXT	SEGMENT
@@ -963,138 +1088,37 @@ __JustMyCode_Default ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_RawBucket
+;	COMDAT Collection_Collapse
 _TEXT	SEGMENT
-$T5 = 296
-$T6 = 344
-__$ReturnAddress$ = 416
-col$ = 424
-head$ = 432
-count$ = 440
-Collection_RawBucket PROC				; COMDAT
+trg$ = 224
+start$ = 232
+count$ = 240
+Collection_Collapse PROC				; COMDAT
 
-; 321  : Bucket Collection_RawBucket(COLLECTION col, void* head, unsigned int count) {
+; 301  : bool Collection_Collapse(COLLECTION trg, unsigned int start, unsigned int count) {
 
 $LN3:
-  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
-  00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
-  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00014	55		 push	 rbp
-  00015	56		 push	 rsi
-  00016	57		 push	 rdi
-  00017	48 81 ec a0 01
-	00 00		 sub	 rsp, 416		; 000001a0H
-  0001e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00023	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00028	b9 30 00 00 00	 mov	 ecx, 48			; 00000030H
-  0002d	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00032	f3 ab		 rep stosd
-  00034	48 8b 8c 24 c8
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+456]
-  0003c	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  00043	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 322  : 	return (Bucket) {
-
-  00048	48 8b 85 a8 01
-	00 00		 mov	 rax, QWORD PTR col$[rbp]
-  0004f	48 8b 08	 mov	 rcx, QWORD PTR [rax]
-  00052	e8 00 00 00 00	 call	 Collection_GetRawExtensions
-  00057	44 8b 85 b8 01
-	00 00		 mov	 r8d, DWORD PTR count$[rbp]
-  0005e	48 8b d0	 mov	 rdx, rax
-  00061	48 8d 8d 28 01
-	00 00		 lea	 rcx, QWORD PTR $T5[rbp]
-  00068	e8 00 00 00 00	 call	 Collection_Create
-  0006d	48 8b bd a0 01
-	00 00		 mov	 rdi, QWORD PTR __$ReturnAddress$[rbp]
-  00074	48 8b f0	 mov	 rsi, rax
-  00077	b9 10 00 00 00	 mov	 ecx, 16
-  0007c	f3 a4		 rep movsb
-  0007e	48 8b 85 a8 01
-	00 00		 mov	 rax, QWORD PTR col$[rbp]
-  00085	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  00088	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  0008b	8b 8d b8 01 00
-	00		 mov	 ecx, DWORD PTR count$[rbp]
-  00091	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  00095	48 0f af c1	 imul	 rax, rcx
-  00099	4c 8b c0	 mov	 r8, rax
-  0009c	48 8b 95 b0 01
-	00 00		 mov	 rdx, QWORD PTR head$[rbp]
-  000a3	48 8d 8d 58 01
-	00 00		 lea	 rcx, QWORD PTR $T6[rbp]
-  000aa	e8 00 00 00 00	 call	 Chunk_Create
-  000af	48 8b 8d a0 01
-	00 00		 mov	 rcx, QWORD PTR __$ReturnAddress$[rbp]
-  000b6	48 8d 79 10	 lea	 rdi, QWORD PTR [rcx+16]
-  000ba	48 8b f0	 mov	 rsi, rax
-  000bd	b9 10 00 00 00	 mov	 ecx, 16
-  000c2	f3 a4		 rep movsb
-  000c4	48 8b 85 a0 01
-	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
-
-; 323  : 		Collection_Create(Collection_GetRawExtensions(col->_extensions), count),
-; 324  : 		Chunk_Create(head, col->_extensions->_type->_size * count)
-; 325  : 	};
-; 326  : }
-
-  000cb	48 8b f8	 mov	 rdi, rax
-  000ce	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  000d2	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Collection_RawBucket$rtcFrameData
-  000d9	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  000de	48 8b c7	 mov	 rax, rdi
-  000e1	48 8d a5 80 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+384]
-  000e8	5f		 pop	 rdi
-  000e9	5e		 pop	 rsi
-  000ea	5d		 pop	 rbp
-  000eb	c3		 ret	 0
-Collection_RawBucket ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_GetRawExtensions
-_TEXT	SEGMENT
-src$ = 224
-Collection_GetRawExtensions PROC			; COMDAT
-
-; 307  : CollectionExtensions* Collection_GetRawExtensions(CollectionExtensions* src) {
-
-$LN3:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec e8 00
+  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  00005	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  00009	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000e	55		 push	 rbp
+  0000f	57		 push	 rdi
+  00010	48 81 ec e8 00
 	00 00		 sub	 rsp, 232		; 000000e8H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
+  00017	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  0001c	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+  00023	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 308  : 	return Collection_GetExtensions(src->_type, Bucket_Methods, src->_memFlags);
+; 302  : 
+; 303  : }
 
-  0001f	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR src$[rbp]
-  00026	44 8b 40 10	 mov	 r8d, DWORD PTR [rax+16]
-  0002a	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Bucket_Methods
-  00031	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR src$[rbp]
-  00038	48 8b 08	 mov	 rcx, QWORD PTR [rax]
-  0003b	e8 00 00 00 00	 call	 Collection_GetExtensions
-
-; 309  : }
-
-  00040	48 8d a5 c8 00
+  00028	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00047	5f		 pop	 rdi
-  00048	5d		 pop	 rbp
-  00049	c3		 ret	 0
-Collection_GetRawExtensions ENDP
+  0002f	5f		 pop	 rdi
+  00030	5d		 pop	 rbp
+  00031	c3		 ret	 0
+Collection_Collapse ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tCollection.c
@@ -1107,7 +1131,7 @@ srcStart$ = 248
 count$ = 256
 Collection_Insertion PROC				; COMDAT
 
-; 244  : bool Collection_Insertion(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
+; 298  : bool Collection_Insertion(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
 
 $LN3:
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
@@ -1123,8 +1147,8 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
   00029	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 245  : 
-; 246  : }
+; 299  : 
+; 300  : }
 
   0002e	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -1135,929 +1159,6 @@ Collection_Insertion ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_GetExtensions
-_TEXT	SEGMENT
-newInfo$ = 8
-i$4 = 52
-ptr$ = 88
-$T5 = 312
-__$ArrayPad$ = 344
-typeInfo$ = 384
-methods$ = 392
-memFlags$ = 400
-Collection_GetExtensions PROC				; COMDAT
-
-; 256  : CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods)(RequestType* request), int memFlags) {
-
-$LN8:
-  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
-  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  0000f	55		 push	 rbp
-  00010	56		 push	 rsi
-  00011	57		 push	 rdi
-  00012	48 81 ec 80 01
-	00 00		 sub	 rsp, 384		; 00000180H
-  00019	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0001e	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00023	b9 28 00 00 00	 mov	 ecx, 40			; 00000028H
-  00028	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0002d	f3 ab		 rep stosd
-  0002f	48 8b 8c 24 a8
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+424]
-  00037	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  0003e	48 33 c5	 xor	 rax, rbp
-  00041	48 89 85 58 01
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00048	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0004f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 257  : 
-; 258  : 	CollectionExtensions newInfo = CollectionExtensions_Create(typeInfo, methods, memFlags);
-
-  00054	44 8b 8d 90 01
-	00 00		 mov	 r9d, DWORD PTR memFlags$[rbp]
-  0005b	4c 8b 85 88 01
-	00 00		 mov	 r8, QWORD PTR methods$[rbp]
-  00062	48 8b 95 80 01
-	00 00		 mov	 rdx, QWORD PTR typeInfo$[rbp]
-  00069	48 8d 8d 38 01
-	00 00		 lea	 rcx, QWORD PTR $T5[rbp]
-  00070	e8 00 00 00 00	 call	 CollectionExtensions_Create
-  00075	48 8d 4d 08	 lea	 rcx, QWORD PTR newInfo$[rbp]
-  00079	48 8b f9	 mov	 rdi, rcx
-  0007c	48 8b f0	 mov	 rsi, rax
-  0007f	b9 18 00 00 00	 mov	 ecx, 24
-  00084	f3 a4		 rep movsb
-
-; 259  : 
-; 260  : 	for (int i = 0; i < GlobalCollectionInfoCurrentCount; i++) {
-
-  00086	c7 45 34 00 00
-	00 00		 mov	 DWORD PTR i$4[rbp], 0
-  0008d	eb 08		 jmp	 SHORT $LN4@Collection
-$LN2@Collection:
-  0008f	8b 45 34	 mov	 eax, DWORD PTR i$4[rbp]
-  00092	ff c0		 inc	 eax
-  00094	89 45 34	 mov	 DWORD PTR i$4[rbp], eax
-$LN4@Collection:
-  00097	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR GlobalCollectionInfoCurrentCount
-  0009d	39 45 34	 cmp	 DWORD PTR i$4[rbp], eax
-  000a0	73 4c		 jae	 SHORT $LN3@Collection
-
-; 261  : 		if (Collection_Compare(&GlobalCollectionInfo[i], &newInfo)) {
-
-  000a2	48 63 45 34	 movsxd	 rax, DWORD PTR i$4[rbp]
-  000a6	48 6b c0 18	 imul	 rax, rax, 24
-  000aa	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:GlobalCollectionInfo
-  000b1	48 03 c8	 add	 rcx, rax
-  000b4	48 8b c1	 mov	 rax, rcx
-  000b7	48 8d 55 08	 lea	 rdx, QWORD PTR newInfo$[rbp]
-  000bb	48 8b c8	 mov	 rcx, rax
-  000be	e8 00 00 00 00	 call	 Collection_Compare
-  000c3	85 c0		 test	 eax, eax
-  000c5	74 25		 je	 SHORT $LN5@Collection
-
-; 262  : 			PREENT("CollectionInfo found!\n");
-
-  000c7	33 d2		 xor	 edx, edx
-  000c9	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BH@LCKCAPHB@CollectionInfo?5found?$CB?6@
-  000d0	e8 00 00 00 00	 call	 Preent
-
-; 263  : 			return &GlobalCollectionInfo[i];
-
-  000d5	48 63 45 34	 movsxd	 rax, DWORD PTR i$4[rbp]
-  000d9	48 6b c0 18	 imul	 rax, rax, 24
-  000dd	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:GlobalCollectionInfo
-  000e4	48 03 c8	 add	 rcx, rax
-  000e7	48 8b c1	 mov	 rax, rcx
-  000ea	eb 6b		 jmp	 SHORT $LN1@Collection
-$LN5@Collection:
-
-; 264  : 		}
-; 265  : 
-; 266  : 	}
-
-  000ec	eb a1		 jmp	 SHORT $LN2@Collection
-$LN3@Collection:
-
-; 267  : 
-; 268  : 	if (GlobalCollectionInfoCurrentCount >= testTypeBinCount)
-
-  000ee	83 3d 00 00 00
-	00 20		 cmp	 DWORD PTR GlobalCollectionInfoCurrentCount, 32 ; 00000020H
-  000f5	72 12		 jb	 SHORT $LN6@Collection
-
-; 269  : 	{
-; 270  : 		PREENT("No type slots available...\n");
-
-  000f7	33 d2		 xor	 edx, edx
-  000f9	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@KPOEFPPK@No?5type?5slots?5available?4?4?4?6@
-  00100	e8 00 00 00 00	 call	 Preent
-
-; 271  : 		return NULL;
-
-  00105	33 c0		 xor	 eax, eax
-  00107	eb 4e		 jmp	 SHORT $LN1@Collection
-$LN6@Collection:
-
-; 272  : 	}
-; 273  : 
-; 274  : 	CollectionExtensions* ptr = &GlobalCollectionInfo[GlobalCollectionInfoCurrentCount];
-
-  00109	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR GlobalCollectionInfoCurrentCount
-  0010f	48 6b c0 18	 imul	 rax, rax, 24
-  00113	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:GlobalCollectionInfo
-  0011a	48 03 c8	 add	 rcx, rax
-  0011d	48 8b c1	 mov	 rax, rcx
-  00120	48 89 45 58	 mov	 QWORD PTR ptr$[rbp], rax
-
-; 275  : 	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
-
-  00124	41 b8 18 00 00
-	00		 mov	 r8d, 24
-  0012a	48 8d 55 08	 lea	 rdx, QWORD PTR newInfo$[rbp]
-  0012e	48 8b 4d 58	 mov	 rcx, QWORD PTR ptr$[rbp]
-  00132	e8 00 00 00 00	 call	 rawTranscribe
-
-; 276  : 
-; 277  : 	PREENT("Created new CollectionInfo!\n");
-
-  00137	33 d2		 xor	 edx, edx
-  00139	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BN@DBMNBHNG@Created?5new?5CollectionInfo?$CB?6@
-  00140	e8 00 00 00 00	 call	 Preent
-
-; 278  : 
-; 279  : 	GlobalCollectionInfoCurrentCount++;
-
-  00145	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR GlobalCollectionInfoCurrentCount
-  0014b	ff c0		 inc	 eax
-  0014d	89 05 00 00 00
-	00		 mov	 DWORD PTR GlobalCollectionInfoCurrentCount, eax
-
-; 280  : 	return ptr;
-
-  00153	48 8b 45 58	 mov	 rax, QWORD PTR ptr$[rbp]
-$LN1@Collection:
-
-; 281  : }
-
-  00157	48 8b f8	 mov	 rdi, rax
-  0015a	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  0015e	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Collection_GetExtensions$rtcFrameData
-  00165	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  0016a	48 8b c7	 mov	 rax, rdi
-  0016d	48 8b 8d 58 01
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00174	48 33 cd	 xor	 rcx, rbp
-  00177	e8 00 00 00 00	 call	 __security_check_cookie
-  0017c	48 8d a5 60 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+352]
-  00183	5f		 pop	 rdi
-  00184	5e		 pop	 rsi
-  00185	5d		 pop	 rbp
-  00186	c3		 ret	 0
-Collection_GetExtensions ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Create
-_TEXT	SEGMENT
-$S25$ = 8
-__$ArrayPad$ = 232
-__$ReturnAddress$ = 272
-extensions$ = 280
-count$ = 288
-Collection_Create PROC					; COMDAT
-
-; 312  : {
-
-$LN3:
-  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
-  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  0000f	55		 push	 rbp
-  00010	56		 push	 rsi
-  00011	57		 push	 rdi
-  00012	48 81 ec 10 01
-	00 00		 sub	 rsp, 272		; 00000110H
-  00019	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0001e	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00023	b9 0c 00 00 00	 mov	 ecx, 12
-  00028	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0002d	f3 ab		 rep stosd
-  0002f	48 8b 8c 24 38
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+312]
-  00037	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  0003e	48 33 c5	 xor	 rax, rbp
-  00041	48 89 85 e8 00
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00048	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0004f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 313  : 
-; 314  : 	return (Collection) {
-
-  00054	48 8b 85 18 01
-	00 00		 mov	 rax, QWORD PTR extensions$[rbp]
-  0005b	48 89 45 08	 mov	 QWORD PTR $S25$[rbp], rax
-  0005f	8b 85 20 01 00
-	00		 mov	 eax, DWORD PTR count$[rbp]
-  00065	89 45 10	 mov	 DWORD PTR $S25$[rbp+8], eax
-  00068	c7 45 14 00 00
-	00 00		 mov	 DWORD PTR $S25$[rbp+12], 0
-  0006f	48 8d 45 08	 lea	 rax, QWORD PTR $S25$[rbp]
-  00073	48 8b bd 10 01
-	00 00		 mov	 rdi, QWORD PTR __$ReturnAddress$[rbp]
-  0007a	48 8b f0	 mov	 rsi, rax
-  0007d	b9 10 00 00 00	 mov	 ecx, 16
-  00082	f3 a4		 rep movsb
-  00084	48 8b 85 10 01
-	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
-
-; 315  : 		extensions,
-; 316  : 		count,
-; 317  : 		0
-; 318  : 	};
-; 319  : }
-
-  0008b	48 8b f8	 mov	 rdi, rax
-  0008e	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  00092	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Collection_Create$rtcFrameData
-  00099	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  0009e	48 8b c7	 mov	 rax, rdi
-  000a1	48 8b 8d e8 00
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  000a8	48 33 cd	 xor	 rcx, rbp
-  000ab	e8 00 00 00 00	 call	 __security_check_cookie
-  000b0	48 8d a5 f0 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+240]
-  000b7	5f		 pop	 rdi
-  000b8	5e		 pop	 rsi
-  000b9	5d		 pop	 rbp
-  000ba	c3		 ret	 0
-Collection_Create ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT CollectionExtensions_Create
-_TEXT	SEGMENT
-__$ReturnAddress$ = 304
-type$ = 312
-extensions$ = 320
-memFlags$ = 328
-CollectionExtensions_Create PROC			; COMDAT
-
-; 248  : CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extensions)(RequestType* request), int memFlags) {
-
-$LN3:
-  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
-  00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
-  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00014	55		 push	 rbp
-  00015	57		 push	 rdi
-  00016	48 81 ec 38 01
-	00 00		 sub	 rsp, 312		; 00000138H
-  0001d	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00022	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00027	b9 16 00 00 00	 mov	 ecx, 22
-  0002c	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00031	f3 ab		 rep stosd
-  00033	48 8b 8c 24 58
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+344]
-  0003b	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  00042	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 249  : 	return (CollectionExtensions) {
-
-  00047	48 8b 85 30 01
-	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
-  0004e	48 8b 8d 38 01
-	00 00		 mov	 rcx, QWORD PTR type$[rbp]
-  00055	48 89 08	 mov	 QWORD PTR [rax], rcx
-  00058	48 8b 85 30 01
-	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
-  0005f	48 8b 8d 40 01
-	00 00		 mov	 rcx, QWORD PTR extensions$[rbp]
-  00066	48 89 48 08	 mov	 QWORD PTR [rax+8], rcx
-  0006a	48 8b 85 30 01
-	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
-  00071	8b 8d 48 01 00
-	00		 mov	 ecx, DWORD PTR memFlags$[rbp]
-  00077	89 48 10	 mov	 DWORD PTR [rax+16], ecx
-  0007a	48 8b 85 30 01
-	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
-
-; 250  : 		type,
-; 251  : 		extensions,
-; 252  : 		memFlags
-; 253  : 	};
-; 254  : }
-
-  00081	48 8b f8	 mov	 rdi, rax
-  00084	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  00088	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:CollectionExtensions_Create$rtcFrameData
-  0008f	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00094	48 8b c7	 mov	 rax, rdi
-  00097	48 8d a5 18 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+280]
-  0009e	5f		 pop	 rdi
-  0009f	5d		 pop	 rbp
-  000a0	c3		 ret	 0
-CollectionExtensions_Create ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Release
-_TEXT	SEGMENT
-collection$ = 224
-Collection_Release PROC					; COMDAT
-
-; 179  : {
-
-$LN3:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 180  : 	InterlockedExchange(&(collection->_spinLock), 0);
-
-  0001f	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  00026	48 83 c0 0c	 add	 rax, 12
-  0002a	33 c9		 xor	 ecx, ecx
-  0002c	87 08		 xchg	 DWORD PTR [rax], ecx
-
-; 181  : 	return true;
-
-  0002e	b8 01 00 00 00	 mov	 eax, 1
-
-; 182  : }
-
-  00033	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  0003a	5f		 pop	 rdi
-  0003b	5d		 pop	 rbp
-  0003c	c3		 ret	 0
-Collection_Release ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Request
-_TEXT	SEGMENT
-tv72 = 192
-collection$ = 240
-Collection_Request PROC					; COMDAT
-
-; 167  : {
-
-$LN5:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec f8 00
-	00 00		 sub	 rsp, 248		; 000000f8H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-$LN2@Collection:
-
-; 168  : 	while (InterlockedCompareExchange(&(collection->_spinLock), 1, 0)) {
-
-  0001f	48 8b 85 f0 00
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  00026	48 83 c0 0c	 add	 rax, 12
-  0002a	b9 01 00 00 00	 mov	 ecx, 1
-  0002f	48 89 85 c0 00
-	00 00		 mov	 QWORD PTR tv72[rbp], rax
-  00036	33 c0		 xor	 eax, eax
-  00038	48 8b 95 c0 00
-	00 00		 mov	 rdx, QWORD PTR tv72[rbp]
-  0003f	48 8b 95 c0 00
-	00 00		 mov	 rdx, QWORD PTR tv72[rbp]
-  00046	f0 0f b1 0a	 lock cmpxchg DWORD PTR [rdx], ecx
-  0004a	85 c0		 test	 eax, eax
-  0004c	74 02		 je	 SHORT $LN3@Collection
-
-; 169  : 		// time sensitive logic...
-; 170  : 		// eg:
-; 171  : 		// int counter = 0;
-; 172  : 		// if (counter > 100000)
-; 173  : 		//	return false;
-; 174  : 		// counter++;
-; 175  : 	}
-
-  0004e	eb cf		 jmp	 SHORT $LN2@Collection
-$LN3@Collection:
-
-; 176  : 	return true;
-
-  00050	b8 01 00 00 00	 mov	 eax, 1
-
-; 177  : }
-
-  00055	48 8d a5 d8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+216]
-  0005c	5f		 pop	 rdi
-  0005d	5d		 pop	 rbp
-  0005e	c3		 ret	 0
-Collection_Request ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_TranscribeCompare
-_TEXT	SEGMENT
-trg$ = 224
-src$ = 232
-Collection_TranscribeCompare PROC			; COMDAT
-
-; 156  : inline bool Collection_TranscribeCompare(CollectionExtensions* trg, CollectionExtensions* src) {
-
-$LN5:
-  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  0000a	55		 push	 rbp
-  0000b	57		 push	 rdi
-  0000c	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00018	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 157  : 	if (trg->_memFlags & READ_ONLY)
-
-  00024	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR trg$[rbp]
-  0002b	8b 40 10	 mov	 eax, DWORD PTR [rax+16]
-  0002e	83 e0 01	 and	 eax, 1
-  00031	85 c0		 test	 eax, eax
-  00033	74 04		 je	 SHORT $LN2@Collection
-
-; 158  : 		return false;
-
-  00035	33 c0		 xor	 eax, eax
-  00037	eb 26		 jmp	 SHORT $LN1@Collection
-$LN2@Collection:
-
-; 159  : 	
-; 160  : 	if (//trg->_methods != src->_methods ||
-; 161  : 		//A._memFlags != B._memFlags ||
-; 162  : 		!TypeInfo_Compare(trg->_type, src->_type))
-
-  00039	48 8b 85 e8 00
-	00 00		 mov	 rax, QWORD PTR src$[rbp]
-  00040	48 8b 10	 mov	 rdx, QWORD PTR [rax]
-  00043	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR trg$[rbp]
-  0004a	48 8b 08	 mov	 rcx, QWORD PTR [rax]
-  0004d	e8 00 00 00 00	 call	 TypeInfo_Compare
-  00052	85 c0		 test	 eax, eax
-  00054	75 04		 jne	 SHORT $LN3@Collection
-
-; 163  : 		return false;
-
-  00056	33 c0		 xor	 eax, eax
-  00058	eb 05		 jmp	 SHORT $LN1@Collection
-$LN3@Collection:
-
-; 164  : 	return true;
-
-  0005a	b8 01 00 00 00	 mov	 eax, 1
-$LN1@Collection:
-
-; 165  : }
-
-  0005f	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00066	5f		 pop	 rdi
-  00067	5d		 pop	 rbp
-  00068	c3		 ret	 0
-Collection_TranscribeCompare ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Compare
-_TEXT	SEGMENT
-tv73 = 192
-a$ = 240
-b$ = 248
-Collection_Compare PROC					; COMDAT
-
-; 151  : {
-
-$LN5:
-  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  0000a	55		 push	 rbp
-  0000b	57		 push	 rdi
-  0000c	48 81 ec f8 00
-	00 00		 sub	 rsp, 248		; 000000f8H
-  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00018	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 152  : 	return (a->_methods == b->_methods) &&
-
-  00024	48 8b 85 f0 00
-	00 00		 mov	 rax, QWORD PTR a$[rbp]
-  0002b	48 8b 8d f8 00
-	00 00		 mov	 rcx, QWORD PTR b$[rbp]
-  00032	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00036	48 39 48 08	 cmp	 QWORD PTR [rax+8], rcx
-  0003a	75 38		 jne	 SHORT $LN3@Collection
-  0003c	48 8b 85 f0 00
-	00 00		 mov	 rax, QWORD PTR a$[rbp]
-  00043	48 8b 8d f8 00
-	00 00		 mov	 rcx, QWORD PTR b$[rbp]
-  0004a	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
-  0004d	48 39 08	 cmp	 QWORD PTR [rax], rcx
-  00050	75 22		 jne	 SHORT $LN3@Collection
-  00052	48 8b 85 f0 00
-	00 00		 mov	 rax, QWORD PTR a$[rbp]
-  00059	48 8b 8d f8 00
-	00 00		 mov	 rcx, QWORD PTR b$[rbp]
-  00060	8b 49 10	 mov	 ecx, DWORD PTR [rcx+16]
-  00063	39 48 10	 cmp	 DWORD PTR [rax+16], ecx
-  00066	75 0c		 jne	 SHORT $LN3@Collection
-  00068	c7 85 c0 00 00
-	00 01 00 00 00	 mov	 DWORD PTR tv73[rbp], 1
-  00072	eb 0a		 jmp	 SHORT $LN4@Collection
-$LN3@Collection:
-  00074	c7 85 c0 00 00
-	00 00 00 00 00	 mov	 DWORD PTR tv73[rbp], 0
-$LN4@Collection:
-  0007e	8b 85 c0 00 00
-	00		 mov	 eax, DWORD PTR tv73[rbp]
-
-; 153  : 		(a->_type == b->_type) &&
-; 154  : 		(a->_memFlags == b->_memFlags);
-; 155  : }
-
-  00084	48 8d a5 d8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+216]
-  0008b	5f		 pop	 rdi
-  0008c	5d		 pop	 rbp
-  0008d	c3		 ret	 0
-Collection_Compare ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_ReadOnly
-_TEXT	SEGMENT
-collection$ = 224
-Collection_ReadOnly PROC				; COMDAT
-
-; 147  : bool Collection_ReadOnly(COLLECTION collection) {
-
-$LN3:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 148  : 	return collection->_extensions->_memFlags & READ_ONLY;
-
-  0001f	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  00026	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  00029	8b 40 10	 mov	 eax, DWORD PTR [rax+16]
-  0002c	83 e0 01	 and	 eax, 1
-
-; 149  : }
-
-  0002f	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00036	5f		 pop	 rdi
-  00037	5d		 pop	 rbp
-  00038	c3		 ret	 0
-Collection_ReadOnly ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Count
-_TEXT	SEGMENT
-output$ = 4
-$S6$ = 48
-$S7$ = 136
-$S8$ = 184
-$S9$ = 232
-$S10$ = 280
-$S11$ = 336
-$T10 = 1016
-$T11 = 1072
-__$ArrayPad$ = 1096
-collection$ = 1136
-Collection_Count PROC					; COMDAT
-
-; 141  : uint Collection_Count(COLLECTION collection) {
-
-$LN4:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	56		 push	 rsi
-  00007	57		 push	 rdi
-  00008	48 81 ec 70 04
-	00 00		 sub	 rsp, 1136		; 00000470H
-  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00014	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00019	b9 b4 00 00 00	 mov	 ecx, 180		; 000000b4H
-  0001e	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00023	f3 ab		 rep stosd
-  00025	48 8b 8c 24 98
-	04 00 00	 mov	 rcx, QWORD PTR [rsp+1176]
-  0002d	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00034	48 33 c5	 xor	 rax, rbp
-  00037	48 89 85 48 04
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  0003e	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  00045	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 142  : 	uint output;
-; 143  : 	if (!collection->_extensions->_methods(Request(INFO, P_(tVARIANT, tCOUNT), P_(tSRC, collection), P_(tTRG, &output))))
-
-  0004a	48 8d 85 50 01
-	00 00		 lea	 rax, QWORD PTR $S11$[rbp]
-  00051	48 8b f8	 mov	 rdi, rax
-  00054	33 c0		 xor	 eax, eax
-  00056	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
-  0005b	f3 aa		 rep stosb
-  0005d	c7 85 88 00 00
-	00 00 00 00 00	 mov	 DWORD PTR $S7$[rbp], 0
-  00067	48 c7 85 90 00
-	00 00 07 00 00
-	00		 mov	 QWORD PTR $S7$[rbp+8], 7
-  00072	48 8d 45 30	 lea	 rax, QWORD PTR $S6$[rbp]
-  00076	48 8d 8d 88 00
-	00 00		 lea	 rcx, QWORD PTR $S7$[rbp]
-  0007d	48 8b f8	 mov	 rdi, rax
-  00080	48 8b f1	 mov	 rsi, rcx
-  00083	b9 10 00 00 00	 mov	 ecx, 16
-  00088	f3 a4		 rep movsb
-  0008a	c7 85 b8 00 00
-	00 02 00 00 00	 mov	 DWORD PTR $S8$[rbp], 2
-  00094	48 8b 85 70 04
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  0009b	48 89 85 c0 00
-	00 00		 mov	 QWORD PTR $S8$[rbp+8], rax
-  000a2	48 8d 45 40	 lea	 rax, QWORD PTR $S6$[rbp+16]
-  000a6	48 8d 8d b8 00
-	00 00		 lea	 rcx, QWORD PTR $S8$[rbp]
-  000ad	48 8b f8	 mov	 rdi, rax
-  000b0	48 8b f1	 mov	 rsi, rcx
-  000b3	b9 10 00 00 00	 mov	 ecx, 16
-  000b8	f3 a4		 rep movsb
-  000ba	c7 85 e8 00 00
-	00 01 00 00 00	 mov	 DWORD PTR $S9$[rbp], 1
-  000c4	48 8d 45 04	 lea	 rax, QWORD PTR output$[rbp]
-  000c8	48 89 85 f0 00
-	00 00		 mov	 QWORD PTR $S9$[rbp+8], rax
-  000cf	48 8d 45 50	 lea	 rax, QWORD PTR $S6$[rbp+32]
-  000d3	48 8d 8d e8 00
-	00 00		 lea	 rcx, QWORD PTR $S9$[rbp]
-  000da	48 8b f8	 mov	 rdi, rax
-  000dd	48 8b f1	 mov	 rsi, rcx
-  000e0	b9 10 00 00 00	 mov	 ecx, 16
-  000e5	f3 a4		 rep movsb
-  000e7	c7 85 18 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S10$[rbp], -2
-  000f1	48 c7 85 20 01
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S10$[rbp+8], 0
-  000fc	48 8d 45 60	 lea	 rax, QWORD PTR $S6$[rbp+48]
-  00100	48 8d 8d 18 01
-	00 00		 lea	 rcx, QWORD PTR $S10$[rbp]
-  00107	48 8b f8	 mov	 rdi, rax
-  0010a	48 8b f1	 mov	 rsi, rcx
-  0010d	b9 10 00 00 00	 mov	 ecx, 16
-  00112	f3 a4		 rep movsb
-  00114	4c 8d 8d 50 01
-	00 00		 lea	 r9, QWORD PTR $S11$[rbp]
-  0011b	4c 8d 45 30	 lea	 r8, QWORD PTR $S6$[rbp]
-  0011f	ba 04 00 00 00	 mov	 edx, 4
-  00124	48 8d 8d f8 03
-	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
-  0012b	e8 00 00 00 00	 call	 CreateRequest
-  00130	48 8d 8d 30 04
-	00 00		 lea	 rcx, QWORD PTR $T11[rbp]
-  00137	48 8b f9	 mov	 rdi, rcx
-  0013a	48 8b f0	 mov	 rsi, rax
-  0013d	b9 10 00 00 00	 mov	 ecx, 16
-  00142	f3 a4		 rep movsb
-  00144	48 8b 85 70 04
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  0014b	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  0014e	48 8d 8d 30 04
-	00 00		 lea	 rcx, QWORD PTR $T11[rbp]
-  00155	ff 50 08	 call	 QWORD PTR [rax+8]
-  00158	85 c0		 test	 eax, eax
-  0015a	75 04		 jne	 SHORT $LN2@Collection
-
-; 144  : 		return 0;
-
-  0015c	33 c0		 xor	 eax, eax
-  0015e	eb 03		 jmp	 SHORT $LN1@Collection
-$LN2@Collection:
-
-; 145  : 	return output;
-
-  00160	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
-$LN1@Collection:
-
-; 146  : }
-
-  00163	48 8b f8	 mov	 rdi, rax
-  00166	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  0016a	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Collection_Count$rtcFrameData
-  00171	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00176	48 8b c7	 mov	 rax, rdi
-  00179	48 8b 8d 48 04
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00180	48 33 cd	 xor	 rcx, rbp
-  00183	e8 00 00 00 00	 call	 __security_check_cookie
-  00188	48 8d a5 50 04
-	00 00		 lea	 rsp, QWORD PTR [rbp+1104]
-  0018f	5f		 pop	 rdi
-  00190	5e		 pop	 rsi
-  00191	5d		 pop	 rbp
-  00192	c3		 ret	 0
-Collection_Count ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Capacity
-_TEXT	SEGMENT
-output$ = 4
-$S1$ = 40
-$S2$ = 120
-$S3$ = 168
-$S4$ = 216
-$S5$ = 272
-$T9 = 952
-$T10 = 1008
-__$ArrayPad$ = 1032
-collection$ = 1072
-Collection_Capacity PROC				; COMDAT
-
-; 135  : uint Collection_Capacity(COLLECTION collection) {
-
-$LN4:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	56		 push	 rsi
-  00007	57		 push	 rdi
-  00008	48 81 ec 30 04
-	00 00		 sub	 rsp, 1072		; 00000430H
-  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00014	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00019	b9 a4 00 00 00	 mov	 ecx, 164		; 000000a4H
-  0001e	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00023	f3 ab		 rep stosd
-  00025	48 8b 8c 24 58
-	04 00 00	 mov	 rcx, QWORD PTR [rsp+1112]
-  0002d	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00034	48 33 c5	 xor	 rax, rbp
-  00037	48 89 85 08 04
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  0003e	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  00045	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 136  : 	uint output;
-; 137  : 	if (!collection->_extensions->_methods(Request(INFO, P_(tTRG, collection) , P_(tCAPACITY, &output))))
-
-  0004a	48 8d 85 10 01
-	00 00		 lea	 rax, QWORD PTR $S5$[rbp]
-  00051	48 8b f8	 mov	 rdi, rax
-  00054	33 c0		 xor	 eax, eax
-  00056	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
-  0005b	f3 aa		 rep stosb
-  0005d	c7 45 78 01 00
-	00 00		 mov	 DWORD PTR $S2$[rbp], 1
-  00064	48 8b 85 30 04
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  0006b	48 89 85 80 00
-	00 00		 mov	 QWORD PTR $S2$[rbp+8], rax
-  00072	48 8d 45 28	 lea	 rax, QWORD PTR $S1$[rbp]
-  00076	48 8d 4d 78	 lea	 rcx, QWORD PTR $S2$[rbp]
-  0007a	48 8b f8	 mov	 rdi, rax
-  0007d	48 8b f1	 mov	 rsi, rcx
-  00080	b9 10 00 00 00	 mov	 ecx, 16
-  00085	f3 a4		 rep movsb
-  00087	c7 85 a8 00 00
-	00 08 00 00 00	 mov	 DWORD PTR $S3$[rbp], 8
-  00091	48 8d 45 04	 lea	 rax, QWORD PTR output$[rbp]
-  00095	48 89 85 b0 00
-	00 00		 mov	 QWORD PTR $S3$[rbp+8], rax
-  0009c	48 8d 45 38	 lea	 rax, QWORD PTR $S1$[rbp+16]
-  000a0	48 8d 8d a8 00
-	00 00		 lea	 rcx, QWORD PTR $S3$[rbp]
-  000a7	48 8b f8	 mov	 rdi, rax
-  000aa	48 8b f1	 mov	 rsi, rcx
-  000ad	b9 10 00 00 00	 mov	 ecx, 16
-  000b2	f3 a4		 rep movsb
-  000b4	c7 85 d8 00 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S4$[rbp], -2
-  000be	48 c7 85 e0 00
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S4$[rbp+8], 0
-  000c9	48 8d 45 48	 lea	 rax, QWORD PTR $S1$[rbp+32]
-  000cd	48 8d 8d d8 00
-	00 00		 lea	 rcx, QWORD PTR $S4$[rbp]
-  000d4	48 8b f8	 mov	 rdi, rax
-  000d7	48 8b f1	 mov	 rsi, rcx
-  000da	b9 10 00 00 00	 mov	 ecx, 16
-  000df	f3 a4		 rep movsb
-  000e1	4c 8d 8d 10 01
-	00 00		 lea	 r9, QWORD PTR $S5$[rbp]
-  000e8	4c 8d 45 28	 lea	 r8, QWORD PTR $S1$[rbp]
-  000ec	ba 04 00 00 00	 mov	 edx, 4
-  000f1	48 8d 8d b8 03
-	00 00		 lea	 rcx, QWORD PTR $T9[rbp]
-  000f8	e8 00 00 00 00	 call	 CreateRequest
-  000fd	48 8d 8d f0 03
-	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
-  00104	48 8b f9	 mov	 rdi, rcx
-  00107	48 8b f0	 mov	 rsi, rax
-  0010a	b9 10 00 00 00	 mov	 ecx, 16
-  0010f	f3 a4		 rep movsb
-  00111	48 8b 85 30 04
-	00 00		 mov	 rax, QWORD PTR collection$[rbp]
-  00118	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  0011b	48 8d 8d f0 03
-	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
-  00122	ff 50 08	 call	 QWORD PTR [rax+8]
-  00125	85 c0		 test	 eax, eax
-  00127	75 04		 jne	 SHORT $LN2@Collection
-
-; 138  : 		return 0;
-
-  00129	33 c0		 xor	 eax, eax
-  0012b	eb 03		 jmp	 SHORT $LN1@Collection
-$LN2@Collection:
-
-; 139  : 	return output;
-
-  0012d	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
-$LN1@Collection:
-
-; 140  : }
-
-  00130	48 8b f8	 mov	 rdi, rax
-  00133	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  00137	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Collection_Capacity$rtcFrameData
-  0013e	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00143	48 8b c7	 mov	 rax, rdi
-  00146	48 8b 8d 08 04
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  0014d	48 33 cd	 xor	 rcx, rbp
-  00150	e8 00 00 00 00	 call	 __security_check_cookie
-  00155	48 8d a5 10 04
-	00 00		 lea	 rsp, QWORD PTR [rbp+1040]
-  0015c	5f		 pop	 rdi
-  0015d	5e		 pop	 rsi
-  0015e	5d		 pop	 rbp
-  0015f	c3		 ret	 0
-Collection_Capacity ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
 ;	COMDAT Collection_Write
 _TEXT	SEGMENT
 trg$ = 224
@@ -2065,7 +1166,7 @@ src$ = 232
 index$ = 240
 Collection_Write PROC					; COMDAT
 
-; 340  : bool Collection_Write(COLLECTION trg, void* src, unsigned int index) {
+; 260  : bool Collection_Write(COLLECTION trg, void* src, unsigned int index) {
 
 $LN3:
   00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
@@ -2080,7 +1181,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
   00024	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 341  : 	return Collection_WriteSpan(trg, src, index, 1);
+; 261  : 	return Collection_WriteSpan(trg, src, index, 1);
 
   00029	41 b9 01 00 00
 	00		 mov	 r9d, 1
@@ -2092,7 +1193,7 @@ $LN3:
 	00 00		 mov	 rcx, QWORD PTR trg$[rbp]
   00044	e8 00 00 00 00	 call	 Collection_WriteSpan
 
-; 342  : }
+; 262  : }
 
   00049	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -2100,6 +1201,51 @@ $LN3:
   00051	5d		 pop	 rbp
   00052	c3		 ret	 0
 Collection_Write ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Read
+_TEXT	SEGMENT
+src$ = 224
+trg$ = 232
+index$ = 240
+Collection_Read PROC					; COMDAT
+
+; 257  : bool Collection_Read(COLLECTION src, void* trg, unsigned int index) {
+
+$LN3:
+  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000f	55		 push	 rbp
+  00010	57		 push	 rdi
+  00011	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  00018	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  0001d	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00024	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 258  : 	return Collection_ReadSpan(src, trg, index, 1);
+
+  00029	41 b9 01 00 00
+	00		 mov	 r9d, 1
+  0002f	44 8b 85 f0 00
+	00 00		 mov	 r8d, DWORD PTR index$[rbp]
+  00036	48 8b 95 e8 00
+	00 00		 mov	 rdx, QWORD PTR trg$[rbp]
+  0003d	48 8b 8d e0 00
+	00 00		 mov	 rcx, QWORD PTR src$[rbp]
+  00044	e8 00 00 00 00	 call	 Collection_ReadSpan
+
+; 259  : }
+
+  00049	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  00050	5f		 pop	 rdi
+  00051	5d		 pop	 rbp
+  00052	c3		 ret	 0
+Collection_Read ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tCollection.c
@@ -2114,7 +1260,7 @@ start$ = 368
 count$ = 376
 Collection_WriteSpan PROC				; COMDAT
 
-; 333  : bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count) {
+; 253  : bool Collection_WriteSpan(COLLECTION trg, void* src, unsigned int start, unsigned int count) {
 
 $LN3:
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
@@ -2142,7 +1288,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
   00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 334  : 	Bucket srcBucket = Collection_RawBucket(trg, src, count);
+; 254  : 	Bucket srcBucket = Collection_RawBucket(trg, src, count);
 
   00059	44 8b 8d 78 01
 	00 00		 mov	 r9d, DWORD PTR count$[rbp]
@@ -2159,7 +1305,7 @@ $LN3:
   00084	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
   00089	f3 a4		 rep movsb
 
-; 335  : 	return Collection_Transcribe(trg, &srcBucket, start, 0, count);
+; 255  : 	return Collection_Transcribe(trg, &srcBucket, start, 0, count);
 
   0008b	8b 85 78 01 00
 	00		 mov	 eax, DWORD PTR count$[rbp]
@@ -2172,7 +1318,7 @@ $LN3:
 	00 00		 mov	 rcx, QWORD PTR trg$[rbp]
   000aa	e8 00 00 00 00	 call	 Collection_Transcribe
 
-; 336  : }
+; 256  : }
 
   000af	48 8b f8	 mov	 rdi, rax
   000b2	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
@@ -2194,163 +1340,27 @@ Collection_WriteSpan ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_Read
-_TEXT	SEGMENT
-src$ = 224
-trg$ = 232
-index$ = 240
-Collection_Read PROC					; COMDAT
-
-; 337  : bool Collection_Read(COLLECTION src, void* trg, unsigned int index) {
-
-$LN3:
-  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
-  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  0000f	55		 push	 rbp
-  00010	57		 push	 rdi
-  00011	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  00018	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0001d	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  00024	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 338  : 	return Collection_ReadSpan(src, trg, index, 1);
-
-  00029	41 b9 01 00 00
-	00		 mov	 r9d, 1
-  0002f	44 8b 85 f0 00
-	00 00		 mov	 r8d, DWORD PTR index$[rbp]
-  00036	48 8b 95 e8 00
-	00 00		 mov	 rdx, QWORD PTR trg$[rbp]
-  0003d	48 8b 8d e0 00
-	00 00		 mov	 rcx, QWORD PTR src$[rbp]
-  00044	e8 00 00 00 00	 call	 Collection_ReadSpan
-
-; 339  : }
-
-  00049	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00050	5f		 pop	 rdi
-  00051	5d		 pop	 rbp
-  00052	c3		 ret	 0
-Collection_Read ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
-;	COMDAT Collection_ReadSpan
-_TEXT	SEGMENT
-trgBucket$ = 8
-$T4 = 264
-__$ArrayPad$ = 312
-src$ = 352
-trg$ = 360
-start$ = 368
-count$ = 376
-Collection_ReadSpan PROC				; COMDAT
-
-; 329  : bool Collection_ReadSpan(COLLECTION src, void* trg, unsigned int start, unsigned int count) {
-
-$LN3:
-  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
-  00005	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
-  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00014	55		 push	 rbp
-  00015	56		 push	 rsi
-  00016	57		 push	 rdi
-  00017	48 81 ec 70 01
-	00 00		 sub	 rsp, 368		; 00000170H
-  0001e	48 8d 6c 24 30	 lea	 rbp, QWORD PTR [rsp+48]
-  00023	48 8d 7c 24 30	 lea	 rdi, QWORD PTR [rsp+48]
-  00028	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
-  0002d	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00032	f3 ab		 rep stosd
-  00034	48 8b 8c 24 98
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+408]
-  0003c	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00043	48 33 c5	 xor	 rax, rbp
-  00046	48 89 85 38 01
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  0004d	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
-  00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 330  : 	Bucket trgBucket = Collection_RawBucket(src, trg, count);
-
-  00059	44 8b 8d 78 01
-	00 00		 mov	 r9d, DWORD PTR count$[rbp]
-  00060	4c 8b 85 68 01
-	00 00		 mov	 r8, QWORD PTR trg$[rbp]
-  00067	48 8b 95 60 01
-	00 00		 mov	 rdx, QWORD PTR src$[rbp]
-  0006e	48 8d 8d 08 01
-	00 00		 lea	 rcx, QWORD PTR $T4[rbp]
-  00075	e8 00 00 00 00	 call	 Collection_RawBucket
-  0007a	48 8d 4d 08	 lea	 rcx, QWORD PTR trgBucket$[rbp]
-  0007e	48 8b f9	 mov	 rdi, rcx
-  00081	48 8b f0	 mov	 rsi, rax
-  00084	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
-  00089	f3 a4		 rep movsb
-
-; 331  : 	return Collection_Transcribe(&trgBucket, src, 0, start, count);
-
-  0008b	8b 85 78 01 00
-	00		 mov	 eax, DWORD PTR count$[rbp]
-  00091	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
-  00095	44 8b 8d 70 01
-	00 00		 mov	 r9d, DWORD PTR start$[rbp]
-  0009c	45 33 c0	 xor	 r8d, r8d
-  0009f	48 8b 95 60 01
-	00 00		 mov	 rdx, QWORD PTR src$[rbp]
-  000a6	48 8d 4d 08	 lea	 rcx, QWORD PTR trgBucket$[rbp]
-  000aa	e8 00 00 00 00	 call	 Collection_Transcribe
-
-; 332  : }
-
-  000af	48 8b f8	 mov	 rdi, rax
-  000b2	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
-  000b6	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:Collection_ReadSpan$rtcFrameData
-  000bd	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  000c2	48 8b c7	 mov	 rax, rdi
-  000c5	48 8b 8d 38 01
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  000cc	48 33 cd	 xor	 rcx, rbp
-  000cf	e8 00 00 00 00	 call	 __security_check_cookie
-  000d4	48 8d a5 40 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+320]
-  000db	5f		 pop	 rdi
-  000dc	5e		 pop	 rsi
-  000dd	5d		 pop	 rbp
-  000de	c3		 ret	 0
-Collection_ReadSpan ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tCollection.c
 ;	COMDAT Collection_Transcribe
 _TEXT	SEGMENT
 testNode$ = 8
 testBucket$ = 40
 trgChunk$ = 72
 trgReq$ = 120
-$S12$ = 176
-$S13$ = 264
-$S14$ = 312
-$S15$ = 360
-$S16$ = 408
-$S17$ = 464
+$S21$ = 176
+$S22$ = 264
+$S23$ = 312
+$S24$ = 360
+$S25$ = 408
+$S26$ = 464
 trgOffset$ = 760
 srcChunk$ = 792
 srcReq$ = 840
-$S18$ = 896
-$S19$ = 984
-$S20$ = 1032
-$S21$ = 1080
-$S22$ = 1128
-$S23$ = 1184
+$S27$ = 896
+$S28$ = 984
+$S29$ = 1032
+$S30$ = 1080
+$S31$ = 1128
+$S32$ = 1184
 srcOffset$ = 1480
 size$ = 1512
 i$19 = 1540
@@ -2367,7 +1377,7 @@ srcStart$ = 2600
 count$ = 2608
 Collection_Transcribe PROC				; COMDAT
 
-; 209  : bool Collection_Transcribe(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
+; 263  : bool Collection_Transcribe(COLLECTION trg, COLLECTION src, unsigned int trgStart, unsigned int srcStart, unsigned int count) {
 
 $LN9:
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
@@ -2395,8 +1405,8 @@ $LN9:
 	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
   00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 210  : 
-; 211  : 	if (!Collection_TranscribeCompare(trg->_extensions, src->_extensions))
+; 264  : 
+; 265  : 	if (!Collection_TranscribeCompare(trg->_extensions, src->_extensions))
 
   00059	48 8b 85 18 0a
 	00 00		 mov	 rax, QWORD PTR src$[rbp]
@@ -2408,14 +1418,14 @@ $LN9:
   00072	85 c0		 test	 eax, eax
   00074	75 07		 jne	 SHORT $LN5@Collection
 
-; 212  : 		return false;
+; 266  : 		return false;
 
   00076	33 c0		 xor	 eax, eax
   00078	e9 ef 03 00 00	 jmp	 $LN1@Collection
 $LN5@Collection:
 
-; 213  : 
-; 214  : 	if (!Collection_Request(trg) || !Collection_Request(src))
+; 267  : 
+; 268  : 	if (!Collection_Request(trg) || !Collection_Request(src))
 
   0007d	48 8b 8d 10 0a
 	00 00		 mov	 rcx, QWORD PTR trg$[rbp]
@@ -2429,92 +1439,92 @@ $LN5@Collection:
   0009b	75 07		 jne	 SHORT $LN6@Collection
 $LN7@Collection:
 
-; 215  : 		return false;
+; 269  : 		return false;
 
   0009d	33 c0		 xor	 eax, eax
   0009f	e9 c8 03 00 00	 jmp	 $LN1@Collection
 $LN6@Collection:
 
-; 216  : 
-; 217  : 	BarrelNode* testNode = src;
+; 270  : 
+; 271  : 	BarrelNode* testNode = src;
 
   000a4	48 8b 85 18 0a
 	00 00		 mov	 rax, QWORD PTR src$[rbp]
   000ab	48 89 45 08	 mov	 QWORD PTR testNode$[rbp], rax
 
-; 218  : 	Bucket* testBucket = trg;
+; 272  : 	Bucket* testBucket = trg;
 
   000af	48 8b 85 10 0a
 	00 00		 mov	 rax, QWORD PTR trg$[rbp]
   000b6	48 89 45 28	 mov	 QWORD PTR testBucket$[rbp], rax
 
-; 219  : 
-; 220  : 	Chunk trgChunk;
-; 221  : 	REQUEST trgReq = Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, trg), P_(tTRG, &trgChunk));
+; 273  : 
+; 274  : 	Chunk trgChunk;
+; 275  : 	REQUEST trgReq = Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, trg), P_(tTRG, &trgChunk));
 
   000ba	48 8d 85 d0 01
-	00 00		 lea	 rax, QWORD PTR $S17$[rbp]
+	00 00		 lea	 rax, QWORD PTR $S26$[rbp]
   000c1	48 8b f8	 mov	 rdi, rax
   000c4	33 c0		 xor	 eax, eax
   000c6	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
   000cb	f3 aa		 rep stosb
   000cd	c7 85 08 01 00
-	00 00 00 00 00	 mov	 DWORD PTR $S13$[rbp], 0
+	00 00 00 00 00	 mov	 DWORD PTR $S22$[rbp], 0
   000d7	48 c7 85 10 01
 	00 00 05 00 00
-	00		 mov	 QWORD PTR $S13$[rbp+8], 5
+	00		 mov	 QWORD PTR $S22$[rbp+8], 5
   000e2	48 8d 85 b0 00
-	00 00		 lea	 rax, QWORD PTR $S12$[rbp]
+	00 00		 lea	 rax, QWORD PTR $S21$[rbp]
   000e9	48 8d 8d 08 01
-	00 00		 lea	 rcx, QWORD PTR $S13$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S22$[rbp]
   000f0	48 8b f8	 mov	 rdi, rax
   000f3	48 8b f1	 mov	 rsi, rcx
   000f6	b9 10 00 00 00	 mov	 ecx, 16
   000fb	f3 a4		 rep movsb
   000fd	c7 85 38 01 00
-	00 02 00 00 00	 mov	 DWORD PTR $S14$[rbp], 2
+	00 02 00 00 00	 mov	 DWORD PTR $S23$[rbp], 2
   00107	48 8b 85 10 0a
 	00 00		 mov	 rax, QWORD PTR trg$[rbp]
   0010e	48 89 85 40 01
-	00 00		 mov	 QWORD PTR $S14$[rbp+8], rax
+	00 00		 mov	 QWORD PTR $S23$[rbp+8], rax
   00115	48 8d 85 c0 00
-	00 00		 lea	 rax, QWORD PTR $S12$[rbp+16]
+	00 00		 lea	 rax, QWORD PTR $S21$[rbp+16]
   0011c	48 8d 8d 38 01
-	00 00		 lea	 rcx, QWORD PTR $S14$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S23$[rbp]
   00123	48 8b f8	 mov	 rdi, rax
   00126	48 8b f1	 mov	 rsi, rcx
   00129	b9 10 00 00 00	 mov	 ecx, 16
   0012e	f3 a4		 rep movsb
   00130	c7 85 68 01 00
-	00 01 00 00 00	 mov	 DWORD PTR $S15$[rbp], 1
+	00 01 00 00 00	 mov	 DWORD PTR $S24$[rbp], 1
   0013a	48 8d 45 48	 lea	 rax, QWORD PTR trgChunk$[rbp]
   0013e	48 89 85 70 01
-	00 00		 mov	 QWORD PTR $S15$[rbp+8], rax
+	00 00		 mov	 QWORD PTR $S24$[rbp+8], rax
   00145	48 8d 85 d0 00
-	00 00		 lea	 rax, QWORD PTR $S12$[rbp+32]
+	00 00		 lea	 rax, QWORD PTR $S21$[rbp+32]
   0014c	48 8d 8d 68 01
-	00 00		 lea	 rcx, QWORD PTR $S15$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S24$[rbp]
   00153	48 8b f8	 mov	 rdi, rax
   00156	48 8b f1	 mov	 rsi, rcx
   00159	b9 10 00 00 00	 mov	 ecx, 16
   0015e	f3 a4		 rep movsb
   00160	c7 85 98 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S16$[rbp], -2
+	00 fe ff ff ff	 mov	 DWORD PTR $S25$[rbp], -2
   0016a	48 c7 85 a0 01
 	00 00 00 00 00
-	00		 mov	 QWORD PTR $S16$[rbp+8], 0
+	00		 mov	 QWORD PTR $S25$[rbp+8], 0
   00175	48 8d 85 e0 00
-	00 00		 lea	 rax, QWORD PTR $S12$[rbp+48]
+	00 00		 lea	 rax, QWORD PTR $S21$[rbp+48]
   0017c	48 8d 8d 98 01
-	00 00		 lea	 rcx, QWORD PTR $S16$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S25$[rbp]
   00183	48 8b f8	 mov	 rdi, rax
   00186	48 8b f1	 mov	 rsi, rcx
   00189	b9 10 00 00 00	 mov	 ecx, 16
   0018e	f3 a4		 rep movsb
   00190	4c 8d 8d d0 01
-	00 00		 lea	 r9, QWORD PTR $S17$[rbp]
+	00 00		 lea	 r9, QWORD PTR $S26$[rbp]
   00197	4c 8d 85 b0 00
-	00 00		 lea	 r8, QWORD PTR $S12$[rbp]
+	00 00		 lea	 r8, QWORD PTR $S21$[rbp]
   0019e	ba 08 00 00 00	 mov	 edx, 8
   001a3	48 8d 8d 28 09
 	00 00		 lea	 rcx, QWORD PTR $T20[rbp]
@@ -2525,7 +1535,7 @@ $LN6@Collection:
   001b9	b9 10 00 00 00	 mov	 ecx, 16
   001be	f3 a4		 rep movsb
 
-; 222  : 	trg->_extensions->_methods(trgReq);
+; 276  : 	trg->_extensions->_methods(trgReq);
 
   001c0	48 8d 85 90 09
 	00 00		 lea	 rax, QWORD PTR $T22[rbp]
@@ -2541,7 +1551,7 @@ $LN6@Collection:
 	00 00		 lea	 rcx, QWORD PTR $T22[rbp]
   001e9	ff 50 08	 call	 QWORD PTR [rax+8]
 
-; 223  : 	size_t trgOffset = trgReq._params[tSIZE];
+; 277  : 	size_t trgOffset = trgReq._params[tSIZE];
 
   001ec	b8 08 00 00 00	 mov	 eax, 8
   001f1	48 6b c0 06	 imul	 rax, rax, 6
@@ -2551,74 +1561,74 @@ $LN6@Collection:
   00200	48 89 85 f8 02
 	00 00		 mov	 QWORD PTR trgOffset$[rbp], rax
 
-; 224  : 
-; 225  : 	Chunk srcChunk;
-; 226  : 	REQUEST srcReq = Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, src), P_(tTRG, &srcChunk));
+; 278  : 
+; 279  : 	Chunk srcChunk;
+; 280  : 	REQUEST srcReq = Request(MANAGE, P_(tVARIANT, tCHUNK), P_(tSRC, src), P_(tTRG, &srcChunk));
 
   00207	48 8d 85 a0 04
-	00 00		 lea	 rax, QWORD PTR $S23$[rbp]
+	00 00		 lea	 rax, QWORD PTR $S32$[rbp]
   0020e	48 8b f8	 mov	 rdi, rax
   00211	33 c0		 xor	 eax, eax
   00213	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
   00218	f3 aa		 rep stosb
   0021a	c7 85 d8 03 00
-	00 00 00 00 00	 mov	 DWORD PTR $S19$[rbp], 0
+	00 00 00 00 00	 mov	 DWORD PTR $S28$[rbp], 0
   00224	48 c7 85 e0 03
 	00 00 05 00 00
-	00		 mov	 QWORD PTR $S19$[rbp+8], 5
+	00		 mov	 QWORD PTR $S28$[rbp+8], 5
   0022f	48 8d 85 80 03
-	00 00		 lea	 rax, QWORD PTR $S18$[rbp]
+	00 00		 lea	 rax, QWORD PTR $S27$[rbp]
   00236	48 8d 8d d8 03
-	00 00		 lea	 rcx, QWORD PTR $S19$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S28$[rbp]
   0023d	48 8b f8	 mov	 rdi, rax
   00240	48 8b f1	 mov	 rsi, rcx
   00243	b9 10 00 00 00	 mov	 ecx, 16
   00248	f3 a4		 rep movsb
   0024a	c7 85 08 04 00
-	00 02 00 00 00	 mov	 DWORD PTR $S20$[rbp], 2
+	00 02 00 00 00	 mov	 DWORD PTR $S29$[rbp], 2
   00254	48 8b 85 18 0a
 	00 00		 mov	 rax, QWORD PTR src$[rbp]
   0025b	48 89 85 10 04
-	00 00		 mov	 QWORD PTR $S20$[rbp+8], rax
+	00 00		 mov	 QWORD PTR $S29$[rbp+8], rax
   00262	48 8d 85 90 03
-	00 00		 lea	 rax, QWORD PTR $S18$[rbp+16]
+	00 00		 lea	 rax, QWORD PTR $S27$[rbp+16]
   00269	48 8d 8d 08 04
-	00 00		 lea	 rcx, QWORD PTR $S20$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S29$[rbp]
   00270	48 8b f8	 mov	 rdi, rax
   00273	48 8b f1	 mov	 rsi, rcx
   00276	b9 10 00 00 00	 mov	 ecx, 16
   0027b	f3 a4		 rep movsb
   0027d	c7 85 38 04 00
-	00 01 00 00 00	 mov	 DWORD PTR $S21$[rbp], 1
+	00 01 00 00 00	 mov	 DWORD PTR $S30$[rbp], 1
   00287	48 8d 85 18 03
 	00 00		 lea	 rax, QWORD PTR srcChunk$[rbp]
   0028e	48 89 85 40 04
-	00 00		 mov	 QWORD PTR $S21$[rbp+8], rax
+	00 00		 mov	 QWORD PTR $S30$[rbp+8], rax
   00295	48 8d 85 a0 03
-	00 00		 lea	 rax, QWORD PTR $S18$[rbp+32]
+	00 00		 lea	 rax, QWORD PTR $S27$[rbp+32]
   0029c	48 8d 8d 38 04
-	00 00		 lea	 rcx, QWORD PTR $S21$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S30$[rbp]
   002a3	48 8b f8	 mov	 rdi, rax
   002a6	48 8b f1	 mov	 rsi, rcx
   002a9	b9 10 00 00 00	 mov	 ecx, 16
   002ae	f3 a4		 rep movsb
   002b0	c7 85 68 04 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S22$[rbp], -2
+	00 fe ff ff ff	 mov	 DWORD PTR $S31$[rbp], -2
   002ba	48 c7 85 70 04
 	00 00 00 00 00
-	00		 mov	 QWORD PTR $S22$[rbp+8], 0
+	00		 mov	 QWORD PTR $S31$[rbp+8], 0
   002c5	48 8d 85 b0 03
-	00 00		 lea	 rax, QWORD PTR $S18$[rbp+48]
+	00 00		 lea	 rax, QWORD PTR $S27$[rbp+48]
   002cc	48 8d 8d 68 04
-	00 00		 lea	 rcx, QWORD PTR $S22$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S31$[rbp]
   002d3	48 8b f8	 mov	 rdi, rax
   002d6	48 8b f1	 mov	 rsi, rcx
   002d9	b9 10 00 00 00	 mov	 ecx, 16
   002de	f3 a4		 rep movsb
   002e0	4c 8d 8d a0 04
-	00 00		 lea	 r9, QWORD PTR $S23$[rbp]
+	00 00		 lea	 r9, QWORD PTR $S32$[rbp]
   002e7	4c 8d 85 80 03
-	00 00		 lea	 r8, QWORD PTR $S18$[rbp]
+	00 00		 lea	 r8, QWORD PTR $S27$[rbp]
   002ee	ba 08 00 00 00	 mov	 edx, 8
   002f3	48 8d 8d 58 09
 	00 00		 lea	 rcx, QWORD PTR $T21[rbp]
@@ -2630,7 +1640,7 @@ $LN6@Collection:
   0030c	b9 10 00 00 00	 mov	 ecx, 16
   00311	f3 a4		 rep movsb
 
-; 227  : 	src->_extensions->_methods(srcReq);
+; 281  : 	src->_extensions->_methods(srcReq);
 
   00313	48 8d 85 c0 09
 	00 00		 lea	 rax, QWORD PTR $T23[rbp]
@@ -2647,7 +1657,7 @@ $LN6@Collection:
 	00 00		 lea	 rcx, QWORD PTR $T23[rbp]
   0033f	ff 50 08	 call	 QWORD PTR [rax+8]
 
-; 228  : 	size_t srcOffset = srcReq._params[tSIZE];
+; 282  : 	size_t srcOffset = srcReq._params[tSIZE];
 
   00342	b8 08 00 00 00	 mov	 eax, 8
   00347	48 6b c0 06	 imul	 rax, rax, 6
@@ -2657,8 +1667,8 @@ $LN6@Collection:
   00356	48 89 85 c8 05
 	00 00		 mov	 QWORD PTR srcOffset$[rbp], rax
 
-; 229  : 
-; 230  : 	size_t size = trg->_extensions->_type->_size;
+; 283  : 
+; 284  : 	size_t size = trg->_extensions->_type->_size;
 
   0035d	48 8b 85 10 0a
 	00 00		 mov	 rax, QWORD PTR trg$[rbp]
@@ -2668,8 +1678,8 @@ $LN6@Collection:
   0036e	48 89 85 e8 05
 	00 00		 mov	 QWORD PTR size$[rbp], rax
 
-; 231  : 
-; 232  : 	for (int i = 0; i < count; i++) {
+; 285  : 
+; 286  : 	for (int i = 0; i < count; i++) {
 
   00375	c7 85 04 06 00
 	00 00 00 00 00	 mov	 DWORD PTR i$19[rbp], 0
@@ -2688,7 +1698,7 @@ $LN4@Collection:
   0039b	0f 83 ae 00 00
 	00		 jae	 $LN3@Collection
 
-; 233  : 		rawTranscribe(
+; 287  : 		rawTranscribe(
 
   003a1	8b 85 04 06 00
 	00		 mov	 eax, DWORD PTR i$19[rbp]
@@ -2745,34 +1755,34 @@ $LN4@Collection:
   00442	48 8b c8	 mov	 rcx, rax
   00445	e8 00 00 00 00	 call	 rawTranscribe
 
-; 234  : 			trgChunk._head + ((trgOffset + (size * (trgStart + i))) % trgChunk._size),
-; 235  : 			srcChunk._head + ((srcOffset + (size * (srcStart + i))) % srcChunk._size),
-; 236  : 			size);
-; 237  : 	}
+; 288  : 			trgChunk._head + ((trgOffset + (size * (trgStart + i))) % trgChunk._size),
+; 289  : 			srcChunk._head + ((srcOffset + (size * (srcStart + i))) % srcChunk._size),
+; 290  : 			size);
+; 291  : 	}
 
   0044a	e9 32 ff ff ff	 jmp	 $LN2@Collection
 $LN3@Collection:
 
-; 238  : 
-; 239  : 	Collection_Release(trg);
+; 292  : 
+; 293  : 	Collection_Release(trg);
 
   0044f	48 8b 8d 10 0a
 	00 00		 mov	 rcx, QWORD PTR trg$[rbp]
   00456	e8 00 00 00 00	 call	 Collection_Release
 
-; 240  : 	Collection_Release(src);
+; 294  : 	Collection_Release(src);
 
   0045b	48 8b 8d 18 0a
 	00 00		 mov	 rcx, QWORD PTR src$[rbp]
   00462	e8 00 00 00 00	 call	 Collection_Release
 
-; 241  : 
-; 242  : 	return true;
+; 295  : 
+; 296  : 	return true;
 
   00467	b8 01 00 00 00	 mov	 eax, 1
 $LN1@Collection:
 
-; 243  : }
+; 297  : }
 
   0046c	48 8b f8	 mov	 rdi, rax
   0046f	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
@@ -2791,5 +1801,1327 @@ $LN1@Collection:
   0049a	5d		 pop	 rbp
   0049b	c3		 ret	 0
 Collection_Transcribe ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_ReadSpan
+_TEXT	SEGMENT
+trgBucket$ = 8
+$T4 = 264
+__$ArrayPad$ = 312
+src$ = 352
+trg$ = 360
+start$ = 368
+count$ = 376
+Collection_ReadSpan PROC				; COMDAT
+
+; 249  : bool Collection_ReadSpan(COLLECTION src, void* trg, unsigned int start, unsigned int count) {
+
+$LN3:
+  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
+  00005	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00014	55		 push	 rbp
+  00015	56		 push	 rsi
+  00016	57		 push	 rdi
+  00017	48 81 ec 70 01
+	00 00		 sub	 rsp, 368		; 00000170H
+  0001e	48 8d 6c 24 30	 lea	 rbp, QWORD PTR [rsp+48]
+  00023	48 8d 7c 24 30	 lea	 rdi, QWORD PTR [rsp+48]
+  00028	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
+  0002d	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00032	f3 ab		 rep stosd
+  00034	48 8b 8c 24 98
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+408]
+  0003c	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  00043	48 33 c5	 xor	 rax, rbp
+  00046	48 89 85 38 01
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  0004d	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 250  : 	Bucket trgBucket = Collection_RawBucket(src, trg, count);
+
+  00059	44 8b 8d 78 01
+	00 00		 mov	 r9d, DWORD PTR count$[rbp]
+  00060	4c 8b 85 68 01
+	00 00		 mov	 r8, QWORD PTR trg$[rbp]
+  00067	48 8b 95 60 01
+	00 00		 mov	 rdx, QWORD PTR src$[rbp]
+  0006e	48 8d 8d 08 01
+	00 00		 lea	 rcx, QWORD PTR $T4[rbp]
+  00075	e8 00 00 00 00	 call	 Collection_RawBucket
+  0007a	48 8d 4d 08	 lea	 rcx, QWORD PTR trgBucket$[rbp]
+  0007e	48 8b f9	 mov	 rdi, rcx
+  00081	48 8b f0	 mov	 rsi, rax
+  00084	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
+  00089	f3 a4		 rep movsb
+
+; 251  : 	return Collection_Transcribe(&trgBucket, src, 0, start, count);
+
+  0008b	8b 85 78 01 00
+	00		 mov	 eax, DWORD PTR count$[rbp]
+  00091	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
+  00095	44 8b 8d 70 01
+	00 00		 mov	 r9d, DWORD PTR start$[rbp]
+  0009c	45 33 c0	 xor	 r8d, r8d
+  0009f	48 8b 95 60 01
+	00 00		 mov	 rdx, QWORD PTR src$[rbp]
+  000a6	48 8d 4d 08	 lea	 rcx, QWORD PTR trgBucket$[rbp]
+  000aa	e8 00 00 00 00	 call	 Collection_Transcribe
+
+; 252  : }
+
+  000af	48 8b f8	 mov	 rdi, rax
+  000b2	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
+  000b6	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_ReadSpan$rtcFrameData
+  000bd	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  000c2	48 8b c7	 mov	 rax, rdi
+  000c5	48 8b 8d 38 01
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  000cc	48 33 cd	 xor	 rcx, rbp
+  000cf	e8 00 00 00 00	 call	 __security_check_cookie
+  000d4	48 8d a5 40 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+320]
+  000db	5f		 pop	 rdi
+  000dc	5e		 pop	 rsi
+  000dd	5d		 pop	 rbp
+  000de	c3		 ret	 0
+Collection_ReadSpan ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_ReadOnly
+_TEXT	SEGMENT
+collection$ = 224
+Collection_ReadOnly PROC				; COMDAT
+
+; 246  : bool Collection_ReadOnly(COLLECTION collection) {
+
+$LN3:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 247  : 	return collection->_extensions->_memFlags & READ_ONLY;
+
+  0001f	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  00026	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  00029	8b 40 10	 mov	 eax, DWORD PTR [rax+16]
+  0002c	83 e0 01	 and	 eax, 1
+
+; 248  : }
+
+  0002f	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  00036	5f		 pop	 rdi
+  00037	5d		 pop	 rbp
+  00038	c3		 ret	 0
+Collection_ReadOnly ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Resize
+_TEXT	SEGMENT
+$S15$ = 16
+$S16$ = 104
+$S17$ = 152
+$S18$ = 200
+$S19$ = 248
+$S20$ = 304
+$T9 = 984
+$T10 = 1040
+__$ArrayPad$ = 1064
+collection$ = 1104
+count$ = 1112
+Collection_Resize PROC					; COMDAT
+
+; 243  : bool Collection_Resize(COLLECTION collection, unsigned int count) {
+
+$LN3:
+  00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  00004	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00009	55		 push	 rbp
+  0000a	56		 push	 rsi
+  0000b	57		 push	 rdi
+  0000c	48 81 ec 50 04
+	00 00		 sub	 rsp, 1104		; 00000450H
+  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00018	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  0001d	b9 ac 00 00 00	 mov	 ecx, 172		; 000000acH
+  00022	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00027	f3 ab		 rep stosd
+  00029	48 8b 8c 24 78
+	04 00 00	 mov	 rcx, QWORD PTR [rsp+1144]
+  00031	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  00038	48 33 c5	 xor	 rax, rbp
+  0003b	48 89 85 28 04
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  00042	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00049	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 244  : 	return collection->_extensions->_methods(Request(MANAGE, P_(tVARIANT, tRESIZE), P_(tTRG, collection), P_(tCOUNT, count)));
+
+  0004e	48 8d 85 30 01
+	00 00		 lea	 rax, QWORD PTR $S20$[rbp]
+  00055	48 8b f8	 mov	 rdi, rax
+  00058	33 c0		 xor	 eax, eax
+  0005a	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
+  0005f	f3 aa		 rep stosb
+  00061	c7 45 68 00 00
+	00 00		 mov	 DWORD PTR $S16$[rbp], 0
+  00068	48 c7 45 70 14
+	00 00 00	 mov	 QWORD PTR $S16$[rbp+8], 20
+  00070	48 8d 45 10	 lea	 rax, QWORD PTR $S15$[rbp]
+  00074	48 8d 4d 68	 lea	 rcx, QWORD PTR $S16$[rbp]
+  00078	48 8b f8	 mov	 rdi, rax
+  0007b	48 8b f1	 mov	 rsi, rcx
+  0007e	b9 10 00 00 00	 mov	 ecx, 16
+  00083	f3 a4		 rep movsb
+  00085	c7 85 98 00 00
+	00 01 00 00 00	 mov	 DWORD PTR $S17$[rbp], 1
+  0008f	48 8b 85 50 04
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  00096	48 89 85 a0 00
+	00 00		 mov	 QWORD PTR $S17$[rbp+8], rax
+  0009d	48 8d 45 20	 lea	 rax, QWORD PTR $S15$[rbp+16]
+  000a1	48 8d 8d 98 00
+	00 00		 lea	 rcx, QWORD PTR $S17$[rbp]
+  000a8	48 8b f8	 mov	 rdi, rax
+  000ab	48 8b f1	 mov	 rsi, rcx
+  000ae	b9 10 00 00 00	 mov	 ecx, 16
+  000b3	f3 a4		 rep movsb
+  000b5	c7 85 c8 00 00
+	00 07 00 00 00	 mov	 DWORD PTR $S18$[rbp], 7
+  000bf	8b 85 58 04 00
+	00		 mov	 eax, DWORD PTR count$[rbp]
+  000c5	48 89 85 d0 00
+	00 00		 mov	 QWORD PTR $S18$[rbp+8], rax
+  000cc	48 8d 45 30	 lea	 rax, QWORD PTR $S15$[rbp+32]
+  000d0	48 8d 8d c8 00
+	00 00		 lea	 rcx, QWORD PTR $S18$[rbp]
+  000d7	48 8b f8	 mov	 rdi, rax
+  000da	48 8b f1	 mov	 rsi, rcx
+  000dd	b9 10 00 00 00	 mov	 ecx, 16
+  000e2	f3 a4		 rep movsb
+  000e4	c7 85 f8 00 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S19$[rbp], -2
+  000ee	48 c7 85 00 01
+	00 00 00 00 00
+	00		 mov	 QWORD PTR $S19$[rbp+8], 0
+  000f9	48 8d 45 40	 lea	 rax, QWORD PTR $S15$[rbp+48]
+  000fd	48 8d 8d f8 00
+	00 00		 lea	 rcx, QWORD PTR $S19$[rbp]
+  00104	48 8b f8	 mov	 rdi, rax
+  00107	48 8b f1	 mov	 rsi, rcx
+  0010a	b9 10 00 00 00	 mov	 ecx, 16
+  0010f	f3 a4		 rep movsb
+  00111	4c 8d 8d 30 01
+	00 00		 lea	 r9, QWORD PTR $S20$[rbp]
+  00118	4c 8d 45 10	 lea	 r8, QWORD PTR $S15$[rbp]
+  0011c	ba 08 00 00 00	 mov	 edx, 8
+  00121	48 8d 8d d8 03
+	00 00		 lea	 rcx, QWORD PTR $T9[rbp]
+  00128	e8 00 00 00 00	 call	 CreateRequest
+  0012d	48 8d 8d 10 04
+	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
+  00134	48 8b f9	 mov	 rdi, rcx
+  00137	48 8b f0	 mov	 rsi, rax
+  0013a	b9 10 00 00 00	 mov	 ecx, 16
+  0013f	f3 a4		 rep movsb
+  00141	48 8b 85 50 04
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  00148	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  0014b	48 8d 8d 10 04
+	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
+  00152	ff 50 08	 call	 QWORD PTR [rax+8]
+
+; 245  : }
+
+  00155	48 8b f8	 mov	 rdi, rax
+  00158	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  0015c	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_Resize$rtcFrameData
+  00163	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  00168	48 8b c7	 mov	 rax, rdi
+  0016b	48 8b 8d 28 04
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  00172	48 33 cd	 xor	 rcx, rbp
+  00175	e8 00 00 00 00	 call	 __security_check_cookie
+  0017a	48 8d a5 30 04
+	00 00		 lea	 rsp, QWORD PTR [rbp+1072]
+  00181	5f		 pop	 rdi
+  00182	5e		 pop	 rsi
+  00183	5d		 pop	 rbp
+  00184	c3		 ret	 0
+Collection_Resize ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Count
+_TEXT	SEGMENT
+output$ = 4
+$S9$ = 48
+$S10$ = 136
+$S11$ = 184
+$S12$ = 232
+$S13$ = 280
+$S14$ = 336
+$T10 = 1016
+$T11 = 1072
+__$ArrayPad$ = 1096
+collection$ = 1136
+Collection_Count PROC					; COMDAT
+
+; 236  : uint Collection_Count(COLLECTION collection) {
+
+$LN4:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	56		 push	 rsi
+  00007	57		 push	 rdi
+  00008	48 81 ec 70 04
+	00 00		 sub	 rsp, 1136		; 00000470H
+  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00014	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00019	b9 b4 00 00 00	 mov	 ecx, 180		; 000000b4H
+  0001e	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00023	f3 ab		 rep stosd
+  00025	48 8b 8c 24 98
+	04 00 00	 mov	 rcx, QWORD PTR [rsp+1176]
+  0002d	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  00034	48 33 c5	 xor	 rax, rbp
+  00037	48 89 85 48 04
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  0003e	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00045	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 237  : 	uint output;
+; 238  : 	if (!collection->_extensions->_methods(Request(INFO, P_(tVARIANT, tCOUNT), P_(tSRC, collection), P_(tTRG, &output))))
+
+  0004a	48 8d 85 50 01
+	00 00		 lea	 rax, QWORD PTR $S14$[rbp]
+  00051	48 8b f8	 mov	 rdi, rax
+  00054	33 c0		 xor	 eax, eax
+  00056	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
+  0005b	f3 aa		 rep stosb
+  0005d	c7 85 88 00 00
+	00 00 00 00 00	 mov	 DWORD PTR $S10$[rbp], 0
+  00067	48 c7 85 90 00
+	00 00 07 00 00
+	00		 mov	 QWORD PTR $S10$[rbp+8], 7
+  00072	48 8d 45 30	 lea	 rax, QWORD PTR $S9$[rbp]
+  00076	48 8d 8d 88 00
+	00 00		 lea	 rcx, QWORD PTR $S10$[rbp]
+  0007d	48 8b f8	 mov	 rdi, rax
+  00080	48 8b f1	 mov	 rsi, rcx
+  00083	b9 10 00 00 00	 mov	 ecx, 16
+  00088	f3 a4		 rep movsb
+  0008a	c7 85 b8 00 00
+	00 02 00 00 00	 mov	 DWORD PTR $S11$[rbp], 2
+  00094	48 8b 85 70 04
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  0009b	48 89 85 c0 00
+	00 00		 mov	 QWORD PTR $S11$[rbp+8], rax
+  000a2	48 8d 45 40	 lea	 rax, QWORD PTR $S9$[rbp+16]
+  000a6	48 8d 8d b8 00
+	00 00		 lea	 rcx, QWORD PTR $S11$[rbp]
+  000ad	48 8b f8	 mov	 rdi, rax
+  000b0	48 8b f1	 mov	 rsi, rcx
+  000b3	b9 10 00 00 00	 mov	 ecx, 16
+  000b8	f3 a4		 rep movsb
+  000ba	c7 85 e8 00 00
+	00 01 00 00 00	 mov	 DWORD PTR $S12$[rbp], 1
+  000c4	48 8d 45 04	 lea	 rax, QWORD PTR output$[rbp]
+  000c8	48 89 85 f0 00
+	00 00		 mov	 QWORD PTR $S12$[rbp+8], rax
+  000cf	48 8d 45 50	 lea	 rax, QWORD PTR $S9$[rbp+32]
+  000d3	48 8d 8d e8 00
+	00 00		 lea	 rcx, QWORD PTR $S12$[rbp]
+  000da	48 8b f8	 mov	 rdi, rax
+  000dd	48 8b f1	 mov	 rsi, rcx
+  000e0	b9 10 00 00 00	 mov	 ecx, 16
+  000e5	f3 a4		 rep movsb
+  000e7	c7 85 18 01 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S13$[rbp], -2
+  000f1	48 c7 85 20 01
+	00 00 00 00 00
+	00		 mov	 QWORD PTR $S13$[rbp+8], 0
+  000fc	48 8d 45 60	 lea	 rax, QWORD PTR $S9$[rbp+48]
+  00100	48 8d 8d 18 01
+	00 00		 lea	 rcx, QWORD PTR $S13$[rbp]
+  00107	48 8b f8	 mov	 rdi, rax
+  0010a	48 8b f1	 mov	 rsi, rcx
+  0010d	b9 10 00 00 00	 mov	 ecx, 16
+  00112	f3 a4		 rep movsb
+  00114	4c 8d 8d 50 01
+	00 00		 lea	 r9, QWORD PTR $S14$[rbp]
+  0011b	4c 8d 45 30	 lea	 r8, QWORD PTR $S9$[rbp]
+  0011f	ba 04 00 00 00	 mov	 edx, 4
+  00124	48 8d 8d f8 03
+	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
+  0012b	e8 00 00 00 00	 call	 CreateRequest
+  00130	48 8d 8d 30 04
+	00 00		 lea	 rcx, QWORD PTR $T11[rbp]
+  00137	48 8b f9	 mov	 rdi, rcx
+  0013a	48 8b f0	 mov	 rsi, rax
+  0013d	b9 10 00 00 00	 mov	 ecx, 16
+  00142	f3 a4		 rep movsb
+  00144	48 8b 85 70 04
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  0014b	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  0014e	48 8d 8d 30 04
+	00 00		 lea	 rcx, QWORD PTR $T11[rbp]
+  00155	ff 50 08	 call	 QWORD PTR [rax+8]
+  00158	85 c0		 test	 eax, eax
+  0015a	75 0e		 jne	 SHORT $LN2@Collection
+
+; 239  : 		PREENT("Failed to get Count!\n");
+
+  0015c	33 d2		 xor	 edx, edx
+  0015e	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BG@DOLFGBMF@Failed?5to?5get?5Count?$CB?6@
+  00165	e8 00 00 00 00	 call	 Preent
+$LN2@Collection:
+
+; 240  : 	return output;
+
+  0016a	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
+
+; 241  : }
+
+  0016d	8b f8		 mov	 edi, eax
+  0016f	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00173	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_Count$rtcFrameData
+  0017a	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  0017f	8b c7		 mov	 eax, edi
+  00181	48 8b 8d 48 04
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  00188	48 33 cd	 xor	 rcx, rbp
+  0018b	e8 00 00 00 00	 call	 __security_check_cookie
+  00190	48 8d a5 50 04
+	00 00		 lea	 rsp, QWORD PTR [rbp+1104]
+  00197	5f		 pop	 rdi
+  00198	5e		 pop	 rsi
+  00199	5d		 pop	 rbp
+  0019a	c3		 ret	 0
+Collection_Count ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Capacity
+_TEXT	SEGMENT
+output$ = 4
+$S4$ = 40
+$S5$ = 120
+$S6$ = 168
+$S7$ = 216
+$S8$ = 272
+$T9 = 952
+$T10 = 1008
+__$ArrayPad$ = 1032
+collection$ = 1072
+Collection_Capacity PROC				; COMDAT
+
+; 230  : uint Collection_Capacity(COLLECTION collection) {
+
+$LN4:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	56		 push	 rsi
+  00007	57		 push	 rdi
+  00008	48 81 ec 30 04
+	00 00		 sub	 rsp, 1072		; 00000430H
+  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00014	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00019	b9 a4 00 00 00	 mov	 ecx, 164		; 000000a4H
+  0001e	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00023	f3 ab		 rep stosd
+  00025	48 8b 8c 24 58
+	04 00 00	 mov	 rcx, QWORD PTR [rsp+1112]
+  0002d	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  00034	48 33 c5	 xor	 rax, rbp
+  00037	48 89 85 08 04
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  0003e	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00045	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 231  : 	uint output;
+; 232  : 	if (!collection->_extensions->_methods(Request(INFO, P_(tTRG, collection), P_(tCAPACITY, &output))))
+
+  0004a	48 8d 85 10 01
+	00 00		 lea	 rax, QWORD PTR $S8$[rbp]
+  00051	48 8b f8	 mov	 rdi, rax
+  00054	33 c0		 xor	 eax, eax
+  00056	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
+  0005b	f3 aa		 rep stosb
+  0005d	c7 45 78 01 00
+	00 00		 mov	 DWORD PTR $S5$[rbp], 1
+  00064	48 8b 85 30 04
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  0006b	48 89 85 80 00
+	00 00		 mov	 QWORD PTR $S5$[rbp+8], rax
+  00072	48 8d 45 28	 lea	 rax, QWORD PTR $S4$[rbp]
+  00076	48 8d 4d 78	 lea	 rcx, QWORD PTR $S5$[rbp]
+  0007a	48 8b f8	 mov	 rdi, rax
+  0007d	48 8b f1	 mov	 rsi, rcx
+  00080	b9 10 00 00 00	 mov	 ecx, 16
+  00085	f3 a4		 rep movsb
+  00087	c7 85 a8 00 00
+	00 08 00 00 00	 mov	 DWORD PTR $S6$[rbp], 8
+  00091	48 8d 45 04	 lea	 rax, QWORD PTR output$[rbp]
+  00095	48 89 85 b0 00
+	00 00		 mov	 QWORD PTR $S6$[rbp+8], rax
+  0009c	48 8d 45 38	 lea	 rax, QWORD PTR $S4$[rbp+16]
+  000a0	48 8d 8d a8 00
+	00 00		 lea	 rcx, QWORD PTR $S6$[rbp]
+  000a7	48 8b f8	 mov	 rdi, rax
+  000aa	48 8b f1	 mov	 rsi, rcx
+  000ad	b9 10 00 00 00	 mov	 ecx, 16
+  000b2	f3 a4		 rep movsb
+  000b4	c7 85 d8 00 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S7$[rbp], -2
+  000be	48 c7 85 e0 00
+	00 00 00 00 00
+	00		 mov	 QWORD PTR $S7$[rbp+8], 0
+  000c9	48 8d 45 48	 lea	 rax, QWORD PTR $S4$[rbp+32]
+  000cd	48 8d 8d d8 00
+	00 00		 lea	 rcx, QWORD PTR $S7$[rbp]
+  000d4	48 8b f8	 mov	 rdi, rax
+  000d7	48 8b f1	 mov	 rsi, rcx
+  000da	b9 10 00 00 00	 mov	 ecx, 16
+  000df	f3 a4		 rep movsb
+  000e1	4c 8d 8d 10 01
+	00 00		 lea	 r9, QWORD PTR $S8$[rbp]
+  000e8	4c 8d 45 28	 lea	 r8, QWORD PTR $S4$[rbp]
+  000ec	ba 04 00 00 00	 mov	 edx, 4
+  000f1	48 8d 8d b8 03
+	00 00		 lea	 rcx, QWORD PTR $T9[rbp]
+  000f8	e8 00 00 00 00	 call	 CreateRequest
+  000fd	48 8d 8d f0 03
+	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
+  00104	48 8b f9	 mov	 rdi, rcx
+  00107	48 8b f0	 mov	 rsi, rax
+  0010a	b9 10 00 00 00	 mov	 ecx, 16
+  0010f	f3 a4		 rep movsb
+  00111	48 8b 85 30 04
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  00118	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  0011b	48 8d 8d f0 03
+	00 00		 lea	 rcx, QWORD PTR $T10[rbp]
+  00122	ff 50 08	 call	 QWORD PTR [rax+8]
+  00125	85 c0		 test	 eax, eax
+  00127	75 0e		 jne	 SHORT $LN2@Collection
+
+; 233  : 		PREENT("Failed to get Capacity!\n");
+
+  00129	33 d2		 xor	 edx, edx
+  0012b	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BJ@PDAHBIE@Failed?5to?5get?5Capacity?$CB?6@
+  00132	e8 00 00 00 00	 call	 Preent
+$LN2@Collection:
+
+; 234  : 	return output;
+
+  00137	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
+
+; 235  : }
+
+  0013a	8b f8		 mov	 edi, eax
+  0013c	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00140	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_Capacity$rtcFrameData
+  00147	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  0014c	8b c7		 mov	 eax, edi
+  0014e	48 8b 8d 08 04
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  00155	48 33 cd	 xor	 rcx, rbp
+  00158	e8 00 00 00 00	 call	 __security_check_cookie
+  0015d	48 8d a5 10 04
+	00 00		 lea	 rsp, QWORD PTR [rbp+1040]
+  00164	5f		 pop	 rdi
+  00165	5e		 pop	 rsi
+  00166	5d		 pop	 rbp
+  00167	c3		 ret	 0
+Collection_Capacity ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Index
+_TEXT	SEGMENT
+trg$ = 224
+index$ = 232
+Collection_Index PROC					; COMDAT
+
+; 227  : void* Collection_Index(COLLECTION trg, unsigned int index) {
+
+$LN3:
+  00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  00004	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00009	55		 push	 rbp
+  0000a	57		 push	 rdi
+  0000b	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00017	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 228  : 
+; 229  : }
+
+  00023	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  0002a	5f		 pop	 rdi
+  0002b	5d		 pop	 rbp
+  0002c	c3		 ret	 0
+Collection_Index ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Release
+_TEXT	SEGMENT
+collection$ = 224
+Collection_Release PROC					; COMDAT
+
+; 222  : {
+
+$LN3:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 223  : 	InterlockedExchange(&(collection->_spinLock), 0);
+
+  0001f	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  00026	48 83 c0 0c	 add	 rax, 12
+  0002a	33 c9		 xor	 ecx, ecx
+  0002c	87 08		 xchg	 DWORD PTR [rax], ecx
+
+; 224  : 	return true;
+
+  0002e	b8 01 00 00 00	 mov	 eax, 1
+
+; 225  : }
+
+  00033	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  0003a	5f		 pop	 rdi
+  0003b	5d		 pop	 rbp
+  0003c	c3		 ret	 0
+Collection_Release ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Request
+_TEXT	SEGMENT
+tv72 = 192
+collection$ = 240
+Collection_Request PROC					; COMDAT
+
+; 210  : {
+
+$LN5:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec f8 00
+	00 00		 sub	 rsp, 248		; 000000f8H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+$LN2@Collection:
+
+; 211  : 	while (InterlockedCompareExchange(&(collection->_spinLock), 1, 0)) {
+
+  0001f	48 8b 85 f0 00
+	00 00		 mov	 rax, QWORD PTR collection$[rbp]
+  00026	48 83 c0 0c	 add	 rax, 12
+  0002a	b9 01 00 00 00	 mov	 ecx, 1
+  0002f	48 89 85 c0 00
+	00 00		 mov	 QWORD PTR tv72[rbp], rax
+  00036	33 c0		 xor	 eax, eax
+  00038	48 8b 95 c0 00
+	00 00		 mov	 rdx, QWORD PTR tv72[rbp]
+  0003f	48 8b 95 c0 00
+	00 00		 mov	 rdx, QWORD PTR tv72[rbp]
+  00046	f0 0f b1 0a	 lock cmpxchg DWORD PTR [rdx], ecx
+  0004a	85 c0		 test	 eax, eax
+  0004c	74 02		 je	 SHORT $LN3@Collection
+
+; 212  : 		// time sensitive logic...
+; 213  : 		// eg:
+; 214  : 		// int counter = 0;
+; 215  : 		// if (counter > 100000)
+; 216  : 		//	return false;
+; 217  : 		// counter++;
+; 218  : 	}
+
+  0004e	eb cf		 jmp	 SHORT $LN2@Collection
+$LN3@Collection:
+
+; 219  : 	return true;
+
+  00050	b8 01 00 00 00	 mov	 eax, 1
+
+; 220  : }
+
+  00055	48 8d a5 d8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+216]
+  0005c	5f		 pop	 rdi
+  0005d	5d		 pop	 rbp
+  0005e	c3		 ret	 0
+Collection_Request ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_RawBucket
+_TEXT	SEGMENT
+$T5 = 296
+$T6 = 344
+__$ReturnAddress$ = 416
+col$ = 424
+head$ = 432
+count$ = 440
+Collection_RawBucket PROC				; COMDAT
+
+; 202  : Bucket Collection_RawBucket(COLLECTION col, void* head, unsigned int count) {
+
+$LN3:
+  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
+  00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
+  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00014	55		 push	 rbp
+  00015	56		 push	 rsi
+  00016	57		 push	 rdi
+  00017	48 81 ec a0 01
+	00 00		 sub	 rsp, 416		; 000001a0H
+  0001e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00023	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00028	b9 30 00 00 00	 mov	 ecx, 48			; 00000030H
+  0002d	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00032	f3 ab		 rep stosd
+  00034	48 8b 8c 24 c8
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+456]
+  0003c	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00043	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 203  : 	return (Bucket) {
+
+  00048	48 8b 85 a8 01
+	00 00		 mov	 rax, QWORD PTR col$[rbp]
+  0004f	48 8b 08	 mov	 rcx, QWORD PTR [rax]
+  00052	e8 00 00 00 00	 call	 Collection_GetRawExtensions
+  00057	44 8b 85 b8 01
+	00 00		 mov	 r8d, DWORD PTR count$[rbp]
+  0005e	48 8b d0	 mov	 rdx, rax
+  00061	48 8d 8d 28 01
+	00 00		 lea	 rcx, QWORD PTR $T5[rbp]
+  00068	e8 00 00 00 00	 call	 Collection_Create
+  0006d	48 8b bd a0 01
+	00 00		 mov	 rdi, QWORD PTR __$ReturnAddress$[rbp]
+  00074	48 8b f0	 mov	 rsi, rax
+  00077	b9 10 00 00 00	 mov	 ecx, 16
+  0007c	f3 a4		 rep movsb
+  0007e	48 8b 85 a8 01
+	00 00		 mov	 rax, QWORD PTR col$[rbp]
+  00085	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  00088	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  0008b	8b 8d b8 01 00
+	00		 mov	 ecx, DWORD PTR count$[rbp]
+  00091	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  00095	48 0f af c1	 imul	 rax, rcx
+  00099	4c 8b c0	 mov	 r8, rax
+  0009c	48 8b 95 b0 01
+	00 00		 mov	 rdx, QWORD PTR head$[rbp]
+  000a3	48 8d 8d 58 01
+	00 00		 lea	 rcx, QWORD PTR $T6[rbp]
+  000aa	e8 00 00 00 00	 call	 Chunk_Create
+  000af	48 8b 8d a0 01
+	00 00		 mov	 rcx, QWORD PTR __$ReturnAddress$[rbp]
+  000b6	48 8d 79 10	 lea	 rdi, QWORD PTR [rcx+16]
+  000ba	48 8b f0	 mov	 rsi, rax
+  000bd	b9 10 00 00 00	 mov	 ecx, 16
+  000c2	f3 a4		 rep movsb
+  000c4	48 8b 85 a0 01
+	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
+
+; 204  : 		Collection_Create(Collection_GetRawExtensions(col->_extensions), count),
+; 205  : 		Chunk_Create(head, col->_extensions->_type->_size * count)
+; 206  : 	};
+; 207  : }
+
+  000cb	48 8b f8	 mov	 rdi, rax
+  000ce	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  000d2	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_RawBucket$rtcFrameData
+  000d9	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  000de	48 8b c7	 mov	 rax, rdi
+  000e1	48 8d a5 80 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+384]
+  000e8	5f		 pop	 rdi
+  000e9	5e		 pop	 rsi
+  000ea	5d		 pop	 rbp
+  000eb	c3		 ret	 0
+Collection_RawBucket ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_GetRawExtensions
+_TEXT	SEGMENT
+src$ = 224
+Collection_GetRawExtensions PROC			; COMDAT
+
+; 190  : CollectionExtensions* Collection_GetRawExtensions(CollectionExtensions* src) {
+
+$LN3:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 191  : 	return Collection_GetExtensions(src->_type, Bucket_Methods, src->_memFlags);
+
+  0001f	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR src$[rbp]
+  00026	44 8b 40 10	 mov	 r8d, DWORD PTR [rax+16]
+  0002a	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Bucket_Methods
+  00031	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR src$[rbp]
+  00038	48 8b 08	 mov	 rcx, QWORD PTR [rax]
+  0003b	e8 00 00 00 00	 call	 Collection_GetExtensions
+
+; 192  : }
+
+  00040	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  00047	5f		 pop	 rdi
+  00048	5d		 pop	 rbp
+  00049	c3		 ret	 0
+Collection_GetRawExtensions ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_GetExtensions
+_TEXT	SEGMENT
+newInfo$ = 8
+i$4 = 52
+ptr$ = 88
+$T5 = 312
+__$ArrayPad$ = 344
+typeInfo$ = 384
+methods$ = 392
+memFlags$ = 400
+Collection_GetExtensions PROC				; COMDAT
+
+; 164  : CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods)(RequestType* request), int memFlags) {
+
+$LN8:
+  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000f	55		 push	 rbp
+  00010	56		 push	 rsi
+  00011	57		 push	 rdi
+  00012	48 81 ec 80 01
+	00 00		 sub	 rsp, 384		; 00000180H
+  00019	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  0001e	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00023	b9 28 00 00 00	 mov	 ecx, 40			; 00000028H
+  00028	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  0002d	f3 ab		 rep stosd
+  0002f	48 8b 8c 24 a8
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+424]
+  00037	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  0003e	48 33 c5	 xor	 rax, rbp
+  00041	48 89 85 58 01
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  00048	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0004f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 165  : 
+; 166  : 	CollectionExtensions newInfo = CollectionExtensions_Create(typeInfo, methods, memFlags);
+
+  00054	44 8b 8d 90 01
+	00 00		 mov	 r9d, DWORD PTR memFlags$[rbp]
+  0005b	4c 8b 85 88 01
+	00 00		 mov	 r8, QWORD PTR methods$[rbp]
+  00062	48 8b 95 80 01
+	00 00		 mov	 rdx, QWORD PTR typeInfo$[rbp]
+  00069	48 8d 8d 38 01
+	00 00		 lea	 rcx, QWORD PTR $T5[rbp]
+  00070	e8 00 00 00 00	 call	 CollectionExtensions_Create
+  00075	48 8d 4d 08	 lea	 rcx, QWORD PTR newInfo$[rbp]
+  00079	48 8b f9	 mov	 rdi, rcx
+  0007c	48 8b f0	 mov	 rsi, rax
+  0007f	b9 18 00 00 00	 mov	 ecx, 24
+  00084	f3 a4		 rep movsb
+
+; 167  : 
+; 168  : 	for (int i = 0; i < GlobalCollectionInfoCurrentCount; i++) {
+
+  00086	c7 45 34 00 00
+	00 00		 mov	 DWORD PTR i$4[rbp], 0
+  0008d	eb 08		 jmp	 SHORT $LN4@Collection
+$LN2@Collection:
+  0008f	8b 45 34	 mov	 eax, DWORD PTR i$4[rbp]
+  00092	ff c0		 inc	 eax
+  00094	89 45 34	 mov	 DWORD PTR i$4[rbp], eax
+$LN4@Collection:
+  00097	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR GlobalCollectionInfoCurrentCount
+  0009d	39 45 34	 cmp	 DWORD PTR i$4[rbp], eax
+  000a0	73 4c		 jae	 SHORT $LN3@Collection
+
+; 169  : 		if (Collection_Compare(&GlobalCollectionInfo[i], &newInfo)) {
+
+  000a2	48 63 45 34	 movsxd	 rax, DWORD PTR i$4[rbp]
+  000a6	48 6b c0 18	 imul	 rax, rax, 24
+  000aa	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:GlobalCollectionInfo
+  000b1	48 03 c8	 add	 rcx, rax
+  000b4	48 8b c1	 mov	 rax, rcx
+  000b7	48 8d 55 08	 lea	 rdx, QWORD PTR newInfo$[rbp]
+  000bb	48 8b c8	 mov	 rcx, rax
+  000be	e8 00 00 00 00	 call	 Collection_Compare
+  000c3	85 c0		 test	 eax, eax
+  000c5	74 25		 je	 SHORT $LN5@Collection
+
+; 170  : 			PREENT("CollectionInfo found!\n");
+
+  000c7	33 d2		 xor	 edx, edx
+  000c9	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BH@LCKCAPHB@CollectionInfo?5found?$CB?6@
+  000d0	e8 00 00 00 00	 call	 Preent
+
+; 171  : 			return &GlobalCollectionInfo[i];
+
+  000d5	48 63 45 34	 movsxd	 rax, DWORD PTR i$4[rbp]
+  000d9	48 6b c0 18	 imul	 rax, rax, 24
+  000dd	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:GlobalCollectionInfo
+  000e4	48 03 c8	 add	 rcx, rax
+  000e7	48 8b c1	 mov	 rax, rcx
+  000ea	eb 6b		 jmp	 SHORT $LN1@Collection
+$LN5@Collection:
+
+; 172  : 		}
+; 173  : 
+; 174  : 	}
+
+  000ec	eb a1		 jmp	 SHORT $LN2@Collection
+$LN3@Collection:
+
+; 175  : 
+; 176  : 	if (GlobalCollectionInfoCurrentCount >= testTypeBinCount)
+
+  000ee	83 3d 00 00 00
+	00 20		 cmp	 DWORD PTR GlobalCollectionInfoCurrentCount, 32 ; 00000020H
+  000f5	72 12		 jb	 SHORT $LN6@Collection
+
+; 177  : 	{
+; 178  : 		PREENT("No type slots available...\n");
+
+  000f7	33 d2		 xor	 edx, edx
+  000f9	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@KPOEFPPK@No?5type?5slots?5available?4?4?4?6@
+  00100	e8 00 00 00 00	 call	 Preent
+
+; 179  : 		return NULL;
+
+  00105	33 c0		 xor	 eax, eax
+  00107	eb 4e		 jmp	 SHORT $LN1@Collection
+$LN6@Collection:
+
+; 180  : 	}
+; 181  : 
+; 182  : 	CollectionExtensions* ptr = &GlobalCollectionInfo[GlobalCollectionInfoCurrentCount];
+
+  00109	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR GlobalCollectionInfoCurrentCount
+  0010f	48 6b c0 18	 imul	 rax, rax, 24
+  00113	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:GlobalCollectionInfo
+  0011a	48 03 c8	 add	 rcx, rax
+  0011d	48 8b c1	 mov	 rax, rcx
+  00120	48 89 45 58	 mov	 QWORD PTR ptr$[rbp], rax
+
+; 183  : 	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
+
+  00124	41 b8 18 00 00
+	00		 mov	 r8d, 24
+  0012a	48 8d 55 08	 lea	 rdx, QWORD PTR newInfo$[rbp]
+  0012e	48 8b 4d 58	 mov	 rcx, QWORD PTR ptr$[rbp]
+  00132	e8 00 00 00 00	 call	 rawTranscribe
+
+; 184  : 
+; 185  : 	PREENT("Created new CollectionInfo!\n");
+
+  00137	33 d2		 xor	 edx, edx
+  00139	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BN@DBMNBHNG@Created?5new?5CollectionInfo?$CB?6@
+  00140	e8 00 00 00 00	 call	 Preent
+
+; 186  : 
+; 187  : 	GlobalCollectionInfoCurrentCount++;
+
+  00145	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR GlobalCollectionInfoCurrentCount
+  0014b	ff c0		 inc	 eax
+  0014d	89 05 00 00 00
+	00		 mov	 DWORD PTR GlobalCollectionInfoCurrentCount, eax
+
+; 188  : 	return ptr;
+
+  00153	48 8b 45 58	 mov	 rax, QWORD PTR ptr$[rbp]
+$LN1@Collection:
+
+; 189  : }
+
+  00157	48 8b f8	 mov	 rdi, rax
+  0015a	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  0015e	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_GetExtensions$rtcFrameData
+  00165	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  0016a	48 8b c7	 mov	 rax, rdi
+  0016d	48 8b 8d 58 01
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  00174	48 33 cd	 xor	 rcx, rbp
+  00177	e8 00 00 00 00	 call	 __security_check_cookie
+  0017c	48 8d a5 60 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+352]
+  00183	5f		 pop	 rdi
+  00184	5e		 pop	 rsi
+  00185	5d		 pop	 rbp
+  00186	c3		 ret	 0
+Collection_GetExtensions ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Create
+_TEXT	SEGMENT
+$S2$ = 8
+__$ArrayPad$ = 232
+__$ReturnAddress$ = 272
+extensions$ = 280
+count$ = 288
+Collection_Create PROC					; COMDAT
+
+; 194  : {
+
+$LN3:
+  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000f	55		 push	 rbp
+  00010	56		 push	 rsi
+  00011	57		 push	 rdi
+  00012	48 81 ec 10 01
+	00 00		 sub	 rsp, 272		; 00000110H
+  00019	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  0001e	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00023	b9 0c 00 00 00	 mov	 ecx, 12
+  00028	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  0002d	f3 ab		 rep stosd
+  0002f	48 8b 8c 24 38
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+312]
+  00037	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  0003e	48 33 c5	 xor	 rax, rbp
+  00041	48 89 85 e8 00
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  00048	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0004f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 195  : 
+; 196  : 	return (Collection) {
+
+  00054	48 8b 85 18 01
+	00 00		 mov	 rax, QWORD PTR extensions$[rbp]
+  0005b	48 89 45 08	 mov	 QWORD PTR $S2$[rbp], rax
+  0005f	8b 85 20 01 00
+	00		 mov	 eax, DWORD PTR count$[rbp]
+  00065	89 45 10	 mov	 DWORD PTR $S2$[rbp+8], eax
+  00068	c7 45 14 00 00
+	00 00		 mov	 DWORD PTR $S2$[rbp+12], 0
+  0006f	48 8d 45 08	 lea	 rax, QWORD PTR $S2$[rbp]
+  00073	48 8b bd 10 01
+	00 00		 mov	 rdi, QWORD PTR __$ReturnAddress$[rbp]
+  0007a	48 8b f0	 mov	 rsi, rax
+  0007d	b9 10 00 00 00	 mov	 ecx, 16
+  00082	f3 a4		 rep movsb
+  00084	48 8b 85 10 01
+	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
+
+; 197  : 		extensions,
+; 198  : 		count,
+; 199  : 		0
+; 200  : 	};
+; 201  : }
+
+  0008b	48 8b f8	 mov	 rdi, rax
+  0008e	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00092	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Collection_Create$rtcFrameData
+  00099	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  0009e	48 8b c7	 mov	 rax, rdi
+  000a1	48 8b 8d e8 00
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  000a8	48 33 cd	 xor	 rcx, rbp
+  000ab	e8 00 00 00 00	 call	 __security_check_cookie
+  000b0	48 8d a5 f0 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+240]
+  000b7	5f		 pop	 rdi
+  000b8	5e		 pop	 rsi
+  000b9	5d		 pop	 rbp
+  000ba	c3		 ret	 0
+Collection_Create ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT CollectionExtensions_Create
+_TEXT	SEGMENT
+__$ReturnAddress$ = 304
+type$ = 312
+extensions$ = 320
+memFlags$ = 328
+CollectionExtensions_Create PROC			; COMDAT
+
+; 157  : CollectionExtensions CollectionExtensions_Create(TypeInfo* type, bool(*extensions)(RequestType* request), int memFlags) {
+
+$LN3:
+  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
+  00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
+  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00014	55		 push	 rbp
+  00015	57		 push	 rdi
+  00016	48 81 ec 38 01
+	00 00		 sub	 rsp, 312		; 00000138H
+  0001d	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00022	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  00027	b9 16 00 00 00	 mov	 ecx, 22
+  0002c	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00031	f3 ab		 rep stosd
+  00033	48 8b 8c 24 58
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+344]
+  0003b	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  00042	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 158  : 	return (CollectionExtensions) {
+
+  00047	48 8b 85 30 01
+	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
+  0004e	48 8b 8d 38 01
+	00 00		 mov	 rcx, QWORD PTR type$[rbp]
+  00055	48 89 08	 mov	 QWORD PTR [rax], rcx
+  00058	48 8b 85 30 01
+	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
+  0005f	48 8b 8d 40 01
+	00 00		 mov	 rcx, QWORD PTR extensions$[rbp]
+  00066	48 89 48 08	 mov	 QWORD PTR [rax+8], rcx
+  0006a	48 8b 85 30 01
+	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
+  00071	8b 8d 48 01 00
+	00		 mov	 ecx, DWORD PTR memFlags$[rbp]
+  00077	89 48 10	 mov	 DWORD PTR [rax+16], ecx
+  0007a	48 8b 85 30 01
+	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
+
+; 159  : 		type,
+; 160  : 		extensions,
+; 161  : 		memFlags
+; 162  : 	};
+; 163  : }
+
+  00081	48 8b f8	 mov	 rdi, rax
+  00084	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00088	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:CollectionExtensions_Create$rtcFrameData
+  0008f	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  00094	48 8b c7	 mov	 rax, rdi
+  00097	48 8d a5 18 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+280]
+  0009e	5f		 pop	 rdi
+  0009f	5d		 pop	 rbp
+  000a0	c3		 ret	 0
+CollectionExtensions_Create ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_TranscribeCompare
+_TEXT	SEGMENT
+trg$ = 224
+src$ = 232
+Collection_TranscribeCompare PROC			; COMDAT
+
+; 147  : inline bool Collection_TranscribeCompare(CollectionExtensions* trg, CollectionExtensions* src) {
+
+$LN5:
+  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000a	55		 push	 rbp
+  0000b	57		 push	 rdi
+  0000c	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00018	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 148  : 	if (trg->_memFlags & READ_ONLY)
+
+  00024	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR trg$[rbp]
+  0002b	8b 40 10	 mov	 eax, DWORD PTR [rax+16]
+  0002e	83 e0 01	 and	 eax, 1
+  00031	85 c0		 test	 eax, eax
+  00033	74 04		 je	 SHORT $LN2@Collection
+
+; 149  : 		return false;
+
+  00035	33 c0		 xor	 eax, eax
+  00037	eb 26		 jmp	 SHORT $LN1@Collection
+$LN2@Collection:
+
+; 150  : 
+; 151  : 	if (//trg->_methods != src->_methods ||
+; 152  : 		//A._memFlags != B._memFlags ||
+; 153  : 		!TypeInfo_Compare(trg->_type, src->_type))
+
+  00039	48 8b 85 e8 00
+	00 00		 mov	 rax, QWORD PTR src$[rbp]
+  00040	48 8b 10	 mov	 rdx, QWORD PTR [rax]
+  00043	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR trg$[rbp]
+  0004a	48 8b 08	 mov	 rcx, QWORD PTR [rax]
+  0004d	e8 00 00 00 00	 call	 TypeInfo_Compare
+  00052	85 c0		 test	 eax, eax
+  00054	75 04		 jne	 SHORT $LN3@Collection
+
+; 154  : 		return false;
+
+  00056	33 c0		 xor	 eax, eax
+  00058	eb 05		 jmp	 SHORT $LN1@Collection
+$LN3@Collection:
+
+; 155  : 	return true;
+
+  0005a	b8 01 00 00 00	 mov	 eax, 1
+$LN1@Collection:
+
+; 156  : }
+
+  0005f	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  00066	5f		 pop	 rdi
+  00067	5d		 pop	 rbp
+  00068	c3		 ret	 0
+Collection_TranscribeCompare ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tCollection.c
+;	COMDAT Collection_Compare
+_TEXT	SEGMENT
+tv73 = 192
+a$ = 240
+b$ = 248
+Collection_Compare PROC					; COMDAT
+
+; 142  : {
+
+$LN5:
+  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000a	55		 push	 rbp
+  0000b	57		 push	 rdi
+  0000c	48 81 ec f8 00
+	00 00		 sub	 rsp, 248		; 000000f8H
+  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00018	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__EB233596_tCollection@c
+  0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 143  : 	return (a->_methods == b->_methods) &&
+
+  00024	48 8b 85 f0 00
+	00 00		 mov	 rax, QWORD PTR a$[rbp]
+  0002b	48 8b 8d f8 00
+	00 00		 mov	 rcx, QWORD PTR b$[rbp]
+  00032	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00036	48 39 48 08	 cmp	 QWORD PTR [rax+8], rcx
+  0003a	75 38		 jne	 SHORT $LN3@Collection
+  0003c	48 8b 85 f0 00
+	00 00		 mov	 rax, QWORD PTR a$[rbp]
+  00043	48 8b 8d f8 00
+	00 00		 mov	 rcx, QWORD PTR b$[rbp]
+  0004a	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
+  0004d	48 39 08	 cmp	 QWORD PTR [rax], rcx
+  00050	75 22		 jne	 SHORT $LN3@Collection
+  00052	48 8b 85 f0 00
+	00 00		 mov	 rax, QWORD PTR a$[rbp]
+  00059	48 8b 8d f8 00
+	00 00		 mov	 rcx, QWORD PTR b$[rbp]
+  00060	8b 49 10	 mov	 ecx, DWORD PTR [rcx+16]
+  00063	39 48 10	 cmp	 DWORD PTR [rax+16], ecx
+  00066	75 0c		 jne	 SHORT $LN3@Collection
+  00068	c7 85 c0 00 00
+	00 01 00 00 00	 mov	 DWORD PTR tv73[rbp], 1
+  00072	eb 0a		 jmp	 SHORT $LN4@Collection
+$LN3@Collection:
+  00074	c7 85 c0 00 00
+	00 00 00 00 00	 mov	 DWORD PTR tv73[rbp], 0
+$LN4@Collection:
+  0007e	8b 85 c0 00 00
+	00		 mov	 eax, DWORD PTR tv73[rbp]
+
+; 144  : 		(a->_type == b->_type) &&
+; 145  : 		(a->_memFlags == b->_memFlags);
+; 146  : }
+
+  00084	48 8d a5 d8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+216]
+  0008b	5f		 pop	 rdi
+  0008c	5d		 pop	 rbp
+  0008d	c3		 ret	 0
+Collection_Compare ENDP
 _TEXT	ENDS
 END

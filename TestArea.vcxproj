@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BarrelTest.c" />
     <ClCompile Include="tBarrel.c" />
     <ClCompile Include="tBucket.c" />
     <ClCompile Include="TestArea.c" />
@@ -147,6 +148,7 @@
     <ClCompile Include="tVector.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BarrelTest.h" />
     <ClInclude Include="tBarrel.h" />
     <ClInclude Include="tBucket.h" />
     <ClInclude Include="tDefines.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="tThreads.h" />
     <ClInclude Include="tTypeInfo.h" />
     <ClInclude Include="tCollection.h" />
+    <ClInclude Include="tUserCollection.h" />
     <ClInclude Include="tVector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

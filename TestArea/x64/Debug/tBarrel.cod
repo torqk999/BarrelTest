@@ -231,10 +231,10 @@ EXTRN	TypeInfo_GetInfo:PROC
 EXTRN	TypeInfo_Get:PROC
 EXTRN	Heap_Remaining:PROC
 EXTRN	Chunk_ctor:PROC
-EXTRN	Collection_Request:PROC
-EXTRN	Collection_Release:PROC
 EXTRN	Collection_Create:PROC
 EXTRN	Collection_GetExtensions:PROC
+EXTRN	Collection_Request:PROC
+EXTRN	Collection_Release:PROC
 EXTRN	_RTC_CheckStackVars:PROC
 EXTRN	_RTC_InitBase:PROC
 EXTRN	_RTC_Shutdown:PROC
@@ -383,7 +383,7 @@ pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$Barrel_RollForward DD imagerel $LN6
-	DD	imagerel $LN6+173
+	DD	imagerel $LN6+199
 	DD	imagerel $unwind$Barrel_RollForward
 pdata	ENDS
 ;	COMDAT pdata
@@ -848,7 +848,7 @@ memSize$ = 40
 node$ = 288
 Barrel_Capacity PROC					; COMDAT
 
-; 704  : uint Barrel_Capacity(BarrelNode* node) {
+; 705  : uint Barrel_Capacity(BarrelNode* node) {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -861,7 +861,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 705  : 	size_t unitSize = node->_collection._extensions->_type->_size;
+; 706  : 	size_t unitSize = node->_collection._extensions->_type->_size;
 
   0001f	48 8b 85 20 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -870,7 +870,7 @@ $LN3:
   0002c	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
   00030	48 89 45 08	 mov	 QWORD PTR unitSize$[rbp], rax
 
-; 706  : 	size_t memSize = node->_barrelCount * sizeof(Barrel);
+; 707  : 	size_t memSize = node->_barrelCount * sizeof(Barrel);
 
   00034	48 8b 85 20 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -878,13 +878,13 @@ $LN3:
   0003e	48 6b c0 20	 imul	 rax, rax, 32		; 00000020H
   00042	48 89 45 28	 mov	 QWORD PTR memSize$[rbp], rax
 
-; 707  : 	return memSize / unitSize;
+; 708  : 	return memSize / unitSize;
 
   00046	33 d2		 xor	 edx, edx
   00048	48 8b 45 28	 mov	 rax, QWORD PTR memSize$[rbp]
   0004c	48 f7 75 08	 div	 QWORD PTR unitSize$[rbp]
 
-; 708  : }
+; 709  : }
 
   00050	48 8d a5 08 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+264]
@@ -902,7 +902,7 @@ node$ = 240
 loc$ = 248
 Barrel_GetChunk PROC					; COMDAT
 
-; 699  : bool Barrel_GetChunk(BarrelNode* node, Chunk* loc) {
+; 700  : bool Barrel_GetChunk(BarrelNode* node, Chunk* loc) {
 
 $LN3:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -916,7 +916,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 700  : 	Chunk_ctor(loc, Barrel_GetHead(node), Barrel_GetSize(node));
+; 701  : 	Chunk_ctor(loc, Barrel_GetHead(node), Barrel_GetSize(node));
 
   00024	48 8b 8d f0 00
 	00 00		 mov	 rcx, QWORD PTR node$[rbp]
@@ -934,11 +934,11 @@ $LN3:
 	00 00		 mov	 rcx, QWORD PTR loc$[rbp]
   00057	e8 00 00 00 00	 call	 Chunk_ctor
 
-; 701  : 	return true;
+; 702  : 	return true;
 
   0005c	b8 01 00 00 00	 mov	 eax, 1
 
-; 702  : }
+; 703  : }
 
   00061	48 8d a5 d8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+216]
@@ -962,7 +962,7 @@ node$ = 320
 request$ = 328
 Barrel_Shrink PROC					; COMDAT
 
-; 563  : inline void Barrel_Shrink(BarrelNode* node, int request) {
+; 564  : inline void Barrel_Shrink(BarrelNode* node, int request) {
 
 $LN13:
   00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
@@ -976,7 +976,7 @@ $LN13:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 564  : 	int newCount = (int)(node->_barrelCount) + request;
+; 565  : 	int newCount = (int)(node->_barrelCount) + request;
 
   00023	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -985,7 +985,7 @@ $LN13:
 	00		 add	 eax, DWORD PTR request$[rbp]
   00033	89 45 04	 mov	 DWORD PTR newCount$[rbp], eax
 
-; 565  : 	int newOffset = node->_barrelOffset + request;
+; 566  : 	int newOffset = node->_barrelOffset + request;
 
   00036	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -994,8 +994,8 @@ $LN13:
 	00		 add	 eax, DWORD PTR request$[rbp]
   00046	89 45 24	 mov	 DWORD PTR newOffset$[rbp], eax
 
-; 566  : 
-; 567  : 	if (node->_barrelCount != node->_barrelOffset) {
+; 567  : 
+; 568  : 	if (node->_barrelCount != node->_barrelOffset) {
 
   00049	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -1006,8 +1006,8 @@ $LN13:
   0005d	0f 84 cf 00 00
 	00		 je	 $LN5@Barrel_Shr
 
-; 568  : 
-; 569  : 		request = newOffset < 0 ? request - newOffset : request;
+; 569  : 
+; 570  : 		request = newOffset < 0 ? request - newOffset : request;
 
   00063	83 7d 24 00	 cmp	 DWORD PTR newOffset$[rbp], 0
   00067	7d 15		 jge	 SHORT $LN7@Barrel_Shr
@@ -1030,7 +1030,7 @@ $LN8@Barrel_Shr:
   00090	89 85 48 01 00
 	00		 mov	 DWORD PTR request$[rbp], eax
 
-; 570  : 		newOffset = newOffset < 0 ? 0 : newOffset;
+; 571  : 		newOffset = newOffset < 0 ? 0 : newOffset;
 
   00096	83 7d 24 00	 cmp	 DWORD PTR newOffset$[rbp], 0
   0009a	7d 0c		 jge	 SHORT $LN9@Barrel_Shr
@@ -1046,8 +1046,8 @@ $LN10@Barrel_Shr:
 	00		 mov	 eax, DWORD PTR tv75[rbp]
   000b7	89 45 24	 mov	 DWORD PTR newOffset$[rbp], eax
 
-; 571  : 
-; 572  : 		for (int i = newOffset; i < newCount; i++)
+; 572  : 
+; 573  : 		for (int i = newOffset; i < newCount; i++)
 
   000ba	8b 45 24	 mov	 eax, DWORD PTR newOffset$[rbp]
   000bd	89 45 44	 mov	 DWORD PTR i$1[rbp], eax
@@ -1061,7 +1061,7 @@ $LN4@Barrel_Shr:
   000cd	39 45 44	 cmp	 DWORD PTR i$1[rbp], eax
   000d0	7d 3d		 jge	 SHORT $LN3@Barrel_Shr
 
-; 573  : 			barrelTranscribe(
+; 574  : 			barrelTranscribe(
 
   000d2	8b 85 48 01 00
 	00		 mov	 eax, DWORD PTR request$[rbp]
@@ -1084,11 +1084,11 @@ $LN4@Barrel_Shr:
   0010d	eb b3		 jmp	 SHORT $LN2@Barrel_Shr
 $LN3@Barrel_Shr:
 
-; 574  : 				Barrel_GetBarrelPtr(i),					// offset barrel working forwards
-; 575  : 				Barrel_GetBarrelPtr(i - request),		// barrel request distance from the offset
-; 576  : 				1);
-; 577  : 
-; 578  : 		newOffset = newOffset < 1 ? newCount : newOffset;
+; 575  : 				Barrel_GetBarrelPtr(i),					// offset barrel working forwards
+; 576  : 				Barrel_GetBarrelPtr(i - request),		// barrel request distance from the offset
+; 577  : 				1);
+; 578  : 
+; 579  : 		newOffset = newOffset < 1 ? newCount : newOffset;
 
   0010f	83 7d 24 01	 cmp	 DWORD PTR newOffset$[rbp], 1
   00113	7d 0b		 jge	 SHORT $LN11@Barrel_Shr
@@ -1106,23 +1106,23 @@ $LN12@Barrel_Shr:
   0012f	89 45 24	 mov	 DWORD PTR newOffset$[rbp], eax
 $LN5@Barrel_Shr:
 
-; 579  : 	}
-; 580  : 
-; 581  : 	node->_barrelCount = newCount;
+; 580  : 	}
+; 581  : 
+; 582  : 	node->_barrelCount = newCount;
 
   00132	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
   00139	8b 4d 04	 mov	 ecx, DWORD PTR newCount$[rbp]
   0013c	89 48 10	 mov	 DWORD PTR [rax+16], ecx
 
-; 582  : 	node->_barrelOffset = newOffset;
+; 583  : 	node->_barrelOffset = newOffset;
 
   0013f	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
   00146	8b 4d 24	 mov	 ecx, DWORD PTR newOffset$[rbp]
   00149	89 48 14	 mov	 DWORD PTR [rax+20], ecx
 
-; 583  : }
+; 584  : }
 
   0014c	48 8d a5 28 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+296]
@@ -1143,7 +1143,7 @@ node$ = 320
 request$ = 328
 Barrel_Grow PROC					; COMDAT
 
-; 547  : inline void Barrel_Grow(BarrelNode* node, int request) {
+; 548  : inline void Barrel_Grow(BarrelNode* node, int request) {
 
 $LN7:
   00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
@@ -1157,7 +1157,7 @@ $LN7:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 548  : 	int newCount = (int)(node->_barrelCount) + request;
+; 549  : 	int newCount = (int)(node->_barrelCount) + request;
 
   00023	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -1166,7 +1166,7 @@ $LN7:
 	00		 add	 eax, DWORD PTR request$[rbp]
   00033	89 45 04	 mov	 DWORD PTR newCount$[rbp], eax
 
-; 549  : 	int newOffset = node->_barrelOffset + request;
+; 550  : 	int newOffset = node->_barrelOffset + request;
 
   00036	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -1175,8 +1175,8 @@ $LN7:
 	00		 add	 eax, DWORD PTR request$[rbp]
   00046	89 45 24	 mov	 DWORD PTR newOffset$[rbp], eax
 
-; 550  : 
-; 551  : 	if (node->_barrelCount != node->_barrelOffset) {
+; 551  : 
+; 552  : 	if (node->_barrelCount != node->_barrelOffset) {
 
   00049	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -1186,8 +1186,8 @@ $LN7:
   0005a	39 48 10	 cmp	 DWORD PTR [rax+16], ecx
   0005d	74 60		 je	 SHORT $LN5@Barrel_Gro
 
-; 552  : 
-; 553  : 		for (int i = newCount; i > node->_barrelOffset; i--)
+; 553  : 
+; 554  : 		for (int i = newCount; i > node->_barrelOffset; i--)
 
   0005f	8b 45 04	 mov	 eax, DWORD PTR newCount$[rbp]
   00062	89 45 44	 mov	 DWORD PTR i$1[rbp], eax
@@ -1203,7 +1203,7 @@ $LN4@Barrel_Gro:
   00079	39 45 44	 cmp	 DWORD PTR i$1[rbp], eax
   0007c	76 41		 jbe	 SHORT $LN3@Barrel_Gro
 
-; 554  : 			barrelTranscribe(
+; 555  : 			barrelTranscribe(
 
   0007e	8b 85 48 01 00
 	00		 mov	 eax, DWORD PTR request$[rbp]
@@ -1229,26 +1229,26 @@ $LN4@Barrel_Gro:
 $LN3@Barrel_Gro:
 $LN5@Barrel_Gro:
 
-; 555  : 				Barrel_GetBarrelPtr(i - 1),				// last barrel working backwards
-; 556  : 				Barrel_GetBarrelPtr(i - (1 + request)),	// barrel request distance from the last
-; 557  : 				1);
-; 558  : 	}
-; 559  : 
-; 560  : 	node->_barrelCount = newCount;
+; 556  : 				Barrel_GetBarrelPtr(i - 1),				// last barrel working backwards
+; 557  : 				Barrel_GetBarrelPtr(i - (1 + request)),	// barrel request distance from the last
+; 558  : 				1);
+; 559  : 	}
+; 560  : 
+; 561  : 	node->_barrelCount = newCount;
 
   000bf	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
   000c6	8b 4d 04	 mov	 ecx, DWORD PTR newCount$[rbp]
   000c9	89 48 10	 mov	 DWORD PTR [rax+16], ecx
 
-; 561  : 	node->_barrelOffset = newOffset;
+; 562  : 	node->_barrelOffset = newOffset;
 
   000cc	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
   000d3	8b 4d 24	 mov	 ecx, DWORD PTR newOffset$[rbp]
   000d6	89 48 14	 mov	 DWORD PTR [rax+20], ecx
 
-; 562  : }
+; 563  : }
 
   000d9	48 8d a5 28 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+296]
@@ -1327,22 +1327,33 @@ $LN3@Barrel_Rol:
 ; 541  : 			Barrel_GetBarrelPtr(node->_barrelStart + node->_barrelCount + i),
 ; 542  : 			Barrel_GetBarrelPtr(node->_barrelStart + i),
 ; 543  : 			request);
-; 544  : 
-; 545  : 	Barrel_Offset(node, request);
+; 544  : 	node->_barrelStart += request;
 
-  00091	8b 95 08 01 00
-	00		 mov	 edx, DWORD PTR request$[rbp]
-  00097	48 8b 8d 00 01
+  00091	48 8b 85 00 01
+	00 00		 mov	 rax, QWORD PTR node$[rbp]
+  00098	8b 40 18	 mov	 eax, DWORD PTR [rax+24]
+  0009b	03 85 08 01 00
+	00		 add	 eax, DWORD PTR request$[rbp]
+  000a1	48 8b 8d 00 01
 	00 00		 mov	 rcx, QWORD PTR node$[rbp]
-  0009e	e8 00 00 00 00	 call	 Barrel_Offset
+  000a8	89 41 18	 mov	 DWORD PTR [rcx+24], eax
 
-; 546  : }
+; 545  : 
+; 546  : 	Barrel_Offset(node, request);
 
-  000a3	48 8d a5 e8 00
+  000ab	8b 95 08 01 00
+	00		 mov	 edx, DWORD PTR request$[rbp]
+  000b1	48 8b 8d 00 01
+	00 00		 mov	 rcx, QWORD PTR node$[rbp]
+  000b8	e8 00 00 00 00	 call	 Barrel_Offset
+
+; 547  : }
+
+  000bd	48 8d a5 e8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+232]
-  000aa	5f		 pop	 rdi
-  000ab	5d		 pop	 rbp
-  000ac	c3		 ret	 0
+  000c4	5f		 pop	 rdi
+  000c5	5d		 pop	 rbp
+  000c6	c3		 ret	 0
 Barrel_RollForward ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
@@ -1665,7 +1676,7 @@ memFlags$ = 488
 initCapacity$ = 496
 Barrel_ctor PROC					; COMDAT
 
-; 823  : COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int memFlags, uint initCapacity) {
+; 824  : COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int memFlags, uint initCapacity) {
 
 $LN5:
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
@@ -1693,53 +1704,53 @@ $LN5:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 824  : 
-; 825  : 	// Get the next available node (either a new node must be added to the Omegus vector,
-; 826  : 	// or a garbage node will get recycled.
-; 827  : 	int newNodeIx = Barrel_NextAvailableNodeIx();
+; 825  : 
+; 826  : 	// Get the next available node (either a new node must be added to the Omegus vector,
+; 827  : 	// or a garbage node will get recycled.
+; 828  : 	int newNodeIx = Barrel_NextAvailableNodeIx();
 
   00059	e8 00 00 00 00	 call	 Barrel_NextAvailableNodeIx
   0005e	89 45 04	 mov	 DWORD PTR newNodeIx$[rbp], eax
 
-; 828  : 	if (newNodeIx < 0)
+; 829  : 	if (newNodeIx < 0)
 
   00061	83 7d 04 00	 cmp	 DWORD PTR newNodeIx$[rbp], 0
   00065	7d 07		 jge	 SHORT $LN2@Barrel_cto
 
-; 829  : 		return NULL;
+; 830  : 		return NULL;
 
   00067	33 c0		 xor	 eax, eax
   00069	e9 ea 00 00 00	 jmp	 $LN1@Barrel_cto
 $LN2@Barrel_cto:
 
-; 830  : 	
-; 831  : 	// Aquire the last physical node so that it can initialize our new one
-; 832  : 	BarrelNode* lastPhysicalNode = Barrel_GetLastPhysicalNode();
+; 831  : 	
+; 832  : 	// Aquire the last physical node so that it can initialize our new one
+; 833  : 	BarrelNode* lastPhysicalNode = Barrel_GetLastPhysicalNode();
 
   0006e	e8 00 00 00 00	 call	 Barrel_GetLastPhysicalNode
   00073	48 89 45 28	 mov	 QWORD PTR lastPhysicalNode$[rbp], rax
 
-; 833  : 	if (!lastPhysicalNode)
+; 834  : 	if (!lastPhysicalNode)
 
   00077	48 83 7d 28 00	 cmp	 QWORD PTR lastPhysicalNode$[rbp], 0
   0007c	75 07		 jne	 SHORT $LN3@Barrel_cto
 
-; 834  : 		return NULL;
+; 835  : 		return NULL;
 
   0007e	33 c0		 xor	 eax, eax
   00080	e9 d3 00 00 00	 jmp	 $LN1@Barrel_cto
 $LN3@Barrel_cto:
 
-; 835  : 
-; 836  : 	lastPhysicalNode->_nextNode = newNodeIx;
+; 836  : 
+; 837  : 	lastPhysicalNode->_nextNode = newNodeIx;
 
   00085	48 8b 45 28	 mov	 rax, QWORD PTR lastPhysicalNode$[rbp]
   00089	8b 4d 04	 mov	 ecx, DWORD PTR newNodeIx$[rbp]
   0008c	89 48 1c	 mov	 DWORD PTR [rax+28], ecx
 
-; 837  : 
-; 838  : 	// Increment the global collection's counter before retrieving the ptr
-; 839  : 	GlobalBarrelService.Omegus._collection._count++;
+; 838  : 
+; 839  : 	// Increment the global collection's counter before retrieving the ptr
+; 840  : 	GlobalBarrelService.Omegus._collection._count++;
 
   0008f	8b 05 10 00 00
 	00		 mov	 eax, DWORD PTR GlobalBarrelService+16
@@ -1747,15 +1758,15 @@ $LN3@Barrel_cto:
   00097	89 05 10 00 00
 	00		 mov	 DWORD PTR GlobalBarrelService+16, eax
 
-; 840  : 
-; 841  : 	// Initialize the requestedNode once one has been retrieved
-; 842  : 	BarrelNode* newNodePtr = Barrel_GetNode(newNodeIx);
+; 841  : 
+; 842  : 	// Initialize the requestedNode once one has been retrieved
+; 843  : 	BarrelNode* newNodePtr = Barrel_GetNode(newNodeIx);
 
   0009d	8b 4d 04	 mov	 ecx, DWORD PTR newNodeIx$[rbp]
   000a0	e8 00 00 00 00	 call	 Barrel_GetNode
   000a5	48 89 45 48	 mov	 QWORD PTR newNodePtr$[rbp], rax
 
-; 843  : 	Barrel_NodeCtor(typeName, unitSize, newNodePtr, srcHead, MANAGED | memFlags, initCapacity, lastPhysicalNode->_barrelStart + lastPhysicalNode->_barrelCount);
+; 844  : 	Barrel_NodeCtor(typeName, unitSize, newNodePtr, srcHead, MANAGED | memFlags, initCapacity, lastPhysicalNode->_barrelStart + lastPhysicalNode->_barrelCount);
 
   000a9	48 8b 45 28	 mov	 rax, QWORD PTR lastPhysicalNode$[rbp]
   000ad	8b 40 18	 mov	 eax, DWORD PTR [rax+24]
@@ -1778,15 +1789,15 @@ $LN3@Barrel_cto:
 	00 00		 mov	 rcx, QWORD PTR typeName$[rbp]
   000eb	e8 00 00 00 00	 call	 Barrel_NodeCtor
 
-; 844  : 
-; 845  : 	// Set the last physical node
-; 846  : 	Barrel_SetLastPhysicalNode(newNodeIx);
+; 845  : 
+; 846  : 	// Set the last physical node
+; 847  : 	Barrel_SetLastPhysicalNode(newNodeIx);
 
   000f0	8b 4d 04	 mov	 ecx, DWORD PTR newNodeIx$[rbp]
   000f3	e8 00 00 00 00	 call	 Barrel_SetLastPhysicalNode
 
-; 847  : 
-; 848  : 	PREENT_ARGS("BarrelCount: %\n", fmt_i(newNodePtr->_collection._count));
+; 848  : 
+; 849  : 	PREENT_ARGS("BarrelCount: %\n", fmt_i(newNodePtr->_collection._count));
 
   000f8	c7 45 68 1d 00
 	00 00		 mov	 DWORD PTR $S11$[rbp], 29
@@ -1814,14 +1825,14 @@ $LN3@Barrel_cto:
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BA@KMNOCOCN@BarrelCount?3?5?$CF?6@
   0014f	e8 00 00 00 00	 call	 Preent
 
-; 849  : 
-; 850  : 	// Return the new BarrelNode to the user
-; 851  : 	return newNodePtr;
+; 850  : 
+; 851  : 	// Return the new BarrelNode to the user
+; 852  : 	return newNodePtr;
 
   00154	48 8b 45 48	 mov	 rax, QWORD PTR newNodePtr$[rbp]
 $LN1@Barrel_cto:
 
-; 852  : }
+; 853  : }
 
   00158	48 8b f8	 mov	 rdi, rax
   0015b	48 8d 4d c0	 lea	 rcx, QWORD PTR [rbp-64]
@@ -1848,7 +1859,7 @@ _TEXT	SEGMENT
 heapService$ = 224
 Barrel_ServiceInit PROC					; COMDAT
 
-; 855  : {
+; 856  : {
 
 $LN4:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -1861,38 +1872,38 @@ $LN4:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 856  : 	if (!heapService)
+; 857  : 	if (!heapService)
 
   0001f	48 83 bd e0 00
 	00 00 00	 cmp	 QWORD PTR heapService$[rbp], 0
   00027	75 12		 jne	 SHORT $LN2@Barrel_Ser
 
-; 857  : 	{
-; 858  : 		PREENT("HeapService failed to load!\n");
+; 858  : 	{
+; 859  : 		PREENT("HeapService failed to load!\n");
 
   00029	33 d2		 xor	 edx, edx
   0002b	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BN@KILFMLHE@HeapService?5failed?5to?5load?$CB?6@
   00032	e8 00 00 00 00	 call	 Preent
 
-; 859  : 		//GlobalBarrelService._barrelNodes._localFlags = 0;
-; 860  : 		return false;
+; 860  : 		//GlobalBarrelService._barrelNodes._localFlags = 0;
+; 861  : 		return false;
 
   00037	33 c0		 xor	 eax, eax
   00039	eb 5a		 jmp	 SHORT $LN1@Barrel_Ser
 $LN2@Barrel_Ser:
 
-; 861  : 	}
-; 862  : 
-; 863  : 	GlobalBarrelService._heap = heapService;
+; 862  : 	}
+; 863  : 
+; 864  : 	GlobalBarrelService._heap = heapService;
 
   0003b	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR heapService$[rbp]
   00042	48 89 05 00 00
 	00 00		 mov	 QWORD PTR GlobalBarrelService, rax
 
-; 864  : 
-; 865  : 	Barrel_NodeCtor("BarrelNode", sizeof(BarrelNode),  &(GlobalBarrelService.Omegus), NULL , MANAGED | EMPTY, 0, 0);
+; 865  : 
+; 866  : 	Barrel_NodeCtor("BarrelNode", sizeof(BarrelNode),  &(GlobalBarrelService.Omegus), NULL , MANAGED | EMPTY, 0, 0);
 
   00049	c7 44 24 30 00
 	00 00 00	 mov	 DWORD PTR [rsp+48], 0
@@ -1908,24 +1919,24 @@ $LN2@Barrel_Ser:
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0L@GBDDKNMN@BarrelNode@
   00077	e8 00 00 00 00	 call	 Barrel_NodeCtor
 
-; 866  : 
-; 867  : 	GlobalBarrelService._nextAvailable = NONE;
+; 867  : 
+; 868  : 	GlobalBarrelService._nextAvailable = NONE;
 
   0007c	c7 05 28 00 00
 	00 fe ff ff ff	 mov	 DWORD PTR GlobalBarrelService+40, -2
 
-; 868  : 	GlobalBarrelService._lastPhysicalNode = OMEGA;
+; 869  : 	GlobalBarrelService._lastPhysicalNode = OMEGA;
 
   00086	c7 05 2c 00 00
 	00 ff ff ff ff	 mov	 DWORD PTR GlobalBarrelService+44, -1
 
-; 869  : 
-; 870  : 	return true;
+; 870  : 
+; 871  : 	return true;
 
   00090	b8 01 00 00 00	 mov	 eax, 1
 $LN1@Barrel_Ser:
 
-; 871  : }
+; 872  : }
 
   00095	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -1960,7 +1971,7 @@ initCapacity$ = 600
 startBarrel$ = 608
 Barrel_NodeCtor PROC					; COMDAT
 
-; 784  : void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, void* srcHead, int memFlags, uint initCapacity, uint startBarrel) {
+; 785  : void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, void* srcHead, int memFlags, uint initCapacity, uint startBarrel) {
 
 $LN12:
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
@@ -1988,8 +1999,8 @@ $LN12:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 785  : 
-; 786  : 	loc->_barrelStart = startBarrel;
+; 786  : 
+; 787  : 	loc->_barrelStart = startBarrel;
 
   00059	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR loc$[rbp]
@@ -1997,22 +2008,22 @@ $LN12:
 	00		 mov	 ecx, DWORD PTR startBarrel$[rbp]
   00066	89 48 18	 mov	 DWORD PTR [rax+24], ecx
 
-; 787  : 
-; 788  : 	bool empty = memFlags & EMPTY;
+; 788  : 
+; 789  : 	bool empty = memFlags & EMPTY;
 
   00069	8b 85 50 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
   0006f	83 e0 20	 and	 eax, 32			; 00000020H
   00072	89 45 04	 mov	 DWORD PTR empty$[rbp], eax
 
-; 789  : 	bool fill = memFlags & FILL;
+; 790  : 	bool fill = memFlags & FILL;
 
   00075	8b 85 50 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
   0007b	83 e0 40	 and	 eax, 64			; 00000040H
   0007e	89 45 24	 mov	 DWORD PTR fill$[rbp], eax
 
-; 790  : 	memFlags &= !(EMPTY);
+; 791  : 	memFlags &= !(EMPTY);
 
   00081	8b 85 50 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -2020,7 +2031,7 @@ $LN12:
   0008a	89 85 50 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 791  : 	memFlags &= !(FILL);
+; 792  : 	memFlags &= !(FILL);
 
   00090	8b 85 50 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -2028,7 +2039,7 @@ $LN12:
   00099	89 85 50 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 792  : 	memFlags |= FIXED_SIZE;
+; 793  : 	memFlags |= FIXED_SIZE;
 
   0009f	8b 85 50 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -2036,13 +2047,13 @@ $LN12:
   000a8	89 85 50 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 793  : 
-; 794  : 	int newBarrelCount = 1;
+; 794  : 
+; 795  : 	int newBarrelCount = 1;
 
   000ae	c7 45 44 01 00
 	00 00		 mov	 DWORD PTR newBarrelCount$[rbp], 1
 
-; 795  : 	size_t neededSpace = unitSize * initCapacity;
+; 796  : 	size_t neededSpace = unitSize * initCapacity;
 
   000b5	8b 85 58 02 00
 	00		 mov	 eax, DWORD PTR initCapacity$[rbp]
@@ -2053,8 +2064,8 @@ $LN12:
   000c9	48 89 45 68	 mov	 QWORD PTR neededSpace$[rbp], rax
 $LN2@Barrel_Nod:
 
-; 796  : 
-; 797  : 	while (	(newBarrelCount * sizeof(Barrel) < neededSpace) &&
+; 797  : 
+; 798  : 	while (	(newBarrelCount * sizeof(Barrel) < neededSpace) &&
 
   000cd	48 63 45 44	 movsxd	 rax, DWORD PTR newBarrelCount$[rbp]
   000d1	48 6b c0 20	 imul	 rax, rax, 32		; 00000020H
@@ -2070,8 +2081,8 @@ $LN2@Barrel_Nod:
   000f6	48 3b c8	 cmp	 rcx, rax
   000f9	73 0a		 jae	 SHORT $LN3@Barrel_Nod
 
-; 798  : 			(newBarrelCount * sizeof(Barrel) < Heap_Remaining()))
-; 799  : 		newBarrelCount *= 2;
+; 799  : 			(newBarrelCount * sizeof(Barrel) < Heap_Remaining()))
+; 800  : 		newBarrelCount *= 2;
 
   000fb	8b 45 44	 mov	 eax, DWORD PTR newBarrelCount$[rbp]
   000fe	d1 e0		 shl	 eax, 1
@@ -2079,8 +2090,8 @@ $LN2@Barrel_Nod:
   00103	eb c8		 jmp	 SHORT $LN2@Barrel_Nod
 $LN3@Barrel_Nod:
 
-; 800  : 
-; 801  : 	loc->_barrelCount = empty ? 0 : newBarrelCount;
+; 801  : 
+; 802  : 	loc->_barrelCount = empty ? 0 : newBarrelCount;
 
   00105	83 7d 04 00	 cmp	 DWORD PTR empty$[rbp], 0
   00109	74 0c		 je	 SHORT $LN8@Barrel_Nod
@@ -2098,16 +2109,16 @@ $LN9@Barrel_Nod:
 	00		 mov	 ecx, DWORD PTR tv82[rbp]
   0012d	89 48 10	 mov	 DWORD PTR [rax+16], ecx
 
-; 802  : 
-; 803  : 	size_t newSize = newBarrelCount * sizeof(Barrel);
+; 803  : 
+; 804  : 	size_t newSize = newBarrelCount * sizeof(Barrel);
 
   00130	48 63 45 44	 movsxd	 rax, DWORD PTR newBarrelCount$[rbp]
   00134	48 6b c0 20	 imul	 rax, rax, 32		; 00000020H
   00138	48 89 85 88 00
 	00 00		 mov	 QWORD PTR newSize$[rbp], rax
 
-; 804  : 
-; 805  : 	initCapacity = (neededSpace < newSize ? neededSpace : newSize) / unitSize;
+; 805  : 
+; 806  : 	initCapacity = (neededSpace < newSize ? neededSpace : newSize) / unitSize;
 
   0013f	48 8b 85 88 00
 	00 00		 mov	 rax, QWORD PTR newSize$[rbp]
@@ -2131,8 +2142,8 @@ $LN11@Barrel_Nod:
   00177	89 85 58 02 00
 	00		 mov	 DWORD PTR initCapacity$[rbp], eax
 
-; 806  : 
-; 807  : 	Collection collTmp = Collection_Create(Collection_GetExtensions(TypeInfo_Get(typeName, unitSize), Barrel_Extensions, memFlags), initCapacity);
+; 807  : 
+; 808  : 	Collection collTmp = Collection_Create(Collection_GetExtensions(TypeInfo_Get(typeName, unitSize), Barrel_Extensions, memFlags), initCapacity);
 
   0017d	48 8b 95 38 02
 	00 00		 mov	 rdx, QWORD PTR unitSize$[rbp]
@@ -2158,8 +2169,8 @@ $LN11@Barrel_Nod:
   001c9	b9 10 00 00 00	 mov	 ecx, 16
   001ce	f3 a4		 rep movsb
 
-; 808  : 
-; 809  : 	rawTranscribe(&(loc->_collection), &collTmp, sizeof(Collection));
+; 809  : 
+; 810  : 	rawTranscribe(&(loc->_collection), &collTmp, sizeof(Collection));
 
   001d0	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR loc$[rbp]
@@ -2170,8 +2181,8 @@ $LN11@Barrel_Nod:
   001e4	48 8b c8	 mov	 rcx, rax
   001e7	e8 00 00 00 00	 call	 rawTranscribe
 
-; 810  : 
-; 811  : 	loc->_barrelOffset = loc->_barrelCount;
+; 811  : 
+; 812  : 	loc->_barrelOffset = loc->_barrelCount;
 
   001ec	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR loc$[rbp]
@@ -2180,15 +2191,15 @@ $LN11@Barrel_Nod:
   001fa	8b 49 10	 mov	 ecx, DWORD PTR [rcx+16]
   001fd	89 48 14	 mov	 DWORD PTR [rax+20], ecx
 
-; 812  : 	loc->_nextNode = NONE;
+; 813  : 	loc->_nextNode = NONE;
 
   00200	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR loc$[rbp]
   00207	c7 40 1c fe ff
 	ff ff		 mov	 DWORD PTR [rax+28], -2
 
-; 813  : 
-; 814  : 	void* barrelHead = Barrel_GetBarrelPtr(startBarrel);
+; 814  : 
+; 815  : 	void* barrelHead = Barrel_GetBarrelPtr(startBarrel);
 
   0020e	8b 8d 60 02 00
 	00		 mov	 ecx, DWORD PTR startBarrel$[rbp]
@@ -2196,8 +2207,8 @@ $LN11@Barrel_Nod:
   00219	48 89 85 d8 00
 	00 00		 mov	 QWORD PTR barrelHead$[rbp], rax
 
-; 815  : 	
-; 816  : 	for (int i = 0; i < initCapacity; i++)
+; 816  : 	
+; 817  : 	for (int i = 0; i < initCapacity; i++)
 
   00220	c7 85 f4 00 00
 	00 00 00 00 00	 mov	 DWORD PTR i$4[rbp], 0
@@ -2215,7 +2226,7 @@ $LN6@Barrel_Nod:
 	00		 cmp	 DWORD PTR i$4[rbp], eax
   00246	73 49		 jae	 SHORT $LN5@Barrel_Nod
 
-; 817  : 		rawTranscribe(&((char*)barrelHead)[i * unitSize], &((char*)srcHead)[i * unitSize], unitSize);
+; 818  : 		rawTranscribe(&((char*)barrelHead)[i * unitSize], &((char*)srcHead)[i * unitSize], unitSize);
 
   00248	48 63 85 f4 00
 	00 00		 movsxd	 rax, DWORD PTR i$4[rbp]
@@ -2240,10 +2251,10 @@ $LN6@Barrel_Nod:
   0028f	eb 9b		 jmp	 SHORT $LN4@Barrel_Nod
 $LN5@Barrel_Nod:
 
-; 818  : 
-; 819  : 	//if (srcHead)
-; 820  : 	//	Collection_WriteSpan(loc, srcHead, 0, initCapacity);
-; 821  : }
+; 819  : 
+; 820  : 	//if (srcHead)
+; 821  : 	//	Collection_WriteSpan(loc, srcHead, 0, initCapacity);
+; 822  : }
 
   00291	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
   00295	48 8d 15 00 00
@@ -2272,7 +2283,7 @@ tv65 = 324
 request$ = 368
 Barrel_Extensions PROC					; COMDAT
 
-; 764  : bool Barrel_Extensions(REQUEST request) {
+; 765  : bool Barrel_Extensions(REQUEST request) {
 
 $LN9:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -2286,7 +2297,7 @@ $LN9:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 765  : 	switch (request._type)
+; 766  : 	switch (request._type)
 
   00020	48 8b 85 70 01
 	00 00		 mov	 rax, QWORD PTR request$[rbp]
@@ -2305,10 +2316,10 @@ $LN9:
   0004a	eb 72		 jmp	 SHORT $LN7@Barrel_Ext
 $LN4@Barrel_Ext:
 
-; 766  : 	{
-; 767  : 
-; 768  : 	case INFO:
-; 769  : 		return Barrel_Info(request);
+; 767  : 	{
+; 768  : 
+; 769  : 	case INFO:
+; 770  : 		return Barrel_Info(request);
 
   0004c	48 8d 85 d0 00
 	00 00		 lea	 rax, QWORD PTR $T1[rbp]
@@ -2323,9 +2334,9 @@ $LN4@Barrel_Ext:
   00070	eb 4e		 jmp	 SHORT $LN1@Barrel_Ext
 $LN5@Barrel_Ext:
 
-; 770  : 
-; 771  : 	case TRANSCRIBE:
-; 772  : 		return Barrel_Transcribe(request);
+; 771  : 
+; 772  : 	case TRANSCRIBE:
+; 773  : 		return Barrel_Transcribe(request);
 
   00072	48 8d 85 00 01
 	00 00		 lea	 rax, QWORD PTR $T2[rbp]
@@ -2340,9 +2351,9 @@ $LN5@Barrel_Ext:
   00096	eb 28		 jmp	 SHORT $LN1@Barrel_Ext
 $LN6@Barrel_Ext:
 
-; 773  : 
-; 774  : 	case MANAGE:
-; 775  : 		return Barrel_Manage(request);
+; 774  : 
+; 775  : 	case MANAGE:
+; 776  : 		return Barrel_Manage(request);
 
   00098	48 8d 85 30 01
 	00 00		 lea	 rax, QWORD PTR $T3[rbp]
@@ -2357,15 +2368,15 @@ $LN6@Barrel_Ext:
   000bc	eb 02		 jmp	 SHORT $LN1@Barrel_Ext
 $LN7@Barrel_Ext:
 
-; 776  : 
-; 777  : 	default:
-; 778  : 		return false;
+; 777  : 
+; 778  : 	default:
+; 779  : 		return false;
 
   000be	33 c0		 xor	 eax, eax
 $LN1@Barrel_Ext:
 
-; 779  : 	}
-; 780  : }
+; 780  : 	}
+; 781  : }
 
   000c0	48 8d a5 50 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+336]
@@ -2387,7 +2398,7 @@ tv73 = 324
 request$ = 368
 Barrel_Info PROC					; COMDAT
 
-; 740  : inline bool Barrel_Info(REQUEST request){
+; 741  : inline bool Barrel_Info(REQUEST request){
 
 $LN10:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -2401,7 +2412,7 @@ $LN10:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 741  : 	BarrelNode* barrelNode = request._params[tSRC];
+; 742  : 	BarrelNode* barrelNode = request._params[tSRC];
 
   00020	b8 08 00 00 00	 mov	 eax, 8
   00025	48 6b c0 02	 imul	 rax, rax, 2
@@ -2411,7 +2422,7 @@ $LN10:
   00034	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
   00038	48 89 45 08	 mov	 QWORD PTR barrelNode$[rbp], rax
 
-; 742  : 	ParamType var = (ParamType)request._params[tVARIANT];
+; 743  : 	ParamType var = (ParamType)request._params[tVARIANT];
 
   0003c	b8 08 00 00 00	 mov	 eax, 8
   00041	48 6b c0 00	 imul	 rax, rax, 0
@@ -2421,7 +2432,7 @@ $LN10:
   00050	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
   00053	89 45 24	 mov	 DWORD PTR var$[rbp], eax
 
-; 743  : 	void* output = request._params[tTRG];
+; 744  : 	void* output = request._params[tTRG];
 
   00056	b8 08 00 00 00	 mov	 eax, 8
   0005b	48 6b c0 01	 imul	 rax, rax, 1
@@ -2431,8 +2442,8 @@ $LN10:
   0006a	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
   0006e	48 89 45 48	 mov	 QWORD PTR output$[rbp], rax
 
-; 744  : 
-; 745  : 	switch (var) {
+; 745  : 
+; 746  : 	switch (var) {
 
   00072	8b 45 24	 mov	 eax, DWORD PTR var$[rbp]
   00075	89 85 44 01 00
@@ -2452,41 +2463,41 @@ $LN10:
   0009f	eb 50		 jmp	 SHORT $LN8@Barrel_Inf
 $LN4@Barrel_Inf:
 
-; 746  : 
-; 747  : 	case tCOUNT:
-; 748  : 		*((uint*)output) = barrelNode->_collection._count;
+; 747  : 
+; 748  : 	case tCOUNT:
+; 749  : 		*((uint*)output) = barrelNode->_collection._count;
 
   000a1	48 8b 45 48	 mov	 rax, QWORD PTR output$[rbp]
   000a5	48 8b 4d 08	 mov	 rcx, QWORD PTR barrelNode$[rbp]
   000a9	8b 49 08	 mov	 ecx, DWORD PTR [rcx+8]
   000ac	89 08		 mov	 DWORD PTR [rax], ecx
 
-; 749  : 		return true;
+; 750  : 		return true;
 
   000ae	b8 01 00 00 00	 mov	 eax, 1
   000b3	eb 3e		 jmp	 SHORT $LN1@Barrel_Inf
 $LN5@Barrel_Inf:
 
-; 750  : 
-; 751  : 	case tCAPACITY:
-; 752  : 		*((uint*)output) = Barrel_Capacity(barrelNode);
+; 751  : 
+; 752  : 	case tCAPACITY:
+; 753  : 		*((uint*)output) = Barrel_Capacity(barrelNode);
 
   000b5	48 8b 4d 08	 mov	 rcx, QWORD PTR barrelNode$[rbp]
   000b9	e8 00 00 00 00	 call	 Barrel_Capacity
   000be	48 8b 4d 48	 mov	 rcx, QWORD PTR output$[rbp]
   000c2	89 01		 mov	 DWORD PTR [rcx], eax
 
-; 753  : 		return true;
+; 754  : 		return true;
 
   000c4	b8 01 00 00 00	 mov	 eax, 1
   000c9	eb 28		 jmp	 SHORT $LN1@Barrel_Inf
 $LN6@Barrel_Inf:
 $LN7@Barrel_Inf:
 
-; 754  : 
-; 755  : 	case tNAME:
-; 756  : 	case tSIZE:
-; 757  : 		return TypeInfo_GetInfo(request);
+; 755  : 
+; 756  : 	case tNAME:
+; 757  : 	case tSIZE:
+; 758  : 		return TypeInfo_GetInfo(request);
 
   000cb	48 8d 85 30 01
 	00 00		 lea	 rax, QWORD PTR $T1[rbp]
@@ -2501,15 +2512,15 @@ $LN7@Barrel_Inf:
   000ef	eb 02		 jmp	 SHORT $LN1@Barrel_Inf
 $LN8@Barrel_Inf:
 
-; 758  : 
-; 759  : 	default:
-; 760  : 		return false;
+; 759  : 
+; 760  : 	default:
+; 761  : 		return false;
 
   000f1	33 c0		 xor	 eax, eax
 $LN1@Barrel_Inf:
 
-; 761  : 	}
-; 762  : }
+; 762  : 	}
+; 763  : }
 
   000f3	48 8d a5 50 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+336]
@@ -2526,7 +2537,7 @@ _TEXT	SEGMENT
 request$ = 224
 Barrel_Transcribe PROC					; COMDAT
 
-; 737  : inline bool Barrel_Transcribe(REQUEST request){
+; 738  : inline bool Barrel_Transcribe(REQUEST request){
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -2539,11 +2550,11 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 738  : 	return false;
+; 739  : 	return false;
 
   0001f	33 c0		 xor	 eax, eax
 
-; 739  : }
+; 740  : }
 
   00021	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -2564,7 +2575,7 @@ tv70 = 340
 request$ = 384
 Barrel_Manage PROC					; COMDAT
 
-; 710  : inline bool Barrel_Manage(REQUEST request){
+; 711  : inline bool Barrel_Manage(REQUEST request){
 
 $LN11:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -2578,7 +2589,7 @@ $LN11:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 711  : 	ParamType var = (ParamType)request._params[tVARIANT];
+; 712  : 	ParamType var = (ParamType)request._params[tVARIANT];
 
   00020	b8 08 00 00 00	 mov	 eax, 8
   00025	48 6b c0 00	 imul	 rax, rax, 0
@@ -2588,7 +2599,7 @@ $LN11:
   00034	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
   00037	89 45 04	 mov	 DWORD PTR var$[rbp], eax
 
-; 712  : 	BarrelNode* barrelNode = request._params[tSRC];
+; 713  : 	BarrelNode* barrelNode = request._params[tSRC];
 
   0003a	b8 08 00 00 00	 mov	 eax, 8
   0003f	48 6b c0 02	 imul	 rax, rax, 2
@@ -2598,8 +2609,8 @@ $LN11:
   0004e	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
   00052	48 89 45 28	 mov	 QWORD PTR barrelNode$[rbp], rax
 
-; 713  : 
-; 714  : 	switch (var)
+; 714  : 
+; 715  : 	switch (var)
 
   00056	8b 45 04	 mov	 eax, DWORD PTR var$[rbp]
   00059	89 85 54 01 00
@@ -2623,9 +2634,9 @@ $LN11:
   00090	e9 a8 00 00 00	 jmp	 $LN9@Barrel_Man
 $LN4@Barrel_Man:
 
-; 715  : 	{
-; 716  : 	case tCHUNK:
-; 717  : 		request._params[tSIZE] = barrelNode->_barrelCount * sizeof(Barrel);
+; 716  : 	{
+; 717  : 	case tCHUNK:
+; 718  : 		request._params[tSIZE] = barrelNode->_barrelCount * sizeof(Barrel);
 
   00095	48 8b 45 28	 mov	 rax, QWORD PTR barrelNode$[rbp]
   00099	8b 40 10	 mov	 eax, DWORD PTR [rax+16]
@@ -2637,7 +2648,7 @@ $LN4@Barrel_Man:
   000b0	48 8b 52 08	 mov	 rdx, QWORD PTR [rdx+8]
   000b4	48 89 04 11	 mov	 QWORD PTR [rcx+rdx], rax
 
-; 718  : 		return Barrel_GetChunk(barrelNode, request._params[tTRG]);
+; 719  : 		return Barrel_GetChunk(barrelNode, request._params[tTRG]);
 
   000b8	b8 08 00 00 00	 mov	 eax, 8
   000bd	48 6b c0 01	 imul	 rax, rax, 1
@@ -2650,27 +2661,27 @@ $LN4@Barrel_Man:
   000d9	eb 64		 jmp	 SHORT $LN1@Barrel_Man
 $LN5@Barrel_Man:
 
-; 719  : 
-; 720  : 	case tUSE:
-; 721  : 		return Collection_Request(barrelNode);
+; 720  : 
+; 721  : 	case tUSE:
+; 722  : 		return Collection_Request(barrelNode);
 
   000db	48 8b 4d 28	 mov	 rcx, QWORD PTR barrelNode$[rbp]
   000df	e8 00 00 00 00	 call	 Collection_Request
   000e4	eb 59		 jmp	 SHORT $LN1@Barrel_Man
 $LN6@Barrel_Man:
 
-; 722  : 
-; 723  : 	case tRELEASE:
-; 724  : 		return Collection_Release(barrelNode);
+; 723  : 
+; 724  : 	case tRELEASE:
+; 725  : 		return Collection_Release(barrelNode);
 
   000e6	48 8b 4d 28	 mov	 rcx, QWORD PTR barrelNode$[rbp]
   000ea	e8 00 00 00 00	 call	 Collection_Release
   000ef	eb 4e		 jmp	 SHORT $LN1@Barrel_Man
 $LN7@Barrel_Man:
 
-; 725  : 
-; 726  : 	case DELTA_SIZE:
-; 727  : 		return Barrel_DeltaSize(request);
+; 726  : 
+; 727  : 	case DELTA_SIZE:
+; 728  : 		return Barrel_DeltaSize(request);
 
   000f1	48 8d 85 10 01
 	00 00		 lea	 rax, QWORD PTR $T1[rbp]
@@ -2685,9 +2696,9 @@ $LN7@Barrel_Man:
   00115	eb 28		 jmp	 SHORT $LN1@Barrel_Man
 $LN8@Barrel_Man:
 
-; 728  : 
-; 729  : 	case tRESIZE:
-; 730  : 		return Barrel_Resize(request);
+; 729  : 
+; 730  : 	case tRESIZE:
+; 731  : 		return Barrel_Resize(request);
 
   00117	48 8d 85 40 01
 	00 00		 lea	 rax, QWORD PTR $T2[rbp]
@@ -2702,16 +2713,16 @@ $LN8@Barrel_Man:
   0013b	eb 02		 jmp	 SHORT $LN1@Barrel_Man
 $LN9@Barrel_Man:
 
-; 731  : 
 ; 732  : 
-; 733  : 	default:
-; 734  : 		return false;
+; 733  : 
+; 734  : 	default:
+; 735  : 		return false;
 
   0013d	33 c0		 xor	 eax, eax
 $LN1@Barrel_Man:
 
-; 735  : 	}
-; 736  : }
+; 736  : 	}
+; 737  : }
 
   0013f	48 8d a5 60 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+352]
@@ -2740,7 +2751,7 @@ $T21 = 1216
 __$ArrayPad$ = 1240
 Barrel_NextAvailableNodeIx PROC				; COMDAT
 
-; 668  : {
+; 669  : {
 
 $LN6:
   00000	40 55		 push	 rbp
@@ -2762,35 +2773,35 @@ $LN6:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 669  : 
-; 670  : 	int next = GlobalBarrelService._nextAvailable;
+; 670  : 
+; 671  : 	int next = GlobalBarrelService._nextAvailable;
 
   0003e	8b 05 28 00 00
 	00		 mov	 eax, DWORD PTR GlobalBarrelService+40
   00044	89 45 04	 mov	 DWORD PTR next$[rbp], eax
 
-; 671  : 
-; 672  : 	if (next < 0)
+; 672  : 
+; 673  : 	if (next < 0)
 
   00047	83 7d 04 00	 cmp	 DWORD PTR next$[rbp], 0
   0004b	0f 8d 91 01 00
 	00		 jge	 $LN2@Barrel_Nex
 
-; 673  : 	{
-; 674  : 		PREENT("Getting Fresh Node...\n");
+; 674  : 	{
+; 675  : 		PREENT("Getting Fresh Node...\n");
 
   00051	33 d2		 xor	 edx, edx
   00053	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BH@ILDHJPOI@Getting?5Fresh?5Node?4?4?4?6@
   0005a	e8 00 00 00 00	 call	 Preent
 
-; 675  : 		next = GlobalBarrelService.Omegus._collection._count;
+; 676  : 		next = GlobalBarrelService.Omegus._collection._count;
 
   0005f	8b 05 10 00 00
 	00		 mov	 eax, DWORD PTR GlobalBarrelService+16
   00065	89 45 04	 mov	 DWORD PTR next$[rbp], eax
 
-; 676  : 		REQUEST deltaSize = Request(MANAGE, P_(tVARIANT, DELTA_SIZE), P_(tTRG, &(GlobalBarrelService.Omegus)), P_(tSIZE, 1), P_(tCOUNT, 1));
+; 677  : 		REQUEST deltaSize = Request(MANAGE, P_(tVARIANT, DELTA_SIZE), P_(tTRG, &(GlobalBarrelService.Omegus)), P_(tSIZE, 1), P_(tCOUNT, 1));
 
   00068	48 8d 85 c0 01
 	00 00		 lea	 rax, QWORD PTR $S10$18[rbp]
@@ -2875,7 +2886,7 @@ $LN6:
   0018e	b9 10 00 00 00	 mov	 ecx, 16
   00193	f3 a4		 rep movsb
 
-; 677  : 		if (!Barrel_DeltaSize(deltaSize))
+; 678  : 		if (!Barrel_DeltaSize(deltaSize))
 
   00195	48 8d 85 c0 04
 	00 00		 lea	 rax, QWORD PTR $T21[rbp]
@@ -2890,43 +2901,43 @@ $LN6:
   001b9	85 c0		 test	 eax, eax
   001bb	75 15		 jne	 SHORT $LN4@Barrel_Nex
 
-; 678  : 		{
-; 679  : 			PREENT("Omegus Vector resize failed!\n");
+; 679  : 		{
+; 680  : 			PREENT("Omegus Vector resize failed!\n");
 
   001bd	33 d2		 xor	 edx, edx
   001bf	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BO@CFBAAFAH@Omegus?5Vector?5resize?5failed?$CB?6@
   001c6	e8 00 00 00 00	 call	 Preent
 
-; 680  : 			return NONE;
+; 681  : 			return NONE;
 
   001cb	b8 fe ff ff ff	 mov	 eax, -2
   001d0	eb 40		 jmp	 SHORT $LN1@Barrel_Nex
 $LN4@Barrel_Nex:
 
-; 681  : 		}
-; 682  : 		PREENT("Fresh Node!\n");
+; 682  : 		}
+; 683  : 		PREENT("Fresh Node!\n");
 
   001d2	33 d2		 xor	 edx, edx
   001d4	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0N@EJBOAMCB@Fresh?5Node?$CB?6@
   001db	e8 00 00 00 00	 call	 Preent
 
-; 683  : 	}
+; 684  : 	}
 
   001e0	eb 2d		 jmp	 SHORT $LN3@Barrel_Nex
 $LN2@Barrel_Nex:
 
-; 684  : 	else
-; 685  : 	{
-; 686  : 		BarrelNode* nextNode = Barrel_GetNode(next);
+; 685  : 	else
+; 686  : 	{
+; 687  : 		BarrelNode* nextNode = Barrel_GetNode(next);
 
   001e2	8b 4d 04	 mov	 ecx, DWORD PTR next$[rbp]
   001e5	e8 00 00 00 00	 call	 Barrel_GetNode
   001ea	48 89 85 e8 02
 	00 00		 mov	 QWORD PTR nextNode$19[rbp], rax
 
-; 687  : 		GlobalBarrelService._nextAvailable = nextNode->_nextNode;
+; 688  : 		GlobalBarrelService._nextAvailable = nextNode->_nextNode;
 
   001f1	48 8b 85 e8 02
 	00 00		 mov	 rax, QWORD PTR nextNode$19[rbp]
@@ -2934,7 +2945,7 @@ $LN2@Barrel_Nex:
   001fb	89 05 28 00 00
 	00		 mov	 DWORD PTR GlobalBarrelService+40, eax
 
-; 688  : 		PREENT("Recycled Node!\n");
+; 689  : 		PREENT("Recycled Node!\n");
 
   00201	33 d2		 xor	 edx, edx
   00203	48 8d 0d 00 00
@@ -2942,14 +2953,14 @@ $LN2@Barrel_Nex:
   0020a	e8 00 00 00 00	 call	 Preent
 $LN3@Barrel_Nex:
 
-; 689  : 	}
-; 690  : 
-; 691  : 	return next;
+; 690  : 	}
+; 691  : 
+; 692  : 	return next;
 
   0020f	8b 45 04	 mov	 eax, DWORD PTR next$[rbp]
 $LN1@Barrel_Nex:
 
-; 692  : }
+; 693  : }
 
   00212	48 8b f8	 mov	 rdi, rax
   00215	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
@@ -2978,7 +2989,7 @@ $T1 = 240
 request$ = 304
 Barrel_Resize PROC					; COMDAT
 
-; 661  : bool Barrel_Resize(REQUEST request) {
+; 662  : bool Barrel_Resize(REQUEST request) {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -2992,7 +3003,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 662  : 	BarrelNode* node = request._params[tTRG];
+; 663  : 	BarrelNode* node = request._params[tTRG];
 
   00020	b8 08 00 00 00	 mov	 eax, 8
   00025	48 6b c0 01	 imul	 rax, rax, 1
@@ -3002,7 +3013,7 @@ $LN3:
   00034	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
   00038	48 89 45 08	 mov	 QWORD PTR node$[rbp], rax
 
-; 663  : 	((uint)request._params[tCOUNT]) -= node->_collection._count;
+; 664  : 	((uint)request._params[tCOUNT]) -= node->_collection._count;
 
   0003c	b8 08 00 00 00	 mov	 eax, 8
   00041	48 6b c0 07	 imul	 rax, rax, 7
@@ -3020,7 +3031,7 @@ $LN3:
   0006c	48 8b 52 08	 mov	 rdx, QWORD PTR [rdx+8]
   00070	89 04 11	 mov	 DWORD PTR [rcx+rdx], eax
 
-; 664  : 	return Barrel_DeltaSize(request);
+; 665  : 	return Barrel_DeltaSize(request);
 
   00073	48 8d 85 f0 00
 	00 00		 lea	 rax, QWORD PTR $T1[rbp]
@@ -3033,7 +3044,7 @@ $LN3:
 	00 00		 lea	 rcx, QWORD PTR $T1[rbp]
   00092	e8 00 00 00 00	 call	 Barrel_DeltaSize
 
-; 665  : }
+; 666  : }
 
   00097	48 8d a5 10 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+272]
@@ -3065,7 +3076,7 @@ __$ArrayPad$ = 568
 request$ = 608
 Barrel_DeltaSize PROC					; COMDAT
 
-; 610  : {
+; 611  : {
 
 $LN17:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -3090,7 +3101,7 @@ $LN17:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   00045	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 611  : 	int unitDelta = (int)(request._params[tCOUNT]);
+; 612  : 	int unitDelta = (int)(request._params[tCOUNT]);
 
   0004a	b8 08 00 00 00	 mov	 eax, 8
   0004f	48 6b c0 07	 imul	 rax, rax, 7
@@ -3100,8 +3111,8 @@ $LN17:
   0005e	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
   00061	89 45 04	 mov	 DWORD PTR unitDelta$[rbp], eax
 
-; 612  : 
-; 613  : 	PREENT_ARGS("DeltaSize Request: %\n", fmt_i(unitDelta));
+; 613  : 
+; 614  : 	PREENT_ARGS("DeltaSize Request: %\n", fmt_i(unitDelta));
 
   00064	c7 45 28 1d 00
 	00 00		 mov	 DWORD PTR $S1$[rbp], 29
@@ -3126,8 +3137,8 @@ $LN17:
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BG@GFFEPJOL@DeltaSize?5Request?3?5?$CF?6@
   000b1	e8 00 00 00 00	 call	 Preent
 
-; 614  : 	//int countDelta = (int)(request._params[tCOUNT]);
-; 615  : 	BarrelNode* node = request._params[tTRG];
+; 615  : 	//int countDelta = (int)(request._params[tCOUNT]);
+; 616  : 	BarrelNode* node = request._params[tTRG];
 
   000b6	b8 08 00 00 00	 mov	 eax, 8
   000bb	48 6b c0 01	 imul	 rax, rax, 1
@@ -3138,7 +3149,7 @@ $LN17:
   000ce	48 89 85 b8 00
 	00 00		 mov	 QWORD PTR node$[rbp], rax
 
-; 616  : 	size_t unitSize = node->_collection._extensions->_type->_size;
+; 617  : 	size_t unitSize = node->_collection._extensions->_type->_size;
 
   000d5	48 8b 85 b8 00
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -3148,21 +3159,21 @@ $LN17:
   000e6	48 89 85 d8 00
 	00 00		 mov	 QWORD PTR unitSize$[rbp], rax
 
-; 617  : 	
-; 618  : 	// no action needed
-; 619  : 	if (unitDelta == 0)
+; 618  : 	
+; 619  : 	// no action needed
+; 620  : 	if (unitDelta == 0)
 
   000ed	83 7d 04 00	 cmp	 DWORD PTR unitDelta$[rbp], 0
   000f1	75 0a		 jne	 SHORT $LN2@Barrel_Del
 
-; 620  : 		return true;
+; 621  : 		return true;
 
   000f3	b8 01 00 00 00	 mov	 eax, 1
   000f8	e9 ca 01 00 00	 jmp	 $LN1@Barrel_Del
 $LN2@Barrel_Del:
 
-; 621  : 
-; 622  : 	int deltaMag = unitDelta < 0 ? -unitDelta : unitDelta;
+; 622  : 
+; 623  : 	int deltaMag = unitDelta < 0 ? -unitDelta : unitDelta;
 
   000fd	83 7d 04 00	 cmp	 DWORD PTR unitDelta$[rbp], 0
   00101	7d 0d		 jge	 SHORT $LN9@Barrel_Del
@@ -3181,8 +3192,8 @@ $LN10@Barrel_Del:
   0011f	89 85 f4 00 00
 	00		 mov	 DWORD PTR deltaMag$[rbp], eax
 
-; 623  : 
-; 624  : 	size_t remainingCapacity = Barrel_RemainingSizeCap(node);
+; 624  : 
+; 625  : 	size_t remainingCapacity = Barrel_RemainingSizeCap(node);
 
   00125	48 8b 8d b8 00
 	00 00		 mov	 rcx, QWORD PTR node$[rbp]
@@ -3190,7 +3201,7 @@ $LN10@Barrel_Del:
   00131	48 89 85 18 01
 	00 00		 mov	 QWORD PTR remainingCapacity$[rbp], rax
 
-; 625  : 	size_t deltaSize = deltaMag * node->_collection._extensions->_type->_size;
+; 626  : 	size_t deltaSize = deltaMag * node->_collection._extensions->_type->_size;
 
   00138	48 63 85 f4 00
 	00 00		 movsxd	 rax, DWORD PTR deltaMag$[rbp]
@@ -3202,9 +3213,9 @@ $LN10@Barrel_Del:
   00151	48 89 85 38 01
 	00 00		 mov	 QWORD PTR deltaSize$[rbp], rax
 
-; 626  : 
-; 627  : 	// determine initial block 'delta', rounding up if positive, to cover any trailing elements
-; 628  : 	int barrelDelta =
+; 627  : 
+; 628  : 	// determine initial block 'delta', rounding up if positive, to cover any trailing elements
+; 629  : 	int barrelDelta =
 
   00158	83 7d 04 00	 cmp	 DWORD PTR unitDelta$[rbp], 0
   0015c	7e 6d		 jle	 SHORT $LN15@Barrel_Del
@@ -3274,31 +3285,31 @@ $LN16@Barrel_Del:
   0021b	89 85 54 01 00
 	00		 mov	 DWORD PTR barrelDelta$[rbp], eax
 
-; 629  : 		unitDelta > 0 ? ((deltaSize - remainingCapacity) / sizeof(Barrel)) + ((deltaSize - remainingCapacity) % sizeof(Barrel) > 0 ? 1 : 0) :
-; 630  : 		unitDelta < 0 ? (-(int)(remainingCapacity - deltaSize) / sizeof(Barrel)) : 0;
-; 631  : 
-; 632  : 	// no action needed
-; 633  : 	if (barrelDelta == 0)
+; 630  : 		unitDelta > 0 ? ((deltaSize - remainingCapacity) / sizeof(Barrel)) + ((deltaSize - remainingCapacity) % sizeof(Barrel) > 0 ? 1 : 0) :
+; 631  : 		unitDelta < 0 ? (-(int)(remainingCapacity - deltaSize) / sizeof(Barrel)) : 0;
+; 632  : 
+; 633  : 	// no action needed
+; 634  : 	if (barrelDelta == 0)
 
   00221	83 bd 54 01 00
 	00 00		 cmp	 DWORD PTR barrelDelta$[rbp], 0
   00228	75 0a		 jne	 SHORT $LN3@Barrel_Del
 
-; 634  : 		return true;
+; 635  : 		return true;
 
   0022a	b8 01 00 00 00	 mov	 eax, 1
   0022f	e9 93 00 00 00	 jmp	 $LN1@Barrel_Del
 $LN3@Barrel_Del:
 
-; 635  : 
-; 636  : 	// shrink first
-; 637  : 	if (barrelDelta < 0)
+; 636  : 
+; 637  : 	// shrink first
+; 638  : 	if (barrelDelta < 0)
 
   00234	83 bd 54 01 00
 	00 00		 cmp	 DWORD PTR barrelDelta$[rbp], 0
   0023b	7d 12		 jge	 SHORT $LN4@Barrel_Del
 
-; 638  : 		Barrel_Shrink(node, barrelDelta);
+; 639  : 		Barrel_Shrink(node, barrelDelta);
 
   0023d	8b 95 54 01 00
 	00		 mov	 edx, DWORD PTR barrelDelta$[rbp]
@@ -3307,9 +3318,9 @@ $LN3@Barrel_Del:
   0024a	e8 00 00 00 00	 call	 Barrel_Shrink
 $LN4@Barrel_Del:
 
-; 639  : 
-; 640  : 	// roll necessary Barrels
-; 641  : 	if (node->_nextNode > NONE && !Barrel_Roll(Barrel_GetNode(node->_nextNode), barrelDelta))
+; 640  : 
+; 641  : 	// roll necessary Barrels
+; 642  : 	if (node->_nextNode > NONE && !Barrel_Roll(Barrel_GetNode(node->_nextNode), barrelDelta))
 
   0024f	48 8b 85 b8 00
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -3326,21 +3337,21 @@ $LN4@Barrel_Del:
   00279	85 c0		 test	 eax, eax
   0027b	75 04		 jne	 SHORT $LN5@Barrel_Del
 
-; 642  : 		return false;
+; 643  : 		return false;
 
   0027d	33 c0		 xor	 eax, eax
   0027f	eb 46		 jmp	 SHORT $LN1@Barrel_Del
 $LN5@Barrel_Del:
 
-; 643  : 
-; 644  : 	// grow after
-; 645  : 	if (barrelDelta > 0) {
+; 644  : 
+; 645  : 	// grow after
+; 646  : 	if (barrelDelta > 0) {
 
   00281	83 bd 54 01 00
 	00 00		 cmp	 DWORD PTR barrelDelta$[rbp], 0
   00288	7e 38		 jle	 SHORT $LN6@Barrel_Del
 
-; 646  : 		if (node->_nextNode <= NONE && Heap_Remaining() < barrelDelta * sizeof(Barrel))
+; 647  : 		if (node->_nextNode <= NONE && Heap_Remaining() < barrelDelta * sizeof(Barrel))
 
   0028a	48 8b 85 b8 00
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -3353,14 +3364,14 @@ $LN5@Barrel_Del:
   002a7	48 3b c1	 cmp	 rax, rcx
   002aa	73 04		 jae	 SHORT $LN7@Barrel_Del
 
-; 647  : 			return false;
+; 648  : 			return false;
 
   002ac	33 c0		 xor	 eax, eax
   002ae	eb 17		 jmp	 SHORT $LN1@Barrel_Del
 $LN7@Barrel_Del:
 
-; 648  : 
-; 649  : 		Barrel_Grow(node, barrelDelta);
+; 649  : 
+; 650  : 		Barrel_Grow(node, barrelDelta);
 
   002b0	8b 95 54 01 00
 	00		 mov	 edx, DWORD PTR barrelDelta$[rbp]
@@ -3369,14 +3380,14 @@ $LN7@Barrel_Del:
   002bd	e8 00 00 00 00	 call	 Barrel_Grow
 $LN6@Barrel_Del:
 
-; 650  : 	}
-; 651  : 
-; 652  : 	return true;
+; 651  : 	}
+; 652  : 
+; 653  : 	return true;
 
   002c2	b8 01 00 00 00	 mov	 eax, 1
 $LN1@Barrel_Del:
 
-; 653  : }
+; 654  : }
 
   002c7	48 8b f8	 mov	 rdi, rax
   002ca	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
@@ -3404,7 +3415,7 @@ node$ = 224
 request$ = 232
 Barrel_Roll PROC					; COMDAT
 
-; 586  : bool Barrel_Roll(BarrelNode* node, int request) {
+; 587  : bool Barrel_Roll(BarrelNode* node, int request) {
 
 $LN10:
   00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
@@ -3418,21 +3429,21 @@ $LN10:
 	00 00		 lea	 rcx, OFFSET FLAT:__59E4AADC_tBarrel@c
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 587  : 
-; 588  : 	if (request == 0) // Empty, return good anyway
+; 588  : 
+; 589  : 	if (request == 0) // Empty, return good anyway
 
   00023	83 bd e8 00 00
 	00 00		 cmp	 DWORD PTR request$[rbp], 0
   0002a	75 0a		 jne	 SHORT $LN2@Barrel_Rol
 
-; 589  : 		return true;
+; 590  : 		return true;
 
   0002c	b8 01 00 00 00	 mov	 eax, 1
   00031	e9 ae 00 00 00	 jmp	 $LN1@Barrel_Rol
 $LN2@Barrel_Rol:
 
-; 590  : 
-; 591  : 	if (!Collection_Request(node)) // Failed to reserve collection
+; 591  : 
+; 592  : 	if (!Collection_Request(node)) // Failed to reserve collection
 
   00036	48 8b 8d e0 00
 	00 00		 mov	 rcx, QWORD PTR node$[rbp]
@@ -3440,20 +3451,20 @@ $LN2@Barrel_Rol:
   00042	85 c0		 test	 eax, eax
   00044	75 07		 jne	 SHORT $LN3@Barrel_Rol
 
-; 592  : 		return false;
+; 593  : 		return false;
 
   00046	33 c0		 xor	 eax, eax
   00048	e9 97 00 00 00	 jmp	 $LN1@Barrel_Rol
 $LN3@Barrel_Rol:
 
-; 593  : 
-; 594  : 	if (request < 0) // Shrink collection before anything
+; 594  : 
+; 595  : 	if (request < 0) // Shrink collection before anything
 
   0004d	83 bd e8 00 00
 	00 00		 cmp	 DWORD PTR request$[rbp], 0
   00054	7d 12		 jge	 SHORT $LN4@Barrel_Rol
 
-; 595  : 		Barrel_RollBack(node, request);
+; 596  : 		Barrel_RollBack(node, request);
 
   00056	8b 95 e8 00 00
 	00		 mov	 edx, DWORD PTR request$[rbp]
@@ -3462,15 +3473,15 @@ $LN3@Barrel_Rol:
   00063	e8 00 00 00 00	 call	 Barrel_RollBack
 $LN4@Barrel_Rol:
 
-; 596  : 	
-; 597  : 	if (node->_nextNode > -1) // Send action to next physical node
+; 597  : 	
+; 598  : 	if (node->_nextNode > -1) // Send action to next physical node
 
   00068	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
   0006f	83 78 1c ff	 cmp	 DWORD PTR [rax+28], -1
   00073	7e 21		 jle	 SHORT $LN5@Barrel_Rol
 
-; 598  : 		return Barrel_Roll(Barrel_GetNode(node->_nextNode), request);
+; 599  : 		return Barrel_Roll(Barrel_GetNode(node->_nextNode), request);
 
   00075	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR node$[rbp]
@@ -3484,8 +3495,8 @@ $LN4@Barrel_Rol:
   00094	eb 22		 jmp	 SHORT $LN6@Barrel_Rol
 $LN5@Barrel_Rol:
 
-; 599  : 
-; 600  : 	else if (request > 0 && Heap_Remaining() < request * sizeof(Barrel)) // Heap has no available space for last node
+; 600  : 
+; 601  : 	else if (request > 0 && Heap_Remaining() < request * sizeof(Barrel)) // Heap has no available space for last node
 
   00096	83 bd e8 00 00
 	00 00		 cmp	 DWORD PTR request$[rbp], 0
@@ -3497,21 +3508,21 @@ $LN5@Barrel_Rol:
   000af	48 3b c1	 cmp	 rax, rcx
   000b2	73 04		 jae	 SHORT $LN7@Barrel_Rol
 
-; 601  : 		return false;
+; 602  : 		return false;
 
   000b4	33 c0		 xor	 eax, eax
   000b6	eb 2c		 jmp	 SHORT $LN1@Barrel_Rol
 $LN7@Barrel_Rol:
 $LN6@Barrel_Rol:
 
-; 602  : 
-; 603  : 	if (request > 0) // Grow the collection last
+; 603  : 
+; 604  : 	if (request > 0) // Grow the collection last
 
   000b8	83 bd e8 00 00
 	00 00		 cmp	 DWORD PTR request$[rbp], 0
   000bf	7e 12		 jle	 SHORT $LN8@Barrel_Rol
 
-; 604  : 		Barrel_RollForward(node, request);
+; 605  : 		Barrel_RollForward(node, request);
 
   000c1	8b 95 e8 00 00
 	00		 mov	 edx, DWORD PTR request$[rbp]
@@ -3520,19 +3531,19 @@ $LN6@Barrel_Rol:
   000ce	e8 00 00 00 00	 call	 Barrel_RollForward
 $LN8@Barrel_Rol:
 
-; 605  : 
-; 606  : 	Collection_Release(node); // Release collection
+; 606  : 
+; 607  : 	Collection_Release(node); // Release collection
 
   000d3	48 8b 8d e0 00
 	00 00		 mov	 rcx, QWORD PTR node$[rbp]
   000da	e8 00 00 00 00	 call	 Collection_Release
 
-; 607  : 	return true;
+; 608  : 	return true;
 
   000df	b8 01 00 00 00	 mov	 eax, 1
 $LN1@Barrel_Rol:
 
-; 608  : }
+; 609  : }
 
   000e4	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]

@@ -1,23 +1,4 @@
-﻿  tBarrel.c
-C:\Repos\BarrelTest\tBarrel.c(463,26): warning C4018: '>=': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(480,2): warning C4047: 'return': 'void *' differs in levels of indirection from 'size_t'
-C:\Repos\BarrelTest\tBarrel.c(512,39): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(517,68): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(553,28): warning C4018: '>': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(591,26): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(606,21): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(611,48): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
-C:\Repos\BarrelTest\tBarrel.c(629,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(663,32): warning C4311: 'type cast': pointer truncation from 'void *' to 'unsigned int'
-C:\Repos\BarrelTest\tBarrel.c(676,23): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
-C:\Repos\BarrelTest\tBarrel.c(676,23): warning C4047: 'function': 'void **' differs in levels of indirection from 'Parameter [17]'
-C:\Repos\BarrelTest\tBarrel.c(676,23): warning C4022: 'CreateRequest': pointer mismatch for actual parameter 3
-C:\Repos\BarrelTest\tBarrel.c(707,17): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(717,26): warning C4047: '=': 'void *' differs in levels of indirection from 'size_t'
-C:\Repos\BarrelTest\tBarrel.c(721,29): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(724,29): warning C4133: 'function': incompatible types - from 'BarrelNode *' to 'COLLECTION'
-C:\Repos\BarrelTest\tBarrel.c(805,65): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Repos\BarrelTest\tBarrel.c(807,100): warning C4113: 'int (__cdecl *)(REQUEST)' differs in parameter lists from 'int (__cdecl *)(RequestType *)'
-C:\Repos\BarrelTest\tBarrel.c(816,20): warning C4018: '<': signed/unsigned mismatch
-C:\Repos\BarrelTest\tBarrel.c(851,2): warning C4133: 'return': incompatible types - from 'BarrelNode *' to 'COLLECTION'
+﻿  TestArea.c
+C:\Repos\BarrelTest\TestArea.c(40,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(40,24): warning C4244: 'initializing': conversion from 'float' to 'char', possible loss of data
   TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

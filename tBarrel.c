@@ -541,6 +541,7 @@ inline void Barrel_RollForward(BarrelNode* node, int request) {
 			Barrel_GetBarrelPtr(node->_barrelStart + node->_barrelCount + i),
 			Barrel_GetBarrelPtr(node->_barrelStart + i),
 			request);
+	node->_barrelStart += request;
 
 	Barrel_Offset(node, request);
 }

@@ -1,10 +1,5 @@
 #include <tBucket.h>
 //
-
-
-inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
-	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_chunk._head) + (index * bucket->_collection._extensions->_type->_size);
-}
 //
 //bool Bucket_Resize(Request request)
 //{
@@ -90,13 +85,7 @@ inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
 //{
 //
 //}
-//bool Bucket_Location(Request* request) {
-//	Bucket* bucket = request->_src;
-//	if (request->_srcIx >= bucket->_collection._capacity)
-//		return false;
-//	request->_trg = ((char*)(bucket->_bucket))[request->_srcIx * bucket->_collection._info->_type._size];
-//	return true;
-//}
+
 //bool Bucket_Slice(Request request)
 //{
 //	Bucket* bucket = request._trg;
@@ -132,20 +121,20 @@ inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
 //}
 //
 
+inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
+	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_chunk._head) + (index * bucket->_collection._extensions->_type->_size);
+}
 bool Bucket_GetChunk(Bucket* bucket, Chunk* loc) {
 	Chunk_ctor(loc, bucket->_chunk._head, bucket->_chunk._size);
 	return true;
 }
-
 uint Bucket_Capacity(Bucket* bucket) { return (bucket->_chunk._size) / bucket->_collection._extensions->_type->_size; }
-
 inline bool Bucket_Iterate(REQUEST request) {
 	Bucket* bucket = request._params[tSRC];
 	request._params[tTRG] = Bucket_GetPtr(bucket, request._params[Ix_TRG]);
 	((size_t)(request._params[Ix_TRG]))++;
 	return true;
 }
-
 inline bool Bucket_Manage(REQUEST request) {
 	ParamType var = (ParamType)request._params[tVARIANT];
 	Bucket* bucket = request._params[tSRC];
@@ -158,18 +147,16 @@ inline bool Bucket_Manage(REQUEST request) {
 		request._params[tSIZE] = 0;
 		return Bucket_GetChunk(bucket, request._params[tTRG]);
 
-	case tRELEASE:
-		return true;
+	case tRESIZE:
+		return false;
 
 	default:
 		return false;
 	}
 }
-
 inline bool Bucket_Transcribe(REQUEST request) {
 
 }
-
 inline bool Bucket_Info(REQUEST request) {
 
 	Bucket* bucket = request._params[tSRC];
@@ -195,7 +182,6 @@ inline bool Bucket_Info(REQUEST request) {
 	}
 
 }
-
 bool Bucket_Methods(REQUEST request)
 {
 	switch (request._type) {

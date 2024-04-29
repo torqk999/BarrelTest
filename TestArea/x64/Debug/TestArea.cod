@@ -5,27 +5,6 @@ include listing.inc
 INCLUDELIB MSVCRTD
 INCLUDELIB OLDNAMES
 
-PUBLIC	barrelTest_ESCAPE
-PUBLIC	clear_screen
-PUBLIC	barrelTest_NEW
-PUBLIC	barrelTest_REMOVE
-PUBLIC	barrelTest_RESIZE
-PUBLIC	barrelTest_WRITE
-PUBLIC	barrelTest_READ
-PUBLIC	barrelTest_VIEW_HEAP
-PUBLIC	ESCAPE
-PUBLIC	escapeAction
-PUBLIC	??_C@_06OIGFGPHJ@Escape@			; `string'
-PUBLIC	mainMenuActionCount
-PUBLIC	mainMenuActions
-PUBLIC	??_C@_0N@GKKFFGGN@Quit?5Program@		; `string'
-PUBLIC	??_C@_0P@CPFOBCCD@New?5Collection@		; `string'
-PUBLIC	??_C@_0BC@EGJKACHO@Remove?5Collection@		; `string'
-PUBLIC	??_C@_0BD@DGEAJMED@Re?9size?5Collection@	; `string'
-PUBLIC	??_C@_0BN@IBOFOPMI@Read?5from?5Collection?5to?5span@ ; `string'
-PUBLIC	??_C@_0BO@MPDCLNBC@Write?5to?5Collection?5from?5span@ ; `string'
-PUBLIC	??_C@_0BB@DMJKMIHM@View?5entire?5heap@		; `string'
-PUBLIC	??_C@_0N@EDMEMMAC@Clear?5Screen@		; `string'
 _DATA	SEGMENT
 COMM	ThreadHandle_TypeID:BYTE:018H
 COMM	GlobalBarrelService:BYTE:030H
@@ -33,9 +12,6 @@ COMM	GlobalBarrelNodeType:BYTE:018H
 COMM	barrelService_ThreadBin:BYTE:0100H
 COMM	barrelService_QueBin:BYTE:0200H
 _DATA	ENDS
-_BSS	SEGMENT
-ESCAPE	DD	01H DUP (?)
-_BSS	ENDS
 msvcjmc	SEGMENT
 __9C67CA7D_tEnums@h DB 01H
 __EAEE5CFA_tDefines@h DB 01H
@@ -199,6 +175,7 @@ __577CE3E7_ime_cmodes@h DB 01H
 __1E72C31E_imm@h DB 01H
 __63AA7AF5_Windows@h DB 01H
 __4EC676C0_tModules@h DB 01H
+__9A4426E4_tUserCollection@h DB 01H
 __AFB9CF29_tPreent@h DB 01H
 __366DFDC4_tHelpers@h DB 01H
 __D300D227_tTypeInfo@h DB 01H
@@ -208,140 +185,24 @@ __FEADC134_tHeap@h DB 01H
 __296E417C_tChunk@h DB 01H
 __7CF1EC1E_tCollection@h DB 01H
 __CE367354_tBarrel@h DB 01H
+__308C18FA_BarrelTest@h DB 01H
 __E8DC32E4_tLink@h DB 01H
 __7D6FBD02_tHashMap@h DB 01H
 __BC332FCF_TestArea@c DB 01H
 msvcjmc	ENDS
-;	COMDAT ??_C@_0N@EDMEMMAC@Clear?5Screen@
-CONST	SEGMENT
-??_C@_0N@EDMEMMAC@Clear?5Screen@ DB 'Clear Screen', 00H	; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BB@DMJKMIHM@View?5entire?5heap@
-CONST	SEGMENT
-??_C@_0BB@DMJKMIHM@View?5entire?5heap@ DB 'View entire heap', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BO@MPDCLNBC@Write?5to?5Collection?5from?5span@
-CONST	SEGMENT
-??_C@_0BO@MPDCLNBC@Write?5to?5Collection?5from?5span@ DB 'Write to Collec'
-	DB	'tion from span', 00H			; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BN@IBOFOPMI@Read?5from?5Collection?5to?5span@
-CONST	SEGMENT
-??_C@_0BN@IBOFOPMI@Read?5from?5Collection?5to?5span@ DB 'Read from Collec'
-	DB	'tion to span', 00H				; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BD@DGEAJMED@Re?9size?5Collection@
-CONST	SEGMENT
-??_C@_0BD@DGEAJMED@Re?9size?5Collection@ DB 'Re-size Collection', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BC@EGJKACHO@Remove?5Collection@
-CONST	SEGMENT
-??_C@_0BC@EGJKACHO@Remove?5Collection@ DB 'Remove Collection', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0P@CPFOBCCD@New?5Collection@
-CONST	SEGMENT
-??_C@_0P@CPFOBCCD@New?5Collection@ DB 'New Collection', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0N@GKKFFGGN@Quit?5Program@
-CONST	SEGMENT
-??_C@_0N@GKKFFGGN@Quit?5Program@ DB 'Quit Program', 00H	; `string'
-CONST	ENDS
-;	COMDAT ??_C@_06OIGFGPHJ@Escape@
-CONST	SEGMENT
-??_C@_06OIGFGPHJ@Escape@ DB 'Escape', 00H		; `string'
-CONST	ENDS
-_DATA	SEGMENT
-escapeAction DB	071H
-	ORG $+7
-	DQ	FLAT:??_C@_06OIGFGPHJ@Escape@
-	DQ	FLAT:barrelTest_ESCAPE
-mainMenuActionCount DD 08H
-	ORG $+4
-mainMenuActions DB 071H
-	ORG $+7
-	DQ	FLAT:??_C@_0N@GKKFFGGN@Quit?5Program@
-	DQ	FLAT:barrelTest_ESCAPE
-	DB	06eH
-	ORG $+7
-	DQ	FLAT:??_C@_0P@CPFOBCCD@New?5Collection@
-	DQ	FLAT:barrelTest_NEW
-	DB	06dH
-	ORG $+7
-	DQ	FLAT:??_C@_0BC@EGJKACHO@Remove?5Collection@
-	DQ	FLAT:barrelTest_REMOVE
-	DB	073H
-	ORG $+7
-	DQ	FLAT:??_C@_0BD@DGEAJMED@Re?9size?5Collection@
-	DQ	FLAT:barrelTest_RESIZE
-	DB	072H
-	ORG $+7
-	DQ	FLAT:??_C@_0BN@IBOFOPMI@Read?5from?5Collection?5to?5span@
-	DQ	FLAT:barrelTest_READ
-	DB	077H
-	ORG $+7
-	DQ	FLAT:??_C@_0BO@MPDCLNBC@Write?5to?5Collection?5from?5span@
-	DQ	FLAT:barrelTest_WRITE
-	DB	076H
-	ORG $+7
-	DQ	FLAT:??_C@_0BB@DMJKMIHM@View?5entire?5heap@
-	DQ	FLAT:barrelTest_VIEW_HEAP
-	DB	063H
-	ORG $+7
-	DQ	FLAT:??_C@_0N@EDMEMMAC@Clear?5Screen@
-	DQ	FLAT:clear_screen
-_DATA	ENDS
-PUBLIC	fill_screen
-PUBLIC	barrelTest_MAIN
-PUBLIC	barrelTest
 PUBLIC	main
 PUBLIC	__JustMyCode_Default
-PUBLIC	??_C@_0DK@MEPINEBI@At?5any?5time?0?5enter?5?8q?8?5to?5leave@ ; `string'
-PUBLIC	??_C@_0CJ@LBAGAEEG@Bad?5Capacity?$CB?5Must?5be?5greater?5t@ ; `string'
 PUBLIC	??_C@_03JBIPMCLC@int@				; `string'
-PUBLIC	??_C@_0P@MKMACOIF@Node?5created?$CB?6@		; `string'
-PUBLIC	??_C@_0BI@FPHOOKPN@Node?5failed?5to?5create?$CB?6@ ; `string'
-PUBLIC	??_C@_0BN@NNPMGJLD@No?5Collections?5to?5write?5to?$CB?6@ ; `string'
-PUBLIC	??_C@_0CN@HHIFKPNA@At?5any?5time?0?5enter?5?8q?8?5to?5leave@ ; `string'
-PUBLIC	??_C@_0BM@DIHGPNMA@Bad?5index?$CB?5Between?50?5and?5?$CF?6@ ; `string'
-PUBLIC	??_C@_0O@FKJGIFOA@Start?5Index?3?5@		; `string'
-PUBLIC	??_C@_0O@EFNOKFPJ@Delta?5Count?3?5@		; `string'
-PUBLIC	??_C@_0CA@EDDDOMAH@Input?5new?5param?5?$CI?$CF?5remaining?$CJ?3?5@ ; `string'
-PUBLIC	??_C@_0BB@HBOOCOPG@Write?5Complete?$CB?6@	; `string'
-PUBLIC	??_C@_0BO@HNAGHDFL@No?5Collections?5to?5read?5from?$CB?6@ ; `string'
-PUBLIC	??_C@_07DAMOKBIM@?$FL?$CF?$FN?3?5?$CF?6@	; `string'
-PUBLIC	??_C@_0CE@GDIPAECF@bCount?5?$HM?5vCount?5?$HM?5offset?5?$HM?5bSta@ ; `string'
-PUBLIC	??_C@_0BE@KPHCKKED@?$FL?$CF?$FN?3?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?6@ ; `string'
-PUBLIC	??_C@_0N@BOGIKLIF@?6?$FLHEEP?5MAP?$FN?6@	; `string'
-PUBLIC	??_C@_01DNKMNLPK@?$HM@				; `string'
-PUBLIC	??_C@_04OMPAKLL@?$HM?5?$CF?5@			; `string'
-PUBLIC	??_C@_03FIFGEGHJ@?$HM?$HM?6@			; `string'
-PUBLIC	??_C@_0BM@LDAEMDFJ@?$FL?5Total?5Current?5Nodes?3?5?$CF?5?$FN?6@ ; `string'
-PUBLIC	??_C@_08EAMDPNID@?$FL?$CF?$FN?5?9?5?$CF?6@	; `string'
-PUBLIC	??_C@_0BJ@PLOMDJAN@Collections?5Testing?4?4?4?6?6@ ; `string'
-PUBLIC	??_C@_0BL@CGFOLKEE@Services?5failed?5to?5start?$CB?6@ ; `string'
 PUBLIC	??_C@_0CB@FFPKGLBO@value?5at?5index?53?5of?5myBarrel?3?5?$CF@ ; `string'
 PUBLIC	??_C@_0CE@BBPKOEII@collection?5count?5of?5emptyBucket@ ; `string'
 PUBLIC	??_C@_0CB@EMHFLGEI@value?5at?5index?53?5of?5myBucket?3?5?$CF@ ; `string'
-EXTRN	__imp_GetStdHandle:PROC
-EXTRN	__imp_FillConsoleOutputCharacterW:PROC
-EXTRN	__imp_FillConsoleOutputAttribute:PROC
-EXTRN	__imp_GetConsoleScreenBufferInfo:PROC
-EXTRN	__imp_SetConsoleCursorPosition:PROC
-EXTRN	strToInt:PROC
-EXTRN	Preent:PROC
-EXTRN	Geet:PROC
-EXTRN	CreateRequest:PROC
-EXTRN	paramCount:PROC
-EXTRN	Heap_Head:PROC
-EXTRN	Heap_ServiceInit:PROC
-EXTRN	Collection_Read:PROC
 EXTRN	Collection_Count:PROC
-EXTRN	Barrel_GetNode:PROC
-EXTRN	Barrel_GetUnitPtr:PROC
-EXTRN	Barrel_NodeCount:PROC
-EXTRN	Barrel_ServiceInit:PROC
-EXTRN	Barrel_ctor:PROC
+EXTRN	Collection_Read:PROC
 EXTRN	Bucket_ctor:PROC
+EXTRN	Preent:PROC
+EXTRN	paramCount:PROC
+EXTRN	Barrel_ctor:PROC
+EXTRN	barrelTest:PROC
 EXTRN	_RTC_CheckStackVars:PROC
 EXTRN	_RTC_InitBase:PROC
 EXTRN	_RTC_Shutdown:PROC
@@ -351,74 +212,8 @@ EXTRN	__security_check_cookie:PROC
 EXTRN	__security_cookie:QWORD
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$barrelTest_ESCAPE DD imagerel $LN3
-	DD	imagerel $LN3+47
-	DD	imagerel $unwind$barrelTest_ESCAPE
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$fill_screen DD imagerel $LN5
-	DD	imagerel $LN5+294
-	DD	imagerel $unwind$fill_screen
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$clear_screen DD imagerel $LN3
-	DD	imagerel $LN3+44
-	DD	imagerel $unwind$clear_screen
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_NEW DD imagerel $LN7
-	DD	imagerel $LN7+670
-	DD	imagerel $unwind$barrelTest_NEW
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_REMOVE DD imagerel $LN3
-	DD	imagerel $LN3+53
-	DD	imagerel $unwind$barrelTest_REMOVE
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_RESIZE DD imagerel $LN3
-	DD	imagerel $LN3+37
-	DD	imagerel $unwind$barrelTest_RESIZE
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_WRITE DD imagerel $LN14
-	DD	imagerel $LN14+753
-	DD	imagerel $unwind$barrelTest_WRITE
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_READ DD imagerel $LN14
-	DD	imagerel $LN14+739
-	DD	imagerel $unwind$barrelTest_READ
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_VIEW_HEAP DD imagerel $LN12
-	DD	imagerel $LN12+643
-	DD	imagerel $unwind$barrelTest_VIEW_HEAP
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest_MAIN DD imagerel $LN12
-	DD	imagerel $LN12+538
-	DD	imagerel $unwind$barrelTest_MAIN
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$barrelTest DD imagerel $LN4
-	DD	imagerel $LN4+94
-	DD	imagerel $unwind$barrelTest
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
 $pdata$main DD	imagerel $LN5
-	DD	imagerel $LN5+1063
+	DD	imagerel $LN5+1059
 	DD	imagerel $unwind$main
 pdata	ENDS
 ;	COMDAT rtc$TMZ
@@ -444,119 +239,14 @@ CONST	SEGMENT
 ??_C@_0CB@FFPKGLBO@value?5at?5index?53?5of?5myBarrel?3?5?$CF@ DB 'value a'
 	DB	't index 3 of myBarrel: %', 0aH, 00H		; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0BL@CGFOLKEE@Services?5failed?5to?5start?$CB?6@
-CONST	SEGMENT
-??_C@_0BL@CGFOLKEE@Services?5failed?5to?5start?$CB?6@ DB 'Services failed'
-	DB	' to start!', 0aH, 00H			; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BJ@PLOMDJAN@Collections?5Testing?4?4?4?6?6@
-CONST	SEGMENT
-??_C@_0BJ@PLOMDJAN@Collections?5Testing?4?4?4?6?6@ DB 'Collections Testin'
-	DB	'g...', 0aH, 0aH, 00H			; `string'
-CONST	ENDS
-;	COMDAT ??_C@_08EAMDPNID@?$FL?$CF?$FN?5?9?5?$CF?6@
-CONST	SEGMENT
-??_C@_08EAMDPNID@?$FL?$CF?$FN?5?9?5?$CF?6@ DB '[%] - %', 0aH, 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BM@LDAEMDFJ@?$FL?5Total?5Current?5Nodes?3?5?$CF?5?$FN?6@
-CONST	SEGMENT
-??_C@_0BM@LDAEMDFJ@?$FL?5Total?5Current?5Nodes?3?5?$CF?5?$FN?6@ DB '[ Tot'
-	DB	'al Current Nodes: % ]', 0aH, 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_03FIFGEGHJ@?$HM?$HM?6@
-CONST	SEGMENT
-??_C@_03FIFGEGHJ@?$HM?$HM?6@ DB '||', 0aH, 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_04OMPAKLL@?$HM?5?$CF?5@
-CONST	SEGMENT
-??_C@_04OMPAKLL@?$HM?5?$CF?5@ DB '| % ', 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_01DNKMNLPK@?$HM@
-CONST	SEGMENT
-??_C@_01DNKMNLPK@?$HM@ DB '|', 00H			; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0N@BOGIKLIF@?6?$FLHEEP?5MAP?$FN?6@
-CONST	SEGMENT
-??_C@_0N@BOGIKLIF@?6?$FLHEEP?5MAP?$FN?6@ DB 0aH, '[HEEP MAP]', 0aH, 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BE@KPHCKKED@?$FL?$CF?$FN?3?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?6@
-CONST	SEGMENT
-??_C@_0BE@KPHCKKED@?$FL?$CF?$FN?3?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?6@ DB '['
-	DB	'%]: % | % | % | %', 0aH, 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0CE@GDIPAECF@bCount?5?$HM?5vCount?5?$HM?5offset?5?$HM?5bSta@
-CONST	SEGMENT
-??_C@_0CE@GDIPAECF@bCount?5?$HM?5vCount?5?$HM?5offset?5?$HM?5bSta@ DB 'bC'
-	DB	'ount | vCount | offset | bStart ', 0aH, 00H	; `string'
-CONST	ENDS
-;	COMDAT ??_C@_07DAMOKBIM@?$FL?$CF?$FN?3?5?$CF?6@
-CONST	SEGMENT
-??_C@_07DAMOKBIM@?$FL?$CF?$FN?3?5?$CF?6@ DB '[%]: %', 0aH, 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BO@HNAGHDFL@No?5Collections?5to?5read?5from?$CB?6@
-CONST	SEGMENT
-??_C@_0BO@HNAGHDFL@No?5Collections?5to?5read?5from?$CB?6@ DB 'No Collecti'
-	DB	'ons to read from!', 0aH, 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BB@HBOOCOPG@Write?5Complete?$CB?6@
-CONST	SEGMENT
-??_C@_0BB@HBOOCOPG@Write?5Complete?$CB?6@ DB 'Write Complete!', 0aH, 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0CA@EDDDOMAH@Input?5new?5param?5?$CI?$CF?5remaining?$CJ?3?5@
-CONST	SEGMENT
-??_C@_0CA@EDDDOMAH@Input?5new?5param?5?$CI?$CF?5remaining?$CJ?3?5@ DB 'In'
-	DB	'put new param (% remaining): ', 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0O@EFNOKFPJ@Delta?5Count?3?5@
-CONST	SEGMENT
-??_C@_0O@EFNOKFPJ@Delta?5Count?3?5@ DB 'Delta Count: ', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0O@FKJGIFOA@Start?5Index?3?5@
-CONST	SEGMENT
-??_C@_0O@FKJGIFOA@Start?5Index?3?5@ DB 'Start Index: ', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BM@DIHGPNMA@Bad?5index?$CB?5Between?50?5and?5?$CF?6@
-CONST	SEGMENT
-??_C@_0BM@DIHGPNMA@Bad?5index?$CB?5Between?50?5and?5?$CF?6@ DB 'Bad index'
-	DB	'! Between 0 and %', 0aH, 00H		; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0CN@HHIFKPNA@At?5any?5time?0?5enter?5?8q?8?5to?5leave@
-CONST	SEGMENT
-??_C@_0CN@HHIFKPNA@At?5any?5time?0?5enter?5?8q?8?5to?5leave@ DB 'At any t'
-	DB	'ime, enter ''q'' to leave', 0aH, 'Set Target: ', 00H ; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BN@NNPMGJLD@No?5Collections?5to?5write?5to?$CB?6@
-CONST	SEGMENT
-??_C@_0BN@NNPMGJLD@No?5Collections?5to?5write?5to?$CB?6@ DB 'No Collectio'
-	DB	'ns to write to!', 0aH, 00H			; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0BI@FPHOOKPN@Node?5failed?5to?5create?$CB?6@
-CONST	SEGMENT
-??_C@_0BI@FPHOOKPN@Node?5failed?5to?5create?$CB?6@ DB 'Node failed to cre'
-	DB	'ate!', 0aH, 00H				; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0P@MKMACOIF@Node?5created?$CB?6@
-CONST	SEGMENT
-??_C@_0P@MKMACOIF@Node?5created?$CB?6@ DB 'Node created!', 0aH, 00H ; `string'
-CONST	ENDS
 ;	COMDAT ??_C@_03JBIPMCLC@int@
 CONST	SEGMENT
 ??_C@_03JBIPMCLC@int@ DB 'int', 00H			; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0CJ@LBAGAEEG@Bad?5Capacity?$CB?5Must?5be?5greater?5t@
-CONST	SEGMENT
-??_C@_0CJ@LBAGAEEG@Bad?5Capacity?$CB?5Must?5be?5greater?5t@ DB 'Bad Capac'
-	DB	'ity! Must be greater than 0: %', 0aH, 00H	; `string'
-CONST	ENDS
-;	COMDAT ??_C@_0DK@MEPINEBI@At?5any?5time?0?5enter?5?8q?8?5to?5leave@
-CONST	SEGMENT
-??_C@_0DK@MEPINEBI@At?5any?5time?0?5enter?5?8q?8?5to?5leave@ DB 'At any t'
-	DB	'ime, enter ''q'' to leave', 0aH, 'Choose Initial Capacity: ', 00H ; `string'
-CONST	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DW	02bH
-	DW	040dH
+	DW	0409H
 voltbl	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
@@ -579,112 +269,94 @@ main$rtcName$0 DB 06fH
 	ORG $+1
 main$rtcName$1 DB 024H
 	DB	053H
-	DB	034H
-	DB	030H
-	DB	00H
-	ORG $+3
-main$rtcName$2 DB 024H
-	DB	053H
-	DB	034H
 	DB	031H
 	DB	00H
-	ORG $+3
-main$rtcName$3 DB 024H
+main$rtcName$2 DB 024H
 	DB	053H
-	DB	034H
 	DB	032H
 	DB	00H
-	ORG $+3
+main$rtcName$3 DB 024H
+	DB	053H
+	DB	033H
+	DB	00H
 main$rtcName$4 DB 024H
 	DB	053H
 	DB	034H
-	DB	033H
 	DB	00H
-	ORG $+3
 main$rtcName$5 DB 024H
 	DB	053H
-	DB	034H
-	DB	034H
-	DB	00H
-	ORG $+3
-main$rtcName$6 DB 024H
-	DB	053H
-	DB	034H
 	DB	035H
 	DB	00H
-	ORG $+3
-main$rtcName$7 DB 024H
+main$rtcName$6 DB 024H
 	DB	053H
-	DB	034H
 	DB	036H
 	DB	00H
-	ORG $+3
-main$rtcName$8 DB 024H
+main$rtcName$7 DB 024H
 	DB	053H
-	DB	034H
 	DB	037H
 	DB	00H
-	ORG $+3
-main$rtcName$9 DB 024H
+main$rtcName$8 DB 024H
 	DB	053H
-	DB	034H
 	DB	038H
 	DB	00H
-	ORG $+3
+main$rtcName$9 DB 024H
+	DB	053H
+	DB	039H
+	DB	00H
 main$rtcName$10 DB 024H
 	DB	053H
-	DB	034H
-	DB	039H
+	DB	031H
+	DB	030H
 	DB	00H
 	ORG $+3
 main$rtcName$11 DB 024H
 	DB	053H
-	DB	035H
-	DB	030H
+	DB	031H
+	DB	031H
 	DB	00H
 	ORG $+3
 main$rtcName$12 DB 024H
 	DB	053H
-	DB	035H
 	DB	031H
+	DB	032H
 	DB	00H
 	ORG $+3
 main$rtcName$13 DB 024H
 	DB	053H
-	DB	035H
-	DB	032H
+	DB	031H
+	DB	033H
 	DB	00H
 	ORG $+3
 main$rtcName$14 DB 024H
 	DB	053H
-	DB	035H
-	DB	033H
+	DB	031H
+	DB	034H
 	DB	00H
 	ORG $+3
 main$rtcName$15 DB 024H
 	DB	053H
+	DB	031H
 	DB	035H
-	DB	034H
 	DB	00H
 	ORG $+3
 main$rtcName$16 DB 024H
 	DB	053H
-	DB	035H
-	DB	035H
+	DB	031H
+	DB	036H
 	DB	00H
 	ORG $+3
 main$rtcName$17 DB 024H
 	DB	053H
-	DB	035H
-	DB	036H
+	DB	031H
+	DB	037H
 	DB	00H
 	ORG $+3
 main$rtcName$18 DB 024H
 	DB	053H
-	DB	035H
-	DB	037H
+	DB	031H
+	DB	038H
 	DB	00H
-	ORG $+11
+	ORG $+15
 main$rtcVarDesc DD 03d8H
 	DD	010H
 	DQ	FLAT:main$rtcName$18
@@ -747,524 +419,6 @@ main$rtcFrameData DD 013H
 	DD	00H
 	DQ	FLAT:main$rtcVarDesc
 CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest DD 025050f01H
-	DD	010a230fH
-	DD	07003001dH
-	DD	05002H
-xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	02bH
-	DW	0200H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_MAIN DD 025063219H
-	DD	010b2310H
-	DD	07004004eH
-	DD	050026003H
-	DD	imagerel __GSHandlerCheck
-	DD	0268H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-barrelTest_MAIN$rtcName$0 DB 024H
-	DB	053H
-	DB	033H
-	DB	034H
-	DB	00H
-	ORG $+3
-barrelTest_MAIN$rtcName$1 DB 024H
-	DB	053H
-	DB	033H
-	DB	035H
-	DB	00H
-	ORG $+3
-barrelTest_MAIN$rtcName$2 DB 024H
-	DB	053H
-	DB	033H
-	DB	036H
-	DB	00H
-	ORG $+3
-barrelTest_MAIN$rtcName$3 DB 024H
-	DB	053H
-	DB	033H
-	DB	037H
-	DB	00H
-	ORG $+3
-barrelTest_MAIN$rtcName$4 DB 024H
-	DB	053H
-	DB	033H
-	DB	038H
-	DB	00H
-	ORG $+3
-barrelTest_MAIN$rtcName$5 DB 024H
-	DB	053H
-	DB	033H
-	DB	039H
-	DB	00H
-	ORG $+3
-barrelTest_MAIN$rtcVarDesc DD 0168H
-	DD	010H
-	DQ	FLAT:barrelTest_MAIN$rtcName$5
-	DD	0144H
-	DD	01H
-	DQ	FLAT:barrelTest_MAIN$rtcName$4
-	DD	0f8H
-	DD	030H
-	DQ	FLAT:barrelTest_MAIN$rtcName$3
-	DD	0a8H
-	DD	010H
-	DQ	FLAT:barrelTest_MAIN$rtcName$2
-	DD	084H
-	DD	04H
-	DQ	FLAT:barrelTest_MAIN$rtcName$1
-	DD	048H
-	DD	020H
-	DQ	FLAT:barrelTest_MAIN$rtcName$0
-	ORG $+288
-barrelTest_MAIN$rtcFrameData DD 06H
-	DD	00H
-	DQ	FLAT:barrelTest_MAIN$rtcVarDesc
-CONST	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	02bH
-	DW	0269H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_VIEW_HEAP DD 025063219H
-	DD	010b2310H
-	DD	070040080H
-	DD	050026003H
-	DD	imagerel __GSHandlerCheck
-	DD	03f8H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-barrelTest_VIEW_HEAP$rtcName$0 DB 024H
-	DB	053H
-	DB	032H
-	DB	034H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$1 DB 024H
-	DB	053H
-	DB	032H
-	DB	035H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$2 DB 024H
-	DB	053H
-	DB	032H
-	DB	036H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$3 DB 024H
-	DB	053H
-	DB	032H
-	DB	037H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$4 DB 024H
-	DB	053H
-	DB	032H
-	DB	038H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$5 DB 024H
-	DB	053H
-	DB	032H
-	DB	039H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$6 DB 024H
-	DB	053H
-	DB	033H
-	DB	030H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$7 DB 024H
-	DB	053H
-	DB	033H
-	DB	031H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$8 DB 024H
-	DB	053H
-	DB	033H
-	DB	032H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcName$9 DB 024H
-	DB	053H
-	DB	033H
-	DB	033H
-	DB	00H
-	ORG $+3
-barrelTest_VIEW_HEAP$rtcVarDesc DD 0258H
-	DD	010H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$9
-	DD	0234H
-	DD	04H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$8
-	DD	01f8H
-	DD	020H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$7
-	DD	0188H
-	DD	010H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$6
-	DD	0164H
-	DD	04H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$5
-	DD	0144H
-	DD	04H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$4
-	DD	0124H
-	DD	04H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$3
-	DD	0104H
-	DD	04H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$2
-	DD	0e4H
-	DD	04H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$1
-	DD	070H
-	DD	060H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcName$0
-	ORG $+480
-barrelTest_VIEW_HEAP$rtcFrameData DD 0aH
-	DD	00H
-	DQ	FLAT:barrelTest_VIEW_HEAP$rtcVarDesc
-CONST	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	02bH
-	DW	02c9H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_READ DD 025063219H
-	DD	010b2310H
-	DD	07004007eH
-	DD	050026003H
-	DD	imagerel __GSHandlerCheck
-	DD	03e8H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-barrelTest_READ$rtcName$0 DB 024H
-	DB	053H
-	DB	031H
-	DB	037H
-	DB	00H
-	ORG $+3
-barrelTest_READ$rtcName$1 DB 024H
-	DB	053H
-	DB	031H
-	DB	038H
-	DB	00H
-	ORG $+3
-barrelTest_READ$rtcName$2 DB 024H
-	DB	053H
-	DB	031H
-	DB	039H
-	DB	00H
-	ORG $+3
-barrelTest_READ$rtcName$3 DB 024H
-	DB	053H
-	DB	032H
-	DB	030H
-	DB	00H
-	ORG $+3
-barrelTest_READ$rtcName$4 DB 024H
-	DB	053H
-	DB	032H
-	DB	031H
-	DB	00H
-	ORG $+3
-barrelTest_READ$rtcName$5 DB 024H
-	DB	053H
-	DB	032H
-	DB	032H
-	DB	00H
-	ORG $+3
-barrelTest_READ$rtcName$6 DB 024H
-	DB	053H
-	DB	032H
-	DB	033H
-	DB	00H
-	ORG $+11
-barrelTest_READ$rtcVarDesc DD 0248H
-	DD	010H
-	DQ	FLAT:barrelTest_READ$rtcName$6
-	DD	0224H
-	DD	04H
-	DQ	FLAT:barrelTest_READ$rtcName$5
-	DD	0204H
-	DD	04H
-	DQ	FLAT:barrelTest_READ$rtcName$4
-	DD	01b8H
-	DD	030H
-	DQ	FLAT:barrelTest_READ$rtcName$3
-	DD	0e8H
-	DD	010H
-	DQ	FLAT:barrelTest_READ$rtcName$2
-	DD	0c4H
-	DD	04H
-	DQ	FLAT:barrelTest_READ$rtcName$1
-	DD	088H
-	DD	020H
-	DQ	FLAT:barrelTest_READ$rtcName$0
-	ORG $+336
-barrelTest_READ$rtcFrameData DD 07H
-	DD	00H
-	DQ	FLAT:barrelTest_READ$rtcVarDesc
-CONST	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	02bH
-	DW	02d7H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_WRITE DD 025063219H
-	DD	010b2310H
-	DD	070040078H
-	DD	050026003H
-	DD	imagerel __GSHandlerCheck
-	DD	03b8H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-barrelTest_WRITE$rtcName$0 DB 024H
-	DB	053H
-	DB	031H
-	DB	031H
-	DB	00H
-	ORG $+3
-barrelTest_WRITE$rtcName$1 DB 024H
-	DB	053H
-	DB	031H
-	DB	032H
-	DB	00H
-	ORG $+3
-barrelTest_WRITE$rtcName$2 DB 024H
-	DB	053H
-	DB	031H
-	DB	033H
-	DB	00H
-	ORG $+3
-barrelTest_WRITE$rtcName$3 DB 024H
-	DB	053H
-	DB	031H
-	DB	034H
-	DB	00H
-	ORG $+3
-barrelTest_WRITE$rtcName$4 DB 024H
-	DB	053H
-	DB	031H
-	DB	035H
-	DB	00H
-	ORG $+3
-barrelTest_WRITE$rtcName$5 DB 024H
-	DB	053H
-	DB	031H
-	DB	036H
-	DB	00H
-	ORG $+3
-barrelTest_WRITE$rtcVarDesc DD 0218H
-	DD	010H
-	DQ	FLAT:barrelTest_WRITE$rtcName$5
-	DD	01f4H
-	DD	04H
-	DQ	FLAT:barrelTest_WRITE$rtcName$4
-	DD	01b8H
-	DD	020H
-	DQ	FLAT:barrelTest_WRITE$rtcName$3
-	DD	0e8H
-	DD	010H
-	DQ	FLAT:barrelTest_WRITE$rtcName$2
-	DD	0c4H
-	DD	04H
-	DQ	FLAT:barrelTest_WRITE$rtcName$1
-	DD	088H
-	DD	020H
-	DQ	FLAT:barrelTest_WRITE$rtcName$0
-	ORG $+288
-barrelTest_WRITE$rtcFrameData DD 06H
-	DD	00H
-	DQ	FLAT:barrelTest_WRITE$rtcVarDesc
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_RESIZE DD 025050f01H
-	DD	010a230fH
-	DD	07003001dH
-	DD	05002H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_REMOVE DD 025050f01H
-	DD	010a230fH
-	DD	070030025H
-	DD	05002H
-xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	02bH
-	DW	0284H
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_NEW DD 035063219H
-	DD	010b3310H
-	DD	0700400b2H
-	DD	050026003H
-	DD	imagerel __GSHandlerCheck
-	DD	0588H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-barrelTest_NEW$rtcName$0 DB 024H
-	DB	053H
-	DB	031H
-	DB	00H
-barrelTest_NEW$rtcName$1 DB 024H
-	DB	053H
-	DB	032H
-	DB	00H
-barrelTest_NEW$rtcName$2 DB 024H
-	DB	053H
-	DB	033H
-	DB	00H
-barrelTest_NEW$rtcName$3 DB 024H
-	DB	053H
-	DB	034H
-	DB	00H
-barrelTest_NEW$rtcName$4 DB 024H
-	DB	053H
-	DB	035H
-	DB	00H
-barrelTest_NEW$rtcName$5 DB 024H
-	DB	053H
-	DB	036H
-	DB	00H
-barrelTest_NEW$rtcName$6 DB 024H
-	DB	053H
-	DB	037H
-	DB	00H
-barrelTest_NEW$rtcName$7 DB 024H
-	DB	053H
-	DB	038H
-	DB	00H
-barrelTest_NEW$rtcName$8 DB 024H
-	DB	053H
-	DB	039H
-	DB	00H
-barrelTest_NEW$rtcName$9 DB 024H
-	DB	053H
-	DB	031H
-	DB	030H
-	DB	00H
-	ORG $+7
-barrelTest_NEW$rtcVarDesc DD 0290H
-	DD	0110H
-	DQ	FLAT:barrelTest_NEW$rtcName$9
-	DD	0258H
-	DD	010H
-	DQ	FLAT:barrelTest_NEW$rtcName$8
-	DD	0228H
-	DD	010H
-	DQ	FLAT:barrelTest_NEW$rtcName$7
-	DD	01f8H
-	DD	010H
-	DQ	FLAT:barrelTest_NEW$rtcName$6
-	DD	01c8H
-	DD	010H
-	DQ	FLAT:barrelTest_NEW$rtcName$5
-	DD	0170H
-	DD	040H
-	DQ	FLAT:barrelTest_NEW$rtcName$4
-	DD	0144H
-	DD	04H
-	DQ	FLAT:barrelTest_NEW$rtcName$3
-	DD	0f8H
-	DD	010H
-	DQ	FLAT:barrelTest_NEW$rtcName$2
-	DD	0d4H
-	DD	04H
-	DQ	FLAT:barrelTest_NEW$rtcName$1
-	DD	098H
-	DD	020H
-	DQ	FLAT:barrelTest_NEW$rtcName$0
-	ORG $+480
-barrelTest_NEW$rtcFrameData DD 0aH
-	DD	00H
-	DQ	FLAT:barrelTest_NEW$rtcVarDesc
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$clear_screen DD 025050f01H
-	DD	010a230fH
-	DD	07003001dH
-	DD	05002H
-xdata	ENDS
-;	COMDAT voltbl
-voltbl	SEGMENT
-_volmd	DW	036H
-	DW	010dH
-voltbl	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$fill_screen DD 035053d19H
-	DD	010e3313H
-	DD	070070035H
-	DD	05006H
-	DD	imagerel __GSHandlerCheck
-	DD	0198H
-xdata	ENDS
-;	COMDAT CONST
-CONST	SEGMENT
-fill_screen$rtcName$0 DB 074H
-	DB	06cH
-	DB	00H
-	ORG $+1
-fill_screen$rtcName$1 DB 073H
-	DB	00H
-	ORG $+2
-fill_screen$rtcName$2 DB 077H
-	DB	072H
-	DB	069H
-	DB	074H
-	DB	074H
-	DB	065H
-	DB	06eH
-	DB	00H
-fill_screen$rtcVarDesc DD 0a4H
-	DD	04H
-	DQ	FLAT:fill_screen$rtcName$2
-	DD	058H
-	DD	016H
-	DQ	FLAT:fill_screen$rtcName$1
-	DD	034H
-	DD	04H
-	DQ	FLAT:fill_screen$rtcName$0
-	ORG $+144
-fill_screen$rtcFrameData DD 03H
-	DD	00H
-	DQ	FLAT:fill_screen$rtcVarDesc
-CONST	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$barrelTest_ESCAPE DD 025050f01H
-	DD	010a230fH
-	DD	07003001dH
-	DD	05002H
-xdata	ENDS
 ; Function compile flags: /Odt
 ;	COMDAT __JustMyCode_Default
 _TEXT	SEGMENT
@@ -1278,30 +432,30 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 output$ = 4
 myBarrel$ = 40
-$S40$ = 72
-$S41$ = 136
-$S42$ = 168
-$S43$ = 200
-$S44$ = 260
-$S45$ = 296
+$S1$ = 72
+$S2$ = 136
+$S3$ = 168
+$S4$ = 200
+$S5$ = 260
+$S6$ = 296
 myBucket$ = 344
-$S46$ = 376
-$S47$ = 440
-$S48$ = 484
-$S49$ = 516
+$S7$ = 376
+$S8$ = 440
+$S9$ = 484
+$S10$ = 516
 emptyBucket$ = 552
-$S50$ = 584
-$S51$ = 648
-$S52$ = 696
-$S53$ = 756
-$S54$ = 792
-$S55$ = 840
-$S56$ = 900
-$S57$ = 936
+$S11$ = 584
+$S12$ = 648
+$S13$ = 696
+$S14$ = 756
+$S15$ = 792
+$S16$ = 840
+$S17$ = 900
+$S18$ = 936
 __$ArrayPad$ = 1352
 main	PROC						; COMDAT
 
-; 287  : int main() {
+; 25   : int main() {
 
 $LN5:
   00000	40 55		 push	 rbp
@@ -1323,88 +477,88 @@ $LN5:
 	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
   00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 288  : 
-; 289  : 	barrelTest();
+; 26   : 
+; 27   : 	barrelTest();
 
   0003e	e8 00 00 00 00	 call	 barrelTest
 
-; 290  : 
-; 291  : 	return 0;
+; 28   : 
+; 29   : 	return 0;
 
   00043	33 c0		 xor	 eax, eax
-  00045	e9 ad 03 00 00	 jmp	 $LN1@main
+  00045	e9 a9 03 00 00	 jmp	 $LN1@main
 
-; 292  : 
-; 293  : 	int output = 0;
+; 30   : 
+; 31   : 	int output = 0;
 
   0004a	c7 45 04 00 00
 	00 00		 mov	 DWORD PTR output$[rbp], 0
 
-; 294  : 
-; 295  : 	COLLECTION myBarrel = Barrel_List(int, 0, 1, 2, 3, 4, 5, 6);
+; 32   : 
+; 33   : 	COLLECTION myBarrel = Barrel_List(int, 0, 1, 2, 3, 4, 5, 6);
 
   00051	c6 85 a8 00 00
-	00 00		 mov	 BYTE PTR $S42$[rbp], 0
+	00 00		 mov	 BYTE PTR $S3$[rbp], 0
   00058	c6 85 a9 00 00
-	00 01		 mov	 BYTE PTR $S42$[rbp+1], 1
+	00 01		 mov	 BYTE PTR $S3$[rbp+1], 1
   0005f	c6 85 aa 00 00
-	00 02		 mov	 BYTE PTR $S42$[rbp+2], 2
+	00 02		 mov	 BYTE PTR $S3$[rbp+2], 2
   00066	c6 85 ab 00 00
-	00 03		 mov	 BYTE PTR $S42$[rbp+3], 3
+	00 03		 mov	 BYTE PTR $S3$[rbp+3], 3
   0006d	c6 85 ac 00 00
-	00 04		 mov	 BYTE PTR $S42$[rbp+4], 4
+	00 04		 mov	 BYTE PTR $S3$[rbp+4], 4
   00074	c6 85 ad 00 00
-	00 05		 mov	 BYTE PTR $S42$[rbp+5], 5
+	00 05		 mov	 BYTE PTR $S3$[rbp+5], 5
   0007b	c6 85 ae 00 00
-	00 06		 mov	 BYTE PTR $S42$[rbp+6], 6
+	00 06		 mov	 BYTE PTR $S3$[rbp+6], 6
   00082	c6 85 af 00 00
-	00 01		 mov	 BYTE PTR $S42$[rbp+7], 1
+	00 01		 mov	 BYTE PTR $S3$[rbp+7], 1
   00089	c6 85 88 00 00
-	00 00		 mov	 BYTE PTR $S41$[rbp], 0
+	00 00		 mov	 BYTE PTR $S2$[rbp], 0
   00090	c6 85 89 00 00
-	00 01		 mov	 BYTE PTR $S41$[rbp+1], 1
+	00 01		 mov	 BYTE PTR $S2$[rbp+1], 1
   00097	c6 85 8a 00 00
-	00 02		 mov	 BYTE PTR $S41$[rbp+2], 2
+	00 02		 mov	 BYTE PTR $S2$[rbp+2], 2
   0009e	c6 85 8b 00 00
-	00 03		 mov	 BYTE PTR $S41$[rbp+3], 3
+	00 03		 mov	 BYTE PTR $S2$[rbp+3], 3
   000a5	c6 85 8c 00 00
-	00 04		 mov	 BYTE PTR $S41$[rbp+4], 4
+	00 04		 mov	 BYTE PTR $S2$[rbp+4], 4
   000ac	c6 85 8d 00 00
-	00 05		 mov	 BYTE PTR $S41$[rbp+5], 5
+	00 05		 mov	 BYTE PTR $S2$[rbp+5], 5
   000b3	c6 85 8e 00 00
-	00 06		 mov	 BYTE PTR $S41$[rbp+6], 6
+	00 06		 mov	 BYTE PTR $S2$[rbp+6], 6
   000ba	c6 85 8f 00 00
-	00 00		 mov	 BYTE PTR $S41$[rbp+7], 0
+	00 00		 mov	 BYTE PTR $S2$[rbp+7], 0
   000c1	c7 45 48 00 00
-	00 00		 mov	 DWORD PTR $S40$[rbp], 0
+	00 00		 mov	 DWORD PTR $S1$[rbp], 0
   000c8	c7 45 4c 01 00
-	00 00		 mov	 DWORD PTR $S40$[rbp+4], 1
+	00 00		 mov	 DWORD PTR $S1$[rbp+4], 1
   000cf	c7 45 50 02 00
-	00 00		 mov	 DWORD PTR $S40$[rbp+8], 2
+	00 00		 mov	 DWORD PTR $S1$[rbp+8], 2
   000d6	c7 45 54 03 00
-	00 00		 mov	 DWORD PTR $S40$[rbp+12], 3
+	00 00		 mov	 DWORD PTR $S1$[rbp+12], 3
   000dd	c7 45 58 04 00
-	00 00		 mov	 DWORD PTR $S40$[rbp+16], 4
+	00 00		 mov	 DWORD PTR $S1$[rbp+16], 4
   000e4	c7 45 5c 05 00
-	00 00		 mov	 DWORD PTR $S40$[rbp+20], 5
+	00 00		 mov	 DWORD PTR $S1$[rbp+20], 5
   000eb	c7 45 60 06 00
-	00 00		 mov	 DWORD PTR $S40$[rbp+24], 6
+	00 00		 mov	 DWORD PTR $S1$[rbp+24], 6
   000f2	48 8d 95 a8 00
-	00 00		 lea	 rdx, QWORD PTR $S42$[rbp]
+	00 00		 lea	 rdx, QWORD PTR $S3$[rbp]
   000f9	48 8d 8d 88 00
-	00 00		 lea	 rcx, QWORD PTR $S41$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S2$[rbp]
   00100	e8 00 00 00 00	 call	 paramCount
   00105	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
   00109	45 33 c9	 xor	 r9d, r9d
-  0010c	4c 8d 45 48	 lea	 r8, QWORD PTR $S40$[rbp]
+  0010c	4c 8d 45 48	 lea	 r8, QWORD PTR $S1$[rbp]
   00110	ba 04 00 00 00	 mov	 edx, 4
   00115	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
   0011c	e8 00 00 00 00	 call	 Barrel_ctor
   00121	48 89 45 28	 mov	 QWORD PTR myBarrel$[rbp], rax
 
-; 296  : 
-; 297  : 	if (!Collection_Read(myBarrel, &output, 3))
+; 34   : 
+; 35   : 	if (!Collection_Read(myBarrel, &output, 3))
 
   00125	41 b8 03 00 00
 	00		 mov	 r8d, 3
@@ -1414,2065 +568,246 @@ $LN5:
   00138	85 c0		 test	 eax, eax
   0013a	75 0a		 jne	 SHORT $LN2@main
 
-; 298  : 		return 1;
+; 36   : 		return 1;
 
   0013c	b8 01 00 00 00	 mov	 eax, 1
-  00141	e9 b1 02 00 00	 jmp	 $LN1@main
+  00141	e9 ad 02 00 00	 jmp	 $LN1@main
 $LN2@main:
 
-; 299  : 
-; 300  : 	PREENT_ARGS("value at index 3 of myBarrel: %\n", fmt_i(output));
+; 37   : 
+; 38   : 	PREENT_ARGS("value at index 3 of myBarrel: %\n", fmt_i(output));
 
   00146	c7 85 c8 00 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S43$[rbp], 29
+	00 1d 00 00 00	 mov	 DWORD PTR $S4$[rbp], 29
   00150	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
   00153	89 85 04 01 00
-	00		 mov	 DWORD PTR $S44$[rbp], eax
+	00		 mov	 DWORD PTR $S5$[rbp], eax
   00159	48 8d 85 04 01
-	00 00		 lea	 rax, QWORD PTR $S44$[rbp]
+	00 00		 lea	 rax, QWORD PTR $S5$[rbp]
   00160	48 89 85 d0 00
-	00 00		 mov	 QWORD PTR $S43$[rbp+8], rax
+	00 00		 mov	 QWORD PTR $S4$[rbp+8], rax
   00167	c7 85 28 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S45$[rbp], -2
+	00 fe ff ff ff	 mov	 DWORD PTR $S6$[rbp], -2
   00171	48 c7 85 30 01
 	00 00 00 00 00
-	00		 mov	 QWORD PTR $S45$[rbp+8], 0
+	00		 mov	 QWORD PTR $S6$[rbp+8], 0
   0017c	48 8d 85 d8 00
-	00 00		 lea	 rax, QWORD PTR $S43$[rbp+16]
+	00 00		 lea	 rax, QWORD PTR $S4$[rbp+16]
   00183	48 8d 8d 28 01
-	00 00		 lea	 rcx, QWORD PTR $S45$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S6$[rbp]
   0018a	48 8b f8	 mov	 rdi, rax
   0018d	48 8b f1	 mov	 rsi, rcx
   00190	b9 10 00 00 00	 mov	 ecx, 16
   00195	f3 a4		 rep movsb
   00197	48 8d 95 c8 00
-	00 00		 lea	 rdx, QWORD PTR $S43$[rbp]
+	00 00		 lea	 rdx, QWORD PTR $S4$[rbp]
   0019e	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CB@FFPKGLBO@value?5at?5index?53?5of?5myBarrel?3?5?$CF@
   001a5	e8 00 00 00 00	 call	 Preent
 
-; 301  : 
-; 302  : 	COLLECTION myBucket = Bucket_List(int, 0, 1.0f, 2, 3, 4, 5);
+; 39   : 
+; 40   : 	COLLECTION myBucket = Bucket_List(int, 0, 1.0f, 2, 3, 4, 5);
 
   001aa	c6 85 04 02 00
-	00 00		 mov	 BYTE PTR $S49$[rbp], 0
+	00 00		 mov	 BYTE PTR $S10$[rbp], 0
   001b1	c6 85 05 02 00
-	00 01		 mov	 BYTE PTR $S49$[rbp+1], 1
+	00 01		 mov	 BYTE PTR $S10$[rbp+1], 1
   001b8	c6 85 06 02 00
-	00 02		 mov	 BYTE PTR $S49$[rbp+2], 2
+	00 02		 mov	 BYTE PTR $S10$[rbp+2], 2
   001bf	c6 85 07 02 00
-	00 03		 mov	 BYTE PTR $S49$[rbp+3], 3
+	00 03		 mov	 BYTE PTR $S10$[rbp+3], 3
   001c6	c6 85 08 02 00
-	00 04		 mov	 BYTE PTR $S49$[rbp+4], 4
+	00 04		 mov	 BYTE PTR $S10$[rbp+4], 4
   001cd	c6 85 09 02 00
-	00 05		 mov	 BYTE PTR $S49$[rbp+5], 5
+	00 05		 mov	 BYTE PTR $S10$[rbp+5], 5
   001d4	c6 85 0a 02 00
-	00 01		 mov	 BYTE PTR $S49$[rbp+6], 1
+	00 01		 mov	 BYTE PTR $S10$[rbp+6], 1
   001db	c6 85 e4 01 00
-	00 00		 mov	 BYTE PTR $S48$[rbp], 0
+	00 00		 mov	 BYTE PTR $S9$[rbp], 0
   001e2	c6 85 e5 01 00
-	00 01		 mov	 BYTE PTR $S48$[rbp+1], 1
+	00 01		 mov	 BYTE PTR $S9$[rbp+1], 1
   001e9	c6 85 e6 01 00
-	00 02		 mov	 BYTE PTR $S48$[rbp+2], 2
+	00 02		 mov	 BYTE PTR $S9$[rbp+2], 2
   001f0	c6 85 e7 01 00
-	00 03		 mov	 BYTE PTR $S48$[rbp+3], 3
+	00 03		 mov	 BYTE PTR $S9$[rbp+3], 3
   001f7	c6 85 e8 01 00
-	00 04		 mov	 BYTE PTR $S48$[rbp+4], 4
+	00 04		 mov	 BYTE PTR $S9$[rbp+4], 4
   001fe	c6 85 e9 01 00
-	00 05		 mov	 BYTE PTR $S48$[rbp+5], 5
+	00 05		 mov	 BYTE PTR $S9$[rbp+5], 5
   00205	c6 85 ea 01 00
-	00 00		 mov	 BYTE PTR $S48$[rbp+6], 0
+	00 00		 mov	 BYTE PTR $S9$[rbp+6], 0
   0020c	c7 85 b8 01 00
-	00 00 00 00 00	 mov	 DWORD PTR $S47$[rbp], 0
+	00 00 00 00 00	 mov	 DWORD PTR $S8$[rbp], 0
   00216	c7 85 bc 01 00
-	00 01 00 00 00	 mov	 DWORD PTR $S47$[rbp+4], 1
+	00 01 00 00 00	 mov	 DWORD PTR $S8$[rbp+4], 1
   00220	c7 85 c0 01 00
-	00 02 00 00 00	 mov	 DWORD PTR $S47$[rbp+8], 2
+	00 02 00 00 00	 mov	 DWORD PTR $S8$[rbp+8], 2
   0022a	c7 85 c4 01 00
-	00 03 00 00 00	 mov	 DWORD PTR $S47$[rbp+12], 3
+	00 03 00 00 00	 mov	 DWORD PTR $S8$[rbp+12], 3
   00234	c7 85 c8 01 00
-	00 04 00 00 00	 mov	 DWORD PTR $S47$[rbp+16], 4
+	00 04 00 00 00	 mov	 DWORD PTR $S8$[rbp+16], 4
   0023e	c7 85 cc 01 00
-	00 05 00 00 00	 mov	 DWORD PTR $S47$[rbp+20], 5
+	00 05 00 00 00	 mov	 DWORD PTR $S8$[rbp+20], 5
   00248	48 8d 85 78 01
-	00 00		 lea	 rax, QWORD PTR $S46$[rbp]
+	00 00		 lea	 rax, QWORD PTR $S7$[rbp]
   0024f	48 8b f8	 mov	 rdi, rax
   00252	33 c0		 xor	 eax, eax
   00254	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
   00259	f3 aa		 rep stosb
   0025b	48 8d 95 04 02
-	00 00		 lea	 rdx, QWORD PTR $S49$[rbp]
+	00 00		 lea	 rdx, QWORD PTR $S10$[rbp]
   00262	48 8d 8d e4 01
-	00 00		 lea	 rcx, QWORD PTR $S48$[rbp]
+	00 00		 lea	 rcx, QWORD PTR $S9$[rbp]
   00269	e8 00 00 00 00	 call	 paramCount
   0026e	89 44 24 28	 mov	 DWORD PTR [rsp+40], eax
   00272	c7 44 24 20 00
 	00 00 00	 mov	 DWORD PTR [rsp+32], 0
   0027a	4c 8d 8d b8 01
-	00 00		 lea	 r9, QWORD PTR $S47$[rbp]
+	00 00		 lea	 r9, QWORD PTR $S8$[rbp]
   00281	4c 8d 85 78 01
-	00 00		 lea	 r8, QWORD PTR $S46$[rbp]
+	00 00		 lea	 r8, QWORD PTR $S7$[rbp]
   00288	ba 04 00 00 00	 mov	 edx, 4
   0028d	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
   00294	e8 00 00 00 00	 call	 Bucket_ctor
-  00299	48 98		 cdqe
-  0029b	48 89 85 58 01
+  00299	48 89 85 58 01
 	00 00		 mov	 QWORD PTR myBucket$[rbp], rax
 
-; 303  : 
-; 304  : 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
+; 41   : 
+; 42   : 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
 
-  002a2	48 8d 85 88 02
-	00 00		 lea	 rax, QWORD PTR $S51$[rbp]
-  002a9	48 8b f8	 mov	 rdi, rax
-  002ac	33 c0		 xor	 eax, eax
-  002ae	b9 18 00 00 00	 mov	 ecx, 24
-  002b3	f3 aa		 rep stosb
-  002b5	48 8d 85 48 02
-	00 00		 lea	 rax, QWORD PTR $S50$[rbp]
-  002bc	48 8b f8	 mov	 rdi, rax
-  002bf	33 c0		 xor	 eax, eax
-  002c1	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
-  002c6	f3 aa		 rep stosb
-  002c8	c7 44 24 28 06
+  002a0	48 8d 85 88 02
+	00 00		 lea	 rax, QWORD PTR $S12$[rbp]
+  002a7	48 8b f8	 mov	 rdi, rax
+  002aa	33 c0		 xor	 eax, eax
+  002ac	b9 18 00 00 00	 mov	 ecx, 24
+  002b1	f3 aa		 rep stosb
+  002b3	48 8d 85 48 02
+	00 00		 lea	 rax, QWORD PTR $S11$[rbp]
+  002ba	48 8b f8	 mov	 rdi, rax
+  002bd	33 c0		 xor	 eax, eax
+  002bf	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
+  002c4	f3 aa		 rep stosb
+  002c6	c7 44 24 28 06
 	00 00 00	 mov	 DWORD PTR [rsp+40], 6
-  002d0	c7 44 24 20 20
+  002ce	c7 44 24 20 20
 	00 00 00	 mov	 DWORD PTR [rsp+32], 32	; 00000020H
-  002d8	4c 8d 8d 88 02
-	00 00		 lea	 r9, QWORD PTR $S51$[rbp]
-  002df	4c 8d 85 48 02
-	00 00		 lea	 r8, QWORD PTR $S50$[rbp]
-  002e6	ba 04 00 00 00	 mov	 edx, 4
-  002eb	48 8d 0d 00 00
+  002d6	4c 8d 8d 88 02
+	00 00		 lea	 r9, QWORD PTR $S12$[rbp]
+  002dd	4c 8d 85 48 02
+	00 00		 lea	 r8, QWORD PTR $S11$[rbp]
+  002e4	ba 04 00 00 00	 mov	 edx, 4
+  002e9	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
-  002f2	e8 00 00 00 00	 call	 Bucket_ctor
-  002f7	48 98		 cdqe
-  002f9	48 89 85 28 02
+  002f0	e8 00 00 00 00	 call	 Bucket_ctor
+  002f5	48 89 85 28 02
 	00 00		 mov	 QWORD PTR emptyBucket$[rbp], rax
 
-; 305  : 
-; 306  : 	if (!Collection_Read(myBucket, &output, 3))
+; 43   : 
+; 44   : 	if (!Collection_Read(myBucket, &output, 3))
 
-  00300	41 b8 03 00 00
+  002fc	41 b8 03 00 00
 	00		 mov	 r8d, 3
-  00306	48 8d 55 04	 lea	 rdx, QWORD PTR output$[rbp]
-  0030a	48 8b 8d 58 01
+  00302	48 8d 55 04	 lea	 rdx, QWORD PTR output$[rbp]
+  00306	48 8b 8d 58 01
 	00 00		 mov	 rcx, QWORD PTR myBucket$[rbp]
-  00311	e8 00 00 00 00	 call	 Collection_Read
-  00316	85 c0		 test	 eax, eax
-  00318	75 0a		 jne	 SHORT $LN3@main
+  0030d	e8 00 00 00 00	 call	 Collection_Read
+  00312	85 c0		 test	 eax, eax
+  00314	75 0a		 jne	 SHORT $LN3@main
 
-; 307  : 		return 1;
+; 45   : 		return 1;
 
-  0031a	b8 01 00 00 00	 mov	 eax, 1
-  0031f	e9 d3 00 00 00	 jmp	 $LN1@main
+  00316	b8 01 00 00 00	 mov	 eax, 1
+  0031b	e9 d3 00 00 00	 jmp	 $LN1@main
 $LN3@main:
 
-; 308  : 
-; 309  : 	PREENT_ARGS("collection count of emptyBucket: %\n", fmt_i(Collection_Count(emptyBucket)));
+; 46   : 
+; 47   : 	PREENT_ARGS("collection count of emptyBucket: %\n", fmt_i(Collection_Count(emptyBucket)));
 
-  00324	c7 85 b8 02 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S52$[rbp], 29
-  0032e	48 8b 8d 28 02
+  00320	c7 85 b8 02 00
+	00 1d 00 00 00	 mov	 DWORD PTR $S13$[rbp], 29
+  0032a	48 8b 8d 28 02
 	00 00		 mov	 rcx, QWORD PTR emptyBucket$[rbp]
-  00335	e8 00 00 00 00	 call	 Collection_Count
-  0033a	89 85 f4 02 00
-	00		 mov	 DWORD PTR $S53$[rbp], eax
-  00340	48 8d 85 f4 02
-	00 00		 lea	 rax, QWORD PTR $S53$[rbp]
-  00347	48 89 85 c0 02
-	00 00		 mov	 QWORD PTR $S52$[rbp+8], rax
-  0034e	c7 85 18 03 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S54$[rbp], -2
-  00358	48 c7 85 20 03
+  00331	e8 00 00 00 00	 call	 Collection_Count
+  00336	89 85 f4 02 00
+	00		 mov	 DWORD PTR $S14$[rbp], eax
+  0033c	48 8d 85 f4 02
+	00 00		 lea	 rax, QWORD PTR $S14$[rbp]
+  00343	48 89 85 c0 02
+	00 00		 mov	 QWORD PTR $S13$[rbp+8], rax
+  0034a	c7 85 18 03 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S15$[rbp], -2
+  00354	48 c7 85 20 03
 	00 00 00 00 00
-	00		 mov	 QWORD PTR $S54$[rbp+8], 0
-  00363	48 8d 85 c8 02
-	00 00		 lea	 rax, QWORD PTR $S52$[rbp+16]
-  0036a	48 8d 8d 18 03
-	00 00		 lea	 rcx, QWORD PTR $S54$[rbp]
-  00371	48 8b f8	 mov	 rdi, rax
-  00374	48 8b f1	 mov	 rsi, rcx
-  00377	b9 10 00 00 00	 mov	 ecx, 16
-  0037c	f3 a4		 rep movsb
-  0037e	48 8d 95 b8 02
-	00 00		 lea	 rdx, QWORD PTR $S52$[rbp]
-  00385	48 8d 0d 00 00
+	00		 mov	 QWORD PTR $S15$[rbp+8], 0
+  0035f	48 8d 85 c8 02
+	00 00		 lea	 rax, QWORD PTR $S13$[rbp+16]
+  00366	48 8d 8d 18 03
+	00 00		 lea	 rcx, QWORD PTR $S15$[rbp]
+  0036d	48 8b f8	 mov	 rdi, rax
+  00370	48 8b f1	 mov	 rsi, rcx
+  00373	b9 10 00 00 00	 mov	 ecx, 16
+  00378	f3 a4		 rep movsb
+  0037a	48 8d 95 b8 02
+	00 00		 lea	 rdx, QWORD PTR $S13$[rbp]
+  00381	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CE@BBPKOEII@collection?5count?5of?5emptyBucket@
-  0038c	e8 00 00 00 00	 call	 Preent
+  00388	e8 00 00 00 00	 call	 Preent
 
-; 310  : 	PREENT_ARGS("value at index 3 of myBucket: %\n", fmt_i(output));
+; 48   : 	PREENT_ARGS("value at index 3 of myBucket: %\n", fmt_i(output));
 
-  00391	c7 85 48 03 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S55$[rbp], 29
-  0039b	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
-  0039e	89 85 84 03 00
-	00		 mov	 DWORD PTR $S56$[rbp], eax
-  003a4	48 8d 85 84 03
-	00 00		 lea	 rax, QWORD PTR $S56$[rbp]
-  003ab	48 89 85 50 03
-	00 00		 mov	 QWORD PTR $S55$[rbp+8], rax
-  003b2	c7 85 a8 03 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S57$[rbp], -2
-  003bc	48 c7 85 b0 03
+  0038d	c7 85 48 03 00
+	00 1d 00 00 00	 mov	 DWORD PTR $S16$[rbp], 29
+  00397	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
+  0039a	89 85 84 03 00
+	00		 mov	 DWORD PTR $S17$[rbp], eax
+  003a0	48 8d 85 84 03
+	00 00		 lea	 rax, QWORD PTR $S17$[rbp]
+  003a7	48 89 85 50 03
+	00 00		 mov	 QWORD PTR $S16$[rbp+8], rax
+  003ae	c7 85 a8 03 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S18$[rbp], -2
+  003b8	48 c7 85 b0 03
 	00 00 00 00 00
-	00		 mov	 QWORD PTR $S57$[rbp+8], 0
-  003c7	48 8d 85 58 03
-	00 00		 lea	 rax, QWORD PTR $S55$[rbp+16]
-  003ce	48 8d 8d a8 03
-	00 00		 lea	 rcx, QWORD PTR $S57$[rbp]
-  003d5	48 8b f8	 mov	 rdi, rax
-  003d8	48 8b f1	 mov	 rsi, rcx
-  003db	b9 10 00 00 00	 mov	 ecx, 16
-  003e0	f3 a4		 rep movsb
-  003e2	48 8d 95 48 03
-	00 00		 lea	 rdx, QWORD PTR $S55$[rbp]
-  003e9	48 8d 0d 00 00
+	00		 mov	 QWORD PTR $S18$[rbp+8], 0
+  003c3	48 8d 85 58 03
+	00 00		 lea	 rax, QWORD PTR $S16$[rbp+16]
+  003ca	48 8d 8d a8 03
+	00 00		 lea	 rcx, QWORD PTR $S18$[rbp]
+  003d1	48 8b f8	 mov	 rdi, rax
+  003d4	48 8b f1	 mov	 rsi, rcx
+  003d7	b9 10 00 00 00	 mov	 ecx, 16
+  003dc	f3 a4		 rep movsb
+  003de	48 8d 95 48 03
+	00 00		 lea	 rdx, QWORD PTR $S16$[rbp]
+  003e5	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CB@EMHFLGEI@value?5at?5index?53?5of?5myBucket?3?5?$CF@
-  003f0	e8 00 00 00 00	 call	 Preent
+  003ec	e8 00 00 00 00	 call	 Preent
 
-; 311  : 
-; 312  : 	return 0;
+; 49   : 
+; 50   : 	return 0;
 
-  003f5	33 c0		 xor	 eax, eax
+  003f1	33 c0		 xor	 eax, eax
 $LN1@main:
 
-; 313  : }
+; 51   : }
 
-  003f7	48 8b f8	 mov	 rdi, rax
-  003fa	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
-  003fe	48 8d 15 00 00
+  003f3	48 8b f8	 mov	 rdi, rax
+  003f6	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
+  003fa	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:main$rtcFrameData
-  00405	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  0040a	48 8b c7	 mov	 rax, rdi
-  0040d	48 8b 8d 48 05
+  00401	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  00406	48 8b c7	 mov	 rax, rdi
+  00409	48 8b 8d 48 05
 	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00414	48 33 cd	 xor	 rcx, rbp
-  00417	e8 00 00 00 00	 call	 __security_check_cookie
-  0041c	48 8d a5 50 05
+  00410	48 33 cd	 xor	 rcx, rbp
+  00413	e8 00 00 00 00	 call	 __security_check_cookie
+  00418	48 8d a5 50 05
 	00 00		 lea	 rsp, QWORD PTR [rbp+1360]
-  00423	5f		 pop	 rdi
-  00424	5e		 pop	 rsi
-  00425	5d		 pop	 rbp
-  00426	c3		 ret	 0
+  0041f	5f		 pop	 rdi
+  00420	5e		 pop	 rsi
+  00421	5d		 pop	 rbp
+  00422	c3		 ret	 0
 main	ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest
-_TEXT	SEGMENT
-barrelTest PROC						; COMDAT
-
-; 249  : {
-
-$LN4:
-  00000	40 55		 push	 rbp
-  00002	57		 push	 rdi
-  00003	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0000f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 250  : 	PREENT("Collections Testing...\n\n");
-
-  0001b	33 d2		 xor	 edx, edx
-  0001d	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BJ@PLOMDJAN@Collections?5Testing?4?4?4?6?6@
-  00024	e8 00 00 00 00	 call	 Preent
-
-; 251  : 
-; 252  : 	//TypeInfo* intTypeID = TYPE_ID(int, BARREL);
-; 253  : 
-; 254  : 	//test_intTypeID = &intTypeID;
-; 255  : 
-; 256  : 	//long derp = 5;
-; 257  : 	//long* ptrDerp = &derp;
-; 258  : 
-; 259  : 	//Request blah = DeConstruct((void*) { 0 });
-; 260  : 
-; 261  : 	if (!Barrel_ServiceInit(Heap_ServiceInit(true)))
-
-  00029	b9 01 00 00 00	 mov	 ecx, 1
-  0002e	e8 00 00 00 00	 call	 Heap_ServiceInit
-  00033	48 8b c8	 mov	 rcx, rax
-  00036	e8 00 00 00 00	 call	 Barrel_ServiceInit
-  0003b	85 c0		 test	 eax, eax
-  0003d	75 10		 jne	 SHORT $LN2@barrelTest
-
-; 262  : 	{
-; 263  : 		PREENT("Services failed to start!\n");
-
-  0003f	33 d2		 xor	 edx, edx
-  00041	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BL@CGFOLKEE@Services?5failed?5to?5start?$CB?6@
-  00048	e8 00 00 00 00	 call	 Preent
-
-; 264  : 		return;
-
-  0004d	eb 05		 jmp	 SHORT $LN1@barrelTest
-$LN2@barrelTest:
-
-; 265  : 	}
-; 266  : 
-; 267  : 
-; 268  : 	barrelTest_MAIN();
-
-  0004f	e8 00 00 00 00	 call	 barrelTest_MAIN
-$LN1@barrelTest:
-
-; 269  : }
-
-  00054	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  0005b	5f		 pop	 rdi
-  0005c	5d		 pop	 rbp
-  0005d	c3		 ret	 0
-barrelTest ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_MAIN
-_TEXT	SEGMENT
-input$ = 8
-$S34$9 = 40
-$S35$10 = 100
-$S36$11 = 136
-i$12 = 180
-$S37$13 = 216
-$S38$14 = 292
-$S39$15 = 328
-i$16 = 372
-__$ArrayPad$ = 584
-barrelTest_MAIN PROC					; COMDAT
-
-; 230  : void barrelTest_MAIN() {
-
-$LN12:
-  00000	40 55		 push	 rbp
-  00002	56		 push	 rsi
-  00003	57		 push	 rdi
-  00004	48 81 ec 70 02
-	00 00		 sub	 rsp, 624		; 00000270H
-  0000b	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00010	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00015	b9 64 00 00 00	 mov	 ecx, 100		; 00000064H
-  0001a	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0001f	f3 ab		 rep stosd
-  00021	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00028	48 33 c5	 xor	 rax, rbp
-  0002b	48 89 85 48 02
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00032	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 231  : 
-; 232  : 	const char* input = NULL;
-
-  0003e	48 c7 45 08 00
-	00 00 00	 mov	 QWORD PTR input$[rbp], 0
-$LN2@barrelTest:
-
-; 233  : 
-; 234  : 	while (!ESCAPE) {
-
-  00046	83 3d 00 00 00
-	00 00		 cmp	 DWORD PTR ESCAPE, 0
-  0004d	0f 85 9d 01 00
-	00		 jne	 $LN3@barrelTest
-
-; 235  : 
-; 236  : 		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(Barrel_NodeCount()));
-
-  00053	c7 45 28 1d 00
-	00 00		 mov	 DWORD PTR $S34$9[rbp], 29
-  0005a	e8 00 00 00 00	 call	 Barrel_NodeCount
-  0005f	89 45 64	 mov	 DWORD PTR $S35$10[rbp], eax
-  00062	48 8d 45 64	 lea	 rax, QWORD PTR $S35$10[rbp]
-  00066	48 89 45 30	 mov	 QWORD PTR $S34$9[rbp+8], rax
-  0006a	c7 85 88 00 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S36$11[rbp], -2
-  00074	48 c7 85 90 00
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S36$11[rbp+8], 0
-  0007f	48 8d 45 38	 lea	 rax, QWORD PTR $S34$9[rbp+16]
-  00083	48 8d 8d 88 00
-	00 00		 lea	 rcx, QWORD PTR $S36$11[rbp]
-  0008a	48 8b f8	 mov	 rdi, rax
-  0008d	48 8b f1	 mov	 rsi, rcx
-  00090	b9 10 00 00 00	 mov	 ecx, 16
-  00095	f3 a4		 rep movsb
-  00097	48 8d 55 28	 lea	 rdx, QWORD PTR $S34$9[rbp]
-  0009b	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@LDAEMDFJ@?$FL?5Total?5Current?5Nodes?3?5?$CF?5?$FN?6@
-  000a2	e8 00 00 00 00	 call	 Preent
-
-; 237  : 		for (int i = 0; i < mainMenuActionCount; i++)
-
-  000a7	c7 85 b4 00 00
-	00 00 00 00 00	 mov	 DWORD PTR i$12[rbp], 0
-  000b1	eb 0e		 jmp	 SHORT $LN6@barrelTest
-$LN4@barrelTest:
-  000b3	8b 85 b4 00 00
-	00		 mov	 eax, DWORD PTR i$12[rbp]
-  000b9	ff c0		 inc	 eax
-  000bb	89 85 b4 00 00
-	00		 mov	 DWORD PTR i$12[rbp], eax
-$LN6@barrelTest:
-  000c1	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR mainMenuActionCount
-  000c7	39 85 b4 00 00
-	00		 cmp	 DWORD PTR i$12[rbp], eax
-  000cd	0f 83 a4 00 00
-	00		 jae	 $LN5@barrelTest
-
-; 238  : 			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
-
-  000d3	c7 85 d8 00 00
-	00 15 00 00 00	 mov	 DWORD PTR $S37$13[rbp], 21
-  000dd	48 63 85 b4 00
-	00 00		 movsxd	 rax, DWORD PTR i$12[rbp]
-  000e4	48 6b c0 18	 imul	 rax, rax, 24
-  000e8	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:mainMenuActions
-  000ef	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
-  000f3	88 85 24 01 00
-	00		 mov	 BYTE PTR $S38$14[rbp], al
-  000f9	48 8d 85 24 01
-	00 00		 lea	 rax, QWORD PTR $S38$14[rbp]
-  00100	48 89 85 e0 00
-	00 00		 mov	 QWORD PTR $S37$13[rbp+8], rax
-  00107	c7 85 e8 00 00
-	00 16 00 00 00	 mov	 DWORD PTR $S37$13[rbp+16], 22
-  00111	48 63 85 b4 00
-	00 00		 movsxd	 rax, DWORD PTR i$12[rbp]
-  00118	48 6b c0 18	 imul	 rax, rax, 24
-  0011c	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:mainMenuActions
-  00123	48 8b 44 01 08	 mov	 rax, QWORD PTR [rcx+rax+8]
-  00128	48 89 85 f0 00
-	00 00		 mov	 QWORD PTR $S37$13[rbp+24], rax
-  0012f	c7 85 48 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S39$15[rbp], -2
-  00139	48 c7 85 50 01
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S39$15[rbp+8], 0
-  00144	48 8d 85 f8 00
-	00 00		 lea	 rax, QWORD PTR $S37$13[rbp+32]
-  0014b	48 8d 8d 48 01
-	00 00		 lea	 rcx, QWORD PTR $S39$15[rbp]
-  00152	48 8b f8	 mov	 rdi, rax
-  00155	48 8b f1	 mov	 rsi, rcx
-  00158	b9 10 00 00 00	 mov	 ecx, 16
-  0015d	f3 a4		 rep movsb
-  0015f	48 8d 95 d8 00
-	00 00		 lea	 rdx, QWORD PTR $S37$13[rbp]
-  00166	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_08EAMDPNID@?$FL?$CF?$FN?5?9?5?$CF?6@
-  0016d	e8 00 00 00 00	 call	 Preent
-  00172	e9 3c ff ff ff	 jmp	 $LN4@barrelTest
-$LN5@barrelTest:
-
-; 239  : 
-; 240  : 		input = Geet();
-
-  00177	e8 00 00 00 00	 call	 Geet
-  0017c	48 89 45 08	 mov	 QWORD PTR input$[rbp], rax
-
-; 241  : 
-; 242  : 		for (int i = 0; i < mainMenuActionCount; i++)
-
-  00180	c7 85 74 01 00
-	00 00 00 00 00	 mov	 DWORD PTR i$16[rbp], 0
-  0018a	eb 0e		 jmp	 SHORT $LN9@barrelTest
-$LN7@barrelTest:
-  0018c	8b 85 74 01 00
-	00		 mov	 eax, DWORD PTR i$16[rbp]
-  00192	ff c0		 inc	 eax
-  00194	89 85 74 01 00
-	00		 mov	 DWORD PTR i$16[rbp], eax
-$LN9@barrelTest:
-  0019a	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR mainMenuActionCount
-  001a0	39 85 74 01 00
-	00		 cmp	 DWORD PTR i$16[rbp], eax
-  001a6	73 43		 jae	 SHORT $LN8@barrelTest
-
-; 243  : 			if (mainMenuActions[i]._keyPress == input[0])
-
-  001a8	48 63 85 74 01
-	00 00		 movsxd	 rax, DWORD PTR i$16[rbp]
-  001af	48 6b c0 18	 imul	 rax, rax, 24
-  001b3	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:mainMenuActions
-  001ba	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  001be	b9 01 00 00 00	 mov	 ecx, 1
-  001c3	48 6b c9 00	 imul	 rcx, rcx, 0
-  001c7	48 8b 55 08	 mov	 rdx, QWORD PTR input$[rbp]
-  001cb	0f be 0c 0a	 movsx	 ecx, BYTE PTR [rdx+rcx]
-  001cf	3b c1		 cmp	 eax, ecx
-  001d1	75 16		 jne	 SHORT $LN10@barrelTest
-
-; 244  : 				mainMenuActions[i]._action();
-
-  001d3	48 63 85 74 01
-	00 00		 movsxd	 rax, DWORD PTR i$16[rbp]
-  001da	48 6b c0 18	 imul	 rax, rax, 24
-  001de	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:mainMenuActions
-  001e5	ff 54 01 10	 call	 QWORD PTR [rcx+rax+16]
-$LN10@barrelTest:
-  001e9	eb a1		 jmp	 SHORT $LN7@barrelTest
-$LN8@barrelTest:
-
-; 245  : 	}
-
-  001eb	e9 56 fe ff ff	 jmp	 $LN2@barrelTest
-$LN3@barrelTest:
-
-; 246  : }
-
-  001f0	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  001f4	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:barrelTest_MAIN$rtcFrameData
-  001fb	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00200	48 8b 8d 48 02
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00207	48 33 cd	 xor	 rcx, rbp
-  0020a	e8 00 00 00 00	 call	 __security_check_cookie
-  0020f	48 8d a5 50 02
-	00 00		 lea	 rsp, QWORD PTR [rbp+592]
-  00216	5f		 pop	 rdi
-  00217	5e		 pop	 rsi
-  00218	5d		 pop	 rbp
-  00219	c3		 ret	 0
-barrelTest_MAIN ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_VIEW_HEAP
-_TEXT	SEGMENT
-i$13 = 4
-nextNode$14 = 40
-$S24$15 = 80
-$S25$16 = 196
-$S26$17 = 228
-$S27$18 = 260
-$S28$19 = 292
-$S29$20 = 324
-$S30$21 = 360
-i$22 = 404
-j$23 = 436
-$S31$24 = 472
-$S32$25 = 532
-$S33$26 = 568
-__$ArrayPad$ = 984
-barrelTest_VIEW_HEAP PROC				; COMDAT
-
-; 190  : {
-
-$LN12:
-  00000	40 55		 push	 rbp
-  00002	56		 push	 rsi
-  00003	57		 push	 rdi
-  00004	48 81 ec 00 04
-	00 00		 sub	 rsp, 1024		; 00000400H
-  0000b	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00010	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00015	b9 98 00 00 00	 mov	 ecx, 152		; 00000098H
-  0001a	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0001f	f3 ab		 rep stosd
-  00021	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00028	48 33 c5	 xor	 rax, rbp
-  0002b	48 89 85 d8 03
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00032	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 191  : 	PREENT("bCount | vCount | offset | bStart \n");
-
-  0003e	33 d2		 xor	 edx, edx
-  00040	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CE@GDIPAECF@bCount?5?$HM?5vCount?5?$HM?5offset?5?$HM?5bSta@
-  00047	e8 00 00 00 00	 call	 Preent
-
-; 192  : 
-; 193  : 	for (int i = 0; i < Barrel_NodeCount(); i++)
-
-  0004c	c7 45 04 00 00
-	00 00		 mov	 DWORD PTR i$13[rbp], 0
-  00053	eb 08		 jmp	 SHORT $LN4@barrelTest
-$LN2@barrelTest:
-  00055	8b 45 04	 mov	 eax, DWORD PTR i$13[rbp]
-  00058	ff c0		 inc	 eax
-  0005a	89 45 04	 mov	 DWORD PTR i$13[rbp], eax
-$LN4@barrelTest:
-  0005d	e8 00 00 00 00	 call	 Barrel_NodeCount
-  00062	39 45 04	 cmp	 DWORD PTR i$13[rbp], eax
-  00065	0f 83 f1 00 00
-	00		 jae	 $LN3@barrelTest
-
-; 194  : 	{
-; 195  : 		BarrelNode* nextNode = Heap_Head();
-
-  0006b	e8 00 00 00 00	 call	 Heap_Head
-  00070	48 89 45 28	 mov	 QWORD PTR nextNode$14[rbp], rax
-
-; 196  : 		PREENT_ARGS("[%]: % | % | % | %\n",
-
-  00074	c7 45 50 18 00
-	00 00		 mov	 DWORD PTR $S24$15[rbp], 24
-  0007b	8b 45 04	 mov	 eax, DWORD PTR i$13[rbp]
-  0007e	89 85 c4 00 00
-	00		 mov	 DWORD PTR $S25$16[rbp], eax
-  00084	48 8d 85 c4 00
-	00 00		 lea	 rax, QWORD PTR $S25$16[rbp]
-  0008b	48 89 45 58	 mov	 QWORD PTR $S24$15[rbp+8], rax
-  0008f	c7 45 60 18 00
-	00 00		 mov	 DWORD PTR $S24$15[rbp+16], 24
-  00096	48 8b 45 28	 mov	 rax, QWORD PTR nextNode$14[rbp]
-  0009a	8b 40 10	 mov	 eax, DWORD PTR [rax+16]
-  0009d	89 85 e4 00 00
-	00		 mov	 DWORD PTR $S26$17[rbp], eax
-  000a3	48 8d 85 e4 00
-	00 00		 lea	 rax, QWORD PTR $S26$17[rbp]
-  000aa	48 89 45 68	 mov	 QWORD PTR $S24$15[rbp+24], rax
-  000ae	c7 45 70 18 00
-	00 00		 mov	 DWORD PTR $S24$15[rbp+32], 24
-  000b5	48 8b 45 28	 mov	 rax, QWORD PTR nextNode$14[rbp]
-  000b9	8b 40 08	 mov	 eax, DWORD PTR [rax+8]
-  000bc	89 85 04 01 00
-	00		 mov	 DWORD PTR $S27$18[rbp], eax
-  000c2	48 8d 85 04 01
-	00 00		 lea	 rax, QWORD PTR $S27$18[rbp]
-  000c9	48 89 45 78	 mov	 QWORD PTR $S24$15[rbp+40], rax
-  000cd	c7 85 80 00 00
-	00 18 00 00 00	 mov	 DWORD PTR $S24$15[rbp+48], 24
-  000d7	48 8b 45 28	 mov	 rax, QWORD PTR nextNode$14[rbp]
-  000db	8b 40 14	 mov	 eax, DWORD PTR [rax+20]
-  000de	89 85 24 01 00
-	00		 mov	 DWORD PTR $S28$19[rbp], eax
-  000e4	48 8d 85 24 01
-	00 00		 lea	 rax, QWORD PTR $S28$19[rbp]
-  000eb	48 89 85 88 00
-	00 00		 mov	 QWORD PTR $S24$15[rbp+56], rax
-  000f2	c7 85 90 00 00
-	00 18 00 00 00	 mov	 DWORD PTR $S24$15[rbp+64], 24
-  000fc	48 8b 45 28	 mov	 rax, QWORD PTR nextNode$14[rbp]
-  00100	8b 40 18	 mov	 eax, DWORD PTR [rax+24]
-  00103	89 85 44 01 00
-	00		 mov	 DWORD PTR $S29$20[rbp], eax
-  00109	48 8d 85 44 01
-	00 00		 lea	 rax, QWORD PTR $S29$20[rbp]
-  00110	48 89 85 98 00
-	00 00		 mov	 QWORD PTR $S24$15[rbp+72], rax
-  00117	c7 85 68 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S30$21[rbp], -2
-  00121	48 c7 85 70 01
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S30$21[rbp+8], 0
-  0012c	48 8d 85 a0 00
-	00 00		 lea	 rax, QWORD PTR $S24$15[rbp+80]
-  00133	48 8d 8d 68 01
-	00 00		 lea	 rcx, QWORD PTR $S30$21[rbp]
-  0013a	48 8b f8	 mov	 rdi, rax
-  0013d	48 8b f1	 mov	 rsi, rcx
-  00140	b9 10 00 00 00	 mov	 ecx, 16
-  00145	f3 a4		 rep movsb
-  00147	48 8d 55 50	 lea	 rdx, QWORD PTR $S24$15[rbp]
-  0014b	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BE@KPHCKKED@?$FL?$CF?$FN?3?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?5?$HM?5?$CF?6@
-  00152	e8 00 00 00 00	 call	 Preent
-
-; 197  : 			fmt_I(i),
-; 198  : 			fmt_I(nextNode->_barrelCount),
-; 199  : 			fmt_I(nextNode->_collection._count),
-; 200  : 			fmt_I(nextNode->_barrelOffset),
-; 201  : 			fmt_I(nextNode->_barrelStart)
-; 202  : 			);
-; 203  : 	}
-
-  00157	e9 f9 fe ff ff	 jmp	 $LN2@barrelTest
-$LN3@barrelTest:
-
-; 204  : 	
-; 205  : 	PREENT("\n[HEEP MAP]\n");
-
-  0015c	33 d2		 xor	 edx, edx
-  0015e	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0N@BOGIKLIF@?6?$FLHEEP?5MAP?$FN?6@
-  00165	e8 00 00 00 00	 call	 Preent
-
-; 206  : 
-; 207  : 	for (int i = 0; i < 32; i++) {
-
-  0016a	c7 85 94 01 00
-	00 00 00 00 00	 mov	 DWORD PTR i$22[rbp], 0
-  00174	eb 0e		 jmp	 SHORT $LN7@barrelTest
-$LN5@barrelTest:
-  00176	8b 85 94 01 00
-	00		 mov	 eax, DWORD PTR i$22[rbp]
-  0017c	ff c0		 inc	 eax
-  0017e	89 85 94 01 00
-	00		 mov	 DWORD PTR i$22[rbp], eax
-$LN7@barrelTest:
-  00184	83 bd 94 01 00
-	00 20		 cmp	 DWORD PTR i$22[rbp], 32	; 00000020H
-  0018b	0f 8d c8 00 00
-	00		 jge	 $LN6@barrelTest
-
-; 208  : 		PREENT("|");
-
-  00191	33 d2		 xor	 edx, edx
-  00193	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_01DNKMNLPK@?$HM@
-  0019a	e8 00 00 00 00	 call	 Preent
-
-; 209  : 		for (int j = 0; j < 8; j++) {
-
-  0019f	c7 85 b4 01 00
-	00 00 00 00 00	 mov	 DWORD PTR j$23[rbp], 0
-  001a9	eb 0e		 jmp	 SHORT $LN10@barrelTest
-$LN8@barrelTest:
-  001ab	8b 85 b4 01 00
-	00		 mov	 eax, DWORD PTR j$23[rbp]
-  001b1	ff c0		 inc	 eax
-  001b3	89 85 b4 01 00
-	00		 mov	 DWORD PTR j$23[rbp], eax
-$LN10@barrelTest:
-  001b9	83 bd b4 01 00
-	00 08		 cmp	 DWORD PTR j$23[rbp], 8
-  001c0	0f 8d 80 00 00
-	00		 jge	 $LN9@barrelTest
-
-; 210  : 			PREENT_ARGS("| % ", fmt_I(((int*)Heap_Head())[(i * 8) + j]));
-
-  001c6	c7 85 d8 01 00
-	00 18 00 00 00	 mov	 DWORD PTR $S31$24[rbp], 24
-  001d0	e8 00 00 00 00	 call	 Heap_Head
-  001d5	8b 8d b4 01 00
-	00		 mov	 ecx, DWORD PTR j$23[rbp]
-  001db	8b 95 94 01 00
-	00		 mov	 edx, DWORD PTR i$22[rbp]
-  001e1	8d 0c d1	 lea	 ecx, DWORD PTR [rcx+rdx*8]
-  001e4	48 63 c9	 movsxd	 rcx, ecx
-  001e7	8b 04 88	 mov	 eax, DWORD PTR [rax+rcx*4]
-  001ea	89 85 14 02 00
-	00		 mov	 DWORD PTR $S32$25[rbp], eax
-  001f0	48 8d 85 14 02
-	00 00		 lea	 rax, QWORD PTR $S32$25[rbp]
-  001f7	48 89 85 e0 01
-	00 00		 mov	 QWORD PTR $S31$24[rbp+8], rax
-  001fe	c7 85 38 02 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S33$26[rbp], -2
-  00208	48 c7 85 40 02
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S33$26[rbp+8], 0
-  00213	48 8d 85 e8 01
-	00 00		 lea	 rax, QWORD PTR $S31$24[rbp+16]
-  0021a	48 8d 8d 38 02
-	00 00		 lea	 rcx, QWORD PTR $S33$26[rbp]
-  00221	48 8b f8	 mov	 rdi, rax
-  00224	48 8b f1	 mov	 rsi, rcx
-  00227	b9 10 00 00 00	 mov	 ecx, 16
-  0022c	f3 a4		 rep movsb
-  0022e	48 8d 95 d8 01
-	00 00		 lea	 rdx, QWORD PTR $S31$24[rbp]
-  00235	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_04OMPAKLL@?$HM?5?$CF?5@
-  0023c	e8 00 00 00 00	 call	 Preent
-
-; 211  : 		}
-
-  00241	e9 65 ff ff ff	 jmp	 $LN8@barrelTest
-$LN9@barrelTest:
-
-; 212  : 	
-; 213  : 		PREENT("||\n");
-
-  00246	33 d2		 xor	 edx, edx
-  00248	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03FIFGEGHJ@?$HM?$HM?6@
-  0024f	e8 00 00 00 00	 call	 Preent
-
-; 214  : 	}
-
-  00254	e9 1d ff ff ff	 jmp	 $LN5@barrelTest
-$LN6@barrelTest:
-
-; 215  : }
-
-  00259	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  0025d	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:barrelTest_VIEW_HEAP$rtcFrameData
-  00264	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00269	48 8b 8d d8 03
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00270	48 33 cd	 xor	 rcx, rbp
-  00273	e8 00 00 00 00	 call	 __security_check_cookie
-  00278	48 8d a5 e0 03
-	00 00		 lea	 rsp, QWORD PTR [rbp+992]
-  0027f	5f		 pop	 rdi
-  00280	5e		 pop	 rsi
-  00281	5d		 pop	 rbp
-  00282	c3		 ret	 0
-barrelTest_VIEW_HEAP ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_READ
-_TEXT	SEGMENT
-targetPtr$ = 8
-input$ = 40
-index$ = 68
-$S17$10 = 104
-$S18$11 = 164
-$S19$12 = 200
-targetBoop$ = 248
-startIndex$ = 276
-delta$ = 308
-deltaDir$ = 340
-i$13 = 372
-$S20$14 = 408
-$S21$15 = 484
-$S22$16 = 516
-$S23$17 = 552
-tv136 = 964
-__$ArrayPad$ = 968
-barrelTest_READ PROC					; COMDAT
-
-; 140  : {
-
-$LN14:
-  00000	40 55		 push	 rbp
-  00002	56		 push	 rsi
-  00003	57		 push	 rdi
-  00004	48 81 ec f0 03
-	00 00		 sub	 rsp, 1008		; 000003f0H
-  0000b	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00010	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00015	b9 94 00 00 00	 mov	 ecx, 148		; 00000094H
-  0001a	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0001f	f3 ab		 rep stosd
-  00021	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00028	48 33 c5	 xor	 rax, rbp
-  0002b	48 89 85 c8 03
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00032	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 141  : 	if (!Barrel_NodeCount())
-
-  0003e	e8 00 00 00 00	 call	 Barrel_NodeCount
-  00043	85 c0		 test	 eax, eax
-  00045	75 13		 jne	 SHORT $LN5@barrelTest
-
-; 142  : 	{
-; 143  : 		PREENT("No Collections to read from!\n");
-
-  00047	33 d2		 xor	 edx, edx
-  00049	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BO@HNAGHDFL@No?5Collections?5to?5read?5from?$CB?6@
-  00050	e8 00 00 00 00	 call	 Preent
-
-; 144  : 		return;
-
-  00055	e9 5f 02 00 00	 jmp	 $LN1@barrelTest
-$LN5@barrelTest:
-
-; 145  : 	}
-; 146  : 
-; 147  : 	int* targetPtr = NULL;
-
-  0005a	48 c7 45 08 00
-	00 00 00	 mov	 QWORD PTR targetPtr$[rbp], 0
-
-; 148  : 	const char* input = NULL;
-
-  00062	48 c7 45 28 00
-	00 00 00	 mov	 QWORD PTR input$[rbp], 0
-
-; 149  : 
-; 150  : 	PREENT("At any time, enter 'q' to leave\nSet Target: ");
-
-  0006a	33 d2		 xor	 edx, edx
-  0006c	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CN@HHIFKPNA@At?5any?5time?0?5enter?5?8q?8?5to?5leave@
-  00073	e8 00 00 00 00	 call	 Preent
-
-; 151  : 
-; 152  : 	input = Geet();
-
-  00078	e8 00 00 00 00	 call	 Geet
-  0007d	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 153  : 	if (input[0] == 'q')
-
-  00081	b8 01 00 00 00	 mov	 eax, 1
-  00086	48 6b c0 00	 imul	 rax, rax, 0
-  0008a	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0008e	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  00092	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00095	75 05		 jne	 SHORT $LN6@barrelTest
-
-; 154  : 		return;
-
-  00097	e9 1d 02 00 00	 jmp	 $LN1@barrelTest
-$LN6@barrelTest:
-
-; 155  : 
-; 156  : 	int index = strToInt(input);
-
-  0009c	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  000a0	e8 00 00 00 00	 call	 strToInt
-  000a5	89 45 44	 mov	 DWORD PTR index$[rbp], eax
-
-; 157  : 
-; 158  : 	if (index < 0 || index >= Barrel_NodeCount()) {
-
-  000a8	83 7d 44 00	 cmp	 DWORD PTR index$[rbp], 0
-  000ac	7c 0a		 jl	 SHORT $LN8@barrelTest
-  000ae	e8 00 00 00 00	 call	 Barrel_NodeCount
-  000b3	39 45 44	 cmp	 DWORD PTR index$[rbp], eax
-  000b6	72 5f		 jb	 SHORT $LN7@barrelTest
-$LN8@barrelTest:
-
-; 159  : 		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
-
-  000b8	c7 45 68 1d 00
-	00 00		 mov	 DWORD PTR $S17$10[rbp], 29
-  000bf	e8 00 00 00 00	 call	 Barrel_NodeCount
-  000c4	89 85 a4 00 00
-	00		 mov	 DWORD PTR $S18$11[rbp], eax
-  000ca	48 8d 85 a4 00
-	00 00		 lea	 rax, QWORD PTR $S18$11[rbp]
-  000d1	48 89 45 70	 mov	 QWORD PTR $S17$10[rbp+8], rax
-  000d5	c7 85 c8 00 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S19$12[rbp], -2
-  000df	48 c7 85 d0 00
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S19$12[rbp+8], 0
-  000ea	48 8d 45 78	 lea	 rax, QWORD PTR $S17$10[rbp+16]
-  000ee	48 8d 8d c8 00
-	00 00		 lea	 rcx, QWORD PTR $S19$12[rbp]
-  000f5	48 8b f8	 mov	 rdi, rax
-  000f8	48 8b f1	 mov	 rsi, rcx
-  000fb	b9 10 00 00 00	 mov	 ecx, 16
-  00100	f3 a4		 rep movsb
-  00102	48 8d 55 68	 lea	 rdx, QWORD PTR $S17$10[rbp]
-  00106	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@DIHGPNMA@Bad?5index?$CB?5Between?50?5and?5?$CF?6@
-  0010d	e8 00 00 00 00	 call	 Preent
-
-; 160  : 		return;
-
-  00112	e9 a2 01 00 00	 jmp	 $LN1@barrelTest
-$LN7@barrelTest:
-
-; 161  : 	}
-; 162  : 
-; 163  : 	BarrelNode* targetBoop = Barrel_GetNode(index);
-
-  00117	8b 4d 44	 mov	 ecx, DWORD PTR index$[rbp]
-  0011a	e8 00 00 00 00	 call	 Barrel_GetNode
-  0011f	48 89 85 f8 00
-	00 00		 mov	 QWORD PTR targetBoop$[rbp], rax
-
-; 164  : 
-; 165  : 	PREENT("Start Index: ");
-
-  00126	33 d2		 xor	 edx, edx
-  00128	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0O@FKJGIFOA@Start?5Index?3?5@
-  0012f	e8 00 00 00 00	 call	 Preent
-
-; 166  : 
-; 167  : 	input = Geet();
-
-  00134	e8 00 00 00 00	 call	 Geet
-  00139	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 168  : 	if (input[0] == 'q')
-
-  0013d	b8 01 00 00 00	 mov	 eax, 1
-  00142	48 6b c0 00	 imul	 rax, rax, 0
-  00146	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0014a	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  0014e	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00151	75 05		 jne	 SHORT $LN9@barrelTest
-
-; 169  : 		return;
-
-  00153	e9 61 01 00 00	 jmp	 $LN1@barrelTest
-$LN9@barrelTest:
-
-; 170  : 
-; 171  : 	int startIndex = strToInt(input);
-
-  00158	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0015c	e8 00 00 00 00	 call	 strToInt
-  00161	89 85 14 01 00
-	00		 mov	 DWORD PTR startIndex$[rbp], eax
-
-; 172  : 
-; 173  : 	PREENT("Delta Count: ");
-
-  00167	33 d2		 xor	 edx, edx
-  00169	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0O@EFNOKFPJ@Delta?5Count?3?5@
-  00170	e8 00 00 00 00	 call	 Preent
-
-; 174  : 
-; 175  : 	input = Geet();
-
-  00175	e8 00 00 00 00	 call	 Geet
-  0017a	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 176  : 	if (input[0] == 'q')
-
-  0017e	b8 01 00 00 00	 mov	 eax, 1
-  00183	48 6b c0 00	 imul	 rax, rax, 0
-  00187	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0018b	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  0018f	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00192	75 05		 jne	 SHORT $LN10@barrelTest
-
-; 177  : 		return;
-
-  00194	e9 20 01 00 00	 jmp	 $LN1@barrelTest
-$LN10@barrelTest:
-
-; 178  : 
-; 179  : 	int delta = strToInt(input);
-
-  00199	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0019d	e8 00 00 00 00	 call	 strToInt
-  001a2	89 85 34 01 00
-	00		 mov	 DWORD PTR delta$[rbp], eax
-
-; 180  : 	int deltaDir = delta < 0 ? -1 : 1;
-
-  001a8	83 bd 34 01 00
-	00 00		 cmp	 DWORD PTR delta$[rbp], 0
-  001af	7d 0c		 jge	 SHORT $LN12@barrelTest
-  001b1	c7 85 c4 03 00
-	00 ff ff ff ff	 mov	 DWORD PTR tv136[rbp], -1
-  001bb	eb 0a		 jmp	 SHORT $LN13@barrelTest
-$LN12@barrelTest:
-  001bd	c7 85 c4 03 00
-	00 01 00 00 00	 mov	 DWORD PTR tv136[rbp], 1
-$LN13@barrelTest:
-  001c7	8b 85 c4 03 00
-	00		 mov	 eax, DWORD PTR tv136[rbp]
-  001cd	89 85 54 01 00
-	00		 mov	 DWORD PTR deltaDir$[rbp], eax
-
-; 181  : 
-; 182  : 	
-; 183  : 	for (int i = 0; i < delta; i += deltaDir) {
-
-  001d3	c7 85 74 01 00
-	00 00 00 00 00	 mov	 DWORD PTR i$13[rbp], 0
-  001dd	eb 16		 jmp	 SHORT $LN4@barrelTest
-$LN2@barrelTest:
-  001df	8b 85 54 01 00
-	00		 mov	 eax, DWORD PTR deltaDir$[rbp]
-  001e5	8b 8d 74 01 00
-	00		 mov	 ecx, DWORD PTR i$13[rbp]
-  001eb	03 c8		 add	 ecx, eax
-  001ed	8b c1		 mov	 eax, ecx
-  001ef	89 85 74 01 00
-	00		 mov	 DWORD PTR i$13[rbp], eax
-$LN4@barrelTest:
-  001f5	8b 85 34 01 00
-	00		 mov	 eax, DWORD PTR delta$[rbp]
-  001fb	39 85 74 01 00
-	00		 cmp	 DWORD PTR i$13[rbp], eax
-  00201	0f 8d b2 00 00
-	00		 jge	 $LN3@barrelTest
-
-; 184  : 		targetPtr = Barrel_GetUnitPtr(targetBoop, startIndex + i);
-
-  00207	8b 85 74 01 00
-	00		 mov	 eax, DWORD PTR i$13[rbp]
-  0020d	8b 8d 14 01 00
-	00		 mov	 ecx, DWORD PTR startIndex$[rbp]
-  00213	03 c8		 add	 ecx, eax
-  00215	8b c1		 mov	 eax, ecx
-  00217	8b d0		 mov	 edx, eax
-  00219	48 8b 8d f8 00
-	00 00		 mov	 rcx, QWORD PTR targetBoop$[rbp]
-  00220	e8 00 00 00 00	 call	 Barrel_GetUnitPtr
-  00225	48 89 45 08	 mov	 QWORD PTR targetPtr$[rbp], rax
-
-; 185  : 		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
-
-  00229	c7 85 98 01 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S20$14[rbp], 29
-  00233	8b 85 74 01 00
-	00		 mov	 eax, DWORD PTR i$13[rbp]
-  00239	89 85 e4 01 00
-	00		 mov	 DWORD PTR $S21$15[rbp], eax
-  0023f	48 8d 85 e4 01
-	00 00		 lea	 rax, QWORD PTR $S21$15[rbp]
-  00246	48 89 85 a0 01
-	00 00		 mov	 QWORD PTR $S20$14[rbp+8], rax
-  0024d	c7 85 a8 01 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S20$14[rbp+16], 29
-  00257	48 8b 45 08	 mov	 rax, QWORD PTR targetPtr$[rbp]
-  0025b	8b 00		 mov	 eax, DWORD PTR [rax]
-  0025d	89 85 04 02 00
-	00		 mov	 DWORD PTR $S22$16[rbp], eax
-  00263	48 8d 85 04 02
-	00 00		 lea	 rax, QWORD PTR $S22$16[rbp]
-  0026a	48 89 85 b0 01
-	00 00		 mov	 QWORD PTR $S20$14[rbp+24], rax
-  00271	c7 85 28 02 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S23$17[rbp], -2
-  0027b	48 c7 85 30 02
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S23$17[rbp+8], 0
-  00286	48 8d 85 b8 01
-	00 00		 lea	 rax, QWORD PTR $S20$14[rbp+32]
-  0028d	48 8d 8d 28 02
-	00 00		 lea	 rcx, QWORD PTR $S23$17[rbp]
-  00294	48 8b f8	 mov	 rdi, rax
-  00297	48 8b f1	 mov	 rsi, rcx
-  0029a	b9 10 00 00 00	 mov	 ecx, 16
-  0029f	f3 a4		 rep movsb
-  002a1	48 8d 95 98 01
-	00 00		 lea	 rdx, QWORD PTR $S20$14[rbp]
-  002a8	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_07DAMOKBIM@?$FL?$CF?$FN?3?5?$CF?6@
-  002af	e8 00 00 00 00	 call	 Preent
-
-; 186  : 	}
-
-  002b4	e9 26 ff ff ff	 jmp	 $LN2@barrelTest
-$LN3@barrelTest:
-$LN1@barrelTest:
-
-; 187  : }
-
-  002b9	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  002bd	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:barrelTest_READ$rtcFrameData
-  002c4	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  002c9	48 8b 8d c8 03
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  002d0	48 33 cd	 xor	 rcx, rbp
-  002d3	e8 00 00 00 00	 call	 __security_check_cookie
-  002d8	48 8d a5 d0 03
-	00 00		 lea	 rsp, QWORD PTR [rbp+976]
-  002df	5f		 pop	 rdi
-  002e0	5e		 pop	 rsi
-  002e1	5d		 pop	 rbp
-  002e2	c3		 ret	 0
-barrelTest_READ ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_WRITE
-_TEXT	SEGMENT
-targetPtr$ = 8
-input$ = 40
-index$ = 68
-$S11$9 = 104
-$S12$10 = 164
-$S13$11 = 200
-targetBoop$ = 248
-startIndex$ = 276
-delta$ = 308
-deltaDir$ = 340
-i$12 = 372
-$S14$13 = 408
-$S15$14 = 468
-$S16$15 = 504
-tv136 = 916
-__$ArrayPad$ = 920
-barrelTest_WRITE PROC					; COMDAT
-
-; 85   : {
-
-$LN14:
-  00000	40 55		 push	 rbp
-  00002	56		 push	 rsi
-  00003	57		 push	 rdi
-  00004	48 81 ec c0 03
-	00 00		 sub	 rsp, 960		; 000003c0H
-  0000b	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00010	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00015	b9 88 00 00 00	 mov	 ecx, 136		; 00000088H
-  0001a	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0001f	f3 ab		 rep stosd
-  00021	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00028	48 33 c5	 xor	 rax, rbp
-  0002b	48 89 85 98 03
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00032	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 86   : 	if (!Barrel_NodeCount())
-
-  0003e	e8 00 00 00 00	 call	 Barrel_NodeCount
-  00043	85 c0		 test	 eax, eax
-  00045	75 13		 jne	 SHORT $LN5@barrelTest
-
-; 87   : 	{
-; 88   : 		PREENT("No Collections to write to!\n");
-
-  00047	33 d2		 xor	 edx, edx
-  00049	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BN@NNPMGJLD@No?5Collections?5to?5write?5to?$CB?6@
-  00050	e8 00 00 00 00	 call	 Preent
-
-; 89   : 		return;
-
-  00055	e9 6d 02 00 00	 jmp	 $LN1@barrelTest
-$LN5@barrelTest:
-
-; 90   : 	}
-; 91   : 
-; 92   : 	int* targetPtr = NULL;
-
-  0005a	48 c7 45 08 00
-	00 00 00	 mov	 QWORD PTR targetPtr$[rbp], 0
-
-; 93   : 	const char* input = NULL;
-
-  00062	48 c7 45 28 00
-	00 00 00	 mov	 QWORD PTR input$[rbp], 0
-
-; 94   : 
-; 95   : 	PREENT("At any time, enter 'q' to leave\nSet Target: ");
-
-  0006a	33 d2		 xor	 edx, edx
-  0006c	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CN@HHIFKPNA@At?5any?5time?0?5enter?5?8q?8?5to?5leave@
-  00073	e8 00 00 00 00	 call	 Preent
-
-; 96   : 
-; 97   : 	input = Geet();
-
-  00078	e8 00 00 00 00	 call	 Geet
-  0007d	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 98   : 	if (input[0] == 'q')
-
-  00081	b8 01 00 00 00	 mov	 eax, 1
-  00086	48 6b c0 00	 imul	 rax, rax, 0
-  0008a	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0008e	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  00092	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00095	75 05		 jne	 SHORT $LN6@barrelTest
-
-; 99   : 		return;
-
-  00097	e9 2b 02 00 00	 jmp	 $LN1@barrelTest
-$LN6@barrelTest:
-
-; 100  : 
-; 101  : 	int index = strToInt(input);
-
-  0009c	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  000a0	e8 00 00 00 00	 call	 strToInt
-  000a5	89 45 44	 mov	 DWORD PTR index$[rbp], eax
-
-; 102  : 
-; 103  : 	if (index < 0 || index >= Barrel_NodeCount()) {
-
-  000a8	83 7d 44 00	 cmp	 DWORD PTR index$[rbp], 0
-  000ac	7c 0a		 jl	 SHORT $LN8@barrelTest
-  000ae	e8 00 00 00 00	 call	 Barrel_NodeCount
-  000b3	39 45 44	 cmp	 DWORD PTR index$[rbp], eax
-  000b6	72 5f		 jb	 SHORT $LN7@barrelTest
-$LN8@barrelTest:
-
-; 104  : 		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
-
-  000b8	c7 45 68 1d 00
-	00 00		 mov	 DWORD PTR $S11$9[rbp], 29
-  000bf	e8 00 00 00 00	 call	 Barrel_NodeCount
-  000c4	89 85 a4 00 00
-	00		 mov	 DWORD PTR $S12$10[rbp], eax
-  000ca	48 8d 85 a4 00
-	00 00		 lea	 rax, QWORD PTR $S12$10[rbp]
-  000d1	48 89 45 70	 mov	 QWORD PTR $S11$9[rbp+8], rax
-  000d5	c7 85 c8 00 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S13$11[rbp], -2
-  000df	48 c7 85 d0 00
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S13$11[rbp+8], 0
-  000ea	48 8d 45 78	 lea	 rax, QWORD PTR $S11$9[rbp+16]
-  000ee	48 8d 8d c8 00
-	00 00		 lea	 rcx, QWORD PTR $S13$11[rbp]
-  000f5	48 8b f8	 mov	 rdi, rax
-  000f8	48 8b f1	 mov	 rsi, rcx
-  000fb	b9 10 00 00 00	 mov	 ecx, 16
-  00100	f3 a4		 rep movsb
-  00102	48 8d 55 68	 lea	 rdx, QWORD PTR $S11$9[rbp]
-  00106	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@DIHGPNMA@Bad?5index?$CB?5Between?50?5and?5?$CF?6@
-  0010d	e8 00 00 00 00	 call	 Preent
-
-; 105  : 		return;
-
-  00112	e9 b0 01 00 00	 jmp	 $LN1@barrelTest
-$LN7@barrelTest:
-
-; 106  : 	}
-; 107  : 
-; 108  : 	BarrelNode* targetBoop = Barrel_GetNode(index);
-
-  00117	8b 4d 44	 mov	 ecx, DWORD PTR index$[rbp]
-  0011a	e8 00 00 00 00	 call	 Barrel_GetNode
-  0011f	48 89 85 f8 00
-	00 00		 mov	 QWORD PTR targetBoop$[rbp], rax
-
-; 109  : 
-; 110  : 	PREENT("Start Index: ");
-
-  00126	33 d2		 xor	 edx, edx
-  00128	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0O@FKJGIFOA@Start?5Index?3?5@
-  0012f	e8 00 00 00 00	 call	 Preent
-
-; 111  : 
-; 112  : 	input = Geet();
-
-  00134	e8 00 00 00 00	 call	 Geet
-  00139	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 113  : 	if (input[0] == 'q')
-
-  0013d	b8 01 00 00 00	 mov	 eax, 1
-  00142	48 6b c0 00	 imul	 rax, rax, 0
-  00146	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0014a	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  0014e	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00151	75 05		 jne	 SHORT $LN9@barrelTest
-
-; 114  : 		return;
-
-  00153	e9 6f 01 00 00	 jmp	 $LN1@barrelTest
-$LN9@barrelTest:
-
-; 115  : 
-; 116  : 	int startIndex = strToInt(input);
-
-  00158	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0015c	e8 00 00 00 00	 call	 strToInt
-  00161	89 85 14 01 00
-	00		 mov	 DWORD PTR startIndex$[rbp], eax
-
-; 117  : 
-; 118  : 	PREENT("Delta Count: ");
-
-  00167	33 d2		 xor	 edx, edx
-  00169	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0O@EFNOKFPJ@Delta?5Count?3?5@
-  00170	e8 00 00 00 00	 call	 Preent
-
-; 119  : 
-; 120  : 	input = Geet();
-
-  00175	e8 00 00 00 00	 call	 Geet
-  0017a	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 121  : 	if (input[0] == 'q')
-
-  0017e	b8 01 00 00 00	 mov	 eax, 1
-  00183	48 6b c0 00	 imul	 rax, rax, 0
-  00187	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0018b	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  0018f	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00192	75 05		 jne	 SHORT $LN10@barrelTest
-
-; 122  : 		return;
-
-  00194	e9 2e 01 00 00	 jmp	 $LN1@barrelTest
-$LN10@barrelTest:
-
-; 123  : 
-; 124  : 	int delta = strToInt(input);
-
-  00199	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  0019d	e8 00 00 00 00	 call	 strToInt
-  001a2	89 85 34 01 00
-	00		 mov	 DWORD PTR delta$[rbp], eax
-
-; 125  : 	int deltaDir = delta < 0 ? -1 : 1;
-
-  001a8	83 bd 34 01 00
-	00 00		 cmp	 DWORD PTR delta$[rbp], 0
-  001af	7d 0c		 jge	 SHORT $LN12@barrelTest
-  001b1	c7 85 94 03 00
-	00 ff ff ff ff	 mov	 DWORD PTR tv136[rbp], -1
-  001bb	eb 0a		 jmp	 SHORT $LN13@barrelTest
-$LN12@barrelTest:
-  001bd	c7 85 94 03 00
-	00 01 00 00 00	 mov	 DWORD PTR tv136[rbp], 1
-$LN13@barrelTest:
-  001c7	8b 85 94 03 00
-	00		 mov	 eax, DWORD PTR tv136[rbp]
-  001cd	89 85 54 01 00
-	00		 mov	 DWORD PTR deltaDir$[rbp], eax
-
-; 126  : 
-; 127  : 	
-; 128  : 
-; 129  : 	for (int i = 0; i != delta; i += deltaDir)
-
-  001d3	c7 85 74 01 00
-	00 00 00 00 00	 mov	 DWORD PTR i$12[rbp], 0
-  001dd	eb 16		 jmp	 SHORT $LN4@barrelTest
-$LN2@barrelTest:
-  001df	8b 85 54 01 00
-	00		 mov	 eax, DWORD PTR deltaDir$[rbp]
-  001e5	8b 8d 74 01 00
-	00		 mov	 ecx, DWORD PTR i$12[rbp]
-  001eb	03 c8		 add	 ecx, eax
-  001ed	8b c1		 mov	 eax, ecx
-  001ef	89 85 74 01 00
-	00		 mov	 DWORD PTR i$12[rbp], eax
-$LN4@barrelTest:
-  001f5	8b 85 34 01 00
-	00		 mov	 eax, DWORD PTR delta$[rbp]
-  001fb	39 85 74 01 00
-	00		 cmp	 DWORD PTR i$12[rbp], eax
-  00201	0f 84 b2 00 00
-	00		 je	 $LN3@barrelTest
-
-; 130  : 	{
-; 131  : 		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
-
-  00207	c7 85 98 01 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S14$13[rbp], 29
-  00211	8b 85 74 01 00
-	00		 mov	 eax, DWORD PTR i$12[rbp]
-  00217	8b 8d 34 01 00
-	00		 mov	 ecx, DWORD PTR delta$[rbp]
-  0021d	2b c8		 sub	 ecx, eax
-  0021f	8b c1		 mov	 eax, ecx
-  00221	0f af 85 54 01
-	00 00		 imul	 eax, DWORD PTR deltaDir$[rbp]
-  00228	89 85 d4 01 00
-	00		 mov	 DWORD PTR $S15$14[rbp], eax
-  0022e	48 8d 85 d4 01
-	00 00		 lea	 rax, QWORD PTR $S15$14[rbp]
-  00235	48 89 85 a0 01
-	00 00		 mov	 QWORD PTR $S14$13[rbp+8], rax
-  0023c	c7 85 f8 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S16$15[rbp], -2
-  00246	48 c7 85 00 02
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S16$15[rbp+8], 0
-  00251	48 8d 85 a8 01
-	00 00		 lea	 rax, QWORD PTR $S14$13[rbp+16]
-  00258	48 8d 8d f8 01
-	00 00		 lea	 rcx, QWORD PTR $S16$15[rbp]
-  0025f	48 8b f8	 mov	 rdi, rax
-  00262	48 8b f1	 mov	 rsi, rcx
-  00265	b9 10 00 00 00	 mov	 ecx, 16
-  0026a	f3 a4		 rep movsb
-  0026c	48 8d 95 98 01
-	00 00		 lea	 rdx, QWORD PTR $S14$13[rbp]
-  00273	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CA@EDDDOMAH@Input?5new?5param?5?$CI?$CF?5remaining?$CJ?3?5@
-  0027a	e8 00 00 00 00	 call	 Preent
-
-; 132  : 		targetPtr = Barrel_GetUnitPtr(targetBoop, startIndex + i);
-
-  0027f	8b 85 74 01 00
-	00		 mov	 eax, DWORD PTR i$12[rbp]
-  00285	8b 8d 14 01 00
-	00		 mov	 ecx, DWORD PTR startIndex$[rbp]
-  0028b	03 c8		 add	 ecx, eax
-  0028d	8b c1		 mov	 eax, ecx
-  0028f	8b d0		 mov	 edx, eax
-  00291	48 8b 8d f8 00
-	00 00		 mov	 rcx, QWORD PTR targetBoop$[rbp]
-  00298	e8 00 00 00 00	 call	 Barrel_GetUnitPtr
-  0029d	48 89 45 08	 mov	 QWORD PTR targetPtr$[rbp], rax
-
-; 133  : 		*targetPtr = strToInt(Geet());
-
-  002a1	e8 00 00 00 00	 call	 Geet
-  002a6	48 8b c8	 mov	 rcx, rax
-  002a9	e8 00 00 00 00	 call	 strToInt
-  002ae	48 8b 4d 08	 mov	 rcx, QWORD PTR targetPtr$[rbp]
-  002b2	89 01		 mov	 DWORD PTR [rcx], eax
-
-; 134  : 	}
-
-  002b4	e9 26 ff ff ff	 jmp	 $LN2@barrelTest
-$LN3@barrelTest:
-
-; 135  : 
-; 136  : 	PREENT("Write Complete!\n");
-
-  002b9	33 d2		 xor	 edx, edx
-  002bb	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BB@HBOOCOPG@Write?5Complete?$CB?6@
-  002c2	e8 00 00 00 00	 call	 Preent
-$LN1@barrelTest:
-
-; 137  : }
-
-  002c7	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  002cb	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:barrelTest_WRITE$rtcFrameData
-  002d2	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  002d7	48 8b 8d 98 03
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  002de	48 33 cd	 xor	 rcx, rbp
-  002e1	e8 00 00 00 00	 call	 __security_check_cookie
-  002e6	48 8d a5 a0 03
-	00 00		 lea	 rsp, QWORD PTR [rbp+928]
-  002ed	5f		 pop	 rdi
-  002ee	5e		 pop	 rsi
-  002ef	5d		 pop	 rbp
-  002f0	c3		 ret	 0
-barrelTest_WRITE ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_RESIZE
-_TEXT	SEGMENT
-barrelTest_RESIZE PROC					; COMDAT
-
-; 80   : {
-
-$LN3:
-  00000	40 55		 push	 rbp
-  00002	57		 push	 rdi
-  00003	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0000f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 81   : 
-; 82   : }
-
-  0001b	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00022	5f		 pop	 rdi
-  00023	5d		 pop	 rbp
-  00024	c3		 ret	 0
-barrelTest_RESIZE ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_REMOVE
-_TEXT	SEGMENT
-targetPtr$ = 8
-input$ = 40
-barrelTest_REMOVE PROC					; COMDAT
-
-; 74   : {
-
-$LN3:
-  00000	40 55		 push	 rbp
-  00002	57		 push	 rdi
-  00003	48 81 ec 28 01
-	00 00		 sub	 rsp, 296		; 00000128H
-  0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0000f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 75   : 	int* targetPtr = NULL;
-
-  0001b	48 c7 45 08 00
-	00 00 00	 mov	 QWORD PTR targetPtr$[rbp], 0
-
-; 76   : 	const char* input = NULL;
-
-  00023	48 c7 45 28 00
-	00 00 00	 mov	 QWORD PTR input$[rbp], 0
-
-; 77   : }
-
-  0002b	48 8d a5 08 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+264]
-  00032	5f		 pop	 rdi
-  00033	5d		 pop	 rbp
-  00034	c3		 ret	 0
-barrelTest_REMOVE ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_NEW
-_TEXT	SEGMENT
-targetPtr$ = 8
-input$ = 40
-capacity$ = 68
-$S1$13 = 104
-$S2$14 = 164
-$S3$15 = 200
-newNode$ = 248
-$S4$ = 276
-$S5$ = 320
-$S6$ = 408
-$S7$ = 456
-$S8$ = 504
-$S9$ = 552
-$S10$ = 608
-$T16 = 1288
-$T17 = 1344
-__$ArrayPad$ = 1368
-barrelTest_NEW PROC					; COMDAT
-
-; 43   : {
-
-$LN7:
-  00000	40 55		 push	 rbp
-  00002	56		 push	 rsi
-  00003	57		 push	 rdi
-  00004	48 81 ec 90 05
-	00 00		 sub	 rsp, 1424		; 00000590H
-  0000b	48 8d 6c 24 30	 lea	 rbp, QWORD PTR [rsp+48]
-  00010	48 8d 7c 24 30	 lea	 rdi, QWORD PTR [rsp+48]
-  00015	b9 f8 00 00 00	 mov	 ecx, 248		; 000000f8H
-  0001a	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  0001f	f3 ab		 rep stosd
-  00021	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00028	48 33 c5	 xor	 rax, rbp
-  0002b	48 89 85 58 05
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  00032	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 44   : 	int* targetPtr = NULL;
-
-  0003e	48 c7 45 08 00
-	00 00 00	 mov	 QWORD PTR targetPtr$[rbp], 0
-
-; 45   : 	const char* input = NULL;
-
-  00046	48 c7 45 28 00
-	00 00 00	 mov	 QWORD PTR input$[rbp], 0
-
-; 46   : 
-; 47   : 	PREENT("At any time, enter 'q' to leave\nChoose Initial Capacity: ");
-
-  0004e	33 d2		 xor	 edx, edx
-  00050	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0DK@MEPINEBI@At?5any?5time?0?5enter?5?8q?8?5to?5leave@
-  00057	e8 00 00 00 00	 call	 Preent
-
-; 48   : 
-; 49   : 	input = Geet();
-
-  0005c	e8 00 00 00 00	 call	 Geet
-  00061	48 89 45 28	 mov	 QWORD PTR input$[rbp], rax
-
-; 50   : 	if (input[0] == 'q')
-
-  00065	b8 01 00 00 00	 mov	 eax, 1
-  0006a	48 6b c0 00	 imul	 rax, rax, 0
-  0006e	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  00072	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  00076	83 f8 71	 cmp	 eax, 113		; 00000071H
-  00079	75 05		 jne	 SHORT $LN2@barrelTest
-
-; 51   : 		goto End;
-
-  0007b	e9 f4 01 00 00	 jmp	 $End$8
-$LN2@barrelTest:
-
-; 52   : 
-; 53   : 	int capacity = strToInt(input);
-
-  00080	48 8b 4d 28	 mov	 rcx, QWORD PTR input$[rbp]
-  00084	e8 00 00 00 00	 call	 strToInt
-  00089	89 45 44	 mov	 DWORD PTR capacity$[rbp], eax
-
-; 54   : 
-; 55   : 	if (capacity < 1) {
-
-  0008c	83 7d 44 01	 cmp	 DWORD PTR capacity$[rbp], 1
-  00090	7d 5d		 jge	 SHORT $LN3@barrelTest
-
-; 56   : 		PREENT_ARGS("Bad Capacity! Must be greater than 0: %\n", fmt_i(capacity));
-
-  00092	c7 45 68 1d 00
-	00 00		 mov	 DWORD PTR $S1$13[rbp], 29
-  00099	8b 45 44	 mov	 eax, DWORD PTR capacity$[rbp]
-  0009c	89 85 a4 00 00
-	00		 mov	 DWORD PTR $S2$14[rbp], eax
-  000a2	48 8d 85 a4 00
-	00 00		 lea	 rax, QWORD PTR $S2$14[rbp]
-  000a9	48 89 45 70	 mov	 QWORD PTR $S1$13[rbp+8], rax
-  000ad	c7 85 c8 00 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S3$15[rbp], -2
-  000b7	48 c7 85 d0 00
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S3$15[rbp+8], 0
-  000c2	48 8d 45 78	 lea	 rax, QWORD PTR $S1$13[rbp+16]
-  000c6	48 8d 8d c8 00
-	00 00		 lea	 rcx, QWORD PTR $S3$15[rbp]
-  000cd	48 8b f8	 mov	 rdi, rax
-  000d0	48 8b f1	 mov	 rsi, rcx
-  000d3	b9 10 00 00 00	 mov	 ecx, 16
-  000d8	f3 a4		 rep movsb
-  000da	48 8d 55 68	 lea	 rdx, QWORD PTR $S1$13[rbp]
-  000de	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CJ@LBAGAEEG@Bad?5Capacity?$CB?5Must?5be?5greater?5t@
-  000e5	e8 00 00 00 00	 call	 Preent
-
-; 57   : 		goto End;
-
-  000ea	e9 85 01 00 00	 jmp	 $End$8
-$LN3@barrelTest:
-
-; 58   : 	}
-; 59   : 
-; 60   : 	COLLECTION newNode = Barrel_Empty(int, 1);
-
-  000ef	48 8d 85 14 01
-	00 00		 lea	 rax, QWORD PTR $S4$[rbp]
-  000f6	48 8b f8	 mov	 rdi, rax
-  000f9	33 c0		 xor	 eax, eax
-  000fb	b9 04 00 00 00	 mov	 ecx, 4
-  00100	f3 aa		 rep stosb
-  00102	c7 44 24 20 01
-	00 00 00	 mov	 DWORD PTR [rsp+32], 1
-  0010a	41 b9 20 00 00
-	00		 mov	 r9d, 32			; 00000020H
-  00110	4c 8d 85 14 01
-	00 00		 lea	 r8, QWORD PTR $S4$[rbp]
-  00117	ba 04 00 00 00	 mov	 edx, 4
-  0011c	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
-  00123	e8 00 00 00 00	 call	 Barrel_ctor
-  00128	48 89 85 f8 00
-	00 00		 mov	 QWORD PTR newNode$[rbp], rax
-
-; 61   : 
-; 62   : 	if (newNode)
-
-  0012f	48 83 bd f8 00
-	00 00 00	 cmp	 QWORD PTR newNode$[rbp], 0
-  00137	74 10		 je	 SHORT $LN4@barrelTest
-
-; 63   : 		PREENT("Node created!\n");
-
-  00139	33 d2		 xor	 edx, edx
-  0013b	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0P@MKMACOIF@Node?5created?$CB?6@
-  00142	e8 00 00 00 00	 call	 Preent
-  00147	eb 0e		 jmp	 SHORT $LN5@barrelTest
-$LN4@barrelTest:
-
-; 64   : 	else
-; 65   : 		PREENT("Node failed to create!\n");
-
-  00149	33 d2		 xor	 edx, edx
-  0014b	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BI@FPHOOKPN@Node?5failed?5to?5create?$CB?6@
-  00152	e8 00 00 00 00	 call	 Preent
-$LN5@barrelTest:
-
-; 66   : 
-; 67   : 	newNode->_extensions->_methods(Request(MANAGE, P_(tVARIANT, tRESIZE), P_(tTRG, newNode), P_(tCOUNT, capacity)));
-
-  00157	48 8d 85 60 02
-	00 00		 lea	 rax, QWORD PTR $S10$[rbp]
-  0015e	48 8b f8	 mov	 rdi, rax
-  00161	33 c0		 xor	 eax, eax
-  00163	b9 10 01 00 00	 mov	 ecx, 272		; 00000110H
-  00168	f3 aa		 rep stosb
-  0016a	c7 85 98 01 00
-	00 00 00 00 00	 mov	 DWORD PTR $S6$[rbp], 0
-  00174	48 c7 85 a0 01
-	00 00 14 00 00
-	00		 mov	 QWORD PTR $S6$[rbp+8], 20
-  0017f	48 8d 85 40 01
-	00 00		 lea	 rax, QWORD PTR $S5$[rbp]
-  00186	48 8d 8d 98 01
-	00 00		 lea	 rcx, QWORD PTR $S6$[rbp]
-  0018d	48 8b f8	 mov	 rdi, rax
-  00190	48 8b f1	 mov	 rsi, rcx
-  00193	b9 10 00 00 00	 mov	 ecx, 16
-  00198	f3 a4		 rep movsb
-  0019a	c7 85 c8 01 00
-	00 01 00 00 00	 mov	 DWORD PTR $S7$[rbp], 1
-  001a4	48 8b 85 f8 00
-	00 00		 mov	 rax, QWORD PTR newNode$[rbp]
-  001ab	48 89 85 d0 01
-	00 00		 mov	 QWORD PTR $S7$[rbp+8], rax
-  001b2	48 8d 85 50 01
-	00 00		 lea	 rax, QWORD PTR $S5$[rbp+16]
-  001b9	48 8d 8d c8 01
-	00 00		 lea	 rcx, QWORD PTR $S7$[rbp]
-  001c0	48 8b f8	 mov	 rdi, rax
-  001c3	48 8b f1	 mov	 rsi, rcx
-  001c6	b9 10 00 00 00	 mov	 ecx, 16
-  001cb	f3 a4		 rep movsb
-  001cd	c7 85 f8 01 00
-	00 07 00 00 00	 mov	 DWORD PTR $S8$[rbp], 7
-  001d7	48 63 45 44	 movsxd	 rax, DWORD PTR capacity$[rbp]
-  001db	48 89 85 00 02
-	00 00		 mov	 QWORD PTR $S8$[rbp+8], rax
-  001e2	48 8d 85 60 01
-	00 00		 lea	 rax, QWORD PTR $S5$[rbp+32]
-  001e9	48 8d 8d f8 01
-	00 00		 lea	 rcx, QWORD PTR $S8$[rbp]
-  001f0	48 8b f8	 mov	 rdi, rax
-  001f3	48 8b f1	 mov	 rsi, rcx
-  001f6	b9 10 00 00 00	 mov	 ecx, 16
-  001fb	f3 a4		 rep movsb
-  001fd	c7 85 28 02 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S9$[rbp], -2
-  00207	48 c7 85 30 02
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S9$[rbp+8], 0
-  00212	48 8d 85 70 01
-	00 00		 lea	 rax, QWORD PTR $S5$[rbp+48]
-  00219	48 8d 8d 28 02
-	00 00		 lea	 rcx, QWORD PTR $S9$[rbp]
-  00220	48 8b f8	 mov	 rdi, rax
-  00223	48 8b f1	 mov	 rsi, rcx
-  00226	b9 10 00 00 00	 mov	 ecx, 16
-  0022b	f3 a4		 rep movsb
-  0022d	4c 8d 8d 60 02
-	00 00		 lea	 r9, QWORD PTR $S10$[rbp]
-  00234	4c 8d 85 40 01
-	00 00		 lea	 r8, QWORD PTR $S5$[rbp]
-  0023b	ba 08 00 00 00	 mov	 edx, 8
-  00240	48 8d 8d 08 05
-	00 00		 lea	 rcx, QWORD PTR $T16[rbp]
-  00247	e8 00 00 00 00	 call	 CreateRequest
-  0024c	48 8d 8d 40 05
-	00 00		 lea	 rcx, QWORD PTR $T17[rbp]
-  00253	48 8b f9	 mov	 rdi, rcx
-  00256	48 8b f0	 mov	 rsi, rax
-  00259	b9 10 00 00 00	 mov	 ecx, 16
-  0025e	f3 a4		 rep movsb
-  00260	48 8b 85 f8 00
-	00 00		 mov	 rax, QWORD PTR newNode$[rbp]
-  00267	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  0026a	48 8d 8d 40 05
-	00 00		 lea	 rcx, QWORD PTR $T17[rbp]
-  00271	ff 50 08	 call	 QWORD PTR [rax+8]
-$End$8:
-
-; 68   : 	//test_heapService._heapEnd;
-; 69   : 
-; 70   : End: {}
-; 71   : }
-
-  00274	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
-  00278	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:barrelTest_NEW$rtcFrameData
-  0027f	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00284	48 8b 8d 58 05
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  0028b	48 33 cd	 xor	 rcx, rbp
-  0028e	e8 00 00 00 00	 call	 __security_check_cookie
-  00293	48 8d a5 60 05
-	00 00		 lea	 rsp, QWORD PTR [rbp+1376]
-  0029a	5f		 pop	 rdi
-  0029b	5e		 pop	 rsi
-  0029c	5d		 pop	 rbp
-  0029d	c3		 ret	 0
-barrelTest_NEW ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT clear_screen
-_TEXT	SEGMENT
-clear_screen PROC					; COMDAT
-
-; 40   : void clear_screen() { fill_screen(NULL); }
-
-$LN3:
-  00000	40 55		 push	 rbp
-  00002	57		 push	 rdi
-  00003	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0000f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-  0001b	33 c9		 xor	 ecx, ecx
-  0001d	e8 00 00 00 00	 call	 fill_screen
-  00022	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00029	5f		 pop	 rdi
-  0002a	5d		 pop	 rbp
-  0002b	c3		 ret	 0
-clear_screen ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT fill_screen
-_TEXT	SEGMENT
-tl$ = 4
-s$ = 40
-console$ = 88
-written$ = 116
-cells$ = 148
-tv77 = 356
-__$ArrayPad$ = 360
-fill$ = 400
-fill_screen PROC					; COMDAT
-
-; 29   : void fill_screen(char* fill) {
-
-$LN5:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec a8 01
-	00 00		 sub	 rsp, 424		; 000001a8H
-  0000e	48 8d 6c 24 30	 lea	 rbp, QWORD PTR [rsp+48]
-  00013	48 8d 7c 24 30	 lea	 rdi, QWORD PTR [rsp+48]
-  00018	b9 2e 00 00 00	 mov	 ecx, 46			; 0000002eH
-  0001d	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
-  00022	f3 ab		 rep stosd
-  00024	48 8b 8c 24 c8
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+456]
-  0002c	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00033	48 33 c5	 xor	 rax, rbp
-  00036	48 89 85 68 01
-	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
-  0003d	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00044	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 30   : 	COORD tl = { 0,0 };
-
-  00049	33 c0		 xor	 eax, eax
-  0004b	66 89 45 04	 mov	 WORD PTR tl$[rbp], ax
-  0004f	33 c0		 xor	 eax, eax
-  00051	66 89 45 06	 mov	 WORD PTR tl$[rbp+2], ax
-
-; 31   : 	CONSOLE_SCREEN_BUFFER_INFO s;
-; 32   : 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-
-  00055	b9 f5 ff ff ff	 mov	 ecx, -11		; fffffff5H
-  0005a	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_GetStdHandle
-  00060	48 89 45 58	 mov	 QWORD PTR console$[rbp], rax
-
-; 33   : 	GetConsoleScreenBufferInfo(console, &s);
-
-  00064	48 8d 55 28	 lea	 rdx, QWORD PTR s$[rbp]
-  00068	48 8b 4d 58	 mov	 rcx, QWORD PTR console$[rbp]
-  0006c	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_GetConsoleScreenBufferInfo
-
-; 34   : 	DWORD written, cells = s.dwSize.X * s.dwSize.Y;
-
-  00072	0f bf 45 28	 movsx	 eax, WORD PTR s$[rbp]
-  00076	0f bf 4d 2a	 movsx	 ecx, WORD PTR s$[rbp+2]
-  0007a	0f af c1	 imul	 eax, ecx
-  0007d	89 85 94 00 00
-	00		 mov	 DWORD PTR cells$[rbp], eax
-
-; 35   : 	FillConsoleOutputCharacter(console, fill == NULL ? ' ' : *fill, cells, tl, &written);
-
-  00083	48 83 bd 90 01
-	00 00 00	 cmp	 QWORD PTR fill$[rbp], 0
-  0008b	75 0c		 jne	 SHORT $LN3@fill_scree
-  0008d	c7 85 64 01 00
-	00 20 00 00 00	 mov	 DWORD PTR tv77[rbp], 32	; 00000020H
-  00097	eb 10		 jmp	 SHORT $LN4@fill_scree
-$LN3@fill_scree:
-  00099	48 8b 85 90 01
-	00 00		 mov	 rax, QWORD PTR fill$[rbp]
-  000a0	0f be 00	 movsx	 eax, BYTE PTR [rax]
-  000a3	89 85 64 01 00
-	00		 mov	 DWORD PTR tv77[rbp], eax
-$LN4@fill_scree:
-  000a9	48 8d 45 74	 lea	 rax, QWORD PTR written$[rbp]
-  000ad	48 89 44 24 20	 mov	 QWORD PTR [rsp+32], rax
-  000b2	44 8b 4d 04	 mov	 r9d, DWORD PTR tl$[rbp]
-  000b6	44 8b 85 94 00
-	00 00		 mov	 r8d, DWORD PTR cells$[rbp]
-  000bd	0f b7 95 64 01
-	00 00		 movzx	 edx, WORD PTR tv77[rbp]
-  000c4	48 8b 4d 58	 mov	 rcx, QWORD PTR console$[rbp]
-  000c8	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_FillConsoleOutputCharacterW
-
-; 36   : 	FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
-
-  000ce	48 8d 45 74	 lea	 rax, QWORD PTR written$[rbp]
-  000d2	48 89 44 24 20	 mov	 QWORD PTR [rsp+32], rax
-  000d7	44 8b 4d 04	 mov	 r9d, DWORD PTR tl$[rbp]
-  000db	44 8b 85 94 00
-	00 00		 mov	 r8d, DWORD PTR cells$[rbp]
-  000e2	0f b7 55 30	 movzx	 edx, WORD PTR s$[rbp+8]
-  000e6	48 8b 4d 58	 mov	 rcx, QWORD PTR console$[rbp]
-  000ea	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_FillConsoleOutputAttribute
-
-; 37   : 	SetConsoleCursorPosition(console, tl);
-
-  000f0	8b 55 04	 mov	 edx, DWORD PTR tl$[rbp]
-  000f3	48 8b 4d 58	 mov	 rcx, QWORD PTR console$[rbp]
-  000f7	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_SetConsoleCursorPosition
-
-; 38   : }
-
-  000fd	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
-  00101	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:fill_screen$rtcFrameData
-  00108	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  0010d	48 8b 8d 68 01
-	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00114	48 33 cd	 xor	 rcx, rbp
-  00117	e8 00 00 00 00	 call	 __security_check_cookie
-  0011c	48 8d a5 78 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+376]
-  00123	5f		 pop	 rdi
-  00124	5d		 pop	 rbp
-  00125	c3		 ret	 0
-fill_screen ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\TestArea.c
-;	COMDAT barrelTest_ESCAPE
-_TEXT	SEGMENT
-barrelTest_ESCAPE PROC					; COMDAT
-
-; 25   : void barrelTest_ESCAPE() { ESCAPE = true; }
-
-$LN3:
-  00000	40 55		 push	 rbp
-  00002	57		 push	 rdi
-  00003	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  0000f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
-  00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-  0001b	c7 05 00 00 00
-	00 01 00 00 00	 mov	 DWORD PTR ESCAPE, 1
-  00025	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  0002c	5f		 pop	 rdi
-  0002d	5d		 pop	 rbp
-  0002e	c3		 ret	 0
-barrelTest_ESCAPE ENDP
 _TEXT	ENDS
 END

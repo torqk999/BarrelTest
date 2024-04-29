@@ -176,8 +176,6 @@ __7CF1EC1E_tCollection@h DB 01H
 __EAE81D8C_tBucket@h DB 01H
 __7D3AC404_tBucket@c DB 01H
 msvcjmc	ENDS
-PUBLIC	Bucket_Create
-PUBLIC	Bucket_ctor
 PUBLIC	Bucket_GetPtr
 PUBLIC	Bucket_GetChunk
 PUBLIC	Bucket_Capacity
@@ -185,6 +183,8 @@ PUBLIC	Bucket_Iterate
 PUBLIC	Bucket_Manage
 PUBLIC	Bucket_Info
 PUBLIC	Bucket_Methods
+PUBLIC	Bucket_Create
+PUBLIC	Bucket_ctor
 PUBLIC	__JustMyCode_Default
 EXTRN	rawTranscribe:PROC
 EXTRN	TypeInfo_GetInfo:PROC
@@ -200,18 +200,6 @@ EXTRN	__CheckForDebuggerJustMyCode:PROC
 EXTRN	__GSHandlerCheck:PROC
 EXTRN	__security_check_cookie:PROC
 EXTRN	__security_cookie:QWORD
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Bucket_Create DD imagerel $LN9
-	DD	imagerel $LN9+458
-	DD	imagerel $unwind$Bucket_Create
-pdata	ENDS
-;	COMDAT pdata
-pdata	SEGMENT
-$pdata$Bucket_ctor DD imagerel $LN3
-	DD	imagerel $LN3+236
-	DD	imagerel $unwind$Bucket_ctor
-pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$Bucket_GetPtr DD imagerel $LN5
@@ -239,7 +227,7 @@ pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$Bucket_Manage DD imagerel $LN8
-	DD	imagerel $LN8+196
+	DD	imagerel $LN8+193
 	DD	imagerel $unwind$Bucket_Manage
 pdata	ENDS
 ;	COMDAT pdata
@@ -254,6 +242,18 @@ $pdata$Bucket_Methods DD imagerel $LN9
 	DD	imagerel $LN9+203
 	DD	imagerel $unwind$Bucket_Methods
 pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Bucket_Create DD imagerel $LN9
+	DD	imagerel $LN9+458
+	DD	imagerel $unwind$Bucket_Create
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Bucket_ctor DD imagerel $LN3
+	DD	imagerel $LN3+236
+	DD	imagerel $unwind$Bucket_ctor
+pdata	ENDS
 ;	COMDAT rtc$TMZ
 rtc$TMZ	SEGMENT
 _RTC_Shutdown.rtc$TMZ DQ FLAT:_RTC_Shutdown
@@ -262,55 +262,6 @@ rtc$TMZ	ENDS
 rtc$IMZ	SEGMENT
 _RTC_InitBase.rtc$IMZ DQ FLAT:_RTC_InitBase
 rtc$IMZ	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_Methods DD 025061401H
-	DD	010f2314H
-	DD	07008002eH
-	DD	050066007H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_Info DD 025061401H
-	DD	010f2314H
-	DD	07008002eH
-	DD	050066007H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_Manage DD 025051301H
-	DD	010e2313H
-	DD	070070025H
-	DD	05006H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_Iterate DD 025051301H
-	DD	010e2313H
-	DD	070070021H
-	DD	05006H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_Capacity DD 025051301H
-	DD	010e2313H
-	DD	07007001fH
-	DD	05006H
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_GetChunk DD 025051801H
-	DD	01132318H
-	DD	0700c001dH
-	DD	0500bH
-xdata	ENDS
-;	COMDAT xdata
-xdata	SEGMENT
-$unwind$Bucket_GetPtr DD 025051701H
-	DD	01122317H
-	DD	0700b001fH
-	DD	0500aH
-xdata	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DB	046H
@@ -374,637 +325,61 @@ Bucket_Create$rtcFrameData DD 01H
 	DD	00H
 	DQ	FLAT:Bucket_Create$rtcVarDesc
 CONST	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_Methods DD 025061401H
+	DD	010f2314H
+	DD	07008002eH
+	DD	050066007H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_Info DD 025061401H
+	DD	010f2314H
+	DD	07008002eH
+	DD	050066007H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_Manage DD 025051301H
+	DD	010e2313H
+	DD	070070025H
+	DD	05006H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_Iterate DD 025051301H
+	DD	010e2313H
+	DD	070070021H
+	DD	05006H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_Capacity DD 025051301H
+	DD	010e2313H
+	DD	07007001fH
+	DD	05006H
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_GetChunk DD 025051801H
+	DD	01132318H
+	DD	0700c001dH
+	DD	0500bH
+xdata	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Bucket_GetPtr DD 025051701H
+	DD	01122317H
+	DD	0700b001fH
+	DD	0500aH
+xdata	ENDS
 ; Function compile flags: /Odt
 ;	COMDAT __JustMyCode_Default
 _TEXT	SEGMENT
 __JustMyCode_Default PROC				; COMDAT
   00000	c2 00 00	 ret	 0
 __JustMyCode_Default ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_Methods
-_TEXT	SEGMENT
-$T1 = 208
-$T2 = 256
-$T3 = 304
-tv65 = 324
-request$ = 368
-Bucket_Methods PROC					; COMDAT
-
-; 200  : {
-
-$LN9:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	56		 push	 rsi
-  00007	57		 push	 rdi
-  00008	48 81 ec 70 01
-	00 00		 sub	 rsp, 368		; 00000170H
-  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00014	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 201  : 	switch (request._type) {
-
-  00020	48 8b 85 70 01
-	00 00		 mov	 rax, QWORD PTR request$[rbp]
-  00027	8b 00		 mov	 eax, DWORD PTR [rax]
-  00029	89 85 44 01 00
-	00		 mov	 DWORD PTR tv65[rbp], eax
-  0002f	83 bd 44 01 00
-	00 01		 cmp	 DWORD PTR tv65[rbp], 1
-  00036	74 60		 je	 SHORT $LN6@Bucket_Met
-  00038	83 bd 44 01 00
-	00 04		 cmp	 DWORD PTR tv65[rbp], 4
-  0003f	74 0b		 je	 SHORT $LN4@Bucket_Met
-  00041	83 bd 44 01 00
-	00 08		 cmp	 DWORD PTR tv65[rbp], 8
-  00048	74 28		 je	 SHORT $LN5@Bucket_Met
-  0004a	eb 72		 jmp	 SHORT $LN7@Bucket_Met
-$LN4@Bucket_Met:
-
-; 202  : 
-; 203  : 	case INFO:
-; 204  : 		return Bucket_Info(request);
-
-  0004c	48 8d 85 d0 00
-	00 00		 lea	 rax, QWORD PTR $T1[rbp]
-  00053	48 8b f8	 mov	 rdi, rax
-  00056	48 8b b5 70 01
-	00 00		 mov	 rsi, QWORD PTR request$[rbp]
-  0005d	b9 10 00 00 00	 mov	 ecx, 16
-  00062	f3 a4		 rep movsb
-  00064	48 8d 8d d0 00
-	00 00		 lea	 rcx, QWORD PTR $T1[rbp]
-  0006b	e8 00 00 00 00	 call	 Bucket_Info
-  00070	eb 4e		 jmp	 SHORT $LN1@Bucket_Met
-$LN5@Bucket_Met:
-
-; 205  : 
-; 206  : 	//case TRANSCRIBE:
-; 207  : 	//	return Bucket_Transcribe(request);
-; 208  : 
-; 209  : 	case MANAGE:
-; 210  : 		return Bucket_Manage(request);
-
-  00072	48 8d 85 00 01
-	00 00		 lea	 rax, QWORD PTR $T2[rbp]
-  00079	48 8b f8	 mov	 rdi, rax
-  0007c	48 8b b5 70 01
-	00 00		 mov	 rsi, QWORD PTR request$[rbp]
-  00083	b9 10 00 00 00	 mov	 ecx, 16
-  00088	f3 a4		 rep movsb
-  0008a	48 8d 8d 00 01
-	00 00		 lea	 rcx, QWORD PTR $T2[rbp]
-  00091	e8 00 00 00 00	 call	 Bucket_Manage
-  00096	eb 28		 jmp	 SHORT $LN1@Bucket_Met
-$LN6@Bucket_Met:
-
-; 211  : 
-; 212  : 	case ITERATE:
-; 213  : 		return Bucket_Iterate(request);
-
-  00098	48 8d 85 30 01
-	00 00		 lea	 rax, QWORD PTR $T3[rbp]
-  0009f	48 8b f8	 mov	 rdi, rax
-  000a2	48 8b b5 70 01
-	00 00		 mov	 rsi, QWORD PTR request$[rbp]
-  000a9	b9 10 00 00 00	 mov	 ecx, 16
-  000ae	f3 a4		 rep movsb
-  000b0	48 8d 8d 30 01
-	00 00		 lea	 rcx, QWORD PTR $T3[rbp]
-  000b7	e8 00 00 00 00	 call	 Bucket_Iterate
-  000bc	eb 02		 jmp	 SHORT $LN1@Bucket_Met
-$LN7@Bucket_Met:
-
-; 214  : 
-; 215  : 		//case LOCATION:
-; 216  : 		//	return Bucket_Location(request);
-; 217  : 		//
-; 218  : 		//case SLICE_CREATE:
-; 219  : 		//	return Bucket_Slice(*request);
-; 220  : 		//
-; 221  : 		//case MODIFY_DELTA_CAPACITY:
-; 222  : 		//	return Bucket_Resize(*request);
-; 223  : 		//
-; 224  : 		//case TRANSCRIBE_RAW_TO_COLLECTION:
-; 225  : 		//case TRANSCRIBE_COLLECTIONS:
-; 226  : 		//	return Bucket_Write(*request);
-; 227  : 		//
-; 228  : 		//case TRANSCRIBE_COLLECTION_TO_RAW:
-; 229  : 		//	return Bucket_Read(*request);
-; 230  : 		//
-; 231  : 		//case MODIFY_INSERT:
-; 232  : 		//	return Bucket_Insert(*request);
-; 233  : 		//
-; 234  : 		//case MODIFY_REMOVE_FIRST_FOUND:
-; 235  : 		//	return Bucket_Remove(*request);
-; 236  : 		//
-; 237  : 		//case MODIFY_REMOVE_AT:
-; 238  : 		//	return Bucket_RemoveAt(*request);
-; 239  : 		//
-; 240  : 		//case ITERATE:
-; 241  : 		//	return Bucket_Iterate(request);
-; 242  : 
-; 243  : 	default:
-; 244  : 		return false;
-
-  000be	33 c0		 xor	 eax, eax
-$LN1@Bucket_Met:
-
-; 245  : 	}
-; 246  : }
-
-  000c0	48 8d a5 50 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+336]
-  000c7	5f		 pop	 rdi
-  000c8	5e		 pop	 rsi
-  000c9	5d		 pop	 rbp
-  000ca	c3		 ret	 0
-Bucket_Methods ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_Info
-_TEXT	SEGMENT
-bucket$ = 8
-var$ = 36
-output$ = 72
-$T1 = 304
-tv73 = 324
-request$ = 368
-Bucket_Info PROC					; COMDAT
-
-; 173  : inline bool Bucket_Info(REQUEST request) {
-
-$LN10:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	56		 push	 rsi
-  00007	57		 push	 rdi
-  00008	48 81 ec 70 01
-	00 00		 sub	 rsp, 368		; 00000170H
-  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00014	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 174  : 
-; 175  : 	Bucket* bucket = request._params[tSRC];
-
-  00020	b8 08 00 00 00	 mov	 eax, 8
-  00025	48 6b c0 02	 imul	 rax, rax, 2
-  00029	48 8b 8d 70 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00030	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00034	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  00038	48 89 45 08	 mov	 QWORD PTR bucket$[rbp], rax
-
-; 176  : 	ParamType var = (ParamType)request._params[tVARIANT];
-
-  0003c	b8 08 00 00 00	 mov	 eax, 8
-  00041	48 6b c0 00	 imul	 rax, rax, 0
-  00045	48 8b 8d 70 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  0004c	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00050	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
-  00053	89 45 24	 mov	 DWORD PTR var$[rbp], eax
-
-; 177  : 	void* output = request._params[tTRG];
-
-  00056	b8 08 00 00 00	 mov	 eax, 8
-  0005b	48 6b c0 01	 imul	 rax, rax, 1
-  0005f	48 8b 8d 70 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00066	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  0006a	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  0006e	48 89 45 48	 mov	 QWORD PTR output$[rbp], rax
-
-; 178  : 
-; 179  : 	switch (var) {
-
-  00072	8b 45 24	 mov	 eax, DWORD PTR var$[rbp]
-  00075	89 85 44 01 00
-	00		 mov	 DWORD PTR tv73[rbp], eax
-  0007b	83 bd 44 01 00
-	00 06		 cmp	 DWORD PTR tv73[rbp], 6
-  00082	74 47		 je	 SHORT $LN7@Bucket_Inf
-  00084	83 bd 44 01 00
-	00 07		 cmp	 DWORD PTR tv73[rbp], 7
-  0008b	74 14		 je	 SHORT $LN4@Bucket_Inf
-  0008d	83 bd 44 01 00
-	00 08		 cmp	 DWORD PTR tv73[rbp], 8
-  00094	74 1f		 je	 SHORT $LN5@Bucket_Inf
-  00096	83 bd 44 01 00
-	00 09		 cmp	 DWORD PTR tv73[rbp], 9
-  0009d	74 2c		 je	 SHORT $LN6@Bucket_Inf
-  0009f	eb 50		 jmp	 SHORT $LN8@Bucket_Inf
-$LN4@Bucket_Inf:
-
-; 180  : 
-; 181  : 	case tCOUNT:
-; 182  : 		*((uint*)output) = bucket->_collection._count;
-
-  000a1	48 8b 45 48	 mov	 rax, QWORD PTR output$[rbp]
-  000a5	48 8b 4d 08	 mov	 rcx, QWORD PTR bucket$[rbp]
-  000a9	8b 49 08	 mov	 ecx, DWORD PTR [rcx+8]
-  000ac	89 08		 mov	 DWORD PTR [rax], ecx
-
-; 183  : 		return true;
-
-  000ae	b8 01 00 00 00	 mov	 eax, 1
-  000b3	eb 3e		 jmp	 SHORT $LN1@Bucket_Inf
-$LN5@Bucket_Inf:
-
-; 184  : 
-; 185  : 	case tCAPACITY:
-; 186  : 		*((uint*)output) = Bucket_Capacity(bucket);
-
-  000b5	48 8b 4d 08	 mov	 rcx, QWORD PTR bucket$[rbp]
-  000b9	e8 00 00 00 00	 call	 Bucket_Capacity
-  000be	48 8b 4d 48	 mov	 rcx, QWORD PTR output$[rbp]
-  000c2	89 01		 mov	 DWORD PTR [rcx], eax
-
-; 187  : 		return true;
-
-  000c4	b8 01 00 00 00	 mov	 eax, 1
-  000c9	eb 28		 jmp	 SHORT $LN1@Bucket_Inf
-$LN6@Bucket_Inf:
-$LN7@Bucket_Inf:
-
-; 188  : 
-; 189  : 	case tNAME:
-; 190  : 	case tSIZE:
-; 191  : 		return TypeInfo_GetInfo(request);
-
-  000cb	48 8d 85 30 01
-	00 00		 lea	 rax, QWORD PTR $T1[rbp]
-  000d2	48 8b f8	 mov	 rdi, rax
-  000d5	48 8b b5 70 01
-	00 00		 mov	 rsi, QWORD PTR request$[rbp]
-  000dc	b9 10 00 00 00	 mov	 ecx, 16
-  000e1	f3 a4		 rep movsb
-  000e3	48 8d 8d 30 01
-	00 00		 lea	 rcx, QWORD PTR $T1[rbp]
-  000ea	e8 00 00 00 00	 call	 TypeInfo_GetInfo
-  000ef	eb 02		 jmp	 SHORT $LN1@Bucket_Inf
-$LN8@Bucket_Inf:
-
-; 192  : 
-; 193  : 	default:
-; 194  : 		return false;
-
-  000f1	33 c0		 xor	 eax, eax
-$LN1@Bucket_Inf:
-
-; 195  : 	}
-; 196  : 
-; 197  : }
-
-  000f3	48 8d a5 50 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+336]
-  000fa	5f		 pop	 rdi
-  000fb	5e		 pop	 rsi
-  000fc	5d		 pop	 rbp
-  000fd	c3		 ret	 0
-Bucket_Info ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_Manage
-_TEXT	SEGMENT
-var$ = 4
-bucket$ = 40
-tv70 = 244
-request$ = 288
-Bucket_Manage PROC					; COMDAT
-
-; 149  : inline bool Bucket_Manage(REQUEST request) {
-
-$LN8:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec 28 01
-	00 00		 sub	 rsp, 296		; 00000128H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 150  : 	ParamType var = (ParamType)request._params[tVARIANT];
-
-  0001f	b8 08 00 00 00	 mov	 eax, 8
-  00024	48 6b c0 00	 imul	 rax, rax, 0
-  00028	48 8b 8d 20 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  0002f	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00033	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
-  00036	89 45 04	 mov	 DWORD PTR var$[rbp], eax
-
-; 151  : 	Bucket* bucket = request._params[tSRC];
-
-  00039	b8 08 00 00 00	 mov	 eax, 8
-  0003e	48 6b c0 02	 imul	 rax, rax, 2
-  00042	48 8b 8d 20 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00049	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  0004d	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  00051	48 89 45 28	 mov	 QWORD PTR bucket$[rbp], rax
-
-; 152  : 	//void* output = request._params[1];
-; 153  : 	
-; 154  : 
-; 155  : 	switch (var)
-
-  00055	8b 45 04	 mov	 eax, DWORD PTR var$[rbp]
-  00058	89 85 f4 00 00
-	00		 mov	 DWORD PTR tv70[rbp], eax
-  0005e	83 bd f4 00 00
-	00 05		 cmp	 DWORD PTR tv70[rbp], 5
-  00065	74 0b		 je	 SHORT $LN4@Bucket_Man
-  00067	83 bd f4 00 00
-	00 09		 cmp	 DWORD PTR tv70[rbp], 9
-  0006e	74 41		 je	 SHORT $LN5@Bucket_Man
-  00070	eb 46		 jmp	 SHORT $LN6@Bucket_Man
-$LN4@Bucket_Man:
-
-; 156  : 	{
-; 157  : 	case tCHUNK:
-; 158  : 		request._params[tSIZE] = 0;
-
-  00072	b8 08 00 00 00	 mov	 eax, 8
-  00077	48 6b c0 06	 imul	 rax, rax, 6
-  0007b	48 8b 8d 20 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00082	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00086	48 c7 04 08 00
-	00 00 00	 mov	 QWORD PTR [rax+rcx], 0
-
-; 159  : 		return Bucket_GetChunk(bucket, request._params[tTRG]);
-
-  0008e	b8 08 00 00 00	 mov	 eax, 8
-  00093	48 6b c0 01	 imul	 rax, rax, 1
-  00097	48 8b 8d 20 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  0009e	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  000a2	48 8b 14 01	 mov	 rdx, QWORD PTR [rcx+rax]
-  000a6	48 8b 4d 28	 mov	 rcx, QWORD PTR bucket$[rbp]
-  000aa	e8 00 00 00 00	 call	 Bucket_GetChunk
-  000af	eb 09		 jmp	 SHORT $LN1@Bucket_Man
-$LN5@Bucket_Man:
-
-; 160  : 
-; 161  : 	case tRELEASE:
-; 162  : 		return true;
-
-  000b1	b8 01 00 00 00	 mov	 eax, 1
-  000b6	eb 02		 jmp	 SHORT $LN1@Bucket_Man
-$LN6@Bucket_Man:
-
-; 163  : 
-; 164  : 	default:
-; 165  : 		return false;
-
-  000b8	33 c0		 xor	 eax, eax
-$LN1@Bucket_Man:
-
-; 166  : 	}
-; 167  : }
-
-  000ba	48 8d a5 08 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+264]
-  000c1	5f		 pop	 rdi
-  000c2	5d		 pop	 rbp
-  000c3	c3		 ret	 0
-Bucket_Manage ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_Iterate
-_TEXT	SEGMENT
-bucket$ = 8
-request$ = 256
-Bucket_Iterate PROC					; COMDAT
-
-; 142  : inline bool Bucket_Iterate(REQUEST request) {
-
-$LN3:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec 08 01
-	00 00		 sub	 rsp, 264		; 00000108H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 143  : 	Bucket* bucket = request._params[tSRC];
-
-  0001f	b8 08 00 00 00	 mov	 eax, 8
-  00024	48 6b c0 02	 imul	 rax, rax, 2
-  00028	48 8b 8d 00 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  0002f	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00033	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
-  00037	48 89 45 08	 mov	 QWORD PTR bucket$[rbp], rax
-
-; 144  : 	request._params[tTRG] = Bucket_GetPtr(bucket, request._params[Ix_TRG]);
-
-  0003b	b8 08 00 00 00	 mov	 eax, 8
-  00040	48 6b c0 03	 imul	 rax, rax, 3
-  00044	48 8b 8d 00 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  0004b	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  0004f	8b 14 01	 mov	 edx, DWORD PTR [rcx+rax]
-  00052	48 8b 4d 08	 mov	 rcx, QWORD PTR bucket$[rbp]
-  00056	e8 00 00 00 00	 call	 Bucket_GetPtr
-  0005b	b9 08 00 00 00	 mov	 ecx, 8
-  00060	48 6b c9 01	 imul	 rcx, rcx, 1
-  00064	48 8b 95 00 01
-	00 00		 mov	 rdx, QWORD PTR request$[rbp]
-  0006b	48 8b 52 08	 mov	 rdx, QWORD PTR [rdx+8]
-  0006f	48 89 04 11	 mov	 QWORD PTR [rcx+rdx], rax
-
-; 145  : 	((size_t)(request._params[Ix_TRG]))++;
-
-  00073	b8 08 00 00 00	 mov	 eax, 8
-  00078	48 6b c0 03	 imul	 rax, rax, 3
-  0007c	48 8b 8d 00 01
-	00 00		 mov	 rcx, QWORD PTR request$[rbp]
-  00083	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
-  00087	48 8b 04 01	 mov	 rax, QWORD PTR [rcx+rax]
-  0008b	48 ff c0	 inc	 rax
-  0008e	b9 08 00 00 00	 mov	 ecx, 8
-  00093	48 6b c9 03	 imul	 rcx, rcx, 3
-  00097	48 8b 95 00 01
-	00 00		 mov	 rdx, QWORD PTR request$[rbp]
-  0009e	48 8b 52 08	 mov	 rdx, QWORD PTR [rdx+8]
-  000a2	48 89 04 11	 mov	 QWORD PTR [rcx+rdx], rax
-
-; 146  : 	return true;
-
-  000a6	b8 01 00 00 00	 mov	 eax, 1
-
-; 147  : }
-
-  000ab	48 8d a5 e8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+232]
-  000b2	5f		 pop	 rdi
-  000b3	5d		 pop	 rbp
-  000b4	c3		 ret	 0
-Bucket_Iterate ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_Capacity
-_TEXT	SEGMENT
-tv71 = 192
-bucket$ = 240
-Bucket_Capacity PROC					; COMDAT
-
-; 140  : uint Bucket_Capacity(Bucket* bucket) { return (bucket->_chunk._size) / bucket->_collection._extensions->_type->_size; }
-
-$LN3:
-  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00005	55		 push	 rbp
-  00006	57		 push	 rdi
-  00007	48 81 ec f8 00
-	00 00		 sub	 rsp, 248		; 000000f8H
-  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-  0001f	48 8b 85 f0 00
-	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
-  00026	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  00029	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  0002c	48 89 85 c0 00
-	00 00		 mov	 QWORD PTR tv71[rbp], rax
-  00033	33 d2		 xor	 edx, edx
-  00035	48 8b 8d f0 00
-	00 00		 mov	 rcx, QWORD PTR bucket$[rbp]
-  0003c	48 8b 41 18	 mov	 rax, QWORD PTR [rcx+24]
-  00040	48 8b 8d c0 00
-	00 00		 mov	 rcx, QWORD PTR tv71[rbp]
-  00047	48 f7 71 08	 div	 QWORD PTR [rcx+8]
-  0004b	48 8d a5 d8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+216]
-  00052	5f		 pop	 rdi
-  00053	5d		 pop	 rbp
-  00054	c3		 ret	 0
-Bucket_Capacity ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_GetChunk
-_TEXT	SEGMENT
-bucket$ = 224
-loc$ = 232
-Bucket_GetChunk PROC					; COMDAT
-
-; 135  : bool Bucket_GetChunk(Bucket* bucket, Chunk* loc) {
-
-$LN3:
-  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  0000a	55		 push	 rbp
-  0000b	57		 push	 rdi
-  0000c	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00018	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 136  : 	Chunk_ctor(loc, bucket->_chunk._head, bucket->_chunk._size);
-
-  00024	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
-  0002b	4c 8b 40 18	 mov	 r8, QWORD PTR [rax+24]
-  0002f	48 8b 85 e0 00
-	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
-  00036	48 8b 50 10	 mov	 rdx, QWORD PTR [rax+16]
-  0003a	48 8b 8d e8 00
-	00 00		 mov	 rcx, QWORD PTR loc$[rbp]
-  00041	e8 00 00 00 00	 call	 Chunk_ctor
-
-; 137  : 	return true;
-
-  00046	b8 01 00 00 00	 mov	 eax, 1
-
-; 138  : }
-
-  0004b	48 8d a5 c8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00052	5f		 pop	 rdi
-  00053	5d		 pop	 rbp
-  00054	c3		 ret	 0
-Bucket_GetChunk ENDP
-_TEXT	ENDS
-; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Repos\BarrelTest\tBucket.c
-;	COMDAT Bucket_GetPtr
-_TEXT	SEGMENT
-tv73 = 192
-bucket$ = 240
-index$ = 248
-Bucket_GetPtr PROC					; COMDAT
-
-; 5    : inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
-
-$LN5:
-  00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
-  00004	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00009	55		 push	 rbp
-  0000a	57		 push	 rdi
-  0000b	48 81 ec f8 00
-	00 00		 sub	 rsp, 248		; 000000f8H
-  00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
-  00017	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
-  0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
-
-; 6    : 	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_chunk._head) + (index * bucket->_collection._extensions->_type->_size);
-
-  00023	48 8b 85 f0 00
-	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
-  0002a	8b 40 08	 mov	 eax, DWORD PTR [rax+8]
-  0002d	39 85 f8 00 00
-	00		 cmp	 DWORD PTR index$[rbp], eax
-  00033	72 0d		 jb	 SHORT $LN3@Bucket_Get
-  00035	48 c7 85 c0 00
-	00 00 00 00 00
-	00		 mov	 QWORD PTR tv73[rbp], 0
-  00040	eb 2a		 jmp	 SHORT $LN4@Bucket_Get
-$LN3@Bucket_Get:
-  00042	8b 85 f8 00 00
-	00		 mov	 eax, DWORD PTR index$[rbp]
-  00048	48 8b 8d f0 00
-	00 00		 mov	 rcx, QWORD PTR bucket$[rbp]
-  0004f	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
-  00052	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
-  00055	48 0f af 41 08	 imul	 rax, QWORD PTR [rcx+8]
-  0005a	48 8b 8d f0 00
-	00 00		 mov	 rcx, QWORD PTR bucket$[rbp]
-  00061	48 03 41 10	 add	 rax, QWORD PTR [rcx+16]
-  00065	48 89 85 c0 00
-	00 00		 mov	 QWORD PTR tv73[rbp], rax
-$LN4@Bucket_Get:
-  0006c	48 8b 85 c0 00
-	00 00		 mov	 rax, QWORD PTR tv73[rbp]
-
-; 7    : }
-
-  00073	48 8d a5 d8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+216]
-  0007a	5f		 pop	 rdi
-  0007b	5d		 pop	 rbp
-  0007c	c3		 ret	 0
-Bucket_GetPtr ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tBucket.c
@@ -1021,7 +396,7 @@ memFlags$ = 384
 capacity$ = 392
 Bucket_ctor PROC					; COMDAT
 
-; 270  : COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* head, int memFlags, uint capacity) {
+; 256  : COLLECTION Bucket_ctor(const char* name, size_t unitSize, void* loc, void* head, int memFlags, uint capacity) {
 
 $LN3:
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
@@ -1049,8 +424,8 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
   00054	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 271  : 
-; 272  : 	Bucket tmpBucket = Bucket_Create(name, unitSize, head, memFlags, capacity);
+; 257  : 
+; 258  : 	Bucket tmpBucket = Bucket_Create(name, unitSize, head, memFlags, capacity);
 
   00059	8b 85 88 01 00
 	00		 mov	 eax, DWORD PTR capacity$[rbp]
@@ -1073,7 +448,7 @@ $LN3:
   00098	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
   0009d	f3 a4		 rep movsb
 
-; 273  : 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
+; 259  : 	rawTranscribe(loc, &tmpBucket, sizeof(Bucket));
 
   0009f	41 b8 20 00 00
 	00		 mov	 r8d, 32			; 00000020H
@@ -1082,12 +457,12 @@ $LN3:
 	00 00		 mov	 rcx, QWORD PTR loc$[rbp]
   000b0	e8 00 00 00 00	 call	 rawTranscribe
 
-; 274  : 	return loc;
+; 260  : 	return loc;
 
   000b5	48 8b 85 70 01
 	00 00		 mov	 rax, QWORD PTR loc$[rbp]
 
-; 275  : }
+; 261  : }
 
   000bc	48 8b f8	 mov	 rdi, rax
   000bf	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
@@ -1126,7 +501,7 @@ memFlags$ = 544
 capacity$ = 552
 Bucket_Create PROC					; COMDAT
 
-; 248  : Bucket Bucket_Create(const char* name, size_t unitSize, void* head, int memFlags, uint capacity) {
+; 234  : Bucket Bucket_Create(const char* name, size_t unitSize, void* head, int memFlags, uint capacity) {
 
 $LN9:
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
@@ -1149,8 +524,8 @@ $LN9:
 	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
   00043	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 249  : 	
-; 250  : 	TypeInfo* info = TypeInfo_Get(name, unitSize);
+; 235  : 	
+; 236  : 	TypeInfo* info = TypeInfo_Get(name, unitSize);
 
   00048	48 8b 95 10 02
 	00 00		 mov	 rdx, QWORD PTR unitSize$[rbp]
@@ -1159,22 +534,22 @@ $LN9:
   00056	e8 00 00 00 00	 call	 TypeInfo_Get
   0005b	48 89 45 08	 mov	 QWORD PTR info$[rbp], rax
 
-; 251  : 	
-; 252  : 	bool empty = memFlags & EMPTY;
+; 237  : 	
+; 238  : 	bool empty = memFlags & EMPTY;
 
   0005f	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
   00065	83 e0 20	 and	 eax, 32			; 00000020H
   00068	89 45 24	 mov	 DWORD PTR empty$[rbp], eax
 
-; 253  : 	bool fill = memFlags & FILL;
+; 239  : 	bool fill = memFlags & FILL;
 
   0006b	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
   00071	83 e0 40	 and	 eax, 64			; 00000040H
   00074	89 45 44	 mov	 DWORD PTR fill$[rbp], eax
 
-; 254  : 	memFlags &= !(EMPTY);
+; 240  : 	memFlags &= !(EMPTY);
 
   00077	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -1182,7 +557,7 @@ $LN9:
   00080	89 85 20 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 255  : 	memFlags &= !(FILL);
+; 241  : 	memFlags &= !(FILL);
 
   00086	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -1190,7 +565,7 @@ $LN9:
   0008f	89 85 20 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 256  : 	memFlags |= FIXED_SIZE;
+; 242  : 	memFlags |= FIXED_SIZE;
 
   00095	8b 85 20 02 00
 	00		 mov	 eax, DWORD PTR memFlags$[rbp]
@@ -1198,8 +573,8 @@ $LN9:
   0009e	89 85 20 02 00
 	00		 mov	 DWORD PTR memFlags$[rbp], eax
 
-; 257  : 
-; 258  : 	Bucket tmpBucket = {
+; 243  : 
+; 244  : 	Bucket tmpBucket = {
 
   000a4	83 7d 24 00	 cmp	 DWORD PTR empty$[rbp], 0
   000a8	74 0c		 je	 SHORT $LN7@Bucket_Cre
@@ -1248,16 +623,16 @@ $LN8@Bucket_Cre:
   00139	b9 10 00 00 00	 mov	 ecx, 16
   0013e	f3 a4		 rep movsb
 
-; 259  : 		Collection_Create(Collection_GetExtensions(info, Bucket_Methods, memFlags), empty ? 0 : capacity),
-; 260  : 		Chunk_Create(head, info->_size * capacity)
-; 261  : 	};
-; 262  : 
-; 263  : 	if (fill)
+; 245  : 		Collection_Create(Collection_GetExtensions(info, Bucket_Methods, memFlags), empty ? 0 : capacity),
+; 246  : 		Chunk_Create(head, info->_size * capacity)
+; 247  : 	};
+; 248  : 
+; 249  : 	if (fill)
 
   00140	83 7d 44 00	 cmp	 DWORD PTR fill$[rbp], 0
   00144	74 5c		 je	 SHORT $LN5@Bucket_Cre
 
-; 264  : 		for (int i = 1; i < capacity; i++)
+; 250  : 		for (int i = 1; i < capacity; i++)
 
   00146	c7 85 a4 00 00
 	00 01 00 00 00	 mov	 DWORD PTR i$4[rbp], 1
@@ -1275,7 +650,7 @@ $LN4@Bucket_Cre:
 	00		 cmp	 DWORD PTR i$4[rbp], eax
   0016c	73 34		 jae	 SHORT $LN3@Bucket_Cre
 
-; 265  : 			rawTranscribe(&((char*)head)[i * unitSize], head, unitSize);
+; 251  : 			rawTranscribe(&((char*)head)[i * unitSize], head, unitSize);
 
   0016e	48 63 85 a4 00
 	00 00		 movsxd	 rax, DWORD PTR i$4[rbp]
@@ -1295,13 +670,13 @@ $LN4@Bucket_Cre:
 $LN3@Bucket_Cre:
 $LN5@Bucket_Cre:
 
-; 266  : 
-; 267  : 	return tmpBucket;
+; 252  : 
+; 253  : 	return tmpBucket;
 
   001a2	48 8b 85 00 02
 	00 00		 mov	 rax, QWORD PTR __$ReturnAddress$[rbp]
 
-; 268  : }
+; 254  : }
 
   001a9	48 8b f8	 mov	 rdi, rax
   001ac	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
@@ -1316,5 +691,630 @@ $LN5@Bucket_Cre:
   001c8	5d		 pop	 rbp
   001c9	c3		 ret	 0
 Bucket_Create ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_Methods
+_TEXT	SEGMENT
+$T1 = 208
+$T2 = 256
+$T3 = 304
+tv65 = 324
+request$ = 368
+Bucket_Methods PROC					; COMDAT
+
+; 186  : {
+
+$LN9:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	56		 push	 rsi
+  00007	57		 push	 rdi
+  00008	48 81 ec 70 01
+	00 00		 sub	 rsp, 368		; 00000170H
+  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00014	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 187  : 	switch (request._type) {
+
+  00020	48 8b 85 70 01
+	00 00		 mov	 rax, QWORD PTR request$[rbp]
+  00027	8b 00		 mov	 eax, DWORD PTR [rax]
+  00029	89 85 44 01 00
+	00		 mov	 DWORD PTR tv65[rbp], eax
+  0002f	83 bd 44 01 00
+	00 01		 cmp	 DWORD PTR tv65[rbp], 1
+  00036	74 60		 je	 SHORT $LN6@Bucket_Met
+  00038	83 bd 44 01 00
+	00 04		 cmp	 DWORD PTR tv65[rbp], 4
+  0003f	74 0b		 je	 SHORT $LN4@Bucket_Met
+  00041	83 bd 44 01 00
+	00 08		 cmp	 DWORD PTR tv65[rbp], 8
+  00048	74 28		 je	 SHORT $LN5@Bucket_Met
+  0004a	eb 72		 jmp	 SHORT $LN7@Bucket_Met
+$LN4@Bucket_Met:
+
+; 188  : 
+; 189  : 	case INFO:
+; 190  : 		return Bucket_Info(request);
+
+  0004c	48 8d 85 d0 00
+	00 00		 lea	 rax, QWORD PTR $T1[rbp]
+  00053	48 8b f8	 mov	 rdi, rax
+  00056	48 8b b5 70 01
+	00 00		 mov	 rsi, QWORD PTR request$[rbp]
+  0005d	b9 10 00 00 00	 mov	 ecx, 16
+  00062	f3 a4		 rep movsb
+  00064	48 8d 8d d0 00
+	00 00		 lea	 rcx, QWORD PTR $T1[rbp]
+  0006b	e8 00 00 00 00	 call	 Bucket_Info
+  00070	eb 4e		 jmp	 SHORT $LN1@Bucket_Met
+$LN5@Bucket_Met:
+
+; 191  : 
+; 192  : 	//case TRANSCRIBE:
+; 193  : 	//	return Bucket_Transcribe(request);
+; 194  : 
+; 195  : 	case MANAGE:
+; 196  : 		return Bucket_Manage(request);
+
+  00072	48 8d 85 00 01
+	00 00		 lea	 rax, QWORD PTR $T2[rbp]
+  00079	48 8b f8	 mov	 rdi, rax
+  0007c	48 8b b5 70 01
+	00 00		 mov	 rsi, QWORD PTR request$[rbp]
+  00083	b9 10 00 00 00	 mov	 ecx, 16
+  00088	f3 a4		 rep movsb
+  0008a	48 8d 8d 00 01
+	00 00		 lea	 rcx, QWORD PTR $T2[rbp]
+  00091	e8 00 00 00 00	 call	 Bucket_Manage
+  00096	eb 28		 jmp	 SHORT $LN1@Bucket_Met
+$LN6@Bucket_Met:
+
+; 197  : 
+; 198  : 	case ITERATE:
+; 199  : 		return Bucket_Iterate(request);
+
+  00098	48 8d 85 30 01
+	00 00		 lea	 rax, QWORD PTR $T3[rbp]
+  0009f	48 8b f8	 mov	 rdi, rax
+  000a2	48 8b b5 70 01
+	00 00		 mov	 rsi, QWORD PTR request$[rbp]
+  000a9	b9 10 00 00 00	 mov	 ecx, 16
+  000ae	f3 a4		 rep movsb
+  000b0	48 8d 8d 30 01
+	00 00		 lea	 rcx, QWORD PTR $T3[rbp]
+  000b7	e8 00 00 00 00	 call	 Bucket_Iterate
+  000bc	eb 02		 jmp	 SHORT $LN1@Bucket_Met
+$LN7@Bucket_Met:
+
+; 200  : 
+; 201  : 		//case LOCATION:
+; 202  : 		//	return Bucket_Location(request);
+; 203  : 		//
+; 204  : 		//case SLICE_CREATE:
+; 205  : 		//	return Bucket_Slice(*request);
+; 206  : 		//
+; 207  : 		//case MODIFY_DELTA_CAPACITY:
+; 208  : 		//	return Bucket_Resize(*request);
+; 209  : 		//
+; 210  : 		//case TRANSCRIBE_RAW_TO_COLLECTION:
+; 211  : 		//case TRANSCRIBE_COLLECTIONS:
+; 212  : 		//	return Bucket_Write(*request);
+; 213  : 		//
+; 214  : 		//case TRANSCRIBE_COLLECTION_TO_RAW:
+; 215  : 		//	return Bucket_Read(*request);
+; 216  : 		//
+; 217  : 		//case MODIFY_INSERT:
+; 218  : 		//	return Bucket_Insert(*request);
+; 219  : 		//
+; 220  : 		//case MODIFY_REMOVE_FIRST_FOUND:
+; 221  : 		//	return Bucket_Remove(*request);
+; 222  : 		//
+; 223  : 		//case MODIFY_REMOVE_AT:
+; 224  : 		//	return Bucket_RemoveAt(*request);
+; 225  : 		//
+; 226  : 		//case ITERATE:
+; 227  : 		//	return Bucket_Iterate(request);
+; 228  : 
+; 229  : 	default:
+; 230  : 		return false;
+
+  000be	33 c0		 xor	 eax, eax
+$LN1@Bucket_Met:
+
+; 231  : 	}
+; 232  : }
+
+  000c0	48 8d a5 50 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+336]
+  000c7	5f		 pop	 rdi
+  000c8	5e		 pop	 rsi
+  000c9	5d		 pop	 rbp
+  000ca	c3		 ret	 0
+Bucket_Methods ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_Info
+_TEXT	SEGMENT
+bucket$ = 8
+var$ = 36
+output$ = 72
+$T1 = 304
+tv73 = 324
+request$ = 368
+Bucket_Info PROC					; COMDAT
+
+; 160  : inline bool Bucket_Info(REQUEST request) {
+
+$LN10:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	56		 push	 rsi
+  00007	57		 push	 rdi
+  00008	48 81 ec 70 01
+	00 00		 sub	 rsp, 368		; 00000170H
+  0000f	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00014	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001b	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 161  : 
+; 162  : 	Bucket* bucket = request._params[tSRC];
+
+  00020	b8 08 00 00 00	 mov	 eax, 8
+  00025	48 6b c0 02	 imul	 rax, rax, 2
+  00029	48 8b 8d 70 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00030	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00034	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  00038	48 89 45 08	 mov	 QWORD PTR bucket$[rbp], rax
+
+; 163  : 	ParamType var = (ParamType)request._params[tVARIANT];
+
+  0003c	b8 08 00 00 00	 mov	 eax, 8
+  00041	48 6b c0 00	 imul	 rax, rax, 0
+  00045	48 8b 8d 70 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  0004c	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00050	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
+  00053	89 45 24	 mov	 DWORD PTR var$[rbp], eax
+
+; 164  : 	void* output = request._params[tTRG];
+
+  00056	b8 08 00 00 00	 mov	 eax, 8
+  0005b	48 6b c0 01	 imul	 rax, rax, 1
+  0005f	48 8b 8d 70 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00066	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  0006a	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  0006e	48 89 45 48	 mov	 QWORD PTR output$[rbp], rax
+
+; 165  : 
+; 166  : 	switch (var) {
+
+  00072	8b 45 24	 mov	 eax, DWORD PTR var$[rbp]
+  00075	89 85 44 01 00
+	00		 mov	 DWORD PTR tv73[rbp], eax
+  0007b	83 bd 44 01 00
+	00 06		 cmp	 DWORD PTR tv73[rbp], 6
+  00082	74 47		 je	 SHORT $LN7@Bucket_Inf
+  00084	83 bd 44 01 00
+	00 07		 cmp	 DWORD PTR tv73[rbp], 7
+  0008b	74 14		 je	 SHORT $LN4@Bucket_Inf
+  0008d	83 bd 44 01 00
+	00 08		 cmp	 DWORD PTR tv73[rbp], 8
+  00094	74 1f		 je	 SHORT $LN5@Bucket_Inf
+  00096	83 bd 44 01 00
+	00 09		 cmp	 DWORD PTR tv73[rbp], 9
+  0009d	74 2c		 je	 SHORT $LN6@Bucket_Inf
+  0009f	eb 50		 jmp	 SHORT $LN8@Bucket_Inf
+$LN4@Bucket_Inf:
+
+; 167  : 
+; 168  : 	case tCOUNT:
+; 169  : 		*((uint*)output) = bucket->_collection._count;
+
+  000a1	48 8b 45 48	 mov	 rax, QWORD PTR output$[rbp]
+  000a5	48 8b 4d 08	 mov	 rcx, QWORD PTR bucket$[rbp]
+  000a9	8b 49 08	 mov	 ecx, DWORD PTR [rcx+8]
+  000ac	89 08		 mov	 DWORD PTR [rax], ecx
+
+; 170  : 		return true;
+
+  000ae	b8 01 00 00 00	 mov	 eax, 1
+  000b3	eb 3e		 jmp	 SHORT $LN1@Bucket_Inf
+$LN5@Bucket_Inf:
+
+; 171  : 
+; 172  : 	case tCAPACITY:
+; 173  : 		*((uint*)output) = Bucket_Capacity(bucket);
+
+  000b5	48 8b 4d 08	 mov	 rcx, QWORD PTR bucket$[rbp]
+  000b9	e8 00 00 00 00	 call	 Bucket_Capacity
+  000be	48 8b 4d 48	 mov	 rcx, QWORD PTR output$[rbp]
+  000c2	89 01		 mov	 DWORD PTR [rcx], eax
+
+; 174  : 		return true;
+
+  000c4	b8 01 00 00 00	 mov	 eax, 1
+  000c9	eb 28		 jmp	 SHORT $LN1@Bucket_Inf
+$LN6@Bucket_Inf:
+$LN7@Bucket_Inf:
+
+; 175  : 
+; 176  : 	case tNAME:
+; 177  : 	case tSIZE:
+; 178  : 		return TypeInfo_GetInfo(request);
+
+  000cb	48 8d 85 30 01
+	00 00		 lea	 rax, QWORD PTR $T1[rbp]
+  000d2	48 8b f8	 mov	 rdi, rax
+  000d5	48 8b b5 70 01
+	00 00		 mov	 rsi, QWORD PTR request$[rbp]
+  000dc	b9 10 00 00 00	 mov	 ecx, 16
+  000e1	f3 a4		 rep movsb
+  000e3	48 8d 8d 30 01
+	00 00		 lea	 rcx, QWORD PTR $T1[rbp]
+  000ea	e8 00 00 00 00	 call	 TypeInfo_GetInfo
+  000ef	eb 02		 jmp	 SHORT $LN1@Bucket_Inf
+$LN8@Bucket_Inf:
+
+; 179  : 
+; 180  : 	default:
+; 181  : 		return false;
+
+  000f1	33 c0		 xor	 eax, eax
+$LN1@Bucket_Inf:
+
+; 182  : 	}
+; 183  : 
+; 184  : }
+
+  000f3	48 8d a5 50 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+336]
+  000fa	5f		 pop	 rdi
+  000fb	5e		 pop	 rsi
+  000fc	5d		 pop	 rbp
+  000fd	c3		 ret	 0
+Bucket_Info ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_Manage
+_TEXT	SEGMENT
+var$ = 4
+bucket$ = 40
+tv70 = 244
+request$ = 288
+Bucket_Manage PROC					; COMDAT
+
+; 138  : inline bool Bucket_Manage(REQUEST request) {
+
+$LN8:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec 28 01
+	00 00		 sub	 rsp, 296		; 00000128H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 139  : 	ParamType var = (ParamType)request._params[tVARIANT];
+
+  0001f	b8 08 00 00 00	 mov	 eax, 8
+  00024	48 6b c0 00	 imul	 rax, rax, 0
+  00028	48 8b 8d 20 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  0002f	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00033	8b 04 08	 mov	 eax, DWORD PTR [rax+rcx]
+  00036	89 45 04	 mov	 DWORD PTR var$[rbp], eax
+
+; 140  : 	Bucket* bucket = request._params[tSRC];
+
+  00039	b8 08 00 00 00	 mov	 eax, 8
+  0003e	48 6b c0 02	 imul	 rax, rax, 2
+  00042	48 8b 8d 20 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00049	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  0004d	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  00051	48 89 45 28	 mov	 QWORD PTR bucket$[rbp], rax
+
+; 141  : 	//void* output = request._params[1];
+; 142  : 	
+; 143  : 
+; 144  : 	switch (var)
+
+  00055	8b 45 04	 mov	 eax, DWORD PTR var$[rbp]
+  00058	89 85 f4 00 00
+	00		 mov	 DWORD PTR tv70[rbp], eax
+  0005e	83 bd f4 00 00
+	00 05		 cmp	 DWORD PTR tv70[rbp], 5
+  00065	74 0b		 je	 SHORT $LN4@Bucket_Man
+  00067	83 bd f4 00 00
+	00 14		 cmp	 DWORD PTR tv70[rbp], 20
+  0006e	74 41		 je	 SHORT $LN5@Bucket_Man
+  00070	eb 43		 jmp	 SHORT $LN6@Bucket_Man
+$LN4@Bucket_Man:
+
+; 145  : 	{
+; 146  : 	case tCHUNK:
+; 147  : 		request._params[tSIZE] = 0;
+
+  00072	b8 08 00 00 00	 mov	 eax, 8
+  00077	48 6b c0 06	 imul	 rax, rax, 6
+  0007b	48 8b 8d 20 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00082	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00086	48 c7 04 08 00
+	00 00 00	 mov	 QWORD PTR [rax+rcx], 0
+
+; 148  : 		return Bucket_GetChunk(bucket, request._params[tTRG]);
+
+  0008e	b8 08 00 00 00	 mov	 eax, 8
+  00093	48 6b c0 01	 imul	 rax, rax, 1
+  00097	48 8b 8d 20 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  0009e	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  000a2	48 8b 14 01	 mov	 rdx, QWORD PTR [rcx+rax]
+  000a6	48 8b 4d 28	 mov	 rcx, QWORD PTR bucket$[rbp]
+  000aa	e8 00 00 00 00	 call	 Bucket_GetChunk
+  000af	eb 06		 jmp	 SHORT $LN1@Bucket_Man
+$LN5@Bucket_Man:
+
+; 149  : 
+; 150  : 	case tRESIZE:
+; 151  : 		return false;
+
+  000b1	33 c0		 xor	 eax, eax
+  000b3	eb 02		 jmp	 SHORT $LN1@Bucket_Man
+$LN6@Bucket_Man:
+
+; 152  : 
+; 153  : 	default:
+; 154  : 		return false;
+
+  000b5	33 c0		 xor	 eax, eax
+$LN1@Bucket_Man:
+
+; 155  : 	}
+; 156  : }
+
+  000b7	48 8d a5 08 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+264]
+  000be	5f		 pop	 rdi
+  000bf	5d		 pop	 rbp
+  000c0	c3		 ret	 0
+Bucket_Manage ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_Iterate
+_TEXT	SEGMENT
+bucket$ = 8
+request$ = 256
+Bucket_Iterate PROC					; COMDAT
+
+; 132  : inline bool Bucket_Iterate(REQUEST request) {
+
+$LN3:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec 08 01
+	00 00		 sub	 rsp, 264		; 00000108H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 133  : 	Bucket* bucket = request._params[tSRC];
+
+  0001f	b8 08 00 00 00	 mov	 eax, 8
+  00024	48 6b c0 02	 imul	 rax, rax, 2
+  00028	48 8b 8d 00 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  0002f	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00033	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
+  00037	48 89 45 08	 mov	 QWORD PTR bucket$[rbp], rax
+
+; 134  : 	request._params[tTRG] = Bucket_GetPtr(bucket, request._params[Ix_TRG]);
+
+  0003b	b8 08 00 00 00	 mov	 eax, 8
+  00040	48 6b c0 03	 imul	 rax, rax, 3
+  00044	48 8b 8d 00 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  0004b	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  0004f	8b 14 01	 mov	 edx, DWORD PTR [rcx+rax]
+  00052	48 8b 4d 08	 mov	 rcx, QWORD PTR bucket$[rbp]
+  00056	e8 00 00 00 00	 call	 Bucket_GetPtr
+  0005b	b9 08 00 00 00	 mov	 ecx, 8
+  00060	48 6b c9 01	 imul	 rcx, rcx, 1
+  00064	48 8b 95 00 01
+	00 00		 mov	 rdx, QWORD PTR request$[rbp]
+  0006b	48 8b 52 08	 mov	 rdx, QWORD PTR [rdx+8]
+  0006f	48 89 04 11	 mov	 QWORD PTR [rcx+rdx], rax
+
+; 135  : 	((size_t)(request._params[Ix_TRG]))++;
+
+  00073	b8 08 00 00 00	 mov	 eax, 8
+  00078	48 6b c0 03	 imul	 rax, rax, 3
+  0007c	48 8b 8d 00 01
+	00 00		 mov	 rcx, QWORD PTR request$[rbp]
+  00083	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
+  00087	48 8b 04 01	 mov	 rax, QWORD PTR [rcx+rax]
+  0008b	48 ff c0	 inc	 rax
+  0008e	b9 08 00 00 00	 mov	 ecx, 8
+  00093	48 6b c9 03	 imul	 rcx, rcx, 3
+  00097	48 8b 95 00 01
+	00 00		 mov	 rdx, QWORD PTR request$[rbp]
+  0009e	48 8b 52 08	 mov	 rdx, QWORD PTR [rdx+8]
+  000a2	48 89 04 11	 mov	 QWORD PTR [rcx+rdx], rax
+
+; 136  : 	return true;
+
+  000a6	b8 01 00 00 00	 mov	 eax, 1
+
+; 137  : }
+
+  000ab	48 8d a5 e8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+232]
+  000b2	5f		 pop	 rdi
+  000b3	5d		 pop	 rbp
+  000b4	c3		 ret	 0
+Bucket_Iterate ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_Capacity
+_TEXT	SEGMENT
+tv71 = 192
+bucket$ = 240
+Bucket_Capacity PROC					; COMDAT
+
+; 131  : uint Bucket_Capacity(Bucket* bucket) { return (bucket->_chunk._size) / bucket->_collection._extensions->_type->_size; }
+
+$LN3:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	55		 push	 rbp
+  00006	57		 push	 rdi
+  00007	48 81 ec f8 00
+	00 00		 sub	 rsp, 248		; 000000f8H
+  0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00013	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+  0001f	48 8b 85 f0 00
+	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
+  00026	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  00029	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  0002c	48 89 85 c0 00
+	00 00		 mov	 QWORD PTR tv71[rbp], rax
+  00033	33 d2		 xor	 edx, edx
+  00035	48 8b 8d f0 00
+	00 00		 mov	 rcx, QWORD PTR bucket$[rbp]
+  0003c	48 8b 41 18	 mov	 rax, QWORD PTR [rcx+24]
+  00040	48 8b 8d c0 00
+	00 00		 mov	 rcx, QWORD PTR tv71[rbp]
+  00047	48 f7 71 08	 div	 QWORD PTR [rcx+8]
+  0004b	48 8d a5 d8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+216]
+  00052	5f		 pop	 rdi
+  00053	5d		 pop	 rbp
+  00054	c3		 ret	 0
+Bucket_Capacity ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_GetChunk
+_TEXT	SEGMENT
+bucket$ = 224
+loc$ = 232
+Bucket_GetChunk PROC					; COMDAT
+
+; 127  : bool Bucket_GetChunk(Bucket* bucket, Chunk* loc) {
+
+$LN3:
+  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000a	55		 push	 rbp
+  0000b	57		 push	 rdi
+  0000c	48 81 ec e8 00
+	00 00		 sub	 rsp, 232		; 000000e8H
+  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00018	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 128  : 	Chunk_ctor(loc, bucket->_chunk._head, bucket->_chunk._size);
+
+  00024	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
+  0002b	4c 8b 40 18	 mov	 r8, QWORD PTR [rax+24]
+  0002f	48 8b 85 e0 00
+	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
+  00036	48 8b 50 10	 mov	 rdx, QWORD PTR [rax+16]
+  0003a	48 8b 8d e8 00
+	00 00		 mov	 rcx, QWORD PTR loc$[rbp]
+  00041	e8 00 00 00 00	 call	 Chunk_ctor
+
+; 129  : 	return true;
+
+  00046	b8 01 00 00 00	 mov	 eax, 1
+
+; 130  : }
+
+  0004b	48 8d a5 c8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+200]
+  00052	5f		 pop	 rdi
+  00053	5d		 pop	 rbp
+  00054	c3		 ret	 0
+Bucket_GetChunk ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tBucket.c
+;	COMDAT Bucket_GetPtr
+_TEXT	SEGMENT
+tv73 = 192
+bucket$ = 240
+index$ = 248
+Bucket_GetPtr PROC					; COMDAT
+
+; 124  : inline void* Bucket_GetPtr(Bucket* bucket, uint index) {
+
+$LN5:
+  00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  00004	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00009	55		 push	 rbp
+  0000a	57		 push	 rdi
+  0000b	48 81 ec f8 00
+	00 00		 sub	 rsp, 248		; 000000f8H
+  00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00017	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__7D3AC404_tBucket@c
+  0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 125  : 	return index >= bucket->_collection._count ? NULL : (size_t)(bucket->_chunk._head) + (index * bucket->_collection._extensions->_type->_size);
+
+  00023	48 8b 85 f0 00
+	00 00		 mov	 rax, QWORD PTR bucket$[rbp]
+  0002a	8b 40 08	 mov	 eax, DWORD PTR [rax+8]
+  0002d	39 85 f8 00 00
+	00		 cmp	 DWORD PTR index$[rbp], eax
+  00033	72 0d		 jb	 SHORT $LN3@Bucket_Get
+  00035	48 c7 85 c0 00
+	00 00 00 00 00
+	00		 mov	 QWORD PTR tv73[rbp], 0
+  00040	eb 2a		 jmp	 SHORT $LN4@Bucket_Get
+$LN3@Bucket_Get:
+  00042	8b 85 f8 00 00
+	00		 mov	 eax, DWORD PTR index$[rbp]
+  00048	48 8b 8d f0 00
+	00 00		 mov	 rcx, QWORD PTR bucket$[rbp]
+  0004f	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
+  00052	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
+  00055	48 0f af 41 08	 imul	 rax, QWORD PTR [rcx+8]
+  0005a	48 8b 8d f0 00
+	00 00		 mov	 rcx, QWORD PTR bucket$[rbp]
+  00061	48 03 41 10	 add	 rax, QWORD PTR [rcx+16]
+  00065	48 89 85 c0 00
+	00 00		 mov	 QWORD PTR tv73[rbp], rax
+$LN4@Bucket_Get:
+  0006c	48 8b 85 c0 00
+	00 00		 mov	 rax, QWORD PTR tv73[rbp]
+
+; 126  : }
+
+  00073	48 8d a5 d8 00
+	00 00		 lea	 rsp, QWORD PTR [rbp+216]
+  0007a	5f		 pop	 rdi
+  0007b	5d		 pop	 rbp
+  0007c	c3		 ret	 0
+Bucket_GetPtr ENDP
 _TEXT	ENDS
 END

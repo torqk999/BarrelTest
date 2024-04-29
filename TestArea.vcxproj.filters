@@ -66,6 +66,9 @@
     <ClCompile Include="tVector.c">
       <Filter>MothBalled</Filter>
     </ClCompile>
+    <ClCompile Include="BarrelTest.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tHelpers.h">
@@ -115,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="tVector.h">
       <Filter>MothBalled</Filter>
+    </ClInclude>
+    <ClInclude Include="tUserCollection.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarrelTest.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -189,8 +189,8 @@ PUBLIC	RollingQue_PullNext
 PUBLIC	RollingQue_HasQue
 PUBLIC	RollingQue_SeeNext
 PUBLIC	__JustMyCode_Default
-EXTRN	Collection_Read:PROC
 EXTRN	Collection_Write:PROC
+EXTRN	Collection_Read:PROC
 EXTRN	_RTC_CheckStackVars:PROC
 EXTRN	_RTC_InitBase:PROC
 EXTRN	_RTC_Shutdown:PROC
