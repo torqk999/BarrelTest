@@ -782,7 +782,7 @@ bool Barrel_Extensions(REQUEST request) {
 
 
 
-void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, void* srcHead, int memFlags, uint initCapacity, uint startBarrel) {
+void Barrel_NodeCtor(TypeInfo* info, BarrelNode* loc, void* srcHead, int memFlags, uint initCapacity, uint startBarrel) {
 
 	loc->_barrelStart = startBarrel;
 
@@ -793,7 +793,7 @@ void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, voi
 	memFlags |= FIXED_SIZE;
 
 	int newBarrelCount = 1;
-	size_t neededSpace = unitSize * initCapacity;
+	size_t neededSpace = info->_size * initCapacity;
 
 	while (	(newBarrelCount * sizeof(Barrel) < neededSpace) &&
 			(newBarrelCount * sizeof(Barrel) < Heap_Remaining()))
@@ -803,9 +803,9 @@ void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, voi
 
 	size_t newSize = newBarrelCount * sizeof(Barrel);
 
-	initCapacity = (neededSpace < newSize ? neededSpace : newSize) / unitSize;
+	initCapacity = (neededSpace < newSize ? neededSpace : newSize) / info->_size;
 
-	Collection collTmp = Collection_Create(Collection_GetExtensions(TypeInfo_Get(typeName, unitSize), Barrel_Extensions, memFlags), initCapacity);
+	Collection collTmp = Collection_Create(Collection_GetExtensions(info, Barrel_Extensions, memFlags), initCapacity);
 
 	rawTranscribe(&(loc->_collection), &collTmp, sizeof(Collection));
 
@@ -815,20 +815,19 @@ void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, voi
 	void* barrelHead = Barrel_GetBarrelPtr(startBarrel);
 	
 	for (int i = 0; i < initCapacity; i++)
-		rawTranscribe(&((char*)barrelHead)[i * unitSize], &((char*)srcHead)[i * unitSize], unitSize);
+		rawTranscribe(&((char*)barrelHead)[i * info->_size], &((char*)srcHead)[i * info->_size], info->_size);
 
 	//if (srcHead)
 	//	Collection_WriteSpan(loc, srcHead, 0, initCapacity);
 }
 
-COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int memFlags, uint initCapacity) {
+BarrelNode* Barrel_Sourced(TypeInfo* info, void* srcHead, int memFlags, uint initCapacity) {
 
-	// Get the next available node (either a new node must be added to the Omegus vector,
-	// or a garbage node will get recycled.
+	// Get the next available node (either a new node must be added to the Omegus vector, or a garbage node will get recycled.
 	int newNodeIx = Barrel_NextAvailableNodeIx();
 	if (newNodeIx < 0)
 		return NULL;
-	
+
 	// Aquire the last physical node so that it can initialize our new one
 	BarrelNode* lastPhysicalNode = Barrel_GetLastPhysicalNode();
 	if (!lastPhysicalNode)
@@ -841,7 +840,7 @@ COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int
 
 	// Initialize the requestedNode once one has been retrieved
 	BarrelNode* newNodePtr = Barrel_GetNode(newNodeIx);
-	Barrel_NodeCtor(typeName, unitSize, newNodePtr, srcHead, MANAGED | memFlags, initCapacity, lastPhysicalNode->_barrelStart + lastPhysicalNode->_barrelCount);
+	Barrel_NodeCtor(info, newNodePtr, srcHead, MANAGED | memFlags, initCapacity, lastPhysicalNode->_barrelStart + lastPhysicalNode->_barrelCount);
 
 	// Set the last physical node
 	Barrel_SetLastPhysicalNode(newNodeIx);
@@ -850,6 +849,15 @@ COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int
 
 	// Return the new BarrelNode to the user
 	return newNodePtr;
+}
+
+COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int memFlags, uint initCapacity) {
+
+	TypeInfo* info = TypeInfo_Get(typeName, unitSize);
+	if (!info)
+		return NULL;
+
+	return Barrel_Sourced(info, srcHead, memFlags, initCapacity);
 }
 
 bool Barrel_ServiceInit(HeapService* heapService)

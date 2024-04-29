@@ -52,15 +52,16 @@ inline bool Barrel_Info(REQUEST request);
 bool Barrel_Extensions(REQUEST request);
 
 
+void Barrel_NodeCtor(TypeInfo* info, BarrelNode* loc, void* head, int memFlags, uint initCapacity, uint startBarrel);
+BarrelNode* Barrel_Sourced(TypeInfo* info, void* srcHead, int memFlags, uint initCapacity);
 
-
-void Barrel_NodeCtor(const char* typeName, size_t unitSize, BarrelNode* loc, void* head, int memFlags, uint initCapacity, uint startBarrel);
 
 ////////////////////
 // Public Section //
 ////////////////////
 
 bool Barrel_ServiceInit(HeapService* heapService);
+
 COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* head, int memFlags, uint initCapacity);
 
 

@@ -45,6 +45,8 @@ typedef struct { // What global class of data is being represented
 	const TypeInfo* const _type;
 } Property;
 
+typedef Property* PROPERTY;
+
 typedef struct { // How to manage the collection
 	const TypeInfo* const _type;
 	int (*_methods)(REQUEST request);
@@ -148,24 +150,18 @@ typedef struct {
 } Target;
 
 typedef struct {
-	BarrelNode _node;
-	uint _batchOffset;
-} PropertyBatch;
-
-typedef struct {
-	Property* _prop;
+	uint _offset;
 	uint _count;
-	Bucket _batches;
-} PropAllocator;
+} Mutation;
 
 typedef struct {
-	PropAllocator* _allocators;
-	uint _count;
-} PropertyMap;
+	const char* const _name;
+	Bucket _propData, _propDefs;
+} Mutagen;
 
 typedef struct {
-	int _mask;
-	Bucket _batchPtrs;
-} Mutant;
+	Bucket _mutagens, _mutations;
+	BarrelNode *ID_2_Ix, *Ix_2_ID;
+} GenePool;
 
 #endif // !MODULES

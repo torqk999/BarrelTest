@@ -2,7 +2,9 @@
 
 
 TypeInfo testTypeBin[testTypeBinCount];
+Property testPropertyBin[testPropertyBinCount];
 uint testTypeBinCurrentCount = 0;
+uint testPropertyBinCurrentCount = 0;
 Page testNullBin;
 void* testNullBinHead = &testNullBin;
 
@@ -135,37 +137,7 @@ bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b) {
 	return defaultStringCompare(a->_name, b->_name);
 }
 
-TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc) {
 
-	for (int i = 0; i < testTypeBinCurrentCount; i++) {
-		if (testTypeBin[i]._name == name)
-			return &testTypeBin[i];
-	}
-
-	if (testTypeBinCurrentCount >= testTypeBinCount)
-	{
-		PREENT("No type slots available...\n");
-		return NULL;
-	}
-
-	//uint flags = TypeInfo_BuildTypeFlags(name);
-	//uint unitsPerBlock, barrelsPerBlock;
-	//TypeInfo_BarrelBlockCounts(size, &unitsPerBlock, &barrelsPerBlock);
-	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
-
-	TypeInfo newInfo = {
-		name,
-		size,
-		nullTmp,
-		//unitsPerBlock,
-		//barrelsPerBlock
-	};
-
-	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
-	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
-	testTypeBinCurrentCount++;
-	return ptr;
-}
 
 const char* TypeInfo_Name(COLLECTION collection)
 {
@@ -194,6 +166,58 @@ bool TypeInfo_GetInfo(REQUEST request)
 	default:
 		return false;
 	}
+}
+
+Property* Property_Get(const char* name, TypeInfo* info) {
+
+	for (int i = 0; i < testPropertyBinCurrentCount; i++) {
+		if (testPropertyBin[i]._name == name)
+			return &testPropertyBin[i];
+	}
+
+	if (testPropertyBinCurrentCount >= testPropertyBinCount)
+	{
+		PREENT("No type slots available...\n");
+		return NULL;
+	}
+
+	Property newProp = {
+		name,
+		info
+	};
+
+	Property* ptr = &testPropertyBin[testPropertyBinCurrentCount];
+	rawTranscribe(ptr, &newProp, sizeof(Property));
+	testPropertyBinCurrentCount++;
+	return ptr;
+}
+
+TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc)
+
+{
+	for (int i = 0; i < testPropertyBinCount; i++) {
+		if (testTypeBin[i]._name == name)
+			return &testTypeBin[i];
+	}
+
+	if (testTypeBinCurrentCount >= testTypeBinCount)
+	{
+		PREENT("No type slots available...\n");
+		return NULL;
+	}
+
+	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
+
+	TypeInfo newInfo = {
+		name,
+		size,
+		nullTmp,
+	};
+
+	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
+	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
+	testTypeBinCurrentCount++;
+	return ptr;
 }
 
 TypeInfo* TypeInfo_Get(const char* name, size_t size) { return TypeInfo_GetNullable(name, size, NULL); }

@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BarrelTest.c" />
+    <ClCompile Include="MutationTest.c" />
     <ClCompile Include="tBarrel.c" />
     <ClCompile Include="tBucket.c" />
     <ClCompile Include="TestArea.c" />
@@ -138,6 +139,7 @@
     <ClCompile Include="tHelpers.c" />
     <ClCompile Include="tLink.c" />
     <ClCompile Include="tModules.h" />
+    <ClCompile Include="tMutation.c" />
     <ClCompile Include="tPreent.c" />
     <ClCompile Include="tQues.c" />
     <ClCompile Include="tServices.c" />
@@ -149,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BarrelTest.h" />
+    <ClInclude Include="MutationTest.h" />
     <ClInclude Include="tBarrel.h" />
     <ClInclude Include="tBucket.h" />
     <ClInclude Include="tDefines.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="tHeap.h" />
     <ClInclude Include="tHelpers.h" />
     <ClInclude Include="tLink.h" />
+    <ClInclude Include="tMutation.h" />
     <ClInclude Include="tPreent.h" />
     <ClInclude Include="tQues.h" />
     <ClInclude Include="tServices.h" />

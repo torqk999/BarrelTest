@@ -69,6 +69,12 @@
     <ClCompile Include="BarrelTest.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="tMutation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MutationTest.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tHelpers.h">
@@ -123,6 +129,12 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="BarrelTest.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tMutation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MutationTest.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
