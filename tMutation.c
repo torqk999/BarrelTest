@@ -32,19 +32,48 @@ void Mutation_ctor(Mutation* loc, uint offset, uint count) {
 	rawTranscribe(loc, &tmp, sizeof(Mutation));
 }
 
-GenePool GenePool_Create(Mutation* mutations, Mutagen* mutagens, uint mutCount, uint genCount) {
+Mutable GenePool_Create(Mutation* mutations, Mutagen* mutagens, uint mutCount, uint genCount) {
 	return
-		(GenePool) {
+		(Mutable) {
 			Bucket_Create("Mutagen", sizeof(Mutagen), NULL, 0, genCount),
 			Bucket_Create("Mutation", sizeof(Mutation), NULL, 0, mutCount),
 			Barrel_ctor("uint", sizeof(uint), NULL, 0, DEFAULT_POOL_INIT_CAPACITY),
 			Barrel_ctor("uint", sizeof(uint), NULL, 0, DEFAULT_POOL_INIT_CAPACITY)
 		};
 }
-void GenePool_ctor(GenePool* poolLoc, Mutation* mutations, Mutagen* mutagens, uint mutCount, uint genCount) {
+void GenePool_ctor(Mutable* poolLoc, Mutation* mutations, Mutagen* mutagens, uint mutCount, uint genCount) {
 
-	GenePool tmp = GenePool_Create(mutations, mutagens, genCount, mutCount);
-	rawTranscribe(poolLoc, &tmp, sizeof(GenePool));
+	Mutable tmp = GenePool_Create(mutations, mutagens, genCount, mutCount);
+	rawTranscribe(poolLoc, &tmp, sizeof(Mutable));
 
 	
 }
+
+bool GenePool_GetMutant(uint mutationMask)
+{
+	return false;
+}
+
+
+/*
+
+
+	
+	00001
+	00010
+	00011
+	00100
+	00101
+	00110
+	00111
+	01000
+	01001
+	01010
+	01011
+	01100
+	01101
+	01110
+	01111
+	10000
+
+*/

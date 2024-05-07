@@ -56,7 +56,7 @@ bool barrel_INPUT(int* outputLoc, const char* inputRequest, int options) {
 
 	if (options & QuitReminder)
 		PREENT("At any time, enter 'q' to leave\n");
-	PREENT_ARGS("%: ", fmt_s(inputRequest));
+	PREENT_SAFE("%: ", fmt_s(inputRequest));
 
 	input = Geet();
 	if (input[0] == 'q')
@@ -65,7 +65,7 @@ bool barrel_INPUT(int* outputLoc, const char* inputRequest, int options) {
 	*outputLoc = strToInt(input);
 
 	if ((options & Indexing) && (*outputLoc < 0 || *outputLoc >= Barrel_NodeCount())) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
+		PREENT_SAFE("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
 		return false;
 	}
 
@@ -82,7 +82,7 @@ void barrelTest_NEW()
 		return;
 
 	if (capacity < 1) {
-		PREENT_ARGS("Bad Capacity! Must be greater than 0: %\n", fmt_i(capacity));
+		PREENT_SAFE("Bad Capacity! Must be greater than 0: %\n", fmt_i(capacity));
 		return;
 	}
 
@@ -115,7 +115,7 @@ void barrelTest_RESIZE()
 		return;
 
 	if (index < 0 || index >= Barrel_NodeCount()) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
+		PREENT_SAFE("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
 		return;
 	}
 
@@ -141,7 +141,7 @@ void barrelTest_WRITE()
 		return;
 
 	if (index < 0 || index >= Barrel_NodeCount()) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
+		PREENT_SAFE("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
 		return;
 	}
 
@@ -157,7 +157,7 @@ void barrelTest_WRITE()
 
 	for (int i = 0; i != delta; i += deltaDir)
 	{
-		PREENT_ARGS("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
+		PREENT_SAFE("Input new param (% remaining): ", fmt_i((delta - i) * deltaDir));
 		targetPtr = Barrel_GetUnitPtr(targetBoop, startIndex + i);
 		*targetPtr = strToInt(Geet());
 	}
@@ -174,7 +174,7 @@ void barrelTest_READ()
 		return;
 
 	if (index < 0 || index >= Barrel_NodeCount()) {
-		PREENT_ARGS("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
+		PREENT_SAFE("Bad index! Between 0 and %\n", fmt_i(Barrel_NodeCount()));
 		return;
 	}
 
@@ -190,7 +190,7 @@ void barrelTest_READ()
 
 	for (int i = 0; i < delta; i += deltaDir) {
 		targetPtr = Barrel_GetUnitPtr(targetBoop, startIndex + i);
-		PREENT_ARGS("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
+		PREENT_SAFE("[%]: %\n", fmt_i(i), fmt_i(*targetPtr));
 	}
 }
 
@@ -201,7 +201,7 @@ void barrelTest_VIEW_HEAP()
 	for (int i = 0; i < Barrel_NodeCount(); i++)
 	{
 		BarrelNode* nextNode = Heap_Head();
-		PREENT_ARGS("[%]: % | % | % | %\n",
+		PREENT_SAFE("[%]: % | % | % | %\n",
 			fmt_I(i),
 			fmt_I(nextNode->_barrelCount),
 			fmt_I(nextNode->_collection._count),
@@ -215,7 +215,7 @@ void barrelTest_VIEW_HEAP()
 	for (int i = 0; i < 32; i++) {
 		PREENT("|");
 		for (int j = 0; j < 8; j++) {
-			PREENT_ARGS("| % ", fmt_I(((int*)Heap_Head())[(i * 8) + j]));
+			PREENT_SAFE("| % ", fmt_I(((int*)Heap_Head())[(i * 8) + j]));
 		}
 
 		PREENT("||\n");
@@ -241,9 +241,9 @@ void barrelTest_MAIN() {
 
 	while (!ESCAPE) {
 
-		PREENT_ARGS("[ Total Current Nodes: % ]\n", fmt_i(Barrel_NodeCount()));
+		PREENT_SAFE("[ Total Current Nodes: % ]\n", fmt_i(Barrel_NodeCount()));
 		for (int i = 0; i < mainMenuActionCount; i++)
-			PREENT_ARGS("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
+			PREENT_SAFE("[%] - %\n", fmt_c(mainMenuActions[i]._keyPress), fmt_s(mainMenuActions[i]._description));
 
 		input = Geet();
 
@@ -255,18 +255,9 @@ void barrelTest_MAIN() {
 
 void barrelTest()
 {
-	PREENT("Collections Testing...\n\n");
+	PREENT("Barrel Testing...\n\n");
 
-	//TypeInfo* intTypeID = TYPE_ID(int, BARREL);
-
-	//test_intTypeID = &intTypeID;
-
-	//long derp = 5;
-	//long* ptrDerp = &derp;
-
-	//Request blah = DeConstruct((void*) { 0 });
-
-	if (!Barrel_ServiceInit(Heap_ServiceInit(true)))
+	if (!Barrel_ServiceInit())
 	{
 		PREENT("Services failed to start!\n");
 		return;

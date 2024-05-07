@@ -101,6 +101,7 @@ int strToInt(const char* input)
 char* numConvert(Parameter preem)
 {
 	static char Representation[] = "0123456789ABCDEF";
+	static char ValueExpression[] = "csLIxlObhiofd";
 	static char Buffer[MAX_NUM_BUFFER];
 
 	char* ptr = &Buffer[MAX_NUM_BUFFER - 1];
@@ -108,7 +109,9 @@ char* numConvert(Parameter preem)
 
 	char next;
 	int isPositive = 1;
-	int isInt = 0;
+	bool isInt = false;
+	bool isFloat = false;
+
 
 	int intCheck;
 	long long longCheck;
@@ -120,6 +123,11 @@ char* numConvert(Parameter preem)
 
 	switch (preem._type)
 	{
+	case __b:
+		base = 1;
+		iVal = *((unsigned long long*)(preem._ptr));
+		break;
+
 	case __I:
 		intCheck = *((int*)(preem._ptr));
 		isPositive = intCheck >= 0;
@@ -132,6 +140,7 @@ char* numConvert(Parameter preem)
 		iVal = isPositive ? longCheck : -longCheck;
 		base = 10;
 		goto IsInt;
+
 	case __x:
 		base += 6;
 	case __l:
@@ -140,6 +149,7 @@ char* numConvert(Parameter preem)
 		base += 8;
 		iVal = *((unsigned long long*)(preem._ptr));
 		goto IsInt;
+
 	case __h:
 		base += 6;
 	case __i:
@@ -147,8 +157,9 @@ char* numConvert(Parameter preem)
 	case __o:
 		base += 8;
 		iVal = *((unsigned int*)(preem._ptr));
+
 	IsInt:
-		isInt = 1;
+		isInt = true;
 		break;
 
 	case __f:
@@ -162,10 +173,10 @@ char* numConvert(Parameter preem)
 		iVal = fVal;
 		fVal -= iVal;
 		base = 10;
-		isInt = 0;
+		isFloat = true;
 	}
 
-	if (!isInt)
+	if (isFloat) // decimal section
 	{
 		if (fVal > 0)
 		{
@@ -188,19 +199,36 @@ char* numConvert(Parameter preem)
 		}
 	}
 
-	do
-	{
-		ptr -= 1;
-		*ptr = Representation[iVal % base];
-		iVal /= base;
+	if (isFloat || isInt) { // whole integer section
+		do
+		{
+			ptr -= 1;
+			*ptr = Representation[iVal % base];
+			iVal /= base;
 
-	} while (iVal != 0);
+		} while (iVal != 0);
 
-	if (!isPositive)
-	{
-		ptr -= 1;
-		*ptr = '-';
+		if (!isPositive)
+		{
+			ptr -= 1;
+			*ptr = '-';
+		}
 	}
+
+	else { // binary section
+		do
+		{
+			ptr -= 1;
+			*ptr = Representation[iVal & 1];
+			iVal = iVal >> 1;
+
+		} while (iVal != 0);
+	}
+
+	ptr -= 1;
+	*ptr = ValueExpression[preem._type];
+	ptr -= 1;
+	*ptr = Representation[0];
 
 	return(ptr);
 }
@@ -210,7 +238,7 @@ const char* Preent(const char* string, Parameter* head)
 	unsigned int startIndex = 0;
 	char* workingIndex = PREENT_BUFFER;
 
-	void* ptr = head;
+	//void* ptr = head;
 
 	HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD written = 0;
@@ -219,13 +247,13 @@ const char* Preent(const char* string, Parameter* head)
 	{
 		PREENT_BUFFER[i] = string[i];
 
-		if (string[i] == '\0')
+		if (string[i] == '\0') // end of PREENT STREEM
 		{
 			pootStr(workingIndex, output, written);
 			return NULL;
 		}
 
-		if (string[i] == '%')
+		if (string[i] == '%') // next PREENT PRAM
 		{
 			PREENT_BUFFER[i] = '\0';
 			pootStr(workingIndex, output, written);
@@ -243,6 +271,7 @@ const char* Preent(const char* string, Parameter* head)
 				head++;
 				break;
 
+			case __b:
 			case __I:
 			case __L:
 			case __x:

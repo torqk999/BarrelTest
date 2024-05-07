@@ -2,4 +2,4 @@
 #include <tMutation.h>
 #include <tModules.h>
 
-void mutation_TEST();
+void mutationTest();

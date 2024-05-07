@@ -12,6 +12,7 @@
 #define fmt_s(x) { __s,  x }
 #define fmt_L(x) { __L, &((long long){ x }) }
 #define fmt_I(x) { __I, &((int){ x }) }
+#define fmt_b(x) { __b, &((unsigned long long){ x }) }
 #define fmt_x(x) { __x, &((unsigned long long){ x }) }
 #define fmt_l(x) { __l, &((unsigned long long){ x }) }
 #define fmt_O(x) { __O, &((unsigned long long){ x }) }
@@ -21,9 +22,9 @@
 #define fmt_f(x) { __f, &((float){ x }) }
 #define fmt_d(x) { __d, &((double){ x }) }
 
-#define PREENT(string, ...) Preent(string, NULL)
+#define PREENT(string, ...) Preent(string, (Parameter[]) { __VA_ARGS__ })
 
-#define PREENT_ARGS(string, ...) Preent( string , (Parameter[]) { __VA_ARGS__ , nullParam })
+#define PREENT_SAFE(string, ...) Preent( string , (Parameter[]) { __VA_ARGS__ , nullParam })
 
 static char PREENT_BUFFER[MAX_CONSOLE_BUFFER];
 

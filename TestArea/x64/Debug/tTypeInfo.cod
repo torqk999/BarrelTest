@@ -6,12 +6,15 @@ INCLUDELIB MSVCRTD
 INCLUDELIB OLDNAMES
 
 PUBLIC	testTypeBinCurrentCount
+PUBLIC	testPropertyBinCurrentCount
 PUBLIC	testNullBinHead
 _DATA	SEGMENT
 COMM	testTypeBin:BYTE:0300H
+COMM	testPropertyBin:BYTE:0400H
 _DATA	ENDS
 _BSS	SEGMENT
 testTypeBinCurrentCount DD 01H DUP (?)
+testPropertyBinCurrentCount DD 01H DUP (?)
 _BSS	ENDS
 _DATA	SEGMENT
 COMM	testNullBin:BYTE:01000H
@@ -190,6 +193,7 @@ _DATA	ENDS
 PUBLIC	TypeInfo_Compare
 PUBLIC	TypeInfo_GetNullable
 PUBLIC	TypeInfo_GetInfo
+PUBLIC	Property_Get
 PUBLIC	TypeInfo_Get
 PUBLIC	TypeInfo_Name
 PUBLIC	TypeInfo_Size
@@ -228,7 +232,7 @@ pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$TypeInfo_GetNullable DD imagerel $LN8
-	DD	imagerel $LN8+358
+	DD	imagerel $LN8+364
 	DD	imagerel $unwind$TypeInfo_GetNullable
 pdata	ENDS
 ;	COMDAT pdata
@@ -236,6 +240,12 @@ pdata	SEGMENT
 $pdata$TypeInfo_GetInfo DD imagerel $LN8
 	DD	imagerel $LN8+203
 	DD	imagerel $unwind$TypeInfo_GetInfo
+pdata	ENDS
+;	COMDAT pdata
+pdata	SEGMENT
+$pdata$Property_Get DD imagerel $LN8
+	DD	imagerel $LN8+328
+	DD	imagerel $unwind$Property_Get
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
@@ -368,6 +378,46 @@ $unwind$TypeInfo_Get DD 025051801H
 	DD	0700c001dH
 	DD	0500bH
 xdata	ENDS
+;	COMDAT voltbl
+voltbl	SEGMENT
+_volmd	DW	03bH
+	DW	012fH
+voltbl	ENDS
+;	COMDAT xdata
+xdata	SEGMENT
+$unwind$Property_Get DD 025054219H
+	DD	01132318H
+	DD	0700c002fH
+	DD	0500bH
+	DD	imagerel __GSHandlerCheck
+	DD	0168H
+xdata	ENDS
+;	COMDAT CONST
+CONST	SEGMENT
+Property_Get$rtcName$0 DB 024H
+	DB	053H
+	DB	031H
+	DB	00H
+	ORG $+4
+Property_Get$rtcName$1 DB 06eH
+	DB	065H
+	DB	077H
+	DB	050H
+	DB	072H
+	DB	06fH
+	DB	070H
+	DB	00H
+Property_Get$rtcVarDesc DD 068H
+	DD	010H
+	DQ	FLAT:Property_Get$rtcName$1
+	DD	048H
+	DD	00H
+	DQ	FLAT:Property_Get$rtcName$0
+	ORG $+96
+Property_Get$rtcFrameData DD 02H
+	DD	00H
+	DQ	FLAT:Property_Get$rtcVarDesc
+CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$TypeInfo_GetInfo DD 025051301H
@@ -378,20 +428,25 @@ xdata	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DW	040H
-	DW	014dH
+	DW	0153H
 voltbl	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$TypeInfo_GetNullable DD 025054719H
 	DD	0118231dH
-	DD	07011002fH
+	DD	070110033H
 	DD	05010H
 	DD	imagerel __GSHandlerCheck
-	DD	0168H
+	DD	0188H
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-TypeInfo_GetNullable$rtcName$0 DB 06eH
+TypeInfo_GetNullable$rtcName$0 DB 024H
+	DB	053H
+	DB	032H
+	DB	00H
+	ORG $+4
+TypeInfo_GetNullable$rtcName$1 DB 06eH
 	DB	065H
 	DB	077H
 	DB	049H
@@ -399,12 +454,14 @@ TypeInfo_GetNullable$rtcName$0 DB 06eH
 	DB	066H
 	DB	06fH
 	DB	00H
-	ORG $+8
-TypeInfo_GetNullable$rtcVarDesc DD 068H
+TypeInfo_GetNullable$rtcVarDesc DD 088H
 	DD	018H
+	DQ	FLAT:TypeInfo_GetNullable$rtcName$1
+	DD	048H
+	DD	00H
 	DQ	FLAT:TypeInfo_GetNullable$rtcName$0
-	ORG $+48
-TypeInfo_GetNullable$rtcFrameData DD 01H
+	ORG $+96
+TypeInfo_GetNullable$rtcFrameData DD 02H
 	DD	00H
 	DQ	FLAT:TypeInfo_GetNullable$rtcVarDesc
 CONST	ENDS
@@ -433,7 +490,7 @@ size$ = 320
 nullLoc$ = 328
 TypeInfo_GetNullableTemplate PROC			; COMDAT
 
-; 119  : void* TypeInfo_GetNullableTemplate(size_t size, void* nullLoc) {
+; 121  : void* TypeInfo_GetNullableTemplate(size_t size, void* nullLoc) {
 
 $LN5:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -447,20 +504,20 @@ $LN5:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 120  : 	if (!nullLoc)
+; 122  : 	if (!nullLoc)
 
   00024	48 83 bd 48 01
 	00 00 00	 cmp	 QWORD PTR nullLoc$[rbp], 0
   0002c	75 04		 jne	 SHORT $LN2@TypeInfo_G
 
-; 121  : 		return NULL;
+; 123  : 		return NULL;
 
   0002e	33 c0		 xor	 eax, eax
   00030	eb 78		 jmp	 SHORT $LN1@TypeInfo_G
 $LN2@TypeInfo_G:
 
-; 122  : 
-; 123  : 	size_t endOfPage = &testNullBin + sizeof(Page);
+; 124  : 
+; 125  : 	size_t endOfPage = &testNullBin + sizeof(Page);
 
   00032	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:testNullBin
@@ -468,13 +525,13 @@ $LN2@TypeInfo_G:
 	01		 add	 rax, 16777216		; 01000000H
   0003f	48 89 45 08	 mov	 QWORD PTR endOfPage$[rbp], rax
 
-; 124  : 	size_t headLoc = testNullBinHead;
+; 126  : 	size_t headLoc = testNullBinHead;
 
   00043	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR testNullBinHead
   0004a	48 89 45 28	 mov	 QWORD PTR headLoc$[rbp], rax
 
-; 125  : 	if (headLoc + size > endOfPage)
+; 127  : 	if (headLoc + size > endOfPage)
 
   0004e	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR size$[rbp]
@@ -484,14 +541,14 @@ $LN2@TypeInfo_G:
   0005f	48 3b 45 08	 cmp	 rax, QWORD PTR endOfPage$[rbp]
   00063	76 04		 jbe	 SHORT $LN3@TypeInfo_G
 
-; 126  : 		return NULL;
+; 128  : 		return NULL;
 
   00065	33 c0		 xor	 eax, eax
   00067	eb 41		 jmp	 SHORT $LN1@TypeInfo_G
 $LN3@TypeInfo_G:
 
-; 127  : 
-; 128  : 	rawTranscribe(testNullBinHead, nullLoc, size);
+; 129  : 
+; 130  : 	rawTranscribe(testNullBinHead, nullLoc, size);
 
   00069	4c 8b 85 40 01
 	00 00		 mov	 r8, QWORD PTR size$[rbp]
@@ -501,13 +558,13 @@ $LN3@TypeInfo_G:
 	00 00		 mov	 rcx, QWORD PTR testNullBinHead
   0007e	e8 00 00 00 00	 call	 rawTranscribe
 
-; 129  : 	void* ptr = testNullBinHead;
+; 131  : 	void* ptr = testNullBinHead;
 
   00083	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR testNullBinHead
   0008a	48 89 45 48	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 130  : 	testNullBinHead = headLoc + size;
+; 132  : 	testNullBinHead = headLoc + size;
 
   0008e	48 8b 85 40 01
 	00 00		 mov	 rax, QWORD PTR size$[rbp]
@@ -517,12 +574,12 @@ $LN3@TypeInfo_G:
   0009f	48 89 05 00 00
 	00 00		 mov	 QWORD PTR testNullBinHead, rax
 
-; 131  : 	return ptr;
+; 133  : 	return ptr;
 
   000a6	48 8b 45 48	 mov	 rax, QWORD PTR ptr$[rbp]
 $LN1@TypeInfo_G:
 
-; 132  : }
+; 134  : }
 
   000aa	48 8d a5 28 01
 	00 00		 lea	 rsp, QWORD PTR [rbp+296]
@@ -539,7 +596,7 @@ flags$ = 4
 name$ = 256
 TypeInfo_BuildMemFlags PROC				; COMDAT
 
-; 77   : int TypeInfo_BuildMemFlags(const char* name) {
+; 79   : int TypeInfo_BuildMemFlags(const char* name) {
 
 $LN6:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -552,13 +609,13 @@ $LN6:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 78   : 	int flags = 0;
+; 80   : 	int flags = 0;
 
   0001f	c7 45 04 00 00
 	00 00		 mov	 DWORD PTR flags$[rbp], 0
 
-; 79   : 
-; 80   : 	if (findSubString(name, "const") > -1)
+; 81   : 
+; 82   : 	if (findSubString(name, "const") > -1)
 
   00026	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_05BNCCCJPP@const@
@@ -568,15 +625,15 @@ $LN6:
   00039	83 f8 ff	 cmp	 eax, -1
   0003c	7e 09		 jle	 SHORT $LN2@TypeInfo_B
 
-; 81   : 		flags |= READ_ONLY | FIXED_SIZE;
+; 83   : 		flags |= READ_ONLY | FIXED_SIZE;
 
   0003e	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   00041	83 c8 03	 or	 eax, 3
   00044	89 45 04	 mov	 DWORD PTR flags$[rbp], eax
 $LN2@TypeInfo_B:
 
-; 82   : 
-; 83   : 	if (findSubString(name, "static") > -1)
+; 84   : 
+; 85   : 	if (findSubString(name, "static") > -1)
 
   00047	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_06GGHJAEBN@static@
@@ -586,15 +643,15 @@ $LN2@TypeInfo_B:
   0005a	83 f8 ff	 cmp	 eax, -1
   0005d	7e 09		 jle	 SHORT $LN3@TypeInfo_B
 
-; 84   : 		flags |= STATIC;
+; 86   : 		flags |= STATIC;
 
   0005f	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   00062	83 c8 04	 or	 eax, 4
   00065	89 45 04	 mov	 DWORD PTR flags$[rbp], eax
 $LN3@TypeInfo_B:
 
-; 85   : 
-; 86   : 	if (findSubString(name, "volatile") > -1)
+; 87   : 
+; 88   : 	if (findSubString(name, "volatile") > -1)
 
   00068	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_08PABEKFH@volatile@
@@ -604,19 +661,19 @@ $LN3@TypeInfo_B:
   0007b	83 f8 ff	 cmp	 eax, -1
   0007e	7e 09		 jle	 SHORT $LN4@TypeInfo_B
 
-; 87   : 		flags |= VOLATILE;
+; 89   : 		flags |= VOLATILE;
 
   00080	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   00083	83 c8 08	 or	 eax, 8
   00086	89 45 04	 mov	 DWORD PTR flags$[rbp], eax
 $LN4@TypeInfo_B:
 
-; 88   : 
-; 89   : 	return flags;
+; 90   : 
+; 91   : 	return flags;
 
   00089	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
 
-; 90   : }
+; 92   : }
 
   0008c	48 8d a5 e8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+232]
@@ -633,7 +690,7 @@ flags$ = 4
 name$ = 256
 TypeInfo_BuildTypeFlags PROC				; COMDAT
 
-; 51   : {
+; 53   : {
 
 $LN12:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -646,13 +703,13 @@ $LN12:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 52   : 	int flags = 0;
+; 54   : 	int flags = 0;
 
   0001f	c7 45 04 00 00
 	00 00		 mov	 DWORD PTR flags$[rbp], 0
 
-; 53   : 
-; 54   : 	if (findSubString(name, "unsigned") > -1)
+; 55   : 
+; 56   : 	if (findSubString(name, "unsigned") > -1)
 
   00026	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_08CLLOMHGD@unsigned@
@@ -662,15 +719,15 @@ $LN12:
   00039	83 f8 ff	 cmp	 eax, -1
   0003c	7e 09		 jle	 SHORT $LN2@TypeInfo_B
 
-; 55   : 		flags |= UNSIGNED;
+; 57   : 		flags |= UNSIGNED;
 
   0003e	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   00041	83 c8 20	 or	 eax, 32			; 00000020H
   00044	89 45 04	 mov	 DWORD PTR flags$[rbp], eax
 $LN2@TypeInfo_B:
 
-; 56   : 
-; 57   : 	if (findSubString(name, "float") > -1 ||
+; 58   : 
+; 59   : 	if (findSubString(name, "float") > -1 ||
 
   00047	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_05KNFBNCOH@float@
@@ -688,8 +745,8 @@ $LN2@TypeInfo_B:
   00075	7e 0b		 jle	 SHORT $LN3@TypeInfo_B
 $LN5@TypeInfo_B:
 
-; 58   : 		findSubString(name, "double") > -1)
-; 59   : 		flags |= FLOATING;
+; 60   : 		findSubString(name, "double") > -1)
+; 61   : 		flags |= FLOATING;
 
   00077	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   0007a	83 c8 04	 or	 eax, 4
@@ -697,10 +754,10 @@ $LN5@TypeInfo_B:
   00080	eb 7f		 jmp	 SHORT $LN4@TypeInfo_B
 $LN3@TypeInfo_B:
 
-; 60   : 
-; 61   : 	else if
-; 62   : 		(findSubString(name, "int") > -1 ||
-; 63   : 			findSubString(name, "long") > -1 ||
+; 62   : 
+; 63   : 	else if
+; 64   : 		(findSubString(name, "int") > -1 ||
+; 65   : 			findSubString(name, "long") > -1 ||
 
   00082	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
@@ -725,8 +782,8 @@ $LN3@TypeInfo_B:
   000c8	7e 0b		 jle	 SHORT $LN6@TypeInfo_B
 $LN8@TypeInfo_B:
 
-; 64   : 			findSubString(name, "short") > -1)
-; 65   : 		flags |= INTEGRAL;
+; 66   : 			findSubString(name, "short") > -1)
+; 67   : 		flags |= INTEGRAL;
 
   000ca	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   000cd	83 c8 02	 or	 eax, 2
@@ -734,9 +791,9 @@ $LN8@TypeInfo_B:
   000d3	eb 2c		 jmp	 SHORT $LN7@TypeInfo_B
 $LN6@TypeInfo_B:
 
-; 66   : 
-; 67   : 	else if
-; 68   : 		(findSubString(name, "char") > -1)
+; 68   : 
+; 69   : 	else if
+; 70   : 		(findSubString(name, "char") > -1)
 
   000d5	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:??_C@_04ENMBGAPA@char@
@@ -746,7 +803,7 @@ $LN6@TypeInfo_B:
   000e8	83 f8 ff	 cmp	 eax, -1
   000eb	7e 0b		 jle	 SHORT $LN9@TypeInfo_B
 
-; 69   : 		flags |= ALPHA;
+; 71   : 		flags |= ALPHA;
 
   000ed	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   000f0	83 c8 01	 or	 eax, 1
@@ -754,9 +811,9 @@ $LN6@TypeInfo_B:
   000f6	eb 09		 jmp	 SHORT $LN10@TypeInfo_B
 $LN9@TypeInfo_B:
 
-; 70   : 
-; 71   : 	else
-; 72   : 		flags |= TYPE_DEF;
+; 72   : 
+; 73   : 	else
+; 74   : 		flags |= TYPE_DEF;
 
   000f8	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
   000fb	83 c8 08	 or	 eax, 8
@@ -765,12 +822,12 @@ $LN10@TypeInfo_B:
 $LN7@TypeInfo_B:
 $LN4@TypeInfo_B:
 
-; 73   : 
-; 74   : 	return flags;
+; 75   : 
+; 76   : 	return flags;
 
   00101	8b 45 04	 mov	 eax, DWORD PTR flags$[rbp]
 
-; 75   : }
+; 77   : }
 
   00104	48 8d a5 e8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+232]
@@ -786,7 +843,7 @@ _TEXT	SEGMENT
 collection$ = 224
 TypeInfo_Size PROC					; COMDAT
 
-; 176  : {
+; 146  : {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -799,7 +856,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 177  : 	return collection->_extensions->_type->_size;
+; 147  : 	return collection->_extensions->_type->_size;
 
   0001f	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR collection$[rbp]
@@ -807,7 +864,7 @@ $LN3:
   00029	48 8b 00	 mov	 rax, QWORD PTR [rax]
   0002c	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
 
-; 178  : }
+; 148  : }
 
   00030	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -823,7 +880,7 @@ _TEXT	SEGMENT
 collection$ = 224
 TypeInfo_Name PROC					; COMDAT
 
-; 171  : {
+; 141  : {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -836,7 +893,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 172  : 	return collection->_extensions->_type->_name;
+; 142  : 	return collection->_extensions->_type->_name;
 
   0001f	48 8b 85 e0 00
 	00 00		 mov	 rax, QWORD PTR collection$[rbp]
@@ -844,7 +901,7 @@ $LN3:
   00029	48 8b 00	 mov	 rax, QWORD PTR [rax]
   0002c	48 8b 00	 mov	 rax, QWORD PTR [rax]
 
-; 173  : }
+; 143  : }
 
   0002f	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -861,7 +918,7 @@ name$ = 224
 size$ = 232
 TypeInfo_Get PROC					; COMDAT
 
-; 199  : TypeInfo* TypeInfo_Get(const char* name, size_t size) { return TypeInfo_GetNullable(name, size, NULL); }
+; 221  : TypeInfo* TypeInfo_Get(const char* name, size_t size) { return TypeInfo_GetNullable(name, size, NULL); }
 
 $LN3:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -889,6 +946,176 @@ TypeInfo_Get ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
 ; File C:\Repos\BarrelTest\tTypeInfo.c
+;	COMDAT Property_Get
+_TEXT	SEGMENT
+i$5 = 4
+$S1$6 = 40
+newProp$ = 72
+ptr$ = 120
+__$ArrayPad$ = 328
+name$ = 368
+info$ = 376
+Property_Get PROC					; COMDAT
+
+; 169  : Property* Property_Get(const char* name, TypeInfo* info) {
+
+$LN8:
+  00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  00005	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000a	55		 push	 rbp
+  0000b	57		 push	 rdi
+  0000c	48 81 ec 78 01
+	00 00		 sub	 rsp, 376		; 00000178H
+  00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
+  00018	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
+  0001d	b9 26 00 00 00	 mov	 ecx, 38			; 00000026H
+  00022	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
+  00027	f3 ab		 rep stosd
+  00029	48 8b 8c 24 98
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+408]
+  00031	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  00038	48 33 c5	 xor	 rax, rbp
+  0003b	48 89 85 48 01
+	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
+  00042	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
+  00049	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
+
+; 170  : 
+; 171  : 	for (int i = 0; i < testPropertyBinCurrentCount; i++) {
+
+  0004e	c7 45 04 00 00
+	00 00		 mov	 DWORD PTR i$5[rbp], 0
+  00055	eb 08		 jmp	 SHORT $LN4@Property_G
+$LN2@Property_G:
+  00057	8b 45 04	 mov	 eax, DWORD PTR i$5[rbp]
+  0005a	ff c0		 inc	 eax
+  0005c	89 45 04	 mov	 DWORD PTR i$5[rbp], eax
+$LN4@Property_G:
+  0005f	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR testPropertyBinCurrentCount
+  00065	39 45 04	 cmp	 DWORD PTR i$5[rbp], eax
+  00068	73 3c		 jae	 SHORT $LN3@Property_G
+
+; 172  : 		if (defaultStringCompare(testPropertyBin[i]._name, name))
+
+  0006a	48 63 45 04	 movsxd	 rax, DWORD PTR i$5[rbp]
+  0006e	48 6b c0 10	 imul	 rax, rax, 16
+  00072	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:testPropertyBin
+  00079	48 8b 95 70 01
+	00 00		 mov	 rdx, QWORD PTR name$[rbp]
+  00080	48 8b 0c 01	 mov	 rcx, QWORD PTR [rcx+rax]
+  00084	e8 00 00 00 00	 call	 defaultStringCompare
+  00089	85 c0		 test	 eax, eax
+  0008b	74 17		 je	 SHORT $LN5@Property_G
+
+; 173  : 			return &testPropertyBin[i];
+
+  0008d	48 63 45 04	 movsxd	 rax, DWORD PTR i$5[rbp]
+  00091	48 6b c0 10	 imul	 rax, rax, 16
+  00095	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:testPropertyBin
+  0009c	48 03 c8	 add	 rcx, rax
+  0009f	48 8b c1	 mov	 rax, rcx
+  000a2	eb 75		 jmp	 SHORT $LN1@Property_G
+$LN5@Property_G:
+
+; 174  : 	}
+
+  000a4	eb b1		 jmp	 SHORT $LN2@Property_G
+$LN3@Property_G:
+
+; 175  : 
+; 176  : 	if (testPropertyBinCurrentCount >= testPropertyBinCount)
+
+  000a6	83 3d 00 00 00
+	00 40		 cmp	 DWORD PTR testPropertyBinCurrentCount, 64 ; 00000040H
+  000ad	72 14		 jb	 SHORT $LN6@Property_G
+
+; 177  : 	{
+; 178  : 		PREENT("No type slots available...\n");
+
+  000af	48 8d 55 28	 lea	 rdx, QWORD PTR $S1$6[rbp]
+  000b3	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@KPOEFPPK@No?5type?5slots?5available?4?4?4?6@
+  000ba	e8 00 00 00 00	 call	 Preent
+
+; 179  : 		return NULL;
+
+  000bf	33 c0		 xor	 eax, eax
+  000c1	eb 56		 jmp	 SHORT $LN1@Property_G
+$LN6@Property_G:
+
+; 180  : 	}
+; 181  : 
+; 182  : 	Property newProp = {
+
+  000c3	48 8b 85 70 01
+	00 00		 mov	 rax, QWORD PTR name$[rbp]
+  000ca	48 89 45 48	 mov	 QWORD PTR newProp$[rbp], rax
+  000ce	48 8b 85 78 01
+	00 00		 mov	 rax, QWORD PTR info$[rbp]
+  000d5	48 89 45 50	 mov	 QWORD PTR newProp$[rbp+8], rax
+
+; 183  : 		name,
+; 184  : 		info
+; 185  : 	};
+; 186  : 
+; 187  : 	Property* ptr = &testPropertyBin[testPropertyBinCurrentCount];
+
+  000d9	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR testPropertyBinCurrentCount
+  000df	48 6b c0 10	 imul	 rax, rax, 16
+  000e3	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:testPropertyBin
+  000ea	48 03 c8	 add	 rcx, rax
+  000ed	48 8b c1	 mov	 rax, rcx
+  000f0	48 89 45 78	 mov	 QWORD PTR ptr$[rbp], rax
+
+; 188  : 	rawTranscribe(ptr, &newProp, sizeof(Property));
+
+  000f4	41 b8 10 00 00
+	00		 mov	 r8d, 16
+  000fa	48 8d 55 48	 lea	 rdx, QWORD PTR newProp$[rbp]
+  000fe	48 8b 4d 78	 mov	 rcx, QWORD PTR ptr$[rbp]
+  00102	e8 00 00 00 00	 call	 rawTranscribe
+
+; 189  : 	testPropertyBinCurrentCount++;
+
+  00107	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR testPropertyBinCurrentCount
+  0010d	ff c0		 inc	 eax
+  0010f	89 05 00 00 00
+	00		 mov	 DWORD PTR testPropertyBinCurrentCount, eax
+
+; 190  : 	return ptr;
+
+  00115	48 8b 45 78	 mov	 rax, QWORD PTR ptr$[rbp]
+$LN1@Property_G:
+
+; 191  : }
+
+  00119	48 8b f8	 mov	 rdi, rax
+  0011c	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00120	48 8d 15 00 00
+	00 00		 lea	 rdx, OFFSET FLAT:Property_Get$rtcFrameData
+  00127	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  0012c	48 8b c7	 mov	 rax, rdi
+  0012f	48 8b 8d 48 01
+	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
+  00136	48 33 cd	 xor	 rcx, rbp
+  00139	e8 00 00 00 00	 call	 __security_check_cookie
+  0013e	48 8d a5 58 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+344]
+  00145	5f		 pop	 rdi
+  00146	5d		 pop	 rbp
+  00147	c3		 ret	 0
+Property_Get ENDP
+_TEXT	ENDS
+; Function compile flags: /Odtp /RTCsu /ZI
+; File C:\Repos\BarrelTest\tTypeInfo.c
 ;	COMDAT TypeInfo_GetInfo
 _TEXT	SEGMENT
 info$ = 8
@@ -896,7 +1123,7 @@ tv70 = 212
 request$ = 256
 TypeInfo_GetInfo PROC					; COMDAT
 
-; 181  : {
+; 151  : {
 
 $LN8:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -909,7 +1136,7 @@ $LN8:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 182  : 	TypeInfo* info = request._params[tSRC];
+; 152  : 	TypeInfo* info = request._params[tSRC];
 
   0001f	b8 08 00 00 00	 mov	 eax, 8
   00024	48 6b c0 02	 imul	 rax, rax, 2
@@ -919,8 +1146,8 @@ $LN8:
   00033	48 8b 04 08	 mov	 rax, QWORD PTR [rax+rcx]
   00037	48 89 45 08	 mov	 QWORD PTR info$[rbp], rax
 
-; 183  : 
-; 184  : 	switch ((ParamType)request._params[tVARIANT]) {
+; 153  : 
+; 154  : 	switch ((ParamType)request._params[tVARIANT]) {
 
   0003b	b8 08 00 00 00	 mov	 eax, 8
   00040	48 6b c0 00	 imul	 rax, rax, 0
@@ -939,8 +1166,8 @@ $LN8:
   0006a	eb 53		 jmp	 SHORT $LN6@TypeInfo_G
 $LN4@TypeInfo_G:
 
-; 185  : 	case tNAME:
-; 186  : 		*((char**)request._params[tNAME]) = info->_name;
+; 155  : 	case tNAME:
+; 156  : 		*((char**)request._params[tNAME]) = info->_name;
 
   0006c	b8 08 00 00 00	 mov	 eax, 8
   00071	48 6b c0 09	 imul	 rax, rax, 9
@@ -952,15 +1179,15 @@ $LN4@TypeInfo_G:
   00088	48 8b 09	 mov	 rcx, QWORD PTR [rcx]
   0008b	48 89 08	 mov	 QWORD PTR [rax], rcx
 
-; 187  : 		return true;
+; 157  : 		return true;
 
   0008e	b8 01 00 00 00	 mov	 eax, 1
   00093	eb 2c		 jmp	 SHORT $LN1@TypeInfo_G
 $LN5@TypeInfo_G:
 
-; 188  : 
-; 189  : 	case  tSIZE:
-; 190  : 		*((size_t*)request._params[tSIZE]) = info->_size;
+; 158  : 
+; 159  : 	case  tSIZE:
+; 160  : 		*((size_t*)request._params[tSIZE]) = info->_size;
 
   00095	b8 08 00 00 00	 mov	 eax, 8
   0009a	48 6b c0 06	 imul	 rax, rax, 6
@@ -972,22 +1199,22 @@ $LN5@TypeInfo_G:
   000b1	48 8b 49 08	 mov	 rcx, QWORD PTR [rcx+8]
   000b5	48 89 08	 mov	 QWORD PTR [rax], rcx
 
-; 191  : 		return true;
+; 161  : 		return true;
 
   000b8	b8 01 00 00 00	 mov	 eax, 1
   000bd	eb 02		 jmp	 SHORT $LN1@TypeInfo_G
 $LN6@TypeInfo_G:
 
-; 192  : 
-; 193  : 
-; 194  : 	default:
-; 195  : 		return false;
+; 162  : 
+; 163  : 
+; 164  : 	default:
+; 165  : 		return false;
 
   000bf	33 c0		 xor	 eax, eax
 $LN1@TypeInfo_G:
 
-; 196  : 	}
-; 197  : }
+; 166  : 	}
+; 167  : }
 
   000c1	48 8d a5 e8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+232]
@@ -1000,17 +1227,18 @@ _TEXT	ENDS
 ; File C:\Repos\BarrelTest\tTypeInfo.c
 ;	COMDAT TypeInfo_GetNullable
 _TEXT	SEGMENT
-i$4 = 4
-nullTmp$ = 40
-newInfo$ = 72
-ptr$ = 120
-__$ArrayPad$ = 328
-name$ = 368
-size$ = 376
-nullLoc$ = 384
+i$5 = 4
+$S2$6 = 40
+nullTmp$ = 72
+newInfo$ = 104
+ptr$ = 152
+__$ArrayPad$ = 360
+name$ = 400
+size$ = 408
+nullLoc$ = 416
 TypeInfo_GetNullable PROC				; COMDAT
 
-; 138  : TypeInfo* TypeInfo_GetNullable(const char* name, size_t size, void* nullLoc) {
+; 195  : {
 
 $LN8:
   00000	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
@@ -1018,170 +1246,165 @@ $LN8:
   0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   0000f	55		 push	 rbp
   00010	57		 push	 rdi
-  00011	48 81 ec 78 01
-	00 00		 sub	 rsp, 376		; 00000178H
+  00011	48 81 ec 98 01
+	00 00		 sub	 rsp, 408		; 00000198H
   00018	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   0001d	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00022	b9 26 00 00 00	 mov	 ecx, 38			; 00000026H
+  00022	b9 2e 00 00 00	 mov	 ecx, 46			; 0000002eH
   00027	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
   0002c	f3 ab		 rep stosd
-  0002e	48 8b 8c 24 98
-	01 00 00	 mov	 rcx, QWORD PTR [rsp+408]
+  0002e	48 8b 8c 24 b8
+	01 00 00	 mov	 rcx, QWORD PTR [rsp+440]
   00036	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR __security_cookie
   0003d	48 33 c5	 xor	 rax, rbp
-  00040	48 89 85 48 01
+  00040	48 89 85 68 01
 	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
   00047	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0004e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 139  : 
-; 140  : 	for (int i = 0; i < testTypeBinCurrentCount; i++) {
+; 196  : 	for (int i = 0; i < testPropertyBinCount; i++) {
 
   00053	c7 45 04 00 00
-	00 00		 mov	 DWORD PTR i$4[rbp], 0
+	00 00		 mov	 DWORD PTR i$5[rbp], 0
   0005a	eb 08		 jmp	 SHORT $LN4@TypeInfo_G
 $LN2@TypeInfo_G:
-  0005c	8b 45 04	 mov	 eax, DWORD PTR i$4[rbp]
+  0005c	8b 45 04	 mov	 eax, DWORD PTR i$5[rbp]
   0005f	ff c0		 inc	 eax
-  00061	89 45 04	 mov	 DWORD PTR i$4[rbp], eax
+  00061	89 45 04	 mov	 DWORD PTR i$5[rbp], eax
 $LN4@TypeInfo_G:
-  00064	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR testTypeBinCurrentCount
-  0006a	39 45 04	 cmp	 DWORD PTR i$4[rbp], eax
-  0006d	73 38		 jae	 SHORT $LN3@TypeInfo_G
+  00064	83 7d 04 40	 cmp	 DWORD PTR i$5[rbp], 64	; 00000040H
+  00068	7d 38		 jge	 SHORT $LN3@TypeInfo_G
 
-; 141  : 		if (testTypeBin[i]._name == name)
+; 197  : 		if (testTypeBin[i]._name == name)
 
-  0006f	48 63 45 04	 movsxd	 rax, DWORD PTR i$4[rbp]
-  00073	48 6b c0 18	 imul	 rax, rax, 24
-  00077	48 8d 0d 00 00
+  0006a	48 63 45 04	 movsxd	 rax, DWORD PTR i$5[rbp]
+  0006e	48 6b c0 18	 imul	 rax, rax, 24
+  00072	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:testTypeBin
-  0007e	48 8b 95 70 01
+  00079	48 8b 95 90 01
 	00 00		 mov	 rdx, QWORD PTR name$[rbp]
-  00085	48 39 14 01	 cmp	 QWORD PTR [rcx+rax], rdx
-  00089	75 1a		 jne	 SHORT $LN5@TypeInfo_G
+  00080	48 39 14 01	 cmp	 QWORD PTR [rcx+rax], rdx
+  00084	75 1a		 jne	 SHORT $LN5@TypeInfo_G
 
-; 142  : 			return &testTypeBin[i];
+; 198  : 			return &testTypeBin[i];
 
-  0008b	48 63 45 04	 movsxd	 rax, DWORD PTR i$4[rbp]
-  0008f	48 6b c0 18	 imul	 rax, rax, 24
-  00093	48 8d 0d 00 00
+  00086	48 63 45 04	 movsxd	 rax, DWORD PTR i$5[rbp]
+  0008a	48 6b c0 18	 imul	 rax, rax, 24
+  0008e	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:testTypeBin
-  0009a	48 03 c8	 add	 rcx, rax
-  0009d	48 8b c1	 mov	 rax, rcx
-  000a0	e9 92 00 00 00	 jmp	 $LN1@TypeInfo_G
+  00095	48 03 c8	 add	 rcx, rax
+  00098	48 8b c1	 mov	 rax, rcx
+  0009b	e9 9d 00 00 00	 jmp	 $LN1@TypeInfo_G
 $LN5@TypeInfo_G:
 
-; 143  : 	}
+; 199  : 	}
 
-  000a5	eb b5		 jmp	 SHORT $LN2@TypeInfo_G
+  000a0	eb ba		 jmp	 SHORT $LN2@TypeInfo_G
 $LN3@TypeInfo_G:
 
-; 144  : 
-; 145  : 	if (testTypeBinCurrentCount >= testTypeBinCount)
+; 200  : 
+; 201  : 	if (testTypeBinCurrentCount >= testTypeBinCount)
 
-  000a7	83 3d 00 00 00
+  000a2	83 3d 00 00 00
 	00 20		 cmp	 DWORD PTR testTypeBinCurrentCount, 32 ; 00000020H
-  000ae	72 12		 jb	 SHORT $LN6@TypeInfo_G
+  000a9	72 14		 jb	 SHORT $LN6@TypeInfo_G
 
-; 146  : 	{
-; 147  : 		PREENT("No type slots available...\n");
+; 202  : 	{
+; 203  : 		PREENT("No type slots available...\n");
 
-  000b0	33 d2		 xor	 edx, edx
-  000b2	48 8d 0d 00 00
+  000ab	48 8d 55 28	 lea	 rdx, QWORD PTR $S2$6[rbp]
+  000af	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BM@KPOEFPPK@No?5type?5slots?5available?4?4?4?6@
-  000b9	e8 00 00 00 00	 call	 Preent
+  000b6	e8 00 00 00 00	 call	 Preent
 
-; 148  : 		return NULL;
+; 204  : 		return NULL;
 
-  000be	33 c0		 xor	 eax, eax
-  000c0	eb 75		 jmp	 SHORT $LN1@TypeInfo_G
+  000bb	33 c0		 xor	 eax, eax
+  000bd	eb 7e		 jmp	 SHORT $LN1@TypeInfo_G
 $LN6@TypeInfo_G:
 
-; 149  : 	}
-; 150  : 
-; 151  : 	//uint flags = TypeInfo_BuildTypeFlags(name);
-; 152  : 	//uint unitsPerBlock, barrelsPerBlock;
-; 153  : 	//TypeInfo_BarrelBlockCounts(size, &unitsPerBlock, &barrelsPerBlock);
-; 154  : 	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
+; 205  : 	}
+; 206  : 
+; 207  : 	void* nullTmp = TypeInfo_GetNullableTemplate(size, nullLoc);
 
-  000c2	48 8b 95 80 01
+  000bf	48 8b 95 a0 01
 	00 00		 mov	 rdx, QWORD PTR nullLoc$[rbp]
-  000c9	48 8b 8d 78 01
+  000c6	48 8b 8d 98 01
 	00 00		 mov	 rcx, QWORD PTR size$[rbp]
-  000d0	e8 00 00 00 00	 call	 TypeInfo_GetNullableTemplate
-  000d5	48 89 45 28	 mov	 QWORD PTR nullTmp$[rbp], rax
+  000cd	e8 00 00 00 00	 call	 TypeInfo_GetNullableTemplate
+  000d2	48 89 45 48	 mov	 QWORD PTR nullTmp$[rbp], rax
 
-; 155  : 
-; 156  : 	TypeInfo newInfo = {
+; 208  : 
+; 209  : 	TypeInfo newInfo = {
 
-  000d9	48 8b 85 70 01
+  000d6	48 8b 85 90 01
 	00 00		 mov	 rax, QWORD PTR name$[rbp]
-  000e0	48 89 45 48	 mov	 QWORD PTR newInfo$[rbp], rax
-  000e4	48 8b 85 78 01
+  000dd	48 89 45 68	 mov	 QWORD PTR newInfo$[rbp], rax
+  000e1	48 8b 85 98 01
 	00 00		 mov	 rax, QWORD PTR size$[rbp]
-  000eb	48 89 45 50	 mov	 QWORD PTR newInfo$[rbp+8], rax
-  000ef	48 8b 45 28	 mov	 rax, QWORD PTR nullTmp$[rbp]
-  000f3	48 89 45 58	 mov	 QWORD PTR newInfo$[rbp+16], rax
+  000e8	48 89 45 70	 mov	 QWORD PTR newInfo$[rbp+8], rax
+  000ec	48 8b 45 48	 mov	 rax, QWORD PTR nullTmp$[rbp]
+  000f0	48 89 45 78	 mov	 QWORD PTR newInfo$[rbp+16], rax
 
-; 157  : 		name,
-; 158  : 		size,
-; 159  : 		nullTmp,
-; 160  : 		//unitsPerBlock,
-; 161  : 		//barrelsPerBlock
-; 162  : 	};
-; 163  : 
-; 164  : 	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
+; 210  : 		name,
+; 211  : 		size,
+; 212  : 		nullTmp,
+; 213  : 	};
+; 214  : 
+; 215  : 	TypeInfo* ptr = &testTypeBin[testTypeBinCurrentCount];
 
-  000f7	8b 05 00 00 00
+  000f4	8b 05 00 00 00
 	00		 mov	 eax, DWORD PTR testTypeBinCurrentCount
-  000fd	48 6b c0 18	 imul	 rax, rax, 24
-  00101	48 8d 0d 00 00
+  000fa	48 6b c0 18	 imul	 rax, rax, 24
+  000fe	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:testTypeBin
-  00108	48 03 c8	 add	 rcx, rax
-  0010b	48 8b c1	 mov	 rax, rcx
-  0010e	48 89 45 78	 mov	 QWORD PTR ptr$[rbp], rax
+  00105	48 03 c8	 add	 rcx, rax
+  00108	48 8b c1	 mov	 rax, rcx
+  0010b	48 89 85 98 00
+	00 00		 mov	 QWORD PTR ptr$[rbp], rax
 
-; 165  : 	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
+; 216  : 	rawTranscribe(ptr, &newInfo, sizeof(TypeInfo));
 
   00112	41 b8 18 00 00
 	00		 mov	 r8d, 24
-  00118	48 8d 55 48	 lea	 rdx, QWORD PTR newInfo$[rbp]
-  0011c	48 8b 4d 78	 mov	 rcx, QWORD PTR ptr$[rbp]
-  00120	e8 00 00 00 00	 call	 rawTranscribe
+  00118	48 8d 55 68	 lea	 rdx, QWORD PTR newInfo$[rbp]
+  0011c	48 8b 8d 98 00
+	00 00		 mov	 rcx, QWORD PTR ptr$[rbp]
+  00123	e8 00 00 00 00	 call	 rawTranscribe
 
-; 166  : 	testTypeBinCurrentCount++;
+; 217  : 	testTypeBinCurrentCount++;
 
-  00125	8b 05 00 00 00
+  00128	8b 05 00 00 00
 	00		 mov	 eax, DWORD PTR testTypeBinCurrentCount
-  0012b	ff c0		 inc	 eax
-  0012d	89 05 00 00 00
+  0012e	ff c0		 inc	 eax
+  00130	89 05 00 00 00
 	00		 mov	 DWORD PTR testTypeBinCurrentCount, eax
 
-; 167  : 	return ptr;
+; 218  : 	return ptr;
 
-  00133	48 8b 45 78	 mov	 rax, QWORD PTR ptr$[rbp]
+  00136	48 8b 85 98 00
+	00 00		 mov	 rax, QWORD PTR ptr$[rbp]
 $LN1@TypeInfo_G:
 
-; 168  : }
+; 219  : }
 
-  00137	48 8b f8	 mov	 rdi, rax
-  0013a	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  0013e	48 8d 15 00 00
+  0013d	48 8b f8	 mov	 rdi, rax
+  00140	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00144	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:TypeInfo_GetNullable$rtcFrameData
-  00145	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  0014a	48 8b c7	 mov	 rax, rdi
-  0014d	48 8b 8d 48 01
+  0014b	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  00150	48 8b c7	 mov	 rax, rdi
+  00153	48 8b 8d 68 01
 	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00154	48 33 cd	 xor	 rcx, rbp
-  00157	e8 00 00 00 00	 call	 __security_check_cookie
-  0015c	48 8d a5 58 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+344]
-  00163	5f		 pop	 rdi
-  00164	5d		 pop	 rbp
-  00165	c3		 ret	 0
+  0015a	48 33 cd	 xor	 rcx, rbp
+  0015d	e8 00 00 00 00	 call	 __security_check_cookie
+  00162	48 8d a5 78 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+376]
+  00169	5f		 pop	 rdi
+  0016a	5d		 pop	 rbp
+  0016b	c3		 ret	 0
 TypeInfo_GetNullable ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
@@ -1192,7 +1415,7 @@ a$ = 224
 b$ = 232
 TypeInfo_Compare PROC					; COMDAT
 
-; 134  : bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b) {
+; 136  : bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b) {
 
 $LN3:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -1206,7 +1429,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__44D20BAF_tTypeInfo@c
   0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 135  : 	return defaultStringCompare(a->_name, b->_name);
+; 137  : 	return defaultStringCompare(a->_name, b->_name);
 
   00024	48 8b 85 e8 00
 	00 00		 mov	 rax, QWORD PTR b$[rbp]
@@ -1216,7 +1439,7 @@ $LN3:
   00035	48 8b 08	 mov	 rcx, QWORD PTR [rax]
   00038	e8 00 00 00 00	 call	 defaultStringCompare
 
-; 136  : }
+; 138  : }
 
   0003d	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]

@@ -2,7 +2,7 @@
 #define	tHeap
 #include <tServices.h>
 
-
+static HeapService GlobalHeapService;
 
 bool Heap_DeltaPages(int delta);
 

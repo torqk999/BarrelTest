@@ -1,4 +1,9 @@
 ﻿  TestArea.c
-C:\Repos\BarrelTest\TestArea.c(40,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Repos\BarrelTest\TestArea.c(40,24): warning C4244: 'initializing': conversion from 'float' to 'char', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(57,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Repos\BarrelTest\TestArea.c(57,24): warning C4244: 'initializing': conversion from 'float' to 'char', possible loss of data
+  tPreent.c
+C:\Repos\BarrelTest\tPreent.c(172,10): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Repos\BarrelTest\tPreent.c(185,12): warning C4244: '=': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Repos\BarrelTest\tPreent.c(110,7): warning C4101: 'next': unreferenced local variable
+  Generating Code...
   TestArea.vcxproj -> C:\Repos\BarrelTest\x64\Debug\TestArea.exe

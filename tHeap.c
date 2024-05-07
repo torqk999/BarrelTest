@@ -1,6 +1,6 @@
 #include <tHeap.h>
 
-static HeapService GlobalHeapService;
+
 static TypeInfo GlobalPageType;
 
 bool Heap_DeltaPages(int delta)

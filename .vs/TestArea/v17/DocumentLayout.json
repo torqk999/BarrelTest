@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "C:\\Repos\\BarrelTest\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tModules.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tModules.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tPreent.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tPreent.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\TestArea.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:TestArea.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tEnums.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tEnums.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tPreent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tPreent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tMutation.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tMutation.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\MutationTest.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:MutationTest.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -11,96 +35,72 @@
       "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tMutation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tUserCollection.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tUserCollection.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\MutationTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:MutationTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tTypeInfo.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tTypeInfo.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tModules.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tModules.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tTypeInfo.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tTypeInfo.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHelpers.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHelpers.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tMutation.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tMutation.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\TestArea.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:TestArea.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\BarrelTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:BarrelTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBarrel.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBarrel.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\BarrelTest.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:BarrelTest.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBarrel.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBarrel.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHelpers.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHelpers.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tCollection.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tCollection.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBucket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBucket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBucket.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBucket.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\BarrelTest.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:BarrelTest.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tEnums.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tEnums.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tDefines.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tDefines.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tPreent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tPreent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tPreent.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tPreent.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBarrel.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBarrel.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHeap.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHeap.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tCollection.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tCollection.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHeap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHeap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tTypeInfo.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tTypeInfo.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tTypeInfo.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tTypeInfo.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHelpers.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHelpers.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\MutationTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:MutationTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tUserCollection.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tUserCollection.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBucket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBucket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\BarrelTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:BarrelTest.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHelpers.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHelpers.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tBucket.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tBucket.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tDefines.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tDefines.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tCollection.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tCollection.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tHeap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|solutionrelative:tHeap.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{914665E2-88A4-461B-A8FB-54BDDC62C735}|TestArea.vcxproj|C:\\Repos\\BarrelTest\\tServices.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -137,8 +137,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 759,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 1015,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -146,85 +146,109 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "tTypeInfo.c",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tTypeInfo.c",
-              "RelativeDocumentMoniker": "tTypeInfo.c",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tTypeInfo.c",
-              "RelativeToolTip": "tTypeInfo.c",
-              "ViewState": "AQIAAGwAAAAAAAAAAADwv6gAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-09T10:19:06.078Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "tMutation.c",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tMutation.c",
               "RelativeDocumentMoniker": "tMutation.c",
               "ToolTip": "C:\\Repos\\BarrelTest\\tMutation.c",
               "RelativeToolTip": "tMutation.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAA+AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2024-04-29T12:07:19.185Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "BarrelTest.c",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\BarrelTest.c",
-              "RelativeDocumentMoniker": "BarrelTest.c",
-              "ToolTip": "C:\\Repos\\BarrelTest\\BarrelTest.c",
-              "RelativeToolTip": "BarrelTest.c",
-              "ViewState": "AQIAADMAAAAAAAAAAAAlwEYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-29T10:58:55.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "tHelpers.c",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHelpers.c",
-              "RelativeDocumentMoniker": "tHelpers.c",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tHelpers.c",
-              "RelativeToolTip": "tHelpers.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-09T10:18:25.902Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 1,
               "Title": "tPreent.c",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tPreent.c",
               "RelativeDocumentMoniker": "tPreent.c",
               "ToolTip": "C:\\Repos\\BarrelTest\\tPreent.c",
               "RelativeToolTip": "tPreent.c",
-              "ViewState": "AQIAAO0AAAAAAAAAAAAewB4BAAAAAAAA",
+              "ViewState": "AQIAAGIAAAAAAAAAAAApwHUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2024-04-29T10:11:48.564Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 14,
+              "Title": "tTypeInfo.c",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tTypeInfo.c",
+              "RelativeDocumentMoniker": "tTypeInfo.c",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tTypeInfo.c",
+              "RelativeToolTip": "tTypeInfo.c",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAowL0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-09T10:19:06.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "tCollection.c",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tCollection.c",
+              "RelativeDocumentMoniker": "tCollection.c",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tCollection.c",
+              "RelativeToolTip": "tCollection.c",
+              "ViewState": "AQIAAGQAAAAAAAAAAAAjwKcAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-09T10:18:11.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "tBarrel.c",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tBarrel.c",
+              "RelativeDocumentMoniker": "tBarrel.c",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tBarrel.c",
+              "RelativeToolTip": "tBarrel.c",
+              "ViewState": "AQIAAEYDAAAAAAAAAAAjwFgDAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-09T10:15:27.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BarrelTest.c",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\BarrelTest.c",
+              "RelativeDocumentMoniker": "BarrelTest.c",
+              "ToolTip": "C:\\Repos\\BarrelTest\\BarrelTest.c",
+              "RelativeToolTip": "BarrelTest.c",
+              "ViewState": "AQIAANUAAAAAAAAAAAAuwAkBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-29T10:58:55.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "tHeap.c",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHeap.c",
               "RelativeDocumentMoniker": "tHeap.c",
               "ToolTip": "C:\\Repos\\BarrelTest\\tHeap.c",
               "RelativeToolTip": "tHeap.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEcAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-27T12:56:06.4Z",
+              "WhenOpened": "2024-04-27T12:56:06.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "tHelpers.c",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHelpers.c",
+              "RelativeDocumentMoniker": "tHelpers.c",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tHelpers.c",
+              "RelativeToolTip": "tHelpers.c",
+              "ViewState": "AQIAABEAAAAAAAAAAAAwwD4AAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-09T10:18:25.902Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 22,
               "Title": "tBucket.c",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tBucket.c",
               "RelativeDocumentMoniker": "tBucket.c",
@@ -232,34 +256,7 @@
               "RelativeToolTip": "tBucket.c",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-09T10:18:04.647Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "tBarrel.c",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tBarrel.c",
-              "RelativeDocumentMoniker": "tBarrel.c",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tBarrel.c",
-              "RelativeToolTip": "tBarrel.c",
-              "ViewState": "AQIAAE0DAAAAAAAAAAAowHADAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-09T10:15:27.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "tCollection.c",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tCollection.c",
-              "RelativeDocumentMoniker": "tCollection.c",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tCollection.c",
-              "RelativeToolTip": "tCollection.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-09T10:18:11.767Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-09T10:18:04.647Z"
             },
             {
               "$type": "Document",
@@ -300,77 +297,76 @@
           ]
         },
         {
-          "DockedWidth": 992,
-          "SelectedChildIndex": 0,
+          "DockedWidth": 1032,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MutationTest.c",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\MutationTest.c",
-              "RelativeDocumentMoniker": "MutationTest.c",
-              "ToolTip": "C:\\Repos\\BarrelTest\\MutationTest.c",
-              "RelativeToolTip": "MutationTest.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-29T15:28:08.963Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MutationTest.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\MutationTest.h",
-              "RelativeDocumentMoniker": "MutationTest.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\MutationTest.h",
-              "RelativeToolTip": "MutationTest.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-29T15:28:21.623Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "tModules.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tModules.h",
-              "RelativeDocumentMoniker": "tModules.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tModules.h",
-              "RelativeToolTip": "tModules.h",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T18:12:42.304Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "TestArea.c",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\TestArea.c",
               "RelativeDocumentMoniker": "TestArea.c",
               "ToolTip": "C:\\Repos\\BarrelTest\\TestArea.c",
               "RelativeToolTip": "TestArea.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAkwCcAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2024-04-09T10:14:31.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 3,
               "Title": "tEnums.h",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tEnums.h",
               "RelativeDocumentMoniker": "tEnums.h",
               "ToolTip": "C:\\Repos\\BarrelTest\\tEnums.h",
               "RelativeToolTip": "tEnums.h",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAwCkAAAAIAAAA",
+              "ViewState": "AQIAAEkAAAAAAAAAAAAkwFgAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-04-10T18:54:45.158Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 0,
+              "Title": "tModules.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tModules.h",
+              "RelativeDocumentMoniker": "tModules.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tModules.h",
+              "RelativeToolTip": "tModules.h",
+              "ViewState": "AQIAABQAAAAAAAAAAAAkwCQAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T18:12:42.304Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MutationTest.c",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\MutationTest.c",
+              "RelativeDocumentMoniker": "MutationTest.c",
+              "ToolTip": "C:\\Repos\\BarrelTest\\MutationTest.c",
+              "RelativeToolTip": "MutationTest.c",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACgAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-29T15:28:08.963Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MutationTest.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\MutationTest.h",
+              "RelativeDocumentMoniker": "MutationTest.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\MutationTest.h",
+              "RelativeToolTip": "MutationTest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-29T15:28:21.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
               "Title": "tDefines.h",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tDefines.h",
               "RelativeDocumentMoniker": "tDefines.h",
@@ -378,66 +374,51 @@
               "RelativeToolTip": "tDefines.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-22T06:20:54.092Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T06:20:54.092Z"
             }
           ]
         },
         {
-          "DockedWidth": 796,
+          "DockedWidth": 501,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "tPreent.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tPreent.h",
+              "RelativeDocumentMoniker": "tPreent.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tPreent.h",
+              "RelativeToolTip": "tPreent.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-29T10:11:27.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "tMutation.h",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tMutation.h",
               "RelativeDocumentMoniker": "tMutation.h",
               "ToolTip": "C:\\Repos\\BarrelTest\\tMutation.h",
               "RelativeToolTip": "tMutation.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAADgvw8AAAAPAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-04-29T12:07:40.518Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 18,
               "Title": "tUserCollection.h",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tUserCollection.h",
               "RelativeDocumentMoniker": "tUserCollection.h",
               "ToolTip": "C:\\Repos\\BarrelTest\\tUserCollection.h",
               "RelativeToolTip": "tUserCollection.h",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABQAAABqAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-29T10:36:45.345Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "tTypeInfo.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tTypeInfo.h",
-              "RelativeDocumentMoniker": "tTypeInfo.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tTypeInfo.h",
-              "RelativeToolTip": "tTypeInfo.h",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAACMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-09T10:15:07.446Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BarrelTest.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\BarrelTest.h",
-              "RelativeDocumentMoniker": "BarrelTest.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\BarrelTest.h",
-              "RelativeToolTip": "BarrelTest.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-29T10:59:07.501Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-29T10:36:45.345Z"
             },
             {
               "$type": "Document",
@@ -447,27 +428,37 @@
               "RelativeDocumentMoniker": "tBarrel.h",
               "ToolTip": "C:\\Repos\\BarrelTest\\tBarrel.h",
               "RelativeToolTip": "tBarrel.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADwAAAAUAAAA",
+              "ViewState": "AQIAACwAAAAAAAAAAAAjwEgAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-09T09:44:07.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-09T09:44:07.008Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "tHelpers.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHelpers.h",
-              "RelativeDocumentMoniker": "tHelpers.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tHelpers.h",
-              "RelativeToolTip": "tHelpers.h",
-              "ViewState": "AQIAABUAAAAAAAAAAAAAACsAAAAAAAAA",
+              "DocumentIndex": 15,
+              "Title": "tTypeInfo.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tTypeInfo.h",
+              "RelativeDocumentMoniker": "tTypeInfo.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tTypeInfo.h",
+              "RelativeToolTip": "tTypeInfo.h",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAwwBUAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-09T11:26:13.156Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-09T10:15:07.446Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
+              "Title": "tHeap.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHeap.h",
+              "RelativeDocumentMoniker": "tHeap.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tHeap.h",
+              "RelativeToolTip": "tHeap.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-09T12:12:00.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "tBucket.h",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tBucket.h",
               "RelativeDocumentMoniker": "tBucket.h",
@@ -475,21 +466,31 @@
               "RelativeToolTip": "tBucket.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-09T10:18:01.551Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-09T10:18:01.551Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "tPreent.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tPreent.h",
-              "RelativeDocumentMoniker": "tPreent.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tPreent.h",
-              "RelativeToolTip": "tPreent.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAANAAAA",
+              "DocumentIndex": 20,
+              "Title": "BarrelTest.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\BarrelTest.h",
+              "RelativeDocumentMoniker": "BarrelTest.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\BarrelTest.h",
+              "RelativeToolTip": "BarrelTest.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-29T10:11:27.584Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-29T10:59:07.501Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "tHelpers.h",
+              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHelpers.h",
+              "RelativeDocumentMoniker": "tHelpers.h",
+              "ToolTip": "C:\\Repos\\BarrelTest\\tHelpers.h",
+              "RelativeToolTip": "tHelpers.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-09T11:26:13.156Z"
             },
             {
               "$type": "Document",
@@ -517,7 +518,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "tCollection.h",
               "DocumentMoniker": "C:\\Repos\\BarrelTest\\tCollection.h",
               "RelativeDocumentMoniker": "tCollection.h",
@@ -525,8 +526,7 @@
               "RelativeToolTip": "tCollection.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-09T10:14:54.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-09T10:14:54.421Z"
             },
             {
               "$type": "Document",
@@ -539,18 +539,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAIBZwAUAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-04-09T10:15:03.19Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "tHeap.h",
-              "DocumentMoniker": "C:\\Repos\\BarrelTest\\tHeap.h",
-              "RelativeDocumentMoniker": "tHeap.h",
-              "ToolTip": "C:\\Repos\\BarrelTest\\tHeap.h",
-              "RelativeToolTip": "tHeap.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-09T12:12:00.042Z"
             },
             {
               "$type": "Document",

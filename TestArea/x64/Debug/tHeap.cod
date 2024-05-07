@@ -237,7 +237,7 @@ pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$Heap_ServiceInit DD imagerel $LN6
-	DD	imagerel $LN6+299
+	DD	imagerel $LN6+303
 	DD	imagerel $unwind$Heap_ServiceInit
 pdata	ENDS
 ;	COMDAT rtc$TMZ
@@ -261,20 +261,28 @@ CONST	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DW	034H
-	DW	0112H
+	DW	0116H
 voltbl	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$Heap_ServiceInit DD 025053b19H
 	DD	010d2312H
-	DD	070060021H
+	DD	070060029H
 	DD	05005H
 	DD	imagerel __GSHandlerCheck
-	DD	0f8H
+	DD	0138H
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-Heap_ServiceInit$rtcName$0 DB 075H
+Heap_ServiceInit$rtcName$0 DB 024H
+	DB	053H
+	DB	031H
+	DB	00H
+Heap_ServiceInit$rtcName$2 DB 024H
+	DB	053H
+	DB	032H
+	DB	00H
+Heap_ServiceInit$rtcName$1 DB 075H
 	DB	06cH
 	DB	045H
 	DB	06eH
@@ -286,12 +294,18 @@ Heap_ServiceInit$rtcName$0 DB 075H
 	DB	046H
 	DB	048H
 	DB	00H
-	ORG $+4
-Heap_ServiceInit$rtcVarDesc DD 024H
+	ORG $+12
+Heap_ServiceInit$rtcVarDesc DD 068H
+	DD	00H
+	DQ	FLAT:Heap_ServiceInit$rtcName$2
+	DD	044H
 	DD	04H
+	DQ	FLAT:Heap_ServiceInit$rtcName$1
+	DD	028H
+	DD	00H
 	DQ	FLAT:Heap_ServiceInit$rtcName$0
-	ORG $+48
-Heap_ServiceInit$rtcFrameData DD 01H
+	ORG $+144
+Heap_ServiceInit$rtcFrameData DD 03H
 	DD	00H
 	DQ	FLAT:Heap_ServiceInit$rtcVarDesc
 CONST	ENDS
@@ -341,9 +355,11 @@ _TEXT	ENDS
 ; File C:\Repos\BarrelTest\tHeap.c
 ;	COMDAT Heap_ServiceInit
 _TEXT	SEGMENT
-ulEnableLFH$ = 4
-__$ArrayPad$ = 216
-clear$ = 256
+$S1$6 = 8
+ulEnableLFH$ = 36
+$S2$7 = 72
+__$ArrayPad$ = 280
+clear$ = 320
 Heap_ServiceInit PROC					; COMDAT
 
 ; 73   : {
@@ -352,19 +368,19 @@ $LN6:
   00000	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
   00004	55		 push	 rbp
   00005	57		 push	 rdi
-  00006	48 81 ec 08 01
-	00 00		 sub	 rsp, 264		; 00000108H
+  00006	48 81 ec 48 01
+	00 00		 sub	 rsp, 328		; 00000148H
   0000d	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00012	48 8d 7c 24 20	 lea	 rdi, QWORD PTR [rsp+32]
-  00017	b9 0a 00 00 00	 mov	 ecx, 10
+  00017	b9 1a 00 00 00	 mov	 ecx, 26
   0001c	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
   00021	f3 ab		 rep stosd
-  00023	8b 8c 24 28 01
-	00 00		 mov	 ecx, DWORD PTR [rsp+296]
+  00023	8b 8c 24 68 01
+	00 00		 mov	 ecx, DWORD PTR [rsp+360]
   0002a	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR __security_cookie
   00031	48 33 c5	 xor	 rax, rbp
-  00034	48 89 85 d8 00
+  00034	48 89 85 18 01
 	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
   0003b	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__697F18BC_tHeap@c
@@ -385,20 +401,20 @@ $LN6:
 
   0005b	48 83 3d 28 00
 	00 00 00	 cmp	 QWORD PTR GlobalHeapService+40, 0
-  00063	75 15		 jne	 SHORT $LN2@Heap_Servi
+  00063	75 17		 jne	 SHORT $LN2@Heap_Servi
 
 ; 77   : 	{
 ; 78   : 		PREENT("Heap Create Failed!\n");
 
-  00065	33 d2		 xor	 edx, edx
-  00067	48 8d 0d 00 00
+  00065	48 8d 55 08	 lea	 rdx, QWORD PTR $S1$6[rbp]
+  00069	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BF@PNABOKCH@Heap?5Create?5Failed?$CB?6@
-  0006e	e8 00 00 00 00	 call	 Preent
+  00070	e8 00 00 00 00	 call	 Preent
 
 ; 79   : 		return NULL;
 
-  00073	33 c0		 xor	 eax, eax
-  00075	e9 82 00 00 00	 jmp	 $LN1@Heap_Servi
+  00075	33 c0		 xor	 eax, eax
+  00077	e9 84 00 00 00	 jmp	 $LN1@Heap_Servi
 $LN2@Heap_Servi:
 
 ; 80   : 	}
@@ -406,106 +422,106 @@ $LN2@Heap_Servi:
 ; 82   : 
 ; 83   : 	ULONG ulEnableLFH = 2;
 
-  0007a	c7 45 04 02 00
+  0007c	c7 45 24 02 00
 	00 00		 mov	 DWORD PTR ulEnableLFH$[rbp], 2
 
 ; 84   : 
 ; 85   : 	if (!HeapSetInformation(GlobalHeapService._heapStart, HeapCompatibilityInformation, &ulEnableLFH, sizeof(ulEnableLFH)))
 
-  00081	41 b9 04 00 00
+  00083	41 b9 04 00 00
 	00		 mov	 r9d, 4
-  00087	4c 8d 45 04	 lea	 r8, QWORD PTR ulEnableLFH$[rbp]
-  0008b	33 d2		 xor	 edx, edx
-  0008d	48 8b 0d 28 00
+  00089	4c 8d 45 24	 lea	 r8, QWORD PTR ulEnableLFH$[rbp]
+  0008d	33 d2		 xor	 edx, edx
+  0008f	48 8b 0d 28 00
 	00 00		 mov	 rcx, QWORD PTR GlobalHeapService+40
-  00094	ff 15 00 00 00
+  00096	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_HeapSetInformation
-  0009a	85 c0		 test	 eax, eax
-  0009c	75 12		 jne	 SHORT $LN3@Heap_Servi
+  0009c	85 c0		 test	 eax, eax
+  0009e	75 14		 jne	 SHORT $LN3@Heap_Servi
 
 ; 86   : 	{
 ; 87   : 		PREENT("Information Set Failed!\n");
 
-  0009e	33 d2		 xor	 edx, edx
-  000a0	48 8d 0d 00 00
+  000a0	48 8d 55 48	 lea	 rdx, QWORD PTR $S2$7[rbp]
+  000a4	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BJ@PFBKCHAI@Information?5Set?5Failed?$CB?6@
-  000a7	e8 00 00 00 00	 call	 Preent
+  000ab	e8 00 00 00 00	 call	 Preent
 
 ; 88   : 		return NULL;
 
-  000ac	33 c0		 xor	 eax, eax
-  000ae	eb 4c		 jmp	 SHORT $LN1@Heap_Servi
+  000b0	33 c0		 xor	 eax, eax
+  000b2	eb 4c		 jmp	 SHORT $LN1@Heap_Servi
 $LN3@Heap_Servi:
 
 ; 89   : 	}
 ; 90   : 
 ; 91   : 	GlobalHeapService._heapEnd = GlobalHeapService._heapStart;
 
-  000b0	48 8b 05 28 00
+  000b4	48 8b 05 28 00
 	00 00		 mov	 rax, QWORD PTR GlobalHeapService+40
-  000b7	48 89 05 30 00
+  000bb	48 89 05 30 00
 	00 00		 mov	 QWORD PTR GlobalHeapService+48, rax
 
 ; 92   : 	GlobalHeapService._pageCount = 0;
 
-  000be	c7 05 38 00 00
+  000c2	c7 05 38 00 00
 	00 00 00 00 00	 mov	 DWORD PTR GlobalHeapService+56, 0
 
 ; 93   : 
 ; 94   : 	// Initialize service
 ; 95   : 	Service_Start(&(GlobalHeapService._pages), Heap_ServiceWork);
 
-  000c8	48 8d 15 00 00
+  000cc	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:Heap_ServiceWork
-  000cf	48 8d 0d 00 00
+  000d3	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:GlobalHeapService
-  000d6	e8 00 00 00 00	 call	 Service_Start
+  000da	e8 00 00 00 00	 call	 Service_Start
 
 ; 96   : 
 ; 97   : 	// Add first Page
 ; 98   : 	Heap_DeltaPages(1);
 
-  000db	b9 01 00 00 00	 mov	 ecx, 1
-  000e0	e8 00 00 00 00	 call	 Heap_DeltaPages
+  000df	b9 01 00 00 00	 mov	 ecx, 1
+  000e4	e8 00 00 00 00	 call	 Heap_DeltaPages
 
 ; 99   : 
 ; 100  : 	// Initialize the mapSpace to zeros
 ; 101  : 	if (clear)
 
-  000e5	83 bd 00 01 00
+  000e9	83 bd 40 01 00
 	00 00		 cmp	 DWORD PTR clear$[rbp], 0
-  000ec	74 07		 je	 SHORT $LN4@Heap_Servi
+  000f0	74 07		 je	 SHORT $LN4@Heap_Servi
 
 ; 102  : 		Heap_ClearPage(0);
 
-  000ee	33 c9		 xor	 ecx, ecx
-  000f0	e8 00 00 00 00	 call	 Heap_ClearPage
+  000f2	33 c9		 xor	 ecx, ecx
+  000f4	e8 00 00 00 00	 call	 Heap_ClearPage
 $LN4@Heap_Servi:
 
 ; 103  : 
 ; 104  : 	return &GlobalHeapService;
 
-  000f5	48 8d 05 00 00
+  000f9	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:GlobalHeapService
 $LN1@Heap_Servi:
 
 ; 105  : }
 
-  000fc	48 8b f8	 mov	 rdi, rax
-  000ff	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
-  00103	48 8d 15 00 00
+  00100	48 8b f8	 mov	 rdi, rax
+  00103	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
+  00107	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:Heap_ServiceInit$rtcFrameData
-  0010a	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  0010f	48 8b c7	 mov	 rax, rdi
-  00112	48 8b 8d d8 00
+  0010e	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  00113	48 8b c7	 mov	 rax, rdi
+  00116	48 8b 8d 18 01
 	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00119	48 33 cd	 xor	 rcx, rbp
-  0011c	e8 00 00 00 00	 call	 __security_check_cookie
-  00121	48 8d a5 e8 00
-	00 00		 lea	 rsp, QWORD PTR [rbp+232]
-  00128	5f		 pop	 rdi
-  00129	5d		 pop	 rbp
-  0012a	c3		 ret	 0
+  0011d	48 33 cd	 xor	 rcx, rbp
+  00120	e8 00 00 00 00	 call	 __security_check_cookie
+  00125	48 8d a5 28 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+296]
+  0012c	5f		 pop	 rdi
+  0012d	5d		 pop	 rbp
+  0012e	c3		 ret	 0
 Heap_ServiceInit ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI

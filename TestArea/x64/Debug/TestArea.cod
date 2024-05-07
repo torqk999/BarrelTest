@@ -7,8 +7,6 @@ INCLUDELIB OLDNAMES
 
 _DATA	SEGMENT
 COMM	ThreadHandle_TypeID:BYTE:018H
-COMM	GlobalBarrelService:BYTE:030H
-COMM	GlobalBarrelNodeType:BYTE:018H
 COMM	barrelService_ThreadBin:BYTE:0100H
 COMM	barrelService_QueBin:BYTE:0200H
 _DATA	ENDS
@@ -186,12 +184,14 @@ __296E417C_tChunk@h DB 01H
 __7CF1EC1E_tCollection@h DB 01H
 __CE367354_tBarrel@h DB 01H
 __308C18FA_BarrelTest@h DB 01H
-__E8DC32E4_tLink@h DB 01H
-__7D6FBD02_tHashMap@h DB 01H
+__EAE81D8C_tBucket@h DB 01H
+__E8844C26_tMutation@h DB 01H
+__7C7B8CA4_MutationTest@h DB 01H
 __BC332FCF_TestArea@c DB 01H
 msvcjmc	ENDS
 PUBLIC	main
 PUBLIC	__JustMyCode_Default
+PUBLIC	??_C@_04FEKHGLCJ@?$CF?5?$CF?6@			; `string'
 PUBLIC	??_C@_03JBIPMCLC@int@				; `string'
 PUBLIC	??_C@_0CB@FFPKGLBO@value?5at?5index?53?5of?5myBarrel?3?5?$CF@ ; `string'
 PUBLIC	??_C@_0CE@BBPKOEII@collection?5count?5of?5emptyBucket@ ; `string'
@@ -202,7 +202,7 @@ EXTRN	Bucket_ctor:PROC
 EXTRN	Preent:PROC
 EXTRN	paramCount:PROC
 EXTRN	Barrel_ctor:PROC
-EXTRN	barrelTest:PROC
+EXTRN	mutationTest:PROC
 EXTRN	_RTC_CheckStackVars:PROC
 EXTRN	_RTC_InitBase:PROC
 EXTRN	_RTC_Shutdown:PROC
@@ -213,7 +213,7 @@ EXTRN	__security_cookie:QWORD
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$main DD	imagerel $LN5
-	DD	imagerel $LN5+1059
+	DD	imagerel $LN5+1340
 	DD	imagerel $unwind$main
 pdata	ENDS
 ;	COMDAT rtc$TMZ
@@ -243,23 +243,43 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_03JBIPMCLC@int@ DB 'int', 00H			; `string'
 CONST	ENDS
+;	COMDAT ??_C@_04FEKHGLCJ@?$CF?5?$CF?6@
+CONST	SEGMENT
+??_C@_04FEKHGLCJ@?$CF?5?$CF?6@ DB '% %', 0aH, 00H	; `string'
+CONST	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
 _volmd	DW	02bH
-	DW	0409H
+	DW	0522H
 voltbl	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$main DD	035063219H
 	DD	010b3310H
-	DD	0700400b0H
+	DD	0700400f0H
 	DD	050026003H
 	DD	imagerel __GSHandlerCheck
-	DD	0578H
+	DD	0778H
 xdata	ENDS
 ;	COMDAT CONST
 CONST	SEGMENT
-main$rtcName$0 DB 06fH
+main$rtcName$0 DB 024H
+	DB	053H
+	DB	031H
+	DB	00H
+main$rtcName$1 DB 024H
+	DB	053H
+	DB	032H
+	DB	00H
+main$rtcName$2 DB 024H
+	DB	053H
+	DB	033H
+	DB	00H
+main$rtcName$3 DB 024H
+	DB	053H
+	DB	034H
+	DB	00H
+main$rtcName$4 DB 06fH
 	DB	075H
 	DB	074H
 	DB	070H
@@ -267,22 +287,6 @@ main$rtcName$0 DB 06fH
 	DB	074H
 	DB	00H
 	ORG $+1
-main$rtcName$1 DB 024H
-	DB	053H
-	DB	031H
-	DB	00H
-main$rtcName$2 DB 024H
-	DB	053H
-	DB	032H
-	DB	00H
-main$rtcName$3 DB 024H
-	DB	053H
-	DB	033H
-	DB	00H
-main$rtcName$4 DB 024H
-	DB	053H
-	DB	034H
-	DB	00H
 main$rtcName$5 DB 024H
 	DB	053H
 	DB	035H
@@ -356,66 +360,102 @@ main$rtcName$18 DB 024H
 	DB	031H
 	DB	038H
 	DB	00H
+	ORG $+3
+main$rtcName$19 DB 024H
+	DB	053H
+	DB	031H
+	DB	039H
+	DB	00H
+	ORG $+3
+main$rtcName$20 DB 024H
+	DB	053H
+	DB	032H
+	DB	030H
+	DB	00H
+	ORG $+3
+main$rtcName$21 DB 024H
+	DB	053H
+	DB	032H
+	DB	031H
+	DB	00H
+	ORG $+3
+main$rtcName$22 DB 024H
+	DB	053H
+	DB	032H
+	DB	032H
+	DB	00H
 	ORG $+15
-main$rtcVarDesc DD 03d8H
+main$rtcVarDesc DD 0518H
 	DD	010H
+	DQ	FLAT:main$rtcName$22
+	DD	04f4H
+	DD	04H
+	DQ	FLAT:main$rtcName$21
+	DD	04b8H
+	DD	020H
+	DQ	FLAT:main$rtcName$20
+	DD	0488H
+	DD	010H
+	DQ	FLAT:main$rtcName$19
+	DD	0464H
+	DD	04H
 	DQ	FLAT:main$rtcName$18
-	DD	03b4H
-	DD	04H
+	DD	0428H
+	DD	020H
 	DQ	FLAT:main$rtcName$17
-	DD	0378H
-	DD	020H
+	DD	03f8H
+	DD	018H
 	DQ	FLAT:main$rtcName$16
-	DD	0348H
-	DD	010H
-	DQ	FLAT:main$rtcName$15
-	DD	0324H
-	DD	04H
-	DQ	FLAT:main$rtcName$14
-	DD	02e8H
+	DD	03b8H
 	DD	020H
+	DQ	FLAT:main$rtcName$15
+	DD	0374H
+	DD	07H
+	DQ	FLAT:main$rtcName$14
+	DD	0354H
+	DD	07H
 	DQ	FLAT:main$rtcName$13
-	DD	02b8H
+	DD	0328H
 	DD	018H
 	DQ	FLAT:main$rtcName$12
-	DD	0278H
+	DD	02e8H
 	DD	020H
 	DQ	FLAT:main$rtcName$11
-	DD	0234H
-	DD	07H
-	DQ	FLAT:main$rtcName$10
-	DD	0214H
-	DD	07H
-	DQ	FLAT:main$rtcName$9
-	DD	01e8H
-	DD	018H
-	DQ	FLAT:main$rtcName$8
-	DD	01a8H
-	DD	020H
-	DQ	FLAT:main$rtcName$7
-	DD	0158H
+	DD	0298H
 	DD	010H
-	DQ	FLAT:main$rtcName$6
-	DD	0134H
+	DQ	FLAT:main$rtcName$10
+	DD	0274H
 	DD	04H
-	DQ	FLAT:main$rtcName$5
-	DD	0f8H
+	DQ	FLAT:main$rtcName$9
+	DD	0238H
 	DD	020H
+	DQ	FLAT:main$rtcName$8
+	DD	0208H
+	DD	0bH
+	DQ	FLAT:main$rtcName$7
+	DD	01d8H
+	DD	0bH
+	DQ	FLAT:main$rtcName$6
+	DD	0198H
+	DD	028H
+	DQ	FLAT:main$rtcName$5
+	DD	0154H
+	DD	04H
 	DQ	FLAT:main$rtcName$4
-	DD	0d8H
-	DD	08H
+	DD	0128H
+	DD	010H
 	DQ	FLAT:main$rtcName$3
-	DD	0b8H
+	DD	0108H
 	DD	08H
 	DQ	FLAT:main$rtcName$2
-	DD	078H
-	DD	01cH
+	DD	0e8H
+	DD	08H
 	DQ	FLAT:main$rtcName$1
-	DD	034H
-	DD	04H
+	DD	098H
+	DD	030H
 	DQ	FLAT:main$rtcName$0
-	ORG $+912
-main$rtcFrameData DD 013H
+	ORG $+1104
+main$rtcFrameData DD 017H
 	DD	00H
 	DQ	FLAT:main$rtcVarDesc
 CONST	ENDS
@@ -430,384 +470,484 @@ _TEXT	ENDS
 ; File C:\Repos\BarrelTest\TestArea.c
 ;	COMDAT main
 _TEXT	SEGMENT
-output$ = 4
-myBarrel$ = 40
-$S1$ = 72
-$S2$ = 136
-$S3$ = 168
-$S4$ = 200
-$S5$ = 260
-$S6$ = 296
-myBucket$ = 344
-$S7$ = 376
-$S8$ = 440
-$S9$ = 484
-$S10$ = 516
-emptyBucket$ = 552
-$S11$ = 584
-$S12$ = 648
-$S13$ = 696
-$S14$ = 756
-$S15$ = 792
-$S16$ = 840
-$S17$ = 900
-$S18$ = 936
-__$ArrayPad$ = 1352
+a$ = 4
+z$ = 36
+b$ = 68
+$S1$ = 104
+$S2$ = 184
+$S3$ = 216
+$S4$ = 248
+output$ = 292
+myBarrel$ = 328
+$S5$ = 360
+$S6$ = 424
+$S7$ = 472
+$S8$ = 520
+$S9$ = 580
+$S10$ = 616
+myBucket$ = 664
+$S11$ = 696
+$S12$ = 760
+$S13$ = 804
+$S14$ = 836
+emptyBucket$ = 872
+$S15$ = 904
+$S16$ = 968
+$S17$ = 1016
+$S18$ = 1076
+$S19$ = 1112
+$S20$ = 1160
+$S21$ = 1220
+$S22$ = 1256
+__$ArrayPad$ = 1864
 main	PROC						; COMDAT
 
-; 25   : int main() {
+; 32   : int main() {
 
 $LN5:
   00000	40 55		 push	 rbp
   00002	56		 push	 rsi
   00003	57		 push	 rdi
-  00004	48 81 ec 80 05
-	00 00		 sub	 rsp, 1408		; 00000580H
+  00004	48 81 ec 80 07
+	00 00		 sub	 rsp, 1920		; 00000780H
   0000b	48 8d 6c 24 30	 lea	 rbp, QWORD PTR [rsp+48]
   00010	48 8d 7c 24 30	 lea	 rdi, QWORD PTR [rsp+48]
-  00015	b9 f4 00 00 00	 mov	 ecx, 244		; 000000f4H
+  00015	b9 44 01 00 00	 mov	 ecx, 324		; 00000144H
   0001a	b8 cc cc cc cc	 mov	 eax, -858993460		; ccccccccH
   0001f	f3 ab		 rep stosd
   00021	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR __security_cookie
   00028	48 33 c5	 xor	 rax, rbp
-  0002b	48 89 85 48 05
+  0002b	48 89 85 48 07
 	00 00		 mov	 QWORD PTR __$ArrayPad$[rbp], rax
   00032	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__BC332FCF_TestArea@c
   00039	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 26   : 
-; 27   : 	barrelTest();
+; 33   : 
+; 34   : 	int a = 0b11111;
 
-  0003e	e8 00 00 00 00	 call	 barrelTest
+  0003e	c7 45 04 1f 00
+	00 00		 mov	 DWORD PTR a$[rbp], 31
 
-; 28   : 
-; 29   : 	return 0;
+; 35   : 	int z = 0b01111;
 
-  00043	33 c0		 xor	 eax, eax
-  00045	e9 a9 03 00 00	 jmp	 $LN1@main
+  00045	c7 45 24 0f 00
+	00 00		 mov	 DWORD PTR z$[rbp], 15
 
-; 30   : 
-; 31   : 	int output = 0;
+; 36   : 	int b = a >> 3;
 
-  0004a	c7 45 04 00 00
-	00 00		 mov	 DWORD PTR output$[rbp], 0
+  0004c	8b 45 04	 mov	 eax, DWORD PTR a$[rbp]
+  0004f	c1 f8 03	 sar	 eax, 3
+  00052	89 45 44	 mov	 DWORD PTR b$[rbp], eax
 
-; 32   : 
-; 33   : 	COLLECTION myBarrel = Barrel_List(int, 0, 1, 2, 3, 4, 5, 6);
+; 37   : 	b = b << 3;
 
-  00051	c6 85 a8 00 00
-	00 00		 mov	 BYTE PTR $S3$[rbp], 0
-  00058	c6 85 a9 00 00
-	00 01		 mov	 BYTE PTR $S3$[rbp+1], 1
-  0005f	c6 85 aa 00 00
-	00 02		 mov	 BYTE PTR $S3$[rbp+2], 2
-  00066	c6 85 ab 00 00
-	00 03		 mov	 BYTE PTR $S3$[rbp+3], 3
-  0006d	c6 85 ac 00 00
-	00 04		 mov	 BYTE PTR $S3$[rbp+4], 4
-  00074	c6 85 ad 00 00
-	00 05		 mov	 BYTE PTR $S3$[rbp+5], 5
-  0007b	c6 85 ae 00 00
-	00 06		 mov	 BYTE PTR $S3$[rbp+6], 6
-  00082	c6 85 af 00 00
-	00 01		 mov	 BYTE PTR $S3$[rbp+7], 1
-  00089	c6 85 88 00 00
-	00 00		 mov	 BYTE PTR $S2$[rbp], 0
-  00090	c6 85 89 00 00
-	00 01		 mov	 BYTE PTR $S2$[rbp+1], 1
-  00097	c6 85 8a 00 00
-	00 02		 mov	 BYTE PTR $S2$[rbp+2], 2
-  0009e	c6 85 8b 00 00
-	00 03		 mov	 BYTE PTR $S2$[rbp+3], 3
-  000a5	c6 85 8c 00 00
-	00 04		 mov	 BYTE PTR $S2$[rbp+4], 4
-  000ac	c6 85 8d 00 00
-	00 05		 mov	 BYTE PTR $S2$[rbp+5], 5
-  000b3	c6 85 8e 00 00
-	00 06		 mov	 BYTE PTR $S2$[rbp+6], 6
-  000ba	c6 85 8f 00 00
-	00 00		 mov	 BYTE PTR $S2$[rbp+7], 0
-  000c1	c7 45 48 00 00
-	00 00		 mov	 DWORD PTR $S1$[rbp], 0
-  000c8	c7 45 4c 01 00
-	00 00		 mov	 DWORD PTR $S1$[rbp+4], 1
-  000cf	c7 45 50 02 00
-	00 00		 mov	 DWORD PTR $S1$[rbp+8], 2
-  000d6	c7 45 54 03 00
-	00 00		 mov	 DWORD PTR $S1$[rbp+12], 3
-  000dd	c7 45 58 04 00
-	00 00		 mov	 DWORD PTR $S1$[rbp+16], 4
-  000e4	c7 45 5c 05 00
-	00 00		 mov	 DWORD PTR $S1$[rbp+20], 5
-  000eb	c7 45 60 06 00
-	00 00		 mov	 DWORD PTR $S1$[rbp+24], 6
-  000f2	48 8d 95 a8 00
-	00 00		 lea	 rdx, QWORD PTR $S3$[rbp]
-  000f9	48 8d 8d 88 00
-	00 00		 lea	 rcx, QWORD PTR $S2$[rbp]
-  00100	e8 00 00 00 00	 call	 paramCount
-  00105	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
-  00109	45 33 c9	 xor	 r9d, r9d
-  0010c	4c 8d 45 48	 lea	 r8, QWORD PTR $S1$[rbp]
-  00110	ba 04 00 00 00	 mov	 edx, 4
-  00115	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
-  0011c	e8 00 00 00 00	 call	 Barrel_ctor
-  00121	48 89 45 28	 mov	 QWORD PTR myBarrel$[rbp], rax
+  00055	8b 45 44	 mov	 eax, DWORD PTR b$[rbp]
+  00058	c1 e0 03	 shl	 eax, 3
+  0005b	89 45 44	 mov	 DWORD PTR b$[rbp], eax
 
-; 34   : 
-; 35   : 	if (!Collection_Read(myBarrel, &output, 3))
+; 38   : 
+; 39   : 	PREENT_SAFE("% %\n", fmt_b(a), fmt_b(b));
 
-  00125	41 b8 03 00 00
-	00		 mov	 r8d, 3
-  0012b	48 8d 55 04	 lea	 rdx, QWORD PTR output$[rbp]
-  0012f	48 8b 4d 28	 mov	 rcx, QWORD PTR myBarrel$[rbp]
-  00133	e8 00 00 00 00	 call	 Collection_Read
-  00138	85 c0		 test	 eax, eax
-  0013a	75 0a		 jne	 SHORT $LN2@main
-
-; 36   : 		return 1;
-
-  0013c	b8 01 00 00 00	 mov	 eax, 1
-  00141	e9 ad 02 00 00	 jmp	 $LN1@main
-$LN2@main:
-
-; 37   : 
-; 38   : 	PREENT_ARGS("value at index 3 of myBarrel: %\n", fmt_i(output));
-
-  00146	c7 85 c8 00 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S4$[rbp], 29
-  00150	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
-  00153	89 85 04 01 00
-	00		 mov	 DWORD PTR $S5$[rbp], eax
-  00159	48 8d 85 04 01
-	00 00		 lea	 rax, QWORD PTR $S5$[rbp]
-  00160	48 89 85 d0 00
-	00 00		 mov	 QWORD PTR $S4$[rbp+8], rax
-  00167	c7 85 28 01 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S6$[rbp], -2
-  00171	48 c7 85 30 01
+  0005e	c7 45 68 07 00
+	00 00		 mov	 DWORD PTR $S1$[rbp], 7
+  00065	48 63 45 04	 movsxd	 rax, DWORD PTR a$[rbp]
+  00069	48 89 85 b8 00
+	00 00		 mov	 QWORD PTR $S2$[rbp], rax
+  00070	48 8d 85 b8 00
+	00 00		 lea	 rax, QWORD PTR $S2$[rbp]
+  00077	48 89 45 70	 mov	 QWORD PTR $S1$[rbp+8], rax
+  0007b	c7 45 78 07 00
+	00 00		 mov	 DWORD PTR $S1$[rbp+16], 7
+  00082	48 63 45 44	 movsxd	 rax, DWORD PTR b$[rbp]
+  00086	48 89 85 d8 00
+	00 00		 mov	 QWORD PTR $S3$[rbp], rax
+  0008d	48 8d 85 d8 00
+	00 00		 lea	 rax, QWORD PTR $S3$[rbp]
+  00094	48 89 85 80 00
+	00 00		 mov	 QWORD PTR $S1$[rbp+24], rax
+  0009b	c7 85 f8 00 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S4$[rbp], -2
+  000a5	48 c7 85 00 01
 	00 00 00 00 00
-	00		 mov	 QWORD PTR $S6$[rbp+8], 0
-  0017c	48 8d 85 d8 00
-	00 00		 lea	 rax, QWORD PTR $S4$[rbp+16]
-  00183	48 8d 8d 28 01
-	00 00		 lea	 rcx, QWORD PTR $S6$[rbp]
-  0018a	48 8b f8	 mov	 rdi, rax
-  0018d	48 8b f1	 mov	 rsi, rcx
-  00190	b9 10 00 00 00	 mov	 ecx, 16
-  00195	f3 a4		 rep movsb
-  00197	48 8d 95 c8 00
-	00 00		 lea	 rdx, QWORD PTR $S4$[rbp]
-  0019e	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CB@FFPKGLBO@value?5at?5index?53?5of?5myBarrel?3?5?$CF@
-  001a5	e8 00 00 00 00	 call	 Preent
+	00		 mov	 QWORD PTR $S4$[rbp+8], 0
+  000b0	48 8d 85 88 00
+	00 00		 lea	 rax, QWORD PTR $S1$[rbp+32]
+  000b7	48 8d 8d f8 00
+	00 00		 lea	 rcx, QWORD PTR $S4$[rbp]
+  000be	48 8b f8	 mov	 rdi, rax
+  000c1	48 8b f1	 mov	 rsi, rcx
+  000c4	b9 10 00 00 00	 mov	 ecx, 16
+  000c9	f3 a4		 rep movsb
+  000cb	48 8d 55 68	 lea	 rdx, QWORD PTR $S1$[rbp]
+  000cf	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_04FEKHGLCJ@?$CF?5?$CF?6@
+  000d6	e8 00 00 00 00	 call	 Preent
 
-; 39   : 
-; 40   : 	COLLECTION myBucket = Bucket_List(int, 0, 1.0f, 2, 3, 4, 5);
+; 40   : 
+; 41   : 	return 0;
 
-  001aa	c6 85 04 02 00
-	00 00		 mov	 BYTE PTR $S10$[rbp], 0
-  001b1	c6 85 05 02 00
-	00 01		 mov	 BYTE PTR $S10$[rbp+1], 1
-  001b8	c6 85 06 02 00
-	00 02		 mov	 BYTE PTR $S10$[rbp+2], 2
-  001bf	c6 85 07 02 00
-	00 03		 mov	 BYTE PTR $S10$[rbp+3], 3
-  001c6	c6 85 08 02 00
-	00 04		 mov	 BYTE PTR $S10$[rbp+4], 4
-  001cd	c6 85 09 02 00
-	00 05		 mov	 BYTE PTR $S10$[rbp+5], 5
-  001d4	c6 85 0a 02 00
-	00 01		 mov	 BYTE PTR $S10$[rbp+6], 1
-  001db	c6 85 e4 01 00
-	00 00		 mov	 BYTE PTR $S9$[rbp], 0
-  001e2	c6 85 e5 01 00
-	00 01		 mov	 BYTE PTR $S9$[rbp+1], 1
-  001e9	c6 85 e6 01 00
-	00 02		 mov	 BYTE PTR $S9$[rbp+2], 2
-  001f0	c6 85 e7 01 00
-	00 03		 mov	 BYTE PTR $S9$[rbp+3], 3
-  001f7	c6 85 e8 01 00
-	00 04		 mov	 BYTE PTR $S9$[rbp+4], 4
-  001fe	c6 85 e9 01 00
-	00 05		 mov	 BYTE PTR $S9$[rbp+5], 5
-  00205	c6 85 ea 01 00
-	00 00		 mov	 BYTE PTR $S9$[rbp+6], 0
-  0020c	c7 85 b8 01 00
-	00 00 00 00 00	 mov	 DWORD PTR $S8$[rbp], 0
-  00216	c7 85 bc 01 00
-	00 01 00 00 00	 mov	 DWORD PTR $S8$[rbp+4], 1
-  00220	c7 85 c0 01 00
-	00 02 00 00 00	 mov	 DWORD PTR $S8$[rbp+8], 2
-  0022a	c7 85 c4 01 00
-	00 03 00 00 00	 mov	 DWORD PTR $S8$[rbp+12], 3
-  00234	c7 85 c8 01 00
-	00 04 00 00 00	 mov	 DWORD PTR $S8$[rbp+16], 4
-  0023e	c7 85 cc 01 00
-	00 05 00 00 00	 mov	 DWORD PTR $S8$[rbp+20], 5
-  00248	48 8d 85 78 01
-	00 00		 lea	 rax, QWORD PTR $S7$[rbp]
-  0024f	48 8b f8	 mov	 rdi, rax
-  00252	33 c0		 xor	 eax, eax
-  00254	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
-  00259	f3 aa		 rep stosb
-  0025b	48 8d 95 04 02
-	00 00		 lea	 rdx, QWORD PTR $S10$[rbp]
-  00262	48 8d 8d e4 01
-	00 00		 lea	 rcx, QWORD PTR $S9$[rbp]
-  00269	e8 00 00 00 00	 call	 paramCount
-  0026e	89 44 24 28	 mov	 DWORD PTR [rsp+40], eax
-  00272	c7 44 24 20 00
-	00 00 00	 mov	 DWORD PTR [rsp+32], 0
-  0027a	4c 8d 8d b8 01
-	00 00		 lea	 r9, QWORD PTR $S8$[rbp]
-  00281	4c 8d 85 78 01
-	00 00		 lea	 r8, QWORD PTR $S7$[rbp]
-  00288	ba 04 00 00 00	 mov	 edx, 4
-  0028d	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
-  00294	e8 00 00 00 00	 call	 Bucket_ctor
-  00299	48 89 85 58 01
-	00 00		 mov	 QWORD PTR myBucket$[rbp], rax
+  000db	33 c0		 xor	 eax, eax
+  000dd	e9 2a 04 00 00	 jmp	 $LN1@main
 
-; 41   : 
-; 42   : 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
+; 42   : 
+; 43   : 	mutationTest();
 
-  002a0	48 8d 85 88 02
-	00 00		 lea	 rax, QWORD PTR $S12$[rbp]
-  002a7	48 8b f8	 mov	 rdi, rax
-  002aa	33 c0		 xor	 eax, eax
-  002ac	b9 18 00 00 00	 mov	 ecx, 24
-  002b1	f3 aa		 rep stosb
-  002b3	48 8d 85 48 02
-	00 00		 lea	 rax, QWORD PTR $S11$[rbp]
-  002ba	48 8b f8	 mov	 rdi, rax
-  002bd	33 c0		 xor	 eax, eax
-  002bf	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
-  002c4	f3 aa		 rep stosb
-  002c6	c7 44 24 28 06
-	00 00 00	 mov	 DWORD PTR [rsp+40], 6
-  002ce	c7 44 24 20 20
-	00 00 00	 mov	 DWORD PTR [rsp+32], 32	; 00000020H
-  002d6	4c 8d 8d 88 02
-	00 00		 lea	 r9, QWORD PTR $S12$[rbp]
-  002dd	4c 8d 85 48 02
-	00 00		 lea	 r8, QWORD PTR $S11$[rbp]
-  002e4	ba 04 00 00 00	 mov	 edx, 4
-  002e9	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
-  002f0	e8 00 00 00 00	 call	 Bucket_ctor
-  002f5	48 89 85 28 02
-	00 00		 mov	 QWORD PTR emptyBucket$[rbp], rax
+  000e2	e8 00 00 00 00	 call	 mutationTest
 
-; 43   : 
-; 44   : 	if (!Collection_Read(myBucket, &output, 3))
+; 44   : 	//barrelTest();
+; 45   : 
+; 46   : 	return 0;
 
-  002fc	41 b8 03 00 00
-	00		 mov	 r8d, 3
-  00302	48 8d 55 04	 lea	 rdx, QWORD PTR output$[rbp]
-  00306	48 8b 8d 58 01
-	00 00		 mov	 rcx, QWORD PTR myBucket$[rbp]
-  0030d	e8 00 00 00 00	 call	 Collection_Read
-  00312	85 c0		 test	 eax, eax
-  00314	75 0a		 jne	 SHORT $LN3@main
+  000e7	33 c0		 xor	 eax, eax
+  000e9	e9 1e 04 00 00	 jmp	 $LN1@main
 
-; 45   : 		return 1;
+; 47   : 
+; 48   : 	int output = 0;
 
-  00316	b8 01 00 00 00	 mov	 eax, 1
-  0031b	e9 d3 00 00 00	 jmp	 $LN1@main
-$LN3@main:
-
-; 46   : 
-; 47   : 	PREENT_ARGS("collection count of emptyBucket: %\n", fmt_i(Collection_Count(emptyBucket)));
-
-  00320	c7 85 b8 02 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S13$[rbp], 29
-  0032a	48 8b 8d 28 02
-	00 00		 mov	 rcx, QWORD PTR emptyBucket$[rbp]
-  00331	e8 00 00 00 00	 call	 Collection_Count
-  00336	89 85 f4 02 00
-	00		 mov	 DWORD PTR $S14$[rbp], eax
-  0033c	48 8d 85 f4 02
-	00 00		 lea	 rax, QWORD PTR $S14$[rbp]
-  00343	48 89 85 c0 02
-	00 00		 mov	 QWORD PTR $S13$[rbp+8], rax
-  0034a	c7 85 18 03 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S15$[rbp], -2
-  00354	48 c7 85 20 03
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S15$[rbp+8], 0
-  0035f	48 8d 85 c8 02
-	00 00		 lea	 rax, QWORD PTR $S13$[rbp+16]
-  00366	48 8d 8d 18 03
-	00 00		 lea	 rcx, QWORD PTR $S15$[rbp]
-  0036d	48 8b f8	 mov	 rdi, rax
-  00370	48 8b f1	 mov	 rsi, rcx
-  00373	b9 10 00 00 00	 mov	 ecx, 16
-  00378	f3 a4		 rep movsb
-  0037a	48 8d 95 b8 02
-	00 00		 lea	 rdx, QWORD PTR $S13$[rbp]
-  00381	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CE@BBPKOEII@collection?5count?5of?5emptyBucket@
-  00388	e8 00 00 00 00	 call	 Preent
-
-; 48   : 	PREENT_ARGS("value at index 3 of myBucket: %\n", fmt_i(output));
-
-  0038d	c7 85 48 03 00
-	00 1d 00 00 00	 mov	 DWORD PTR $S16$[rbp], 29
-  00397	8b 45 04	 mov	 eax, DWORD PTR output$[rbp]
-  0039a	89 85 84 03 00
-	00		 mov	 DWORD PTR $S17$[rbp], eax
-  003a0	48 8d 85 84 03
-	00 00		 lea	 rax, QWORD PTR $S17$[rbp]
-  003a7	48 89 85 50 03
-	00 00		 mov	 QWORD PTR $S16$[rbp+8], rax
-  003ae	c7 85 a8 03 00
-	00 fe ff ff ff	 mov	 DWORD PTR $S18$[rbp], -2
-  003b8	48 c7 85 b0 03
-	00 00 00 00 00
-	00		 mov	 QWORD PTR $S18$[rbp+8], 0
-  003c3	48 8d 85 58 03
-	00 00		 lea	 rax, QWORD PTR $S16$[rbp+16]
-  003ca	48 8d 8d a8 03
-	00 00		 lea	 rcx, QWORD PTR $S18$[rbp]
-  003d1	48 8b f8	 mov	 rdi, rax
-  003d4	48 8b f1	 mov	 rsi, rcx
-  003d7	b9 10 00 00 00	 mov	 ecx, 16
-  003dc	f3 a4		 rep movsb
-  003de	48 8d 95 48 03
-	00 00		 lea	 rdx, QWORD PTR $S16$[rbp]
-  003e5	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CB@EMHFLGEI@value?5at?5index?53?5of?5myBucket?3?5?$CF@
-  003ec	e8 00 00 00 00	 call	 Preent
+  000ee	c7 85 24 01 00
+	00 00 00 00 00	 mov	 DWORD PTR output$[rbp], 0
 
 ; 49   : 
-; 50   : 	return 0;
+; 50   : 	COLLECTION myBarrel = Barrel_List(int, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-  003f1	33 c0		 xor	 eax, eax
+  000f8	c6 85 d8 01 00
+	00 00		 mov	 BYTE PTR $S7$[rbp], 0
+  000ff	c6 85 d9 01 00
+	00 01		 mov	 BYTE PTR $S7$[rbp+1], 1
+  00106	c6 85 da 01 00
+	00 02		 mov	 BYTE PTR $S7$[rbp+2], 2
+  0010d	c6 85 db 01 00
+	00 03		 mov	 BYTE PTR $S7$[rbp+3], 3
+  00114	c6 85 dc 01 00
+	00 04		 mov	 BYTE PTR $S7$[rbp+4], 4
+  0011b	c6 85 dd 01 00
+	00 05		 mov	 BYTE PTR $S7$[rbp+5], 5
+  00122	c6 85 de 01 00
+	00 06		 mov	 BYTE PTR $S7$[rbp+6], 6
+  00129	c6 85 df 01 00
+	00 07		 mov	 BYTE PTR $S7$[rbp+7], 7
+  00130	c6 85 e0 01 00
+	00 08		 mov	 BYTE PTR $S7$[rbp+8], 8
+  00137	c6 85 e1 01 00
+	00 09		 mov	 BYTE PTR $S7$[rbp+9], 9
+  0013e	c6 85 e2 01 00
+	00 01		 mov	 BYTE PTR $S7$[rbp+10], 1
+  00145	c6 85 a8 01 00
+	00 00		 mov	 BYTE PTR $S6$[rbp], 0
+  0014c	c6 85 a9 01 00
+	00 01		 mov	 BYTE PTR $S6$[rbp+1], 1
+  00153	c6 85 aa 01 00
+	00 02		 mov	 BYTE PTR $S6$[rbp+2], 2
+  0015a	c6 85 ab 01 00
+	00 03		 mov	 BYTE PTR $S6$[rbp+3], 3
+  00161	c6 85 ac 01 00
+	00 04		 mov	 BYTE PTR $S6$[rbp+4], 4
+  00168	c6 85 ad 01 00
+	00 05		 mov	 BYTE PTR $S6$[rbp+5], 5
+  0016f	c6 85 ae 01 00
+	00 06		 mov	 BYTE PTR $S6$[rbp+6], 6
+  00176	c6 85 af 01 00
+	00 07		 mov	 BYTE PTR $S6$[rbp+7], 7
+  0017d	c6 85 b0 01 00
+	00 08		 mov	 BYTE PTR $S6$[rbp+8], 8
+  00184	c6 85 b1 01 00
+	00 09		 mov	 BYTE PTR $S6$[rbp+9], 9
+  0018b	c6 85 b2 01 00
+	00 00		 mov	 BYTE PTR $S6$[rbp+10], 0
+  00192	c7 85 68 01 00
+	00 00 00 00 00	 mov	 DWORD PTR $S5$[rbp], 0
+  0019c	c7 85 6c 01 00
+	00 01 00 00 00	 mov	 DWORD PTR $S5$[rbp+4], 1
+  001a6	c7 85 70 01 00
+	00 02 00 00 00	 mov	 DWORD PTR $S5$[rbp+8], 2
+  001b0	c7 85 74 01 00
+	00 03 00 00 00	 mov	 DWORD PTR $S5$[rbp+12], 3
+  001ba	c7 85 78 01 00
+	00 04 00 00 00	 mov	 DWORD PTR $S5$[rbp+16], 4
+  001c4	c7 85 7c 01 00
+	00 05 00 00 00	 mov	 DWORD PTR $S5$[rbp+20], 5
+  001ce	c7 85 80 01 00
+	00 06 00 00 00	 mov	 DWORD PTR $S5$[rbp+24], 6
+  001d8	c7 85 84 01 00
+	00 07 00 00 00	 mov	 DWORD PTR $S5$[rbp+28], 7
+  001e2	c7 85 88 01 00
+	00 08 00 00 00	 mov	 DWORD PTR $S5$[rbp+32], 8
+  001ec	c7 85 8c 01 00
+	00 09 00 00 00	 mov	 DWORD PTR $S5$[rbp+36], 9
+  001f6	48 8d 95 d8 01
+	00 00		 lea	 rdx, QWORD PTR $S7$[rbp]
+  001fd	48 8d 8d a8 01
+	00 00		 lea	 rcx, QWORD PTR $S6$[rbp]
+  00204	e8 00 00 00 00	 call	 paramCount
+  00209	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
+  0020d	45 33 c9	 xor	 r9d, r9d
+  00210	4c 8d 85 68 01
+	00 00		 lea	 r8, QWORD PTR $S5$[rbp]
+  00217	ba 04 00 00 00	 mov	 edx, 4
+  0021c	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
+  00223	e8 00 00 00 00	 call	 Barrel_ctor
+  00228	48 89 85 48 01
+	00 00		 mov	 QWORD PTR myBarrel$[rbp], rax
+
+; 51   : 
+; 52   : 	if (!Collection_Read(myBarrel, &output, 3))
+
+  0022f	41 b8 03 00 00
+	00		 mov	 r8d, 3
+  00235	48 8d 95 24 01
+	00 00		 lea	 rdx, QWORD PTR output$[rbp]
+  0023c	48 8b 8d 48 01
+	00 00		 mov	 rcx, QWORD PTR myBarrel$[rbp]
+  00243	e8 00 00 00 00	 call	 Collection_Read
+  00248	85 c0		 test	 eax, eax
+  0024a	75 0a		 jne	 SHORT $LN2@main
+
+; 53   : 		return 1;
+
+  0024c	b8 01 00 00 00	 mov	 eax, 1
+  00251	e9 b6 02 00 00	 jmp	 $LN1@main
+$LN2@main:
+
+; 54   : 
+; 55   : 	PREENT_SAFE("value at index 3 of myBarrel: %\n", fmt_i(output));
+
+  00256	c7 85 08 02 00
+	00 09 00 00 00	 mov	 DWORD PTR $S8$[rbp], 9
+  00260	8b 85 24 01 00
+	00		 mov	 eax, DWORD PTR output$[rbp]
+  00266	89 85 44 02 00
+	00		 mov	 DWORD PTR $S9$[rbp], eax
+  0026c	48 8d 85 44 02
+	00 00		 lea	 rax, QWORD PTR $S9$[rbp]
+  00273	48 89 85 10 02
+	00 00		 mov	 QWORD PTR $S8$[rbp+8], rax
+  0027a	c7 85 68 02 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S10$[rbp], -2
+  00284	48 c7 85 70 02
+	00 00 00 00 00
+	00		 mov	 QWORD PTR $S10$[rbp+8], 0
+  0028f	48 8d 85 18 02
+	00 00		 lea	 rax, QWORD PTR $S8$[rbp+16]
+  00296	48 8d 8d 68 02
+	00 00		 lea	 rcx, QWORD PTR $S10$[rbp]
+  0029d	48 8b f8	 mov	 rdi, rax
+  002a0	48 8b f1	 mov	 rsi, rcx
+  002a3	b9 10 00 00 00	 mov	 ecx, 16
+  002a8	f3 a4		 rep movsb
+  002aa	48 8d 95 08 02
+	00 00		 lea	 rdx, QWORD PTR $S8$[rbp]
+  002b1	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CB@FFPKGLBO@value?5at?5index?53?5of?5myBarrel?3?5?$CF@
+  002b8	e8 00 00 00 00	 call	 Preent
+
+; 56   : 
+; 57   : 	COLLECTION myBucket = Bucket_List(int, 0, 1.0f, 2, 3, 4, 5);
+
+  002bd	c6 85 44 03 00
+	00 00		 mov	 BYTE PTR $S14$[rbp], 0
+  002c4	c6 85 45 03 00
+	00 01		 mov	 BYTE PTR $S14$[rbp+1], 1
+  002cb	c6 85 46 03 00
+	00 02		 mov	 BYTE PTR $S14$[rbp+2], 2
+  002d2	c6 85 47 03 00
+	00 03		 mov	 BYTE PTR $S14$[rbp+3], 3
+  002d9	c6 85 48 03 00
+	00 04		 mov	 BYTE PTR $S14$[rbp+4], 4
+  002e0	c6 85 49 03 00
+	00 05		 mov	 BYTE PTR $S14$[rbp+5], 5
+  002e7	c6 85 4a 03 00
+	00 01		 mov	 BYTE PTR $S14$[rbp+6], 1
+  002ee	c6 85 24 03 00
+	00 00		 mov	 BYTE PTR $S13$[rbp], 0
+  002f5	c6 85 25 03 00
+	00 01		 mov	 BYTE PTR $S13$[rbp+1], 1
+  002fc	c6 85 26 03 00
+	00 02		 mov	 BYTE PTR $S13$[rbp+2], 2
+  00303	c6 85 27 03 00
+	00 03		 mov	 BYTE PTR $S13$[rbp+3], 3
+  0030a	c6 85 28 03 00
+	00 04		 mov	 BYTE PTR $S13$[rbp+4], 4
+  00311	c6 85 29 03 00
+	00 05		 mov	 BYTE PTR $S13$[rbp+5], 5
+  00318	c6 85 2a 03 00
+	00 00		 mov	 BYTE PTR $S13$[rbp+6], 0
+  0031f	c7 85 f8 02 00
+	00 00 00 00 00	 mov	 DWORD PTR $S12$[rbp], 0
+  00329	c7 85 fc 02 00
+	00 01 00 00 00	 mov	 DWORD PTR $S12$[rbp+4], 1
+  00333	c7 85 00 03 00
+	00 02 00 00 00	 mov	 DWORD PTR $S12$[rbp+8], 2
+  0033d	c7 85 04 03 00
+	00 03 00 00 00	 mov	 DWORD PTR $S12$[rbp+12], 3
+  00347	c7 85 08 03 00
+	00 04 00 00 00	 mov	 DWORD PTR $S12$[rbp+16], 4
+  00351	c7 85 0c 03 00
+	00 05 00 00 00	 mov	 DWORD PTR $S12$[rbp+20], 5
+  0035b	48 8d 85 b8 02
+	00 00		 lea	 rax, QWORD PTR $S11$[rbp]
+  00362	48 8b f8	 mov	 rdi, rax
+  00365	33 c0		 xor	 eax, eax
+  00367	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
+  0036c	f3 aa		 rep stosb
+  0036e	48 8d 95 44 03
+	00 00		 lea	 rdx, QWORD PTR $S14$[rbp]
+  00375	48 8d 8d 24 03
+	00 00		 lea	 rcx, QWORD PTR $S13$[rbp]
+  0037c	e8 00 00 00 00	 call	 paramCount
+  00381	89 44 24 28	 mov	 DWORD PTR [rsp+40], eax
+  00385	c7 44 24 20 00
+	00 00 00	 mov	 DWORD PTR [rsp+32], 0
+  0038d	4c 8d 8d f8 02
+	00 00		 lea	 r9, QWORD PTR $S12$[rbp]
+  00394	4c 8d 85 b8 02
+	00 00		 lea	 r8, QWORD PTR $S11$[rbp]
+  0039b	ba 04 00 00 00	 mov	 edx, 4
+  003a0	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
+  003a7	e8 00 00 00 00	 call	 Bucket_ctor
+  003ac	48 89 85 98 02
+	00 00		 mov	 QWORD PTR myBucket$[rbp], rax
+
+; 58   : 
+; 59   : 	COLLECTION emptyBucket = Bucket_Empty(int, 6);
+
+  003b3	48 8d 85 c8 03
+	00 00		 lea	 rax, QWORD PTR $S16$[rbp]
+  003ba	48 8b f8	 mov	 rdi, rax
+  003bd	33 c0		 xor	 eax, eax
+  003bf	b9 18 00 00 00	 mov	 ecx, 24
+  003c4	f3 aa		 rep stosb
+  003c6	48 8d 85 88 03
+	00 00		 lea	 rax, QWORD PTR $S15$[rbp]
+  003cd	48 8b f8	 mov	 rdi, rax
+  003d0	33 c0		 xor	 eax, eax
+  003d2	b9 20 00 00 00	 mov	 ecx, 32			; 00000020H
+  003d7	f3 aa		 rep stosb
+  003d9	c7 44 24 28 06
+	00 00 00	 mov	 DWORD PTR [rsp+40], 6
+  003e1	c7 44 24 20 20
+	00 00 00	 mov	 DWORD PTR [rsp+32], 32	; 00000020H
+  003e9	4c 8d 8d c8 03
+	00 00		 lea	 r9, QWORD PTR $S16$[rbp]
+  003f0	4c 8d 85 88 03
+	00 00		 lea	 r8, QWORD PTR $S15$[rbp]
+  003f7	ba 04 00 00 00	 mov	 edx, 4
+  003fc	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_03JBIPMCLC@int@
+  00403	e8 00 00 00 00	 call	 Bucket_ctor
+  00408	48 89 85 68 03
+	00 00		 mov	 QWORD PTR emptyBucket$[rbp], rax
+
+; 60   : 
+; 61   : 	if (!Collection_Read(myBucket, &output, 3))
+
+  0040f	41 b8 03 00 00
+	00		 mov	 r8d, 3
+  00415	48 8d 95 24 01
+	00 00		 lea	 rdx, QWORD PTR output$[rbp]
+  0041c	48 8b 8d 98 02
+	00 00		 mov	 rcx, QWORD PTR myBucket$[rbp]
+  00423	e8 00 00 00 00	 call	 Collection_Read
+  00428	85 c0		 test	 eax, eax
+  0042a	75 0a		 jne	 SHORT $LN3@main
+
+; 62   : 		return 1;
+
+  0042c	b8 01 00 00 00	 mov	 eax, 1
+  00431	e9 d6 00 00 00	 jmp	 $LN1@main
+$LN3@main:
+
+; 63   : 
+; 64   : 	PREENT_SAFE("collection count of emptyBucket: %\n", fmt_i(Collection_Count(emptyBucket)));
+
+  00436	c7 85 f8 03 00
+	00 09 00 00 00	 mov	 DWORD PTR $S17$[rbp], 9
+  00440	48 8b 8d 68 03
+	00 00		 mov	 rcx, QWORD PTR emptyBucket$[rbp]
+  00447	e8 00 00 00 00	 call	 Collection_Count
+  0044c	89 85 34 04 00
+	00		 mov	 DWORD PTR $S18$[rbp], eax
+  00452	48 8d 85 34 04
+	00 00		 lea	 rax, QWORD PTR $S18$[rbp]
+  00459	48 89 85 00 04
+	00 00		 mov	 QWORD PTR $S17$[rbp+8], rax
+  00460	c7 85 58 04 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S19$[rbp], -2
+  0046a	48 c7 85 60 04
+	00 00 00 00 00
+	00		 mov	 QWORD PTR $S19$[rbp+8], 0
+  00475	48 8d 85 08 04
+	00 00		 lea	 rax, QWORD PTR $S17$[rbp+16]
+  0047c	48 8d 8d 58 04
+	00 00		 lea	 rcx, QWORD PTR $S19$[rbp]
+  00483	48 8b f8	 mov	 rdi, rax
+  00486	48 8b f1	 mov	 rsi, rcx
+  00489	b9 10 00 00 00	 mov	 ecx, 16
+  0048e	f3 a4		 rep movsb
+  00490	48 8d 95 f8 03
+	00 00		 lea	 rdx, QWORD PTR $S17$[rbp]
+  00497	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CE@BBPKOEII@collection?5count?5of?5emptyBucket@
+  0049e	e8 00 00 00 00	 call	 Preent
+
+; 65   : 	PREENT_SAFE("value at index 3 of myBucket: %\n", fmt_i(output));
+
+  004a3	c7 85 88 04 00
+	00 09 00 00 00	 mov	 DWORD PTR $S20$[rbp], 9
+  004ad	8b 85 24 01 00
+	00		 mov	 eax, DWORD PTR output$[rbp]
+  004b3	89 85 c4 04 00
+	00		 mov	 DWORD PTR $S21$[rbp], eax
+  004b9	48 8d 85 c4 04
+	00 00		 lea	 rax, QWORD PTR $S21$[rbp]
+  004c0	48 89 85 90 04
+	00 00		 mov	 QWORD PTR $S20$[rbp+8], rax
+  004c7	c7 85 e8 04 00
+	00 fe ff ff ff	 mov	 DWORD PTR $S22$[rbp], -2
+  004d1	48 c7 85 f0 04
+	00 00 00 00 00
+	00		 mov	 QWORD PTR $S22$[rbp+8], 0
+  004dc	48 8d 85 98 04
+	00 00		 lea	 rax, QWORD PTR $S20$[rbp+16]
+  004e3	48 8d 8d e8 04
+	00 00		 lea	 rcx, QWORD PTR $S22$[rbp]
+  004ea	48 8b f8	 mov	 rdi, rax
+  004ed	48 8b f1	 mov	 rsi, rcx
+  004f0	b9 10 00 00 00	 mov	 ecx, 16
+  004f5	f3 a4		 rep movsb
+  004f7	48 8d 95 88 04
+	00 00		 lea	 rdx, QWORD PTR $S20$[rbp]
+  004fe	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0CB@EMHFLGEI@value?5at?5index?53?5of?5myBucket?3?5?$CF@
+  00505	e8 00 00 00 00	 call	 Preent
+
+; 66   : 
+; 67   : 	return 0;
+
+  0050a	33 c0		 xor	 eax, eax
 $LN1@main:
 
-; 51   : }
+; 68   : }
 
-  003f3	48 8b f8	 mov	 rdi, rax
-  003f6	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
-  003fa	48 8d 15 00 00
+  0050c	48 8b f8	 mov	 rdi, rax
+  0050f	48 8d 4d d0	 lea	 rcx, QWORD PTR [rbp-48]
+  00513	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:main$rtcFrameData
-  00401	e8 00 00 00 00	 call	 _RTC_CheckStackVars
-  00406	48 8b c7	 mov	 rax, rdi
-  00409	48 8b 8d 48 05
+  0051a	e8 00 00 00 00	 call	 _RTC_CheckStackVars
+  0051f	48 8b c7	 mov	 rax, rdi
+  00522	48 8b 8d 48 07
 	00 00		 mov	 rcx, QWORD PTR __$ArrayPad$[rbp]
-  00410	48 33 cd	 xor	 rcx, rbp
-  00413	e8 00 00 00 00	 call	 __security_check_cookie
-  00418	48 8d a5 50 05
-	00 00		 lea	 rsp, QWORD PTR [rbp+1360]
-  0041f	5f		 pop	 rdi
-  00420	5e		 pop	 rsi
-  00421	5d		 pop	 rbp
-  00422	c3		 ret	 0
+  00529	48 33 cd	 xor	 rcx, rbp
+  0052c	e8 00 00 00 00	 call	 __security_check_cookie
+  00531	48 8d a5 50 07
+	00 00		 lea	 rsp, QWORD PTR [rbp+1872]
+  00538	5f		 pop	 rdi
+  00539	5e		 pop	 rsi
+  0053a	5d		 pop	 rbp
+  0053b	c3		 ret	 0
 main	ENDP
 _TEXT	ENDS
 END

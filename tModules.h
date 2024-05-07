@@ -6,7 +6,15 @@
 #include <Windows.h>
 
 typedef struct {
-	ParamType _type;
+	ullong _mem[512];
+} Page;
+
+typedef struct {
+	ullong _mem[4];
+} Barrel;
+
+typedef struct {
+	int _type;
 	void* _ptr;
 } Parameter;
 
@@ -69,14 +77,6 @@ typedef struct {
 	char* _key;
 	void* _occupant;
 } hash_node;
-
-typedef struct {
-	ullong _mem[512];
-} Page;
-
-typedef struct {
-	ullong _mem[4];
-} Barrel;
 
 typedef struct {
 	Link _link;
@@ -149,19 +149,48 @@ typedef struct {
 	void* _target;
 } Target;
 
+// Object Instance
 typedef struct {
-	uint _offset;
+	uint _poolIndex;
+	uint _mutationMask;
+} Mutant;
+
+// Class Mask
+typedef struct {
 	uint _count;
+	uint _poolOffset;
+	uint* _mutOffsets;
 } Mutation;
 
+// Backing Field Supplier
 typedef struct {
 	const char* const _name;
-	Bucket _propData, _propDefs;
+	uint _propCount;
+	void* _propData;
+	Property* _propDefs;
+	//Bucket _propData, _propDefs;
 } Mutagen;
 
 typedef struct {
-	Bucket _mutagens, _mutations;
-	BarrelNode *ID_2_Ix, *Ix_2_ID;
-} GenePool;
+	uint _mutagenCount;
+	uint _mutationCount;
+	Mutagen* _mutagens;
+	Mutation* _mutations;
+	//Bucket _mutagens, _mutations;
+	BarrelNode* _mutants, *_reverseLookup;
+} Mutable;
+
+/*
+
+void foo(struct Mutagen, struct Mutation, int index)
+int offSet = 0;
+for (int m = Mutation.mask; m < totalMutations; m++)
+	for (int i = 0; i < totalMutagens; i++)
+		if ((1 << i) & m)
+			offSet += Mutations;
+
+void* attr = Mutagen[index - offset]
+
+*/
 
 #endif // !MODULES

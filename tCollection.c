@@ -165,6 +165,8 @@ CollectionExtensions* Collection_GetExtensions(TypeInfo* typeInfo, bool(*methods
 
 	CollectionExtensions newInfo = CollectionExtensions_Create(typeInfo, methods, memFlags);
 
+	PREENT_SAFE("Looking for Collection Info - typeName: % | sizeof: %\n", fmt_s(newInfo._type->_name), fmt_i(newInfo._type->_size));
+
 	for (int i = 0; i < GlobalCollectionInfoCurrentCount; i++) {
 		if (Collection_Compare(&GlobalCollectionInfo[i], &newInfo)) {
 			PREENT("CollectionInfo found!\n");

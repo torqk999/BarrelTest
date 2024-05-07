@@ -1,4 +1,5 @@
 C:\Repos\BarrelTest\BarrelTest.c;C:\Repos\BarrelTest\TestArea\x64\Debug\BarrelTest.obj
+C:\Repos\BarrelTest\MutationTest.c;C:\Repos\BarrelTest\TestArea\x64\Debug\MutationTest.obj
 C:\Repos\BarrelTest\tBarrel.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tBarrel.obj
 C:\Repos\BarrelTest\tBucket.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tBucket.obj
 C:\Repos\BarrelTest\TestArea.c;C:\Repos\BarrelTest\TestArea\x64\Debug\TestArea.obj
@@ -7,6 +8,7 @@ C:\Repos\BarrelTest\tHeap.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHeap.obj
 C:\Repos\BarrelTest\tHelpers.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tHelpers.obj
 C:\Repos\BarrelTest\tLink.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tLink.obj
 C:\Repos\BarrelTest\tModules.h;C:\Repos\BarrelTest\TestArea\x64\Debug\tModules.obj
+C:\Repos\BarrelTest\tMutation.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tMutation.obj
 C:\Repos\BarrelTest\tPreent.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tPreent.obj
 C:\Repos\BarrelTest\tQues.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tQues.obj
 C:\Repos\BarrelTest\tServices.c;C:\Repos\BarrelTest\TestArea\x64\Debug\tServices.obj

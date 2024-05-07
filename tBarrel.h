@@ -4,9 +4,9 @@
 #include <tHeap.h>
 #include <tCollection.h>
 
-
-BarrelService GlobalBarrelService;
-TypeInfo GlobalBarrelNodeType;
+static bool GlobalBarrelServiceStarted = false;
+static BarrelService GlobalBarrelService;
+//TypeInfo GlobalBarrelNodeType;
 
 ThreadHandle barrelService_ThreadBin[MaxThreadCount];
 REQUEST barrelService_QueBin[MaxQueCount];
@@ -60,7 +60,7 @@ BarrelNode* Barrel_Sourced(TypeInfo* info, void* srcHead, int memFlags, uint ini
 // Public Section //
 ////////////////////
 
-bool Barrel_ServiceInit(HeapService* heapService);
+bool Barrel_ServiceInit();
 
 COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* head, int memFlags, uint initCapacity);
 

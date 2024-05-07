@@ -137,8 +137,6 @@ bool TypeInfo_Compare(TypeInfo* a, TypeInfo* b) {
 	return defaultStringCompare(a->_name, b->_name);
 }
 
-
-
 const char* TypeInfo_Name(COLLECTION collection)
 {
 	return collection->_extensions->_type->_name;
@@ -171,7 +169,7 @@ bool TypeInfo_GetInfo(REQUEST request)
 Property* Property_Get(const char* name, TypeInfo* info) {
 
 	for (int i = 0; i < testPropertyBinCurrentCount; i++) {
-		if (testPropertyBin[i]._name == name)
+		if (defaultStringCompare(testPropertyBin[i]._name, name))
 			return &testPropertyBin[i];
 	}
 

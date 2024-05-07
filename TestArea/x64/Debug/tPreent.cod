@@ -237,14 +237,14 @@ $pdata$strToInt DD imagerel $LN11
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
-$pdata$numConvert DD imagerel $LN46
-	DD	imagerel $LN46+1416
+$pdata$numConvert DD imagerel $LN53
+	DD	imagerel $LN53+1632
 	DD	imagerel $unwind$numConvert
 pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$Preent DD imagerel $LN28
-	DD	imagerel $LN28+787
+	DD	imagerel $LN28+716
 	DD	imagerel $unwind$Preent
 pdata	ENDS
 ;	COMDAT pdata
@@ -288,6 +288,8 @@ _DATA	SEGMENT
 ?Representation@?1??integerConvert@@9@9 DB '0123456789ABCDEF', 00H ; `integerConvert'::`2'::Representation
 	ORG $+7
 ?Representation@?1??numConvert@@9@9 DB '0123456789ABCDEF', 00H ; `numConvert'::`2'::Representation
+	ORG $+7
+?ParamSymbol@?1??numConvert@@9@9 DB 'csLIxlObhiofd', 00H ; `numConvert'::`2'::ParamSymbol
 _DATA	ENDS
 ;	COMDAT voltbl
 voltbl	SEGMENT
@@ -331,14 +333,14 @@ xdata	ENDS
 xdata	SEGMENT
 $unwind$Preent DD 025061901H
 	DD	01142319H
-	DD	0700d003eH
+	DD	0700d003aH
 	DD	0500b600cH
 xdata	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$numConvert DD 025051301H
 	DD	010e2313H
-	DD	070070045H
+	DD	070070049H
 	DD	05006H
 xdata	ENDS
 ;	COMDAT xdata
@@ -391,7 +393,7 @@ count$ = 4
 __$ArrayPad$ = 216
 Geet	PROC						; COMDAT
 
-; 283  : {
+; 311  : {
 
 $LN3:
   00000	40 55		 push	 rbp
@@ -412,13 +414,13 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__386B16A1_tPreent@c
   00038	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 284  : 	unsigned int count;
-; 285  : 	return GeetCount(&count);
+; 312  : 	unsigned int count;
+; 313  : 	return GeetCount(&count);
 
   0003d	48 8d 4d 04	 lea	 rcx, QWORD PTR count$[rbp]
   00041	e8 00 00 00 00	 call	 GeetCount
 
-; 286  : }
+; 314  : }
 
   00046	48 8b f8	 mov	 rdi, rax
   00049	48 8d 4d e0	 lea	 rcx, QWORD PTR [rbp-32]
@@ -444,7 +446,7 @@ _TEXT	SEGMENT
 count$ = 224
 GeetCount PROC						; COMDAT
 
-; 274  : {
+; 302  : {
 
 $LN3:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
@@ -457,7 +459,7 @@ $LN3:
 	00 00		 lea	 rcx, OFFSET FLAT:__386B16A1_tPreent@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 275  : 	ReadConsoleA(GetStdHandle(STD_INPUT_HANDLE), PREENT_BUFFER, MAX_CONSOLE_BUFFER, count, NULL);
+; 303  : 	ReadConsoleA(GetStdHandle(STD_INPUT_HANDLE), PREENT_BUFFER, MAX_CONSOLE_BUFFER, count, NULL);
 
   0001f	b9 f6 ff ff ff	 mov	 ecx, -10		; fffffff6H
   00024	ff 15 00 00 00
@@ -474,15 +476,15 @@ $LN3:
   0004a	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_ReadConsoleA
 
-; 276  : 
-; 277  : 	return PREENT_BUFFER;
+; 304  : 
+; 305  : 	return PREENT_BUFFER;
 
   00050	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:PREENT_BUFFER
 
-; 278  : 	//*count = *count <= 1 ? 0 : *count - 1;
-; 279  : 	//PREENT_BUFFER[*count - 1] = '\0';
-; 280  : }
+; 306  : 	//*count = *count <= 1 ? 0 : *count - 1;
+; 307  : 	//PREENT_BUFFER[*count - 1] = '\0';
+; 308  : }
 
   00057	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -497,18 +499,17 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 startIndex$ = 4
 workingIndex$ = 40
-ptr$ = 72
-output$ = 104
-written$ = 132
-i$1 = 164
-$T2 = 392
-$T3 = 432
-tv132 = 452
-string$ = 496
-head$ = 504
+output$ = 72
+written$ = 100
+i$1 = 132
+$T2 = 360
+$T3 = 400
+tv132 = 420
+string$ = 464
+head$ = 472
 Preent	PROC						; COMDAT
 
-; 209  : {
+; 236  : {
 
 $LN28:
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
@@ -516,239 +517,228 @@ $LN28:
   0000a	55		 push	 rbp
   0000b	56		 push	 rsi
   0000c	57		 push	 rdi
-  0000d	48 81 ec f0 01
-	00 00		 sub	 rsp, 496		; 000001f0H
+  0000d	48 81 ec d0 01
+	00 00		 sub	 rsp, 464		; 000001d0H
   00014	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00019	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__386B16A1_tPreent@c
   00020	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 210  : 	unsigned int startIndex = 0;
+; 237  : 	unsigned int startIndex = 0;
 
   00025	c7 45 04 00 00
 	00 00		 mov	 DWORD PTR startIndex$[rbp], 0
 
-; 211  : 	char* workingIndex = PREENT_BUFFER;
+; 238  : 	char* workingIndex = PREENT_BUFFER;
 
   0002c	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:PREENT_BUFFER
   00033	48 89 45 28	 mov	 QWORD PTR workingIndex$[rbp], rax
 
-; 212  : 
-; 213  : 	void* ptr = head;
+; 239  : 
+; 240  : 	//void* ptr = head;
+; 241  : 
+; 242  : 	HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
 
-  00037	48 8b 85 f8 01
-	00 00		 mov	 rax, QWORD PTR head$[rbp]
-  0003e	48 89 45 48	 mov	 QWORD PTR ptr$[rbp], rax
-
-; 214  : 
-; 215  : 	HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
-
-  00042	b9 f5 ff ff ff	 mov	 ecx, -11		; fffffff5H
-  00047	ff 15 00 00 00
+  00037	b9 f5 ff ff ff	 mov	 ecx, -11		; fffffff5H
+  0003c	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetStdHandle
-  0004d	48 89 45 68	 mov	 QWORD PTR output$[rbp], rax
+  00042	48 89 45 48	 mov	 QWORD PTR output$[rbp], rax
 
-; 216  : 	DWORD written = 0;
+; 243  : 	DWORD written = 0;
 
-  00051	c7 85 84 00 00
-	00 00 00 00 00	 mov	 DWORD PTR written$[rbp], 0
+  00046	c7 45 64 00 00
+	00 00		 mov	 DWORD PTR written$[rbp], 0
 
-; 217  : 
-; 218  : 	for (int i = 0; i < MAX_CONSOLE_BUFFER; i++)
+; 244  : 
+; 245  : 	for (int i = 0; i < MAX_CONSOLE_BUFFER; i++)
 
-  0005b	c7 85 a4 00 00
+  0004d	c7 85 84 00 00
 	00 00 00 00 00	 mov	 DWORD PTR i$1[rbp], 0
-  00065	eb 0e		 jmp	 SHORT $LN4@Preent
+  00057	eb 0e		 jmp	 SHORT $LN4@Preent
 $LN2@Preent:
-  00067	8b 85 a4 00 00
+  00059	8b 85 84 00 00
 	00		 mov	 eax, DWORD PTR i$1[rbp]
-  0006d	ff c0		 inc	 eax
-  0006f	89 85 a4 00 00
+  0005f	ff c0		 inc	 eax
+  00061	89 85 84 00 00
 	00		 mov	 DWORD PTR i$1[rbp], eax
 $LN4@Preent:
-  00075	83 bd a4 00 00
+  00067	83 bd 84 00 00
 	00 40		 cmp	 DWORD PTR i$1[rbp], 64	; 00000040H
-  0007c	0f 8d 13 02 00
+  0006e	0f 8d f9 01 00
 	00		 jge	 $LN3@Preent
 
-; 219  : 	{
-; 220  : 		PREENT_BUFFER[i] = string[i];
+; 246  : 	{
+; 247  : 		PREENT_BUFFER[i] = string[i];
 
-  00082	48 63 85 a4 00
+  00074	48 63 85 84 00
 	00 00		 movsxd	 rax, DWORD PTR i$1[rbp]
-  00089	48 63 8d a4 00
+  0007b	48 63 8d 84 00
 	00 00		 movsxd	 rcx, DWORD PTR i$1[rbp]
-  00090	48 8d 15 00 00
+  00082	48 8d 15 00 00
 	00 00		 lea	 rdx, OFFSET FLAT:PREENT_BUFFER
-  00097	4c 8b 85 f0 01
+  00089	4c 8b 85 d0 01
 	00 00		 mov	 r8, QWORD PTR string$[rbp]
-  0009e	41 0f b6 04 00	 movzx	 eax, BYTE PTR [r8+rax]
-  000a3	88 04 0a	 mov	 BYTE PTR [rdx+rcx], al
+  00090	41 0f b6 04 00	 movzx	 eax, BYTE PTR [r8+rax]
+  00095	88 04 0a	 mov	 BYTE PTR [rdx+rcx], al
 
-; 221  : 
-; 222  : 		if (string[i] == '\0')
+; 248  : 
+; 249  : 		if (string[i] == '\0') // end of PREENT STREEM
 
-  000a6	48 63 85 a4 00
+  00098	48 63 85 84 00
 	00 00		 movsxd	 rax, DWORD PTR i$1[rbp]
-  000ad	48 8b 8d f0 01
+  0009f	48 8b 8d d0 01
 	00 00		 mov	 rcx, QWORD PTR string$[rbp]
-  000b4	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  000b8	85 c0		 test	 eax, eax
-  000ba	75 1b		 jne	 SHORT $LN7@Preent
+  000a6	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
+  000aa	85 c0		 test	 eax, eax
+  000ac	75 18		 jne	 SHORT $LN7@Preent
 
-; 223  : 		{
-; 224  : 			pootStr(workingIndex, output, written);
+; 250  : 		{
+; 251  : 			pootStr(workingIndex, output, written);
 
-  000bc	44 8b 85 84 00
-	00 00		 mov	 r8d, DWORD PTR written$[rbp]
-  000c3	48 8b 55 68	 mov	 rdx, QWORD PTR output$[rbp]
-  000c7	48 8b 4d 28	 mov	 rcx, QWORD PTR workingIndex$[rbp]
-  000cb	e8 00 00 00 00	 call	 pootStr
+  000ae	44 8b 45 64	 mov	 r8d, DWORD PTR written$[rbp]
+  000b2	48 8b 55 48	 mov	 rdx, QWORD PTR output$[rbp]
+  000b6	48 8b 4d 28	 mov	 rcx, QWORD PTR workingIndex$[rbp]
+  000ba	e8 00 00 00 00	 call	 pootStr
 
-; 225  : 			return NULL;
+; 252  : 			return NULL;
 
-  000d0	33 c0		 xor	 eax, eax
-  000d2	e9 d4 01 00 00	 jmp	 $LN1@Preent
+  000bf	33 c0		 xor	 eax, eax
+  000c1	e9 bd 01 00 00	 jmp	 $LN1@Preent
 $LN7@Preent:
 
-; 226  : 		}
-; 227  : 
-; 228  : 		if (string[i] == '%')
+; 253  : 		}
+; 254  : 
+; 255  : 		if (string[i] == '%') // next PREENT PRAM
 
-  000d7	48 63 85 a4 00
+  000c6	48 63 85 84 00
 	00 00		 movsxd	 rax, DWORD PTR i$1[rbp]
-  000de	48 8b 8d f0 01
+  000cd	48 8b 8d d0 01
 	00 00		 mov	 rcx, QWORD PTR string$[rbp]
-  000e5	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
-  000e9	83 f8 25	 cmp	 eax, 37			; 00000025H
-  000ec	0f 85 9e 01 00
+  000d4	0f be 04 01	 movsx	 eax, BYTE PTR [rcx+rax]
+  000d8	83 f8 25	 cmp	 eax, 37			; 00000025H
+  000db	0f 85 87 01 00
 	00		 jne	 $LN8@Preent
 
-; 229  : 		{
-; 230  : 			PREENT_BUFFER[i] = '\0';
+; 256  : 		{
+; 257  : 			PREENT_BUFFER[i] = '\0';
 
-  000f2	48 63 85 a4 00
+  000e1	48 63 85 84 00
 	00 00		 movsxd	 rax, DWORD PTR i$1[rbp]
-  000f9	48 89 85 88 01
+  000e8	48 89 85 68 01
 	00 00		 mov	 QWORD PTR $T2[rbp], rax
-  00100	48 83 bd 88 01
+  000ef	48 83 bd 68 01
 	00 00 40	 cmp	 QWORD PTR $T2[rbp], 64	; 00000040H
-  00108	73 02		 jae	 SHORT $LN24@Preent
-  0010a	eb 05		 jmp	 SHORT $LN25@Preent
-$LN24@Preent:
-  0010c	e8 00 00 00 00	 call	 __report_rangecheckfailure
+  000f7	73 02		 jae	 SHORT $LN25@Preent
+  000f9	eb 05		 jmp	 SHORT $LN26@Preent
 $LN25@Preent:
-  00111	48 8d 05 00 00
+  000fb	e8 00 00 00 00	 call	 __report_rangecheckfailure
+$LN26@Preent:
+  00100	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:PREENT_BUFFER
-  00118	48 8b 8d 88 01
+  00107	48 8b 8d 68 01
 	00 00		 mov	 rcx, QWORD PTR $T2[rbp]
-  0011f	c6 04 08 00	 mov	 BYTE PTR [rax+rcx], 0
+  0010e	c6 04 08 00	 mov	 BYTE PTR [rax+rcx], 0
 
-; 231  : 			pootStr(workingIndex, output, written);
+; 258  : 			pootStr(workingIndex, output, written);
 
-  00123	44 8b 85 84 00
-	00 00		 mov	 r8d, DWORD PTR written$[rbp]
-  0012a	48 8b 55 68	 mov	 rdx, QWORD PTR output$[rbp]
-  0012e	48 8b 4d 28	 mov	 rcx, QWORD PTR workingIndex$[rbp]
-  00132	e8 00 00 00 00	 call	 pootStr
+  00112	44 8b 45 64	 mov	 r8d, DWORD PTR written$[rbp]
+  00116	48 8b 55 48	 mov	 rdx, QWORD PTR output$[rbp]
+  0011a	48 8b 4d 28	 mov	 rcx, QWORD PTR workingIndex$[rbp]
+  0011e	e8 00 00 00 00	 call	 pootStr
 
-; 232  : 			workingIndex = &PREENT_BUFFER[i + 1];
+; 259  : 			workingIndex = &PREENT_BUFFER[i + 1];
 
-  00137	8b 85 a4 00 00
+  00123	8b 85 84 00 00
 	00		 mov	 eax, DWORD PTR i$1[rbp]
-  0013d	ff c0		 inc	 eax
-  0013f	48 98		 cdqe
-  00141	48 8d 0d 00 00
+  00129	ff c0		 inc	 eax
+  0012b	48 98		 cdqe
+  0012d	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:PREENT_BUFFER
-  00148	48 03 c8	 add	 rcx, rax
-  0014b	48 8b c1	 mov	 rax, rcx
-  0014e	48 89 45 28	 mov	 QWORD PTR workingIndex$[rbp], rax
+  00134	48 03 c8	 add	 rcx, rax
+  00137	48 8b c1	 mov	 rax, rcx
+  0013a	48 89 45 28	 mov	 QWORD PTR workingIndex$[rbp], rax
 
-; 233  : 
-; 234  : 			switch (head[0]._type)
+; 260  : 
+; 261  : 			switch (head[0]._type)
 
-  00152	b8 10 00 00 00	 mov	 eax, 16
-  00157	48 6b c0 00	 imul	 rax, rax, 0
-  0015b	48 8b 8d f8 01
+  0013e	b8 10 00 00 00	 mov	 eax, 16
+  00143	48 6b c0 00	 imul	 rax, rax, 0
+  00147	48 8b 8d d8 01
 	00 00		 mov	 rcx, QWORD PTR head$[rbp]
-  00162	8b 04 01	 mov	 eax, DWORD PTR [rcx+rax]
-  00165	89 85 c4 01 00
+  0014e	8b 04 01	 mov	 eax, DWORD PTR [rcx+rax]
+  00151	89 85 a4 01 00
 	00		 mov	 DWORD PTR tv132[rbp], eax
-  0016b	8b 85 c4 01 00
+  00157	8b 85 a4 01 00
 	00		 mov	 eax, DWORD PTR tv132[rbp]
-  00171	83 c0 02	 add	 eax, 2
-  00174	89 85 c4 01 00
+  0015d	83 c0 02	 add	 eax, 2
+  00160	89 85 a4 01 00
 	00		 mov	 DWORD PTR tv132[rbp], eax
-  0017a	83 bd c4 01 00
-	00 22		 cmp	 DWORD PTR tv132[rbp], 34 ; 00000022H
-  00181	0f 87 09 01 00
-	00		 ja	 $LN22@Preent
-  00187	48 63 85 c4 01
+  00166	83 bd a4 01 00
+	00 0e		 cmp	 DWORD PTR tv132[rbp], 14
+  0016d	0f 87 f5 00 00
+	00		 ja	 $LN23@Preent
+  00173	48 63 85 a4 01
 	00 00		 movsxd	 rax, DWORD PTR tv132[rbp]
-  0018e	48 8d 0d 00 00
+  0017a	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__ImageBase
-  00195	0f b6 84 01 00
-	00 00 00	 movzx	 eax, BYTE PTR $LN26@Preent[rcx+rax]
-  0019d	8b 84 81 00 00
+  00181	8b 84 81 00 00
 	00 00		 mov	 eax, DWORD PTR $LN27@Preent[rcx+rax*4]
-  001a4	48 03 c1	 add	 rax, rcx
-  001a7	ff e0		 jmp	 rax
+  00188	48 03 c1	 add	 rax, rcx
+  0018b	ff e0		 jmp	 rax
 $LN9@Preent:
 
-; 235  : 			{
-; 236  : 			case __c:
-; 237  : 				pootChar(*((char*)(head[0]._ptr)), output, written);
+; 262  : 			{
+; 263  : 			case __c:
+; 264  : 				pootChar(*((char*)(head[0]._ptr)), output, written);
 
-  001a9	b8 10 00 00 00	 mov	 eax, 16
-  001ae	48 6b c0 00	 imul	 rax, rax, 0
-  001b2	48 8b 8d f8 01
+  0018d	b8 10 00 00 00	 mov	 eax, 16
+  00192	48 6b c0 00	 imul	 rax, rax, 0
+  00196	48 8b 8d d8 01
 	00 00		 mov	 rcx, QWORD PTR head$[rbp]
-  001b9	48 8b 44 01 08	 mov	 rax, QWORD PTR [rcx+rax+8]
-  001be	44 8b 85 84 00
-	00 00		 mov	 r8d, DWORD PTR written$[rbp]
-  001c5	48 8b 55 68	 mov	 rdx, QWORD PTR output$[rbp]
-  001c9	0f b6 08	 movzx	 ecx, BYTE PTR [rax]
-  001cc	e8 00 00 00 00	 call	 pootChar
+  0019d	48 8b 44 01 08	 mov	 rax, QWORD PTR [rcx+rax+8]
+  001a2	44 8b 45 64	 mov	 r8d, DWORD PTR written$[rbp]
+  001a6	48 8b 55 48	 mov	 rdx, QWORD PTR output$[rbp]
+  001aa	0f b6 08	 movzx	 ecx, BYTE PTR [rax]
+  001ad	e8 00 00 00 00	 call	 pootChar
 
-; 238  : 				head++;
+; 265  : 				head++;
 
-  001d1	48 8b 85 f8 01
+  001b2	48 8b 85 d8 01
 	00 00		 mov	 rax, QWORD PTR head$[rbp]
-  001d8	48 83 c0 10	 add	 rax, 16
-  001dc	48 89 85 f8 01
+  001b9	48 83 c0 10	 add	 rax, 16
+  001bd	48 89 85 d8 01
 	00 00		 mov	 QWORD PTR head$[rbp], rax
 
-; 239  : 				break;
+; 266  : 				break;
 
-  001e3	e9 a8 00 00 00	 jmp	 $LN5@Preent
+  001c4	e9 9f 00 00 00	 jmp	 $LN5@Preent
 $LN10@Preent:
 
-; 240  : 
-; 241  : 			case __s:
-; 242  : 				pootStr((char*)(head[0]._ptr), output, written);
+; 267  : 
+; 268  : 			case __s:
+; 269  : 				pootStr((char*)(head[0]._ptr), output, written);
 
-  001e8	b8 10 00 00 00	 mov	 eax, 16
-  001ed	48 6b c0 00	 imul	 rax, rax, 0
-  001f1	44 8b 85 84 00
-	00 00		 mov	 r8d, DWORD PTR written$[rbp]
-  001f8	48 8b 55 68	 mov	 rdx, QWORD PTR output$[rbp]
-  001fc	48 8b 8d f8 01
+  001c9	b8 10 00 00 00	 mov	 eax, 16
+  001ce	48 6b c0 00	 imul	 rax, rax, 0
+  001d2	44 8b 45 64	 mov	 r8d, DWORD PTR written$[rbp]
+  001d6	48 8b 55 48	 mov	 rdx, QWORD PTR output$[rbp]
+  001da	48 8b 8d d8 01
 	00 00		 mov	 rcx, QWORD PTR head$[rbp]
-  00203	48 8b 4c 01 08	 mov	 rcx, QWORD PTR [rcx+rax+8]
-  00208	e8 00 00 00 00	 call	 pootStr
+  001e1	48 8b 4c 01 08	 mov	 rcx, QWORD PTR [rcx+rax+8]
+  001e6	e8 00 00 00 00	 call	 pootStr
 
-; 243  : 				head++;
+; 270  : 				head++;
 
-  0020d	48 8b 85 f8 01
+  001eb	48 8b 85 d8 01
 	00 00		 mov	 rax, QWORD PTR head$[rbp]
-  00214	48 83 c0 10	 add	 rax, 16
-  00218	48 89 85 f8 01
+  001f2	48 83 c0 10	 add	 rax, 16
+  001f6	48 89 85 d8 01
 	00 00		 mov	 QWORD PTR head$[rbp], rax
 
-; 244  : 				break;
+; 271  : 				break;
 
-  0021f	eb 6f		 jmp	 SHORT $LN5@Preent
+  001fd	eb 69		 jmp	 SHORT $LN5@Preent
 $LN11@Preent:
 $LN12@Preent:
 $LN13@Preent:
@@ -759,149 +749,114 @@ $LN17@Preent:
 $LN18@Preent:
 $LN19@Preent:
 $LN20@Preent:
-
-; 245  : 
-; 246  : 			case __I:
-; 247  : 			case __L:
-; 248  : 			case __x:
-; 249  : 			case __l:
-; 250  : 			case __O:
-; 251  : 			case __h:
-; 252  : 			case __i:
-; 253  : 			case __o:
-; 254  : 			case __f:
-; 255  : 			case __d:
-; 256  : 				pootStr(numConvert(head[0]), output, written);
-
-  00221	b8 10 00 00 00	 mov	 eax, 16
-  00226	48 6b c0 00	 imul	 rax, rax, 0
-  0022a	48 8d 8d b0 01
-	00 00		 lea	 rcx, QWORD PTR $T3[rbp]
-  00231	48 8b 95 f8 01
-	00 00		 mov	 rdx, QWORD PTR head$[rbp]
-  00238	48 8b f9	 mov	 rdi, rcx
-  0023b	48 8d 34 02	 lea	 rsi, QWORD PTR [rdx+rax]
-  0023f	b9 10 00 00 00	 mov	 ecx, 16
-  00244	f3 a4		 rep movsb
-  00246	48 8d 8d b0 01
-	00 00		 lea	 rcx, QWORD PTR $T3[rbp]
-  0024d	e8 00 00 00 00	 call	 numConvert
-  00252	44 8b 85 84 00
-	00 00		 mov	 r8d, DWORD PTR written$[rbp]
-  00259	48 8b 55 68	 mov	 rdx, QWORD PTR output$[rbp]
-  0025d	48 8b c8	 mov	 rcx, rax
-  00260	e8 00 00 00 00	 call	 pootStr
-
-; 257  : 				head++;
-
-  00265	48 8b 85 f8 01
-	00 00		 mov	 rax, QWORD PTR head$[rbp]
-  0026c	48 83 c0 10	 add	 rax, 16
-  00270	48 89 85 f8 01
-	00 00		 mov	 QWORD PTR head$[rbp], rax
-
-; 258  : 				break;
-
-  00277	eb 17		 jmp	 SHORT $LN5@Preent
 $LN21@Preent:
 
-; 259  : 
-; 260  : 			case NONE:
-; 261  : 				pootStr("\n[NULL PARAM ERROR]\n", output, written);
+; 272  : 
+; 273  : 			case __b:
+; 274  : 			case __I:
+; 275  : 			case __L:
+; 276  : 			case __x:
+; 277  : 			case __l:
+; 278  : 			case __O:
+; 279  : 			case __h:
+; 280  : 			case __i:
+; 281  : 			case __o:
+; 282  : 			case __f:
+; 283  : 			case __d:
+; 284  : 				pootStr(numConvert(head[0]), output, written);
 
-  00279	44 8b 85 84 00
-	00 00		 mov	 r8d, DWORD PTR written$[rbp]
-  00280	48 8b 55 68	 mov	 rdx, QWORD PTR output$[rbp]
-  00284	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BF@CAJJEMJD@?6?$FLNULL?5PARAM?5ERROR?$FN?6@
-  0028b	e8 00 00 00 00	 call	 pootStr
+  001ff	b8 10 00 00 00	 mov	 eax, 16
+  00204	48 6b c0 00	 imul	 rax, rax, 0
+  00208	48 8d 8d 90 01
+	00 00		 lea	 rcx, QWORD PTR $T3[rbp]
+  0020f	48 8b 95 d8 01
+	00 00		 mov	 rdx, QWORD PTR head$[rbp]
+  00216	48 8b f9	 mov	 rdi, rcx
+  00219	48 8d 34 02	 lea	 rsi, QWORD PTR [rdx+rax]
+  0021d	b9 10 00 00 00	 mov	 ecx, 16
+  00222	f3 a4		 rep movsb
+  00224	48 8d 8d 90 01
+	00 00		 lea	 rcx, QWORD PTR $T3[rbp]
+  0022b	e8 00 00 00 00	 call	 numConvert
+  00230	44 8b 45 64	 mov	 r8d, DWORD PTR written$[rbp]
+  00234	48 8b 55 48	 mov	 rdx, QWORD PTR output$[rbp]
+  00238	48 8b c8	 mov	 rcx, rax
+  0023b	e8 00 00 00 00	 call	 pootStr
+
+; 285  : 				head++;
+
+  00240	48 8b 85 d8 01
+	00 00		 mov	 rax, QWORD PTR head$[rbp]
+  00247	48 83 c0 10	 add	 rax, 16
+  0024b	48 89 85 d8 01
+	00 00		 mov	 QWORD PTR head$[rbp], rax
+
+; 286  : 				break;
+
+  00252	eb 14		 jmp	 SHORT $LN5@Preent
 $LN22@Preent:
+
+; 287  : 
+; 288  : 			case NONE:
+; 289  : 				pootStr("\n[NULL PARAM ERROR]\n", output, written);
+
+  00254	44 8b 45 64	 mov	 r8d, DWORD PTR written$[rbp]
+  00258	48 8b 55 48	 mov	 rdx, QWORD PTR output$[rbp]
+  0025c	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:??_C@_0BF@CAJJEMJD@?6?$FLNULL?5PARAM?5ERROR?$FN?6@
+  00263	e8 00 00 00 00	 call	 pootStr
+$LN23@Preent:
 $LN5@Preent:
 $LN8@Preent:
 
-; 262  : 				break;
-; 263  : 
-; 264  : 			default:
-; 265  : 				break;
-; 266  : 			}
-; 267  : 		}
-; 268  : 	}
+; 290  : 				break;
+; 291  : 
+; 292  : 			default:
+; 293  : 				break;
+; 294  : 			}
+; 295  : 		}
+; 296  : 	}
 
-  00290	e9 d2 fd ff ff	 jmp	 $LN2@Preent
+  00268	e9 ec fd ff ff	 jmp	 $LN2@Preent
 $LN3@Preent:
 
-; 269  : 
-; 270  : 	return &(string[MAX_CONSOLE_BUFFER]);
+; 297  : 
+; 298  : 	return &(string[MAX_CONSOLE_BUFFER]);
 
-  00295	b8 01 00 00 00	 mov	 eax, 1
-  0029a	48 6b c0 40	 imul	 rax, rax, 64		; 00000040H
-  0029e	48 8b 8d f0 01
+  0026d	b8 01 00 00 00	 mov	 eax, 1
+  00272	48 6b c0 40	 imul	 rax, rax, 64		; 00000040H
+  00276	48 8b 8d d0 01
 	00 00		 mov	 rcx, QWORD PTR string$[rbp]
-  002a5	48 03 c8	 add	 rcx, rax
-  002a8	48 8b c1	 mov	 rax, rcx
+  0027d	48 03 c8	 add	 rcx, rax
+  00280	48 8b c1	 mov	 rax, rcx
 $LN1@Preent:
-$LN23@Preent:
+$LN24@Preent:
 
-; 271  : }
+; 299  : }
 
-  002ab	48 8d a5 d0 01
-	00 00		 lea	 rsp, QWORD PTR [rbp+464]
-  002b2	5f		 pop	 rdi
-  002b3	5e		 pop	 rsi
-  002b4	5d		 pop	 rbp
-  002b5	c3		 ret	 0
-  002b6	66 90		 npad	 2
+  00283	48 8d a5 b0 01
+	00 00		 lea	 rsp, QWORD PTR [rbp+432]
+  0028a	5f		 pop	 rdi
+  0028b	5e		 pop	 rsi
+  0028c	5d		 pop	 rbp
+  0028d	c3		 ret	 0
+  0028e	66 90		 npad	 2
 $LN27@Preent:
-  002b8	00 00 00 00	 DD	 $LN21@Preent
-  002bc	00 00 00 00	 DD	 $LN9@Preent
-  002c0	00 00 00 00	 DD	 $LN10@Preent
-  002c4	00 00 00 00	 DD	 $LN12@Preent
-  002c8	00 00 00 00	 DD	 $LN11@Preent
-  002cc	00 00 00 00	 DD	 $LN13@Preent
-  002d0	00 00 00 00	 DD	 $LN14@Preent
-  002d4	00 00 00 00	 DD	 $LN15@Preent
-  002d8	00 00 00 00	 DD	 $LN16@Preent
-  002dc	00 00 00 00	 DD	 $LN17@Preent
-  002e0	00 00 00 00	 DD	 $LN18@Preent
-  002e4	00 00 00 00	 DD	 $LN19@Preent
-  002e8	00 00 00 00	 DD	 $LN20@Preent
-  002ec	00 00 00 00	 DD	 $LN22@Preent
-$LN26@Preent:
-  002f0	00		 DB	 0
-  002f1	0d		 DB	 13
-  002f2	0d		 DB	 13
-  002f3	0d		 DB	 13
-  002f4	0d		 DB	 13
-  002f5	0d		 DB	 13
-  002f6	0d		 DB	 13
-  002f7	0d		 DB	 13
-  002f8	0d		 DB	 13
-  002f9	0d		 DB	 13
-  002fa	0d		 DB	 13
-  002fb	0d		 DB	 13
-  002fc	0d		 DB	 13
-  002fd	0d		 DB	 13
-  002fe	0d		 DB	 13
-  002ff	0d		 DB	 13
-  00300	0d		 DB	 13
-  00301	0d		 DB	 13
-  00302	0d		 DB	 13
-  00303	0d		 DB	 13
-  00304	0d		 DB	 13
-  00305	0d		 DB	 13
-  00306	0d		 DB	 13
-  00307	01		 DB	 1
-  00308	02		 DB	 2
-  00309	03		 DB	 3
-  0030a	04		 DB	 4
-  0030b	05		 DB	 5
-  0030c	06		 DB	 6
-  0030d	07		 DB	 7
-  0030e	08		 DB	 8
-  0030f	09		 DB	 9
-  00310	0a		 DB	 10
-  00311	0b		 DB	 11
-  00312	0c		 DB	 12
+  00290	00 00 00 00	 DD	 $LN22@Preent
+  00294	00 00 00 00	 DD	 $LN23@Preent
+  00298	00 00 00 00	 DD	 $LN9@Preent
+  0029c	00 00 00 00	 DD	 $LN10@Preent
+  002a0	00 00 00 00	 DD	 $LN13@Preent
+  002a4	00 00 00 00	 DD	 $LN12@Preent
+  002a8	00 00 00 00	 DD	 $LN14@Preent
+  002ac	00 00 00 00	 DD	 $LN15@Preent
+  002b0	00 00 00 00	 DD	 $LN16@Preent
+  002b4	00 00 00 00	 DD	 $LN11@Preent
+  002b8	00 00 00 00	 DD	 $LN17@Preent
+  002bc	00 00 00 00	 DD	 $LN18@Preent
+  002c0	00 00 00 00	 DD	 $LN19@Preent
+  002c4	00 00 00 00	 DD	 $LN20@Preent
+  002c8	00 00 00 00	 DD	 $LN21@Preent
 Preent	ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
@@ -911,43 +866,45 @@ _TEXT	SEGMENT
 ptr$ = 8
 isPositive$ = 68
 isInt$ = 100
-intCheck$ = 132
-longCheck$ = 168
-fVal$ = 200
-iVal$ = 232
-fRem$ = 264
-base$ = 292
-tv134 = 500
-tv132 = 500
-tv79 = 500
-tv74 = 500
-tv71 = 500
-tv67 = 500
-tv163 = 504
-tv159 = 504
-tv154 = 504
-tv150 = 504
-tv82 = 504
-preem$ = 544
+isFloat$ = 132
+intCheck$ = 164
+longCheck$ = 200
+fVal$ = 232
+iVal$ = 264
+fRem$ = 296
+base$ = 324
+tv136 = 532
+tv134 = 532
+tv81 = 532
+tv76 = 532
+tv73 = 532
+tv67 = 532
+tv167 = 536
+tv163 = 536
+tv156 = 536
+tv152 = 536
+tv84 = 536
+preem$ = 576
 numConvert PROC						; COMDAT
 
 ; 102  : {
 
-$LN46:
+$LN53:
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   00005	55		 push	 rbp
   00006	57		 push	 rdi
-  00007	48 81 ec 28 02
-	00 00		 sub	 rsp, 552		; 00000228H
+  00007	48 81 ec 48 02
+	00 00		 sub	 rsp, 584		; 00000248H
   0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00013	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__386B16A1_tPreent@c
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
 ; 103  : 	static char Representation[] = "0123456789ABCDEF";
-; 104  : 	static char Buffer[MAX_NUM_BUFFER];
-; 105  : 
-; 106  : 	char* ptr = &Buffer[MAX_NUM_BUFFER - 1];
+; 104  : 	static char ParamSymbol[] = "csLIxlObhiofd";
+; 105  : 	static char Buffer[MAX_NUM_BUFFER];
+; 106  : 
+; 107  : 	char* ptr = &Buffer[MAX_NUM_BUFFER - 1];
 
   0001f	b8 01 00 00 00	 mov	 eax, 1
   00024	48 6b c0 31	 imul	 rax, rax, 49		; 00000031H
@@ -957,651 +914,769 @@ $LN46:
   00032	48 8b c1	 mov	 rax, rcx
   00035	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 107  : 	*ptr = '\0';
+; 108  : 	*ptr = '\0';
 
   00039	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
   0003d	c6 00 00	 mov	 BYTE PTR [rax], 0
 
-; 108  : 
-; 109  : 	char next;
-; 110  : 	int isPositive = 1;
+; 109  : 
+; 110  : 	char next;
+; 111  : 	int isPositive = 1;
 
   00040	c7 45 44 01 00
 	00 00		 mov	 DWORD PTR isPositive$[rbp], 1
 
-; 111  : 	int isInt = 0;
+; 112  : 	bool isInt = false;
 
   00047	c7 45 64 00 00
 	00 00		 mov	 DWORD PTR isInt$[rbp], 0
 
-; 112  : 
-; 113  : 	int intCheck;
-; 114  : 	long long longCheck;
-; 115  : 
-; 116  : 	double fVal = 0;
+; 113  : 	bool isFloat = false;
 
-  0004e	0f 57 c0	 xorps	 xmm0, xmm0
-  00051	f2 0f 11 85 c8
+  0004e	c7 85 84 00 00
+	00 00 00 00 00	 mov	 DWORD PTR isFloat$[rbp], 0
+
+; 114  : 
+; 115  : 	int intCheck;
+; 116  : 	long long longCheck;
+; 117  : 
+; 118  : 	double fVal = 0;
+
+  00058	0f 57 c0	 xorps	 xmm0, xmm0
+  0005b	f2 0f 11 85 e8
 	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
 
-; 117  : 	unsigned long long iVal = 0;
+; 119  : 	unsigned long long iVal = 0;
 
-  00059	48 c7 85 e8 00
+  00063	48 c7 85 08 01
 	00 00 00 00 00
 	00		 mov	 QWORD PTR iVal$[rbp], 0
 
-; 118  : 	unsigned long long fRem = 0;
+; 120  : 	unsigned long long fRem = 0;
 
-  00064	48 c7 85 08 01
+  0006e	48 c7 85 28 01
 	00 00 00 00 00
 	00		 mov	 QWORD PTR fRem$[rbp], 0
 
-; 119  : 	unsigned int base = 0;
+; 121  : 	unsigned int base = 0;
 
-  0006f	c7 85 24 01 00
+  00079	c7 85 44 01 00
 	00 00 00 00 00	 mov	 DWORD PTR base$[rbp], 0
 
-; 120  : 
-; 121  : 	switch (preem._type)
+; 122  : 
+; 123  : 	switch (preem._type)
 
-  00079	48 8b 85 20 02
+  00083	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  00080	8b 00		 mov	 eax, DWORD PTR [rax]
-  00082	89 85 f4 01 00
+  0008a	8b 00		 mov	 eax, DWORD PTR [rax]
+  0008c	89 85 14 02 00
 	00		 mov	 DWORD PTR tv67[rbp], eax
-  00088	8b 85 f4 01 00
+  00092	8b 85 14 02 00
 	00		 mov	 eax, DWORD PTR tv67[rbp]
-  0008e	83 e8 17	 sub	 eax, 23
-  00091	89 85 f4 01 00
+  00098	83 e8 02	 sub	 eax, 2
+  0009b	89 85 14 02 00
 	00		 mov	 DWORD PTR tv67[rbp], eax
-  00097	83 bd f4 01 00
-	00 09		 cmp	 DWORD PTR tv67[rbp], 9
-  0009e	0f 87 dc 02 00
+  000a1	83 bd 14 02 00
+	00 0a		 cmp	 DWORD PTR tv67[rbp], 10
+  000a8	0f 87 03 03 00
 	00		 ja	 $LN2@numConvert
-  000a4	48 63 85 f4 01
+  000ae	48 63 85 14 02
 	00 00		 movsxd	 rax, DWORD PTR tv67[rbp]
-  000ab	48 8d 0d 00 00
+  000b5	48 8d 0d 00 00
 	00 00		 lea	 rcx, OFFSET FLAT:__ImageBase
-  000b2	8b 84 81 00 00
-	00 00		 mov	 eax, DWORD PTR $LN45@numConvert[rcx+rax*4]
-  000b9	48 03 c1	 add	 rax, rcx
-  000bc	ff e0		 jmp	 rax
-$LN13@numConvert:
-
-; 122  : 	{
-; 123  : 	case __I:
-; 124  : 		intCheck = *((int*)(preem._ptr));
-
-  000be	48 8b 85 20 02
-	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  000c5	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  000c9	8b 00		 mov	 eax, DWORD PTR [rax]
-  000cb	89 85 84 00 00
-	00		 mov	 DWORD PTR intCheck$[rbp], eax
-
-; 125  : 		isPositive = intCheck >= 0;
-
-  000d1	83 bd 84 00 00
-	00 00		 cmp	 DWORD PTR intCheck$[rbp], 0
-  000d8	7c 0c		 jl	 SHORT $LN27@numConvert
-  000da	c7 85 f4 01 00
-	00 01 00 00 00	 mov	 DWORD PTR tv71[rbp], 1
-  000e4	eb 0a		 jmp	 SHORT $LN28@numConvert
-$LN27@numConvert:
-  000e6	c7 85 f4 01 00
-	00 00 00 00 00	 mov	 DWORD PTR tv71[rbp], 0
-$LN28@numConvert:
-  000f0	8b 85 f4 01 00
-	00		 mov	 eax, DWORD PTR tv71[rbp]
-  000f6	89 45 44	 mov	 DWORD PTR isPositive$[rbp], eax
-
-; 126  : 		iVal = isPositive ? intCheck : -intCheck;
-
-  000f9	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
-  000fd	74 0e		 je	 SHORT $LN29@numConvert
-  000ff	8b 85 84 00 00
-	00		 mov	 eax, DWORD PTR intCheck$[rbp]
-  00105	89 85 f4 01 00
-	00		 mov	 DWORD PTR tv74[rbp], eax
-  0010b	eb 0e		 jmp	 SHORT $LN30@numConvert
-$LN29@numConvert:
-  0010d	8b 85 84 00 00
-	00		 mov	 eax, DWORD PTR intCheck$[rbp]
-  00113	f7 d8		 neg	 eax
-  00115	89 85 f4 01 00
-	00		 mov	 DWORD PTR tv74[rbp], eax
-$LN30@numConvert:
-  0011b	48 63 85 f4 01
-	00 00		 movsxd	 rax, DWORD PTR tv74[rbp]
-  00122	48 89 85 e8 00
-	00 00		 mov	 QWORD PTR iVal$[rbp], rax
-
-; 127  : 		base = 10;
-
-  00129	c7 85 24 01 00
-	00 0a 00 00 00	 mov	 DWORD PTR base$[rbp], 10
-
-; 128  : 		goto IsInt;
-
-  00133	e9 07 01 00 00	 jmp	 $IsInt$47
-$LN14@numConvert:
-
-; 129  : 	case __L:
-; 130  : 		longCheck = *((long long*)(preem._ptr));
-
-  00138	48 8b 85 20 02
-	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  0013f	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  00143	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  00146	48 89 85 a8 00
-	00 00		 mov	 QWORD PTR longCheck$[rbp], rax
-
-; 131  : 		isPositive = longCheck >= 0;
-
-  0014d	48 83 bd a8 00
-	00 00 00	 cmp	 QWORD PTR longCheck$[rbp], 0
-  00155	7c 0c		 jl	 SHORT $LN31@numConvert
-  00157	c7 85 f4 01 00
-	00 01 00 00 00	 mov	 DWORD PTR tv79[rbp], 1
-  00161	eb 0a		 jmp	 SHORT $LN32@numConvert
-$LN31@numConvert:
-  00163	c7 85 f4 01 00
-	00 00 00 00 00	 mov	 DWORD PTR tv79[rbp], 0
-$LN32@numConvert:
-  0016d	8b 85 f4 01 00
-	00		 mov	 eax, DWORD PTR tv79[rbp]
-  00173	89 45 44	 mov	 DWORD PTR isPositive$[rbp], eax
-
-; 132  : 		iVal = isPositive ? longCheck : -longCheck;
-
-  00176	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
-  0017a	74 10		 je	 SHORT $LN33@numConvert
-  0017c	48 8b 85 a8 00
-	00 00		 mov	 rax, QWORD PTR longCheck$[rbp]
-  00183	48 89 85 f8 01
-	00 00		 mov	 QWORD PTR tv82[rbp], rax
-  0018a	eb 11		 jmp	 SHORT $LN34@numConvert
-$LN33@numConvert:
-  0018c	48 8b 85 a8 00
-	00 00		 mov	 rax, QWORD PTR longCheck$[rbp]
-  00193	48 f7 d8	 neg	 rax
-  00196	48 89 85 f8 01
-	00 00		 mov	 QWORD PTR tv82[rbp], rax
-$LN34@numConvert:
-  0019d	48 8b 85 f8 01
-	00 00		 mov	 rax, QWORD PTR tv82[rbp]
-  001a4	48 89 85 e8 00
-	00 00		 mov	 QWORD PTR iVal$[rbp], rax
-
-; 133  : 		base = 10;
-
-  001ab	c7 85 24 01 00
-	00 0a 00 00 00	 mov	 DWORD PTR base$[rbp], 10
-
-; 134  : 		goto IsInt;
-
-  001b5	e9 85 00 00 00	 jmp	 $IsInt$47
-$LN15@numConvert:
-
-; 135  : 	case __x:
-; 136  : 		base += 6;
-
-  001ba	8b 85 24 01 00
-	00		 mov	 eax, DWORD PTR base$[rbp]
-  001c0	83 c0 06	 add	 eax, 6
-  001c3	89 85 24 01 00
-	00		 mov	 DWORD PTR base$[rbp], eax
+  000bc	8b 84 81 00 00
+	00 00		 mov	 eax, DWORD PTR $LN52@numConvert[rcx+rax*4]
+  000c3	48 03 c1	 add	 rax, rcx
+  000c6	ff e0		 jmp	 rax
 $LN16@numConvert:
 
-; 137  : 	case __l:
-; 138  : 		base += 2;
+; 124  : 	{
+; 125  : 	case __b:
+; 126  : 		base = 1;
 
-  001c9	8b 85 24 01 00
-	00		 mov	 eax, DWORD PTR base$[rbp]
-  001cf	83 c0 02	 add	 eax, 2
-  001d2	89 85 24 01 00
-	00		 mov	 DWORD PTR base$[rbp], eax
-$LN17@numConvert:
+  000c8	c7 85 44 01 00
+	00 01 00 00 00	 mov	 DWORD PTR base$[rbp], 1
 
-; 139  : 	case __O:
-; 140  : 		base += 8;
+; 127  : 		iVal = *((unsigned long long*)(preem._ptr));
 
-  001d8	8b 85 24 01 00
-	00		 mov	 eax, DWORD PTR base$[rbp]
-  001de	83 c0 08	 add	 eax, 8
-  001e1	89 85 24 01 00
-	00		 mov	 DWORD PTR base$[rbp], eax
-
-; 141  : 		iVal = *((unsigned long long*)(preem._ptr));
-
-  001e7	48 8b 85 20 02
+  000d2	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  001ee	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  001f2	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  001f5	48 89 85 e8 00
+  000d9	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  000dd	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  000e0	48 89 85 08 01
 	00 00		 mov	 QWORD PTR iVal$[rbp], rax
 
-; 142  : 		goto IsInt;
+; 128  : 		break;
 
-  001fc	eb 41		 jmp	 SHORT $IsInt$47
+  000e7	e9 c5 02 00 00	 jmp	 $LN2@numConvert
+$LN17@numConvert:
+
+; 129  : 
+; 130  : 	case __I:
+; 131  : 		intCheck = *((int*)(preem._ptr));
+
+  000ec	48 8b 85 40 02
+	00 00		 mov	 rax, QWORD PTR preem$[rbp]
+  000f3	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  000f7	8b 00		 mov	 eax, DWORD PTR [rax]
+  000f9	89 85 a4 00 00
+	00		 mov	 DWORD PTR intCheck$[rbp], eax
+
+; 132  : 		isPositive = intCheck >= 0;
+
+  000ff	83 bd a4 00 00
+	00 00		 cmp	 DWORD PTR intCheck$[rbp], 0
+  00106	7c 0c		 jl	 SHORT $LN34@numConvert
+  00108	c7 85 14 02 00
+	00 01 00 00 00	 mov	 DWORD PTR tv73[rbp], 1
+  00112	eb 0a		 jmp	 SHORT $LN35@numConvert
+$LN34@numConvert:
+  00114	c7 85 14 02 00
+	00 00 00 00 00	 mov	 DWORD PTR tv73[rbp], 0
+$LN35@numConvert:
+  0011e	8b 85 14 02 00
+	00		 mov	 eax, DWORD PTR tv73[rbp]
+  00124	89 45 44	 mov	 DWORD PTR isPositive$[rbp], eax
+
+; 133  : 		iVal = isPositive ? intCheck : -intCheck;
+
+  00127	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
+  0012b	74 0e		 je	 SHORT $LN36@numConvert
+  0012d	8b 85 a4 00 00
+	00		 mov	 eax, DWORD PTR intCheck$[rbp]
+  00133	89 85 14 02 00
+	00		 mov	 DWORD PTR tv76[rbp], eax
+  00139	eb 0e		 jmp	 SHORT $LN37@numConvert
+$LN36@numConvert:
+  0013b	8b 85 a4 00 00
+	00		 mov	 eax, DWORD PTR intCheck$[rbp]
+  00141	f7 d8		 neg	 eax
+  00143	89 85 14 02 00
+	00		 mov	 DWORD PTR tv76[rbp], eax
+$LN37@numConvert:
+  00149	48 63 85 14 02
+	00 00		 movsxd	 rax, DWORD PTR tv76[rbp]
+  00150	48 89 85 08 01
+	00 00		 mov	 QWORD PTR iVal$[rbp], rax
+
+; 134  : 		base = 10;
+
+  00157	c7 85 44 01 00
+	00 0a 00 00 00	 mov	 DWORD PTR base$[rbp], 10
+
+; 135  : 		goto IsInt;
+
+  00161	e9 07 01 00 00	 jmp	 $IsInt$54
 $LN18@numConvert:
 
-; 143  : 	case __h:
-; 144  : 		base += 6;
+; 136  : 	case __L:
+; 137  : 		longCheck = *((long long*)(preem._ptr));
 
-  001fe	8b 85 24 01 00
-	00		 mov	 eax, DWORD PTR base$[rbp]
-  00204	83 c0 06	 add	 eax, 6
-  00207	89 85 24 01 00
-	00		 mov	 DWORD PTR base$[rbp], eax
+  00166	48 8b 85 40 02
+	00 00		 mov	 rax, QWORD PTR preem$[rbp]
+  0016d	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  00171	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  00174	48 89 85 c8 00
+	00 00		 mov	 QWORD PTR longCheck$[rbp], rax
+
+; 138  : 		isPositive = longCheck >= 0;
+
+  0017b	48 83 bd c8 00
+	00 00 00	 cmp	 QWORD PTR longCheck$[rbp], 0
+  00183	7c 0c		 jl	 SHORT $LN38@numConvert
+  00185	c7 85 14 02 00
+	00 01 00 00 00	 mov	 DWORD PTR tv81[rbp], 1
+  0018f	eb 0a		 jmp	 SHORT $LN39@numConvert
+$LN38@numConvert:
+  00191	c7 85 14 02 00
+	00 00 00 00 00	 mov	 DWORD PTR tv81[rbp], 0
+$LN39@numConvert:
+  0019b	8b 85 14 02 00
+	00		 mov	 eax, DWORD PTR tv81[rbp]
+  001a1	89 45 44	 mov	 DWORD PTR isPositive$[rbp], eax
+
+; 139  : 		iVal = isPositive ? longCheck : -longCheck;
+
+  001a4	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
+  001a8	74 10		 je	 SHORT $LN40@numConvert
+  001aa	48 8b 85 c8 00
+	00 00		 mov	 rax, QWORD PTR longCheck$[rbp]
+  001b1	48 89 85 18 02
+	00 00		 mov	 QWORD PTR tv84[rbp], rax
+  001b8	eb 11		 jmp	 SHORT $LN41@numConvert
+$LN40@numConvert:
+  001ba	48 8b 85 c8 00
+	00 00		 mov	 rax, QWORD PTR longCheck$[rbp]
+  001c1	48 f7 d8	 neg	 rax
+  001c4	48 89 85 18 02
+	00 00		 mov	 QWORD PTR tv84[rbp], rax
+$LN41@numConvert:
+  001cb	48 8b 85 18 02
+	00 00		 mov	 rax, QWORD PTR tv84[rbp]
+  001d2	48 89 85 08 01
+	00 00		 mov	 QWORD PTR iVal$[rbp], rax
+
+; 140  : 		base = 10;
+
+  001d9	c7 85 44 01 00
+	00 0a 00 00 00	 mov	 DWORD PTR base$[rbp], 10
+
+; 141  : 		goto IsInt;
+
+  001e3	e9 85 00 00 00	 jmp	 $IsInt$54
 $LN19@numConvert:
 
-; 145  : 	case __i:
-; 146  : 		base += 2;
+; 142  : 
+; 143  : 	case __x:
+; 144  : 		base += 6;
 
-  0020d	8b 85 24 01 00
+  001e8	8b 85 44 01 00
 	00		 mov	 eax, DWORD PTR base$[rbp]
-  00213	83 c0 02	 add	 eax, 2
-  00216	89 85 24 01 00
+  001ee	83 c0 06	 add	 eax, 6
+  001f1	89 85 44 01 00
 	00		 mov	 DWORD PTR base$[rbp], eax
 $LN20@numConvert:
 
-; 147  : 	case __o:
-; 148  : 		base += 8;
+; 145  : 	case __l:
+; 146  : 		base += 2;
 
-  0021c	8b 85 24 01 00
+  001f7	8b 85 44 01 00
 	00		 mov	 eax, DWORD PTR base$[rbp]
-  00222	83 c0 08	 add	 eax, 8
-  00225	89 85 24 01 00
+  001fd	83 c0 02	 add	 eax, 2
+  00200	89 85 44 01 00
 	00		 mov	 DWORD PTR base$[rbp], eax
-
-; 149  : 		iVal = *((unsigned int*)(preem._ptr));
-
-  0022b	48 8b 85 20 02
-	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  00232	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  00236	8b 00		 mov	 eax, DWORD PTR [rax]
-  00238	48 89 85 e8 00
-	00 00		 mov	 QWORD PTR iVal$[rbp], rax
-$IsInt$47:
-
-; 150  : 	IsInt:
-; 151  : 		isInt = 1;
-
-  0023f	c7 45 64 01 00
-	00 00		 mov	 DWORD PTR isInt$[rbp], 1
-
-; 152  : 		break;
-
-  00246	e9 35 01 00 00	 jmp	 $LN2@numConvert
 $LN21@numConvert:
 
-; 153  : 
-; 154  : 	case __f:
-; 155  : 		fVal = *((float*)(preem._ptr));
+; 147  : 	case __O:
+; 148  : 		base += 8;
 
-  0024b	48 8b 85 20 02
+  00206	8b 85 44 01 00
+	00		 mov	 eax, DWORD PTR base$[rbp]
+  0020c	83 c0 08	 add	 eax, 8
+  0020f	89 85 44 01 00
+	00		 mov	 DWORD PTR base$[rbp], eax
+
+; 149  : 		iVal = *((unsigned long long*)(preem._ptr));
+
+  00215	48 8b 85 40 02
 	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  00252	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  00256	f3 0f 5a 00	 cvtss2sd xmm0, DWORD PTR [rax]
-  0025a	f2 0f 11 85 c8
-	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
-
-; 156  : 		goto IsFloat;
-
-  00262	eb 17		 jmp	 SHORT $IsFloat$48
-$LN22@numConvert:
-
-; 157  : 	case __d:
-; 158  : 		fVal = *((double*)(preem._ptr));
-
-  00264	48 8b 85 20 02
-	00 00		 mov	 rax, QWORD PTR preem$[rbp]
-  0026b	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
-  0026f	f2 0f 10 00	 movsd	 xmm0, QWORD PTR [rax]
-  00273	f2 0f 11 85 c8
-	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
-$IsFloat$48:
-
-; 159  : 	IsFloat:
-; 160  : 		isPositive = fVal >= 0;
-
-  0027b	f2 0f 10 85 c8
-	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
-  00283	66 0f 2f 05 00
-	00 00 00	 comisd	 xmm0, QWORD PTR __real@0000000000000000
-  0028b	72 0c		 jb	 SHORT $LN35@numConvert
-  0028d	c7 85 f4 01 00
-	00 01 00 00 00	 mov	 DWORD PTR tv132[rbp], 1
-  00297	eb 0a		 jmp	 SHORT $LN36@numConvert
-$LN35@numConvert:
-  00299	c7 85 f4 01 00
-	00 00 00 00 00	 mov	 DWORD PTR tv132[rbp], 0
-$LN36@numConvert:
-  002a3	8b 85 f4 01 00
-	00		 mov	 eax, DWORD PTR tv132[rbp]
-  002a9	89 45 44	 mov	 DWORD PTR isPositive$[rbp], eax
-
-; 161  : 		fVal *= isPositive ? 1 : -1;
-
-  002ac	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
-  002b0	74 0c		 je	 SHORT $LN37@numConvert
-  002b2	c7 85 f4 01 00
-	00 01 00 00 00	 mov	 DWORD PTR tv134[rbp], 1
-  002bc	eb 0a		 jmp	 SHORT $LN38@numConvert
-$LN37@numConvert:
-  002be	c7 85 f4 01 00
-	00 ff ff ff ff	 mov	 DWORD PTR tv134[rbp], -1
-$LN38@numConvert:
-  002c8	f2 0f 2a 85 f4
-	01 00 00	 cvtsi2sd xmm0, DWORD PTR tv134[rbp]
-  002d0	f2 0f 10 8d c8
-	00 00 00	 movsd	 xmm1, QWORD PTR fVal$[rbp]
-  002d8	f2 0f 59 c8	 mulsd	 xmm1, xmm0
-  002dc	0f 28 c1	 movaps	 xmm0, xmm1
-  002df	f2 0f 11 85 c8
-	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
-
-; 162  : 		iVal = fVal;
-
-  002e7	33 c0		 xor	 eax, eax
-  002e9	f2 0f 10 85 c8
-	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
-  002f1	66 0f 2f 05 00
-	00 00 00	 comisd	 xmm0, QWORD PTR __real@43e0000000000000
-  002f9	72 1f		 jb	 SHORT $LN44@numConvert
-  002fb	f2 0f 5c 05 00
-	00 00 00	 subsd	 xmm0, QWORD PTR __real@43e0000000000000
-  00303	66 0f 2f 05 00
-	00 00 00	 comisd	 xmm0, QWORD PTR __real@43e0000000000000
-  0030b	73 0d		 jae	 SHORT $LN44@numConvert
-  0030d	48 b9 00 00 00
-	00 00 00 00 80	 mov	 rcx, -9223372036854775808 ; 8000000000000000H
-  00317	48 03 c1	 add	 rax, rcx
-$LN44@numConvert:
-  0031a	f2 48 0f 2c c8	 cvttsd2si rcx, xmm0
-  0031f	48 03 c8	 add	 rcx, rax
-  00322	48 8b c1	 mov	 rax, rcx
-  00325	48 89 85 e8 00
+  0021c	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  00220	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  00223	48 89 85 08 01
 	00 00		 mov	 QWORD PTR iVal$[rbp], rax
 
-; 163  : 		fVal -= iVal;
+; 150  : 		goto IsInt;
 
-  0032c	48 8b 85 e8 00
-	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
-  00333	48 85 c0	 test	 rax, rax
-  00336	7c 07		 jl	 SHORT $LN42@numConvert
-  00338	f2 48 0f 2a c0	 cvtsi2sd xmm0, rax
-  0033d	eb 19		 jmp	 SHORT $LN43@numConvert
-$LN42@numConvert:
-  0033f	48 8b c8	 mov	 rcx, rax
-  00342	48 d1 e9	 shr	 rcx, 1
-  00345	48 83 e0 01	 and	 rax, 1
-  00349	48 0b c8	 or	 rcx, rax
-  0034c	f2 48 0f 2a c9	 cvtsi2sd xmm1, rcx
-  00351	f2 0f 58 c9	 addsd	 xmm1, xmm1
-  00355	0f 28 c1	 movaps	 xmm0, xmm1
-$LN43@numConvert:
-  00358	f2 0f 10 8d c8
-	00 00 00	 movsd	 xmm1, QWORD PTR fVal$[rbp]
-  00360	f2 0f 5c c8	 subsd	 xmm1, xmm0
-  00364	0f 28 c1	 movaps	 xmm0, xmm1
-  00367	f2 0f 11 85 c8
+  0022a	eb 41		 jmp	 SHORT $IsInt$54
+$LN22@numConvert:
+
+; 151  : 
+; 152  : 	case __h:
+; 153  : 		base += 6;
+
+  0022c	8b 85 44 01 00
+	00		 mov	 eax, DWORD PTR base$[rbp]
+  00232	83 c0 06	 add	 eax, 6
+  00235	89 85 44 01 00
+	00		 mov	 DWORD PTR base$[rbp], eax
+$LN23@numConvert:
+
+; 154  : 	case __i:
+; 155  : 		base += 2;
+
+  0023b	8b 85 44 01 00
+	00		 mov	 eax, DWORD PTR base$[rbp]
+  00241	83 c0 02	 add	 eax, 2
+  00244	89 85 44 01 00
+	00		 mov	 DWORD PTR base$[rbp], eax
+$LN24@numConvert:
+
+; 156  : 	case __o:
+; 157  : 		base += 8;
+
+  0024a	8b 85 44 01 00
+	00		 mov	 eax, DWORD PTR base$[rbp]
+  00250	83 c0 08	 add	 eax, 8
+  00253	89 85 44 01 00
+	00		 mov	 DWORD PTR base$[rbp], eax
+
+; 158  : 		iVal = *((unsigned int*)(preem._ptr));
+
+  00259	48 8b 85 40 02
+	00 00		 mov	 rax, QWORD PTR preem$[rbp]
+  00260	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  00264	8b 00		 mov	 eax, DWORD PTR [rax]
+  00266	48 89 85 08 01
+	00 00		 mov	 QWORD PTR iVal$[rbp], rax
+$IsInt$54:
+
+; 159  : 
+; 160  : 	IsInt:
+; 161  : 		isInt = true;
+
+  0026d	c7 45 64 01 00
+	00 00		 mov	 DWORD PTR isInt$[rbp], 1
+
+; 162  : 		break;
+
+  00274	e9 38 01 00 00	 jmp	 $LN2@numConvert
+$LN25@numConvert:
+
+; 163  : 
+; 164  : 	case __f:
+; 165  : 		fVal = *((float*)(preem._ptr));
+
+  00279	48 8b 85 40 02
+	00 00		 mov	 rax, QWORD PTR preem$[rbp]
+  00280	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  00284	f3 0f 5a 00	 cvtss2sd xmm0, DWORD PTR [rax]
+  00288	f2 0f 11 85 e8
 	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
 
-; 164  : 		base = 10;
+; 166  : 		goto IsFloat;
 
-  0036f	c7 85 24 01 00
+  00290	eb 17		 jmp	 SHORT $IsFloat$55
+$LN26@numConvert:
+
+; 167  : 	case __d:
+; 168  : 		fVal = *((double*)(preem._ptr));
+
+  00292	48 8b 85 40 02
+	00 00		 mov	 rax, QWORD PTR preem$[rbp]
+  00299	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
+  0029d	f2 0f 10 00	 movsd	 xmm0, QWORD PTR [rax]
+  002a1	f2 0f 11 85 e8
+	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
+$IsFloat$55:
+
+; 169  : 	IsFloat:
+; 170  : 		isPositive = fVal >= 0;
+
+  002a9	f2 0f 10 85 e8
+	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
+  002b1	66 0f 2f 05 00
+	00 00 00	 comisd	 xmm0, QWORD PTR __real@0000000000000000
+  002b9	72 0c		 jb	 SHORT $LN42@numConvert
+  002bb	c7 85 14 02 00
+	00 01 00 00 00	 mov	 DWORD PTR tv134[rbp], 1
+  002c5	eb 0a		 jmp	 SHORT $LN43@numConvert
+$LN42@numConvert:
+  002c7	c7 85 14 02 00
+	00 00 00 00 00	 mov	 DWORD PTR tv134[rbp], 0
+$LN43@numConvert:
+  002d1	8b 85 14 02 00
+	00		 mov	 eax, DWORD PTR tv134[rbp]
+  002d7	89 45 44	 mov	 DWORD PTR isPositive$[rbp], eax
+
+; 171  : 		fVal *= isPositive ? 1 : -1;
+
+  002da	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
+  002de	74 0c		 je	 SHORT $LN44@numConvert
+  002e0	c7 85 14 02 00
+	00 01 00 00 00	 mov	 DWORD PTR tv136[rbp], 1
+  002ea	eb 0a		 jmp	 SHORT $LN45@numConvert
+$LN44@numConvert:
+  002ec	c7 85 14 02 00
+	00 ff ff ff ff	 mov	 DWORD PTR tv136[rbp], -1
+$LN45@numConvert:
+  002f6	f2 0f 2a 85 14
+	02 00 00	 cvtsi2sd xmm0, DWORD PTR tv136[rbp]
+  002fe	f2 0f 10 8d e8
+	00 00 00	 movsd	 xmm1, QWORD PTR fVal$[rbp]
+  00306	f2 0f 59 c8	 mulsd	 xmm1, xmm0
+  0030a	0f 28 c1	 movaps	 xmm0, xmm1
+  0030d	f2 0f 11 85 e8
+	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
+
+; 172  : 		iVal = fVal;
+
+  00315	33 c0		 xor	 eax, eax
+  00317	f2 0f 10 85 e8
+	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
+  0031f	66 0f 2f 05 00
+	00 00 00	 comisd	 xmm0, QWORD PTR __real@43e0000000000000
+  00327	72 1f		 jb	 SHORT $LN51@numConvert
+  00329	f2 0f 5c 05 00
+	00 00 00	 subsd	 xmm0, QWORD PTR __real@43e0000000000000
+  00331	66 0f 2f 05 00
+	00 00 00	 comisd	 xmm0, QWORD PTR __real@43e0000000000000
+  00339	73 0d		 jae	 SHORT $LN51@numConvert
+  0033b	48 b9 00 00 00
+	00 00 00 00 80	 mov	 rcx, -9223372036854775808 ; 8000000000000000H
+  00345	48 03 c1	 add	 rax, rcx
+$LN51@numConvert:
+  00348	f2 48 0f 2c c8	 cvttsd2si rcx, xmm0
+  0034d	48 03 c8	 add	 rcx, rax
+  00350	48 8b c1	 mov	 rax, rcx
+  00353	48 89 85 08 01
+	00 00		 mov	 QWORD PTR iVal$[rbp], rax
+
+; 173  : 		fVal -= iVal;
+
+  0035a	48 8b 85 08 01
+	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
+  00361	48 85 c0	 test	 rax, rax
+  00364	7c 07		 jl	 SHORT $LN49@numConvert
+  00366	f2 48 0f 2a c0	 cvtsi2sd xmm0, rax
+  0036b	eb 19		 jmp	 SHORT $LN50@numConvert
+$LN49@numConvert:
+  0036d	48 8b c8	 mov	 rcx, rax
+  00370	48 d1 e9	 shr	 rcx, 1
+  00373	48 83 e0 01	 and	 rax, 1
+  00377	48 0b c8	 or	 rcx, rax
+  0037a	f2 48 0f 2a c9	 cvtsi2sd xmm1, rcx
+  0037f	f2 0f 58 c9	 addsd	 xmm1, xmm1
+  00383	0f 28 c1	 movaps	 xmm0, xmm1
+$LN50@numConvert:
+  00386	f2 0f 10 8d e8
+	00 00 00	 movsd	 xmm1, QWORD PTR fVal$[rbp]
+  0038e	f2 0f 5c c8	 subsd	 xmm1, xmm0
+  00392	0f 28 c1	 movaps	 xmm0, xmm1
+  00395	f2 0f 11 85 e8
+	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
+
+; 174  : 		base = 10;
+
+  0039d	c7 85 44 01 00
 	00 0a 00 00 00	 mov	 DWORD PTR base$[rbp], 10
 
-; 165  : 		isInt = 0;
+; 175  : 		isFloat = true;
 
-  00379	c7 45 64 00 00
-	00 00		 mov	 DWORD PTR isInt$[rbp], 0
+  003a7	c7 85 84 00 00
+	00 01 00 00 00	 mov	 DWORD PTR isFloat$[rbp], 1
 $LN2@numConvert:
 
-; 166  : 	}
-; 167  : 
-; 168  : 	if (!isInt)
+; 176  : 	}
+; 177  : 
+; 178  : 	if (isFloat) // decimal section
 
-  00380	83 7d 64 00	 cmp	 DWORD PTR isInt$[rbp], 0
-  00384	0f 85 3e 01 00
-	00		 jne	 $LN23@numConvert
+  003b1	83 bd 84 00 00
+	00 00		 cmp	 DWORD PTR isFloat$[rbp], 0
+  003b8	0f 84 3e 01 00
+	00		 je	 $LN27@numConvert
 
-; 169  : 	{
-; 170  : 		if (fVal > 0)
+; 179  : 	{
+; 180  : 		if (fVal > 0)
 
-  0038a	f2 0f 10 85 c8
+  003be	f2 0f 10 85 e8
 	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
-  00392	66 0f 2f 05 00
+  003c6	66 0f 2f 05 00
 	00 00 00	 comisd	 xmm0, QWORD PTR __real@0000000000000000
-  0039a	0f 86 28 01 00
-	00		 jbe	 $LN24@numConvert
+  003ce	0f 86 28 01 00
+	00		 jbe	 $LN28@numConvert
 $LN6@numConvert:
 
-; 171  : 		{
-; 172  : 			do
-; 173  : 			{
-; 174  : 				fVal *= 10;
+; 181  : 		{
+; 182  : 			do
+; 183  : 			{
+; 184  : 				fVal *= 10;
 
-  003a0	f2 0f 10 85 c8
+  003d4	f2 0f 10 85 e8
 	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
-  003a8	f2 0f 59 05 00
+  003dc	f2 0f 59 05 00
 	00 00 00	 mulsd	 xmm0, QWORD PTR __real@4024000000000000
-  003b0	f2 0f 11 85 c8
+  003e4	f2 0f 11 85 e8
 	00 00 00	 movsd	 QWORD PTR fVal$[rbp], xmm0
 
-; 175  : 				fRem = fVal;
+; 185  : 				fRem = fVal;
 
-  003b8	33 c0		 xor	 eax, eax
-  003ba	f2 0f 10 85 c8
+  003ec	33 c0		 xor	 eax, eax
+  003ee	f2 0f 10 85 e8
 	00 00 00	 movsd	 xmm0, QWORD PTR fVal$[rbp]
-  003c2	66 0f 2f 05 00
+  003f6	66 0f 2f 05 00
 	00 00 00	 comisd	 xmm0, QWORD PTR __real@43e0000000000000
-  003ca	72 1f		 jb	 SHORT $LN41@numConvert
-  003cc	f2 0f 5c 05 00
+  003fe	72 1f		 jb	 SHORT $LN48@numConvert
+  00400	f2 0f 5c 05 00
 	00 00 00	 subsd	 xmm0, QWORD PTR __real@43e0000000000000
-  003d4	66 0f 2f 05 00
+  00408	66 0f 2f 05 00
 	00 00 00	 comisd	 xmm0, QWORD PTR __real@43e0000000000000
-  003dc	73 0d		 jae	 SHORT $LN41@numConvert
-  003de	48 b9 00 00 00
+  00410	73 0d		 jae	 SHORT $LN48@numConvert
+  00412	48 b9 00 00 00
 	00 00 00 00 80	 mov	 rcx, -9223372036854775808 ; 8000000000000000H
-  003e8	48 03 c1	 add	 rax, rcx
-$LN41@numConvert:
-  003eb	f2 48 0f 2c c8	 cvttsd2si rcx, xmm0
-  003f0	48 03 c8	 add	 rcx, rax
-  003f3	48 8b c1	 mov	 rax, rcx
-  003f6	48 89 85 08 01
+  0041c	48 03 c1	 add	 rax, rcx
+$LN48@numConvert:
+  0041f	f2 48 0f 2c c8	 cvttsd2si rcx, xmm0
+  00424	48 03 c8	 add	 rcx, rax
+  00427	48 8b c1	 mov	 rax, rcx
+  0042a	48 89 85 28 01
 	00 00		 mov	 QWORD PTR fRem$[rbp], rax
 
-; 176  : 			} while (fVal - (double)fRem > 0);
+; 186  : 			} while (fVal - (double)fRem > 0);
 
-  003fd	48 8b 85 08 01
+  00431	48 8b 85 28 01
 	00 00		 mov	 rax, QWORD PTR fRem$[rbp]
-  00404	48 85 c0	 test	 rax, rax
-  00407	7c 07		 jl	 SHORT $LN39@numConvert
-  00409	f2 48 0f 2a c0	 cvtsi2sd xmm0, rax
-  0040e	eb 19		 jmp	 SHORT $LN40@numConvert
-$LN39@numConvert:
-  00410	48 8b c8	 mov	 rcx, rax
-  00413	48 d1 e9	 shr	 rcx, 1
-  00416	48 83 e0 01	 and	 rax, 1
-  0041a	48 0b c8	 or	 rcx, rax
-  0041d	f2 48 0f 2a c9	 cvtsi2sd xmm1, rcx
-  00422	f2 0f 58 c9	 addsd	 xmm1, xmm1
-  00426	0f 28 c1	 movaps	 xmm0, xmm1
-$LN40@numConvert:
-  00429	f2 0f 10 8d c8
+  00438	48 85 c0	 test	 rax, rax
+  0043b	7c 07		 jl	 SHORT $LN46@numConvert
+  0043d	f2 48 0f 2a c0	 cvtsi2sd xmm0, rax
+  00442	eb 19		 jmp	 SHORT $LN47@numConvert
+$LN46@numConvert:
+  00444	48 8b c8	 mov	 rcx, rax
+  00447	48 d1 e9	 shr	 rcx, 1
+  0044a	48 83 e0 01	 and	 rax, 1
+  0044e	48 0b c8	 or	 rcx, rax
+  00451	f2 48 0f 2a c9	 cvtsi2sd xmm1, rcx
+  00456	f2 0f 58 c9	 addsd	 xmm1, xmm1
+  0045a	0f 28 c1	 movaps	 xmm0, xmm1
+$LN47@numConvert:
+  0045d	f2 0f 10 8d e8
 	00 00 00	 movsd	 xmm1, QWORD PTR fVal$[rbp]
-  00431	f2 0f 5c c8	 subsd	 xmm1, xmm0
-  00435	0f 28 c1	 movaps	 xmm0, xmm1
-  00438	66 0f 2f 05 00
+  00465	f2 0f 5c c8	 subsd	 xmm1, xmm0
+  00469	0f 28 c1	 movaps	 xmm0, xmm1
+  0046c	66 0f 2f 05 00
 	00 00 00	 comisd	 xmm0, QWORD PTR __real@0000000000000000
-  00440	0f 87 5a ff ff
+  00474	0f 87 5a ff ff
 	ff		 ja	 $LN6@numConvert
 $LN9@numConvert:
 
-; 177  : 
-; 178  : 			do
-; 179  : 			{
-; 180  : 				ptr -= 1;
+; 187  : 
+; 188  : 			do
+; 189  : 			{
+; 190  : 				ptr -= 1;
 
-  00446	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
-  0044a	48 ff c8	 dec	 rax
-  0044d	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+  0047a	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  0047e	48 ff c8	 dec	 rax
+  00481	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 181  : 				*ptr = Representation[fRem % base];
+; 191  : 				*ptr = Representation[fRem % base];
 
-  00451	8b 85 24 01 00
+  00485	8b 85 44 01 00
 	00		 mov	 eax, DWORD PTR base$[rbp]
-  00457	48 89 85 f8 01
-	00 00		 mov	 QWORD PTR tv150[rbp], rax
-  0045e	33 d2		 xor	 edx, edx
-  00460	48 8b 85 08 01
-	00 00		 mov	 rax, QWORD PTR fRem$[rbp]
-  00467	48 8b 8d f8 01
-	00 00		 mov	 rcx, QWORD PTR tv150[rbp]
-  0046e	48 f7 f1	 div	 rcx
-  00471	48 8b c2	 mov	 rax, rdx
-  00474	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:?Representation@?1??numConvert@@9@9
-  0047b	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
-  0047f	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
-  00483	88 02		 mov	 BYTE PTR [rdx], al
-
-; 182  : 				fRem /= base;
-
-  00485	8b 85 24 01 00
-	00		 mov	 eax, DWORD PTR base$[rbp]
-  0048b	48 89 85 f8 01
-	00 00		 mov	 QWORD PTR tv154[rbp], rax
+  0048b	48 89 85 18 02
+	00 00		 mov	 QWORD PTR tv152[rbp], rax
   00492	33 d2		 xor	 edx, edx
-  00494	48 8b 85 08 01
+  00494	48 8b 85 28 01
 	00 00		 mov	 rax, QWORD PTR fRem$[rbp]
-  0049b	48 8b 8d f8 01
-	00 00		 mov	 rcx, QWORD PTR tv154[rbp]
+  0049b	48 8b 8d 18 02
+	00 00		 mov	 rcx, QWORD PTR tv152[rbp]
   004a2	48 f7 f1	 div	 rcx
-  004a5	48 89 85 08 01
+  004a5	48 8b c2	 mov	 rax, rdx
+  004a8	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?Representation@?1??numConvert@@9@9
+  004af	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
+  004b3	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
+  004b7	88 02		 mov	 BYTE PTR [rdx], al
+
+; 192  : 				fRem /= base;
+
+  004b9	8b 85 44 01 00
+	00		 mov	 eax, DWORD PTR base$[rbp]
+  004bf	48 89 85 18 02
+	00 00		 mov	 QWORD PTR tv156[rbp], rax
+  004c6	33 d2		 xor	 edx, edx
+  004c8	48 8b 85 28 01
+	00 00		 mov	 rax, QWORD PTR fRem$[rbp]
+  004cf	48 8b 8d 18 02
+	00 00		 mov	 rcx, QWORD PTR tv156[rbp]
+  004d6	48 f7 f1	 div	 rcx
+  004d9	48 89 85 28 01
 	00 00		 mov	 QWORD PTR fRem$[rbp], rax
 
-; 183  : 
-; 184  : 			} while (fRem != 0);
+; 193  : 
+; 194  : 			} while (fRem != 0);
 
-  004ac	48 83 bd 08 01
+  004e0	48 83 bd 28 01
 	00 00 00	 cmp	 QWORD PTR fRem$[rbp], 0
-  004b4	75 90		 jne	 SHORT $LN9@numConvert
+  004e8	75 90		 jne	 SHORT $LN9@numConvert
 
-; 185  : 
-; 186  : 			ptr -= 1;
+; 195  : 
+; 196  : 			ptr -= 1;
 
-  004b6	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
-  004ba	48 ff c8	 dec	 rax
-  004bd	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+  004ea	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  004ee	48 ff c8	 dec	 rax
+  004f1	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 187  : 			*ptr = '.';
+; 197  : 			*ptr = '.';
 
-  004c1	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
-  004c5	c6 00 2e	 mov	 BYTE PTR [rax], 46	; 0000002eH
-$LN24@numConvert:
-$LN23@numConvert:
+  004f5	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  004f9	c6 00 2e	 mov	 BYTE PTR [rax], 46	; 0000002eH
+$LN28@numConvert:
+$LN27@numConvert:
+
+; 198  : 		}
+; 199  : 	}
+; 200  : 
+; 201  : 	if (isFloat || isInt) { // whole integer section
+
+  004fc	83 bd 84 00 00
+	00 00		 cmp	 DWORD PTR isFloat$[rbp], 0
+  00503	75 0a		 jne	 SHORT $LN31@numConvert
+  00505	83 7d 64 00	 cmp	 DWORD PTR isInt$[rbp], 0
+  00509	0f 84 8a 00 00
+	00		 je	 $LN29@numConvert
+$LN31@numConvert:
 $LN12@numConvert:
 
-; 188  : 		}
-; 189  : 	}
-; 190  : 
-; 191  : 	do
-; 192  : 	{
-; 193  : 		ptr -= 1;
+; 202  : 		do
+; 203  : 		{
+; 204  : 			ptr -= 1;
 
-  004c8	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
-  004cc	48 ff c8	 dec	 rax
-  004cf	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+  0050f	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  00513	48 ff c8	 dec	 rax
+  00516	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 194  : 		*ptr = Representation[iVal % base];
+; 205  : 			*ptr = Representation[iVal % base];
 
-  004d3	8b 85 24 01 00
+  0051a	8b 85 44 01 00
 	00		 mov	 eax, DWORD PTR base$[rbp]
-  004d9	48 89 85 f8 01
-	00 00		 mov	 QWORD PTR tv159[rbp], rax
-  004e0	33 d2		 xor	 edx, edx
-  004e2	48 8b 85 e8 00
-	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
-  004e9	48 8b 8d f8 01
-	00 00		 mov	 rcx, QWORD PTR tv159[rbp]
-  004f0	48 f7 f1	 div	 rcx
-  004f3	48 8b c2	 mov	 rax, rdx
-  004f6	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:?Representation@?1??numConvert@@9@9
-  004fd	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
-  00501	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
-  00505	88 02		 mov	 BYTE PTR [rdx], al
-
-; 195  : 		iVal /= base;
-
-  00507	8b 85 24 01 00
-	00		 mov	 eax, DWORD PTR base$[rbp]
-  0050d	48 89 85 f8 01
+  00520	48 89 85 18 02
 	00 00		 mov	 QWORD PTR tv163[rbp], rax
-  00514	33 d2		 xor	 edx, edx
-  00516	48 8b 85 e8 00
+  00527	33 d2		 xor	 edx, edx
+  00529	48 8b 85 08 01
 	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
-  0051d	48 8b 8d f8 01
+  00530	48 8b 8d 18 02
 	00 00		 mov	 rcx, QWORD PTR tv163[rbp]
-  00524	48 f7 f1	 div	 rcx
-  00527	48 89 85 e8 00
+  00537	48 f7 f1	 div	 rcx
+  0053a	48 8b c2	 mov	 rax, rdx
+  0053d	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?Representation@?1??numConvert@@9@9
+  00544	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
+  00548	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
+  0054c	88 02		 mov	 BYTE PTR [rdx], al
+
+; 206  : 			iVal /= base;
+
+  0054e	8b 85 44 01 00
+	00		 mov	 eax, DWORD PTR base$[rbp]
+  00554	48 89 85 18 02
+	00 00		 mov	 QWORD PTR tv167[rbp], rax
+  0055b	33 d2		 xor	 edx, edx
+  0055d	48 8b 85 08 01
+	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
+  00564	48 8b 8d 18 02
+	00 00		 mov	 rcx, QWORD PTR tv167[rbp]
+  0056b	48 f7 f1	 div	 rcx
+  0056e	48 89 85 08 01
 	00 00		 mov	 QWORD PTR iVal$[rbp], rax
 
-; 196  : 
-; 197  : 	} while (iVal != 0);
+; 207  : 
+; 208  : 		} while (iVal != 0);
 
-  0052e	48 83 bd e8 00
+  00575	48 83 bd 08 01
 	00 00 00	 cmp	 QWORD PTR iVal$[rbp], 0
-  00536	75 90		 jne	 SHORT $LN12@numConvert
+  0057d	75 90		 jne	 SHORT $LN12@numConvert
 
-; 198  : 
-; 199  : 	if (!isPositive)
+; 209  : 
+; 210  : 		if (!isPositive)
 
-  00538	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
-  0053c	75 12		 jne	 SHORT $LN25@numConvert
+  0057f	83 7d 44 00	 cmp	 DWORD PTR isPositive$[rbp], 0
+  00583	75 12		 jne	 SHORT $LN32@numConvert
 
-; 200  : 	{
-; 201  : 		ptr -= 1;
+; 211  : 		{
+; 212  : 			ptr -= 1;
 
-  0053e	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
-  00542	48 ff c8	 dec	 rax
-  00545	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+  00585	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  00589	48 ff c8	 dec	 rax
+  0058c	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
 
-; 202  : 		*ptr = '-';
+; 213  : 			*ptr = '-';
 
-  00549	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
-  0054d	c6 00 2d	 mov	 BYTE PTR [rax], 45	; 0000002dH
-$LN25@numConvert:
+  00590	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  00594	c6 00 2d	 mov	 BYTE PTR [rax], 45	; 0000002dH
+$LN32@numConvert:
 
-; 203  : 	}
-; 204  : 
-; 205  : 	return(ptr);
+; 214  : 		}
+; 215  : 	}
 
-  00550	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  00597	eb 42		 jmp	 SHORT $LN30@numConvert
+$LN29@numConvert:
+$LN15@numConvert:
 
-; 206  : }
+; 216  : 
+; 217  : 	else { // binary section
+; 218  : 		do
+; 219  : 		{
+; 220  : 			ptr -= 1;
 
-  00554	48 8d a5 08 02
-	00 00		 lea	 rsp, QWORD PTR [rbp+520]
-  0055b	5f		 pop	 rdi
-  0055c	5d		 pop	 rbp
-  0055d	c3		 ret	 0
-  0055e	66 90		 npad	 2
-$LN45@numConvert:
-  00560	00 00 00 00	 DD	 $LN14@numConvert
-  00564	00 00 00 00	 DD	 $LN13@numConvert
-  00568	00 00 00 00	 DD	 $LN15@numConvert
-  0056c	00 00 00 00	 DD	 $LN16@numConvert
-  00570	00 00 00 00	 DD	 $LN17@numConvert
-  00574	00 00 00 00	 DD	 $LN18@numConvert
-  00578	00 00 00 00	 DD	 $LN19@numConvert
-  0057c	00 00 00 00	 DD	 $LN20@numConvert
-  00580	00 00 00 00	 DD	 $LN21@numConvert
-  00584	00 00 00 00	 DD	 $LN22@numConvert
+  00599	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  0059d	48 ff c8	 dec	 rax
+  005a0	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+
+; 221  : 			*ptr = Representation[iVal & 1];
+
+  005a4	48 8b 85 08 01
+	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
+  005ab	48 83 e0 01	 and	 rax, 1
+  005af	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?Representation@?1??numConvert@@9@9
+  005b6	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
+  005ba	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
+  005be	88 02		 mov	 BYTE PTR [rdx], al
+
+; 222  : 			iVal = iVal >> 1;
+
+  005c0	48 8b 85 08 01
+	00 00		 mov	 rax, QWORD PTR iVal$[rbp]
+  005c7	48 d1 e8	 shr	 rax, 1
+  005ca	48 89 85 08 01
+	00 00		 mov	 QWORD PTR iVal$[rbp], rax
+
+; 223  : 
+; 224  : 		} while (iVal != 0);
+
+  005d1	48 83 bd 08 01
+	00 00 00	 cmp	 QWORD PTR iVal$[rbp], 0
+  005d9	75 be		 jne	 SHORT $LN15@numConvert
+$LN30@numConvert:
+
+; 225  : 	}
+; 226  : 
+; 227  : 	ptr -= 1;
+
+  005db	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  005df	48 ff c8	 dec	 rax
+  005e2	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+
+; 228  : 	*ptr = ParamSymbol[preem._type];
+
+  005e6	48 8b 85 40 02
+	00 00		 mov	 rax, QWORD PTR preem$[rbp]
+  005ed	48 63 00	 movsxd	 rax, DWORD PTR [rax]
+  005f0	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?ParamSymbol@?1??numConvert@@9@9
+  005f7	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
+  005fb	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
+  005ff	88 02		 mov	 BYTE PTR [rdx], al
+
+; 229  : 	ptr -= 1;
+
+  00601	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+  00605	48 ff c8	 dec	 rax
+  00608	48 89 45 08	 mov	 QWORD PTR ptr$[rbp], rax
+
+; 230  : 	*ptr = Representation[0];
+
+  0060c	b8 01 00 00 00	 mov	 eax, 1
+  00611	48 6b c0 00	 imul	 rax, rax, 0
+  00615	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?Representation@?1??numConvert@@9@9
+  0061c	48 8b 55 08	 mov	 rdx, QWORD PTR ptr$[rbp]
+  00620	0f b6 04 01	 movzx	 eax, BYTE PTR [rcx+rax]
+  00624	88 02		 mov	 BYTE PTR [rdx], al
+
+; 231  : 
+; 232  : 	return(ptr);
+
+  00626	48 8b 45 08	 mov	 rax, QWORD PTR ptr$[rbp]
+
+; 233  : }
+
+  0062a	48 8d a5 28 02
+	00 00		 lea	 rsp, QWORD PTR [rbp+552]
+  00631	5f		 pop	 rdi
+  00632	5d		 pop	 rbp
+  00633	c3		 ret	 0
+$LN52@numConvert:
+  00634	00 00 00 00	 DD	 $LN18@numConvert
+  00638	00 00 00 00	 DD	 $LN17@numConvert
+  0063c	00 00 00 00	 DD	 $LN19@numConvert
+  00640	00 00 00 00	 DD	 $LN20@numConvert
+  00644	00 00 00 00	 DD	 $LN21@numConvert
+  00648	00 00 00 00	 DD	 $LN16@numConvert
+  0064c	00 00 00 00	 DD	 $LN22@numConvert
+  00650	00 00 00 00	 DD	 $LN23@numConvert
+  00654	00 00 00 00	 DD	 $LN24@numConvert
+  00658	00 00 00 00	 DD	 $LN25@numConvert
+  0065c	00 00 00 00	 DD	 $LN26@numConvert
 numConvert ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI

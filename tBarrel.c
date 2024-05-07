@@ -595,9 +595,11 @@ bool Barrel_Roll(BarrelNode* node, int request) {
 	if (request < 0) // Shrink collection before anything
 		Barrel_RollBack(node, request);
 	
-	if (node->_nextNode > -1) // Send action to next physical node
-		return Barrel_Roll(Barrel_GetNode(node->_nextNode), request);
-
+	// Send action to next physical node. Return false on recursion chain failure.
+	if (node->_nextNode > -1) {
+		if (!Barrel_Roll(Barrel_GetNode(node->_nextNode), request))
+			return false;
+	}
 	else if (request > 0 && Heap_Remaining() < request * sizeof(Barrel)) // Heap has no available space for last node
 		return false;
 
@@ -611,7 +613,7 @@ bool Barrel_DeltaSize(REQUEST request)
 {
 	int unitDelta = (int)(request._params[tCOUNT]);
 
-	PREENT_ARGS("DeltaSize Request: %\n", fmt_i(unitDelta));
+	PREENT_SAFE("DeltaSize Request: %\n", fmt_i(unitDelta));
 	//int countDelta = (int)(request._params[tCOUNT]);
 	BarrelNode* node = request._params[tTRG];
 	size_t unitSize = node->_collection._extensions->_type->_size;
@@ -814,8 +816,9 @@ void Barrel_NodeCtor(TypeInfo* info, BarrelNode* loc, void* srcHead, int memFlag
 
 	void* barrelHead = Barrel_GetBarrelPtr(startBarrel);
 	
-	for (int i = 0; i < initCapacity; i++)
-		rawTranscribe(&((char*)barrelHead)[i * info->_size], &((char*)srcHead)[i * info->_size], info->_size);
+	if (srcHead)
+		for (int i = 0; i < initCapacity; i++)
+			rawTranscribe(&((char*)barrelHead)[i * info->_size], &((char*)srcHead)[i * info->_size], info->_size);
 
 	//if (srcHead)
 	//	Collection_WriteSpan(loc, srcHead, 0, initCapacity);
@@ -845,13 +848,38 @@ BarrelNode* Barrel_Sourced(TypeInfo* info, void* srcHead, int memFlags, uint ini
 	// Set the last physical node
 	Barrel_SetLastPhysicalNode(newNodeIx);
 
-	PREENT_ARGS("BarrelCount: %\n", fmt_i(newNodePtr->_collection._count));
+	PREENT_SAFE("BarrelCount: %\n", fmt_i(newNodePtr->_collection._count));
 
 	// Return the new BarrelNode to the user
 	return newNodePtr;
 }
 
+bool Barrel_ServiceInit()//HeapService* heapService)
+{
+
+	GlobalBarrelService._heap = Heap_ServiceInit(true);
+
+	if (!GlobalBarrelService._heap)
+	{
+		PREENT("HeapService failed to load!\n");
+		//GlobalBarrelService._barrelNodes._localFlags = 0;
+		return false;
+	}
+
+	Barrel_NodeCtor(TypeInfo_Get("BarrelNode", sizeof(BarrelNode)), &(GlobalBarrelService.Omegus), NULL, MANAGED | EMPTY, 0, 0);
+
+	GlobalBarrelService._nextAvailable = NONE;
+	GlobalBarrelService._lastPhysicalNode = OMEGA;
+
+	GlobalBarrelServiceStarted = true;
+
+	return true;
+}
+
 COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int memFlags, uint initCapacity) {
+
+	if (!GlobalBarrelServiceStarted && !Barrel_ServiceInit())
+		return NULL;
 
 	TypeInfo* info = TypeInfo_Get(typeName, unitSize);
 	if (!info)
@@ -860,24 +888,7 @@ COLLECTION Barrel_ctor(const char* typeName, size_t unitSize, void* srcHead, int
 	return Barrel_Sourced(info, srcHead, memFlags, initCapacity);
 }
 
-bool Barrel_ServiceInit(HeapService* heapService)
-{
-	if (!heapService)
-	{
-		PREENT("HeapService failed to load!\n");
-		//GlobalBarrelService._barrelNodes._localFlags = 0;
-		return false;
-	}
 
-	GlobalBarrelService._heap = heapService;
-
-	Barrel_NodeCtor("BarrelNode", sizeof(BarrelNode),  &(GlobalBarrelService.Omegus), NULL , MANAGED | EMPTY, 0, 0);
-
-	GlobalBarrelService._nextAvailable = NONE;
-	GlobalBarrelService._lastPhysicalNode = OMEGA;
-
-	return true;
-}
 
 
 //bool barrel_RemoveNode(BarrelNode* node)
